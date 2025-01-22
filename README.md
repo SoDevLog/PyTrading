@@ -12,7 +12,7 @@ Inside folder **PyTrading-main** you'll find:
 
 Clic on **TradingInPyhton**
 
-Then clic on **TradingInPython v1.0.exe** then Trading plateform in python will launched.
+Then clic on **TradingInPython.exe** then Trading plateform in python will launched.
 
 # Rapid Tour
 
