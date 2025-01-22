@@ -1,0 +1,8 @@
+# mystyle.mplstyle
+
+figure.facecolor: whitesmoke
+font.size: 10
+axes.facecolor: lavender
+lines.linewidth : 3
+lines.linestyle: --
+lines.color: red

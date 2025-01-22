@@ -1,0 +1,10 @@
+{
+    "stocks": [
+        {
+            "name": "DEFAULT",
+            "JAW": 13,
+            "TEETH": 8,
+            "LIPS": 5
+        }
+    ]
+}

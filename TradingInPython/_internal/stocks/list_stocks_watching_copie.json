@@ -1,0 +1,377 @@
+{
+    "configuration": {
+        "run_monitor_stock_market": true,
+        "time_start": "09:00",
+        "time_stop": "17:40",
+        "days_off": [
+            "samedi",
+            "dimanche"
+        ]
+    },
+    "stocks": [
+        {
+            "name": "AB SCIENCE",
+            "symbol": "AB.PA",
+            "price_purchase": 10.15,
+            "price_high": 2.62,
+            "price_low": 1.92,
+            "trading_plan_high": "Un exemple de tous les champs possibles pour une stock",
+            "trading_plan_low": "Bon pour l'achat",
+            "message_date": "2024-05-23",
+            "message_date_to_sent": false,
+            "message_date_content": "Message d'exemple",
+            "volume_max": 400000,
+            "menu_list": "A",
+            "is_monitoring": false
+        },
+        {
+            "name": "CAC 40",
+            "symbol": "^FCHI",
+            "menu_list": "INDICES"
+        },
+        {
+            "name": "S&P 500",
+            "symbol": "^GSPC",
+            "menu_list": "INDICES"
+        },
+        {
+            "name": "NYSE Composite",
+            "symbol": "^NYA",
+            "menu_list": "INDICES"
+        },
+        {
+            "name": "Euronext Amsterdam",
+            "symbol": "^AEX",
+            "menu_list": "INDICES"
+        },
+        {
+            "name": "ACCOR",
+            "symbol": "AC.PA",
+            "menu_list": "A"
+        },
+        {
+            "name": "AIRBUS",
+            "symbol": "AIR.PA",
+            "menu_list": "Industrie"
+        },
+        {
+            "name": "AIR LIQUIDE",
+            "symbol": "AI.PA"
+        },
+        {
+            "name": "Aéroport de Paris SA",
+            "symbol": "ADP.PA"
+        },
+        {
+            "name": "AirFrance KML",
+            "symbol": "AF.PA",
+            "menu_list": "A"
+        },
+        {
+            "name": "AUBAY",
+            "symbol": "AUB.PA",
+            "menu_list": "A"
+        },
+        {
+            "name": "ALSTOM",
+            "symbol": "ALO.PA",
+            "menu_list": "Industrie"
+        },
+        {
+            "name": "ASSYSTEM",
+            "symbol": "ASY.PA"
+        },
+        {
+            "name": "ATOS",
+            "symbol": "ATO.PA",
+            "menu_list": "ESN",
+            "is_monitoring": false
+        },
+        {
+            "name": "AYVENS",
+            "symbol": "AYV.PA",
+            "menu_list": "A"
+        },
+        {
+            "name": "AXWAY SOFTWARE",
+            "symbol": "AXW.PA",
+            "menu_list": "A"
+        },
+        {
+            "name": "BOUYGUES",
+            "symbol": "EN.PA",
+            "menu_list": "B"
+        },
+        {
+            "name": "BELIEVE",
+            "symbol": "BLV.PA",
+            "menu_list": "B"
+        },
+        {
+            "name": "BENETEAU",
+            "symbol": "BEN.PA",
+            "menu_list": "B"
+        },
+        {
+            "name": "BNP PARIBAS",
+            "symbol": "BNP.PA",
+            "menu_list": "Finance"
+        },
+        {
+            "name": "CAPGEMINI",
+            "symbol": "CAP.PA",
+            "price_purchase": 191.67,
+            "price_high": 194.9,
+            "price_low": 193.28,
+            "trading_plan_high": "Début de journéé",
+            "trading_plan_low": "Stop Loss",
+            "menu_list": "Portefeuille"
+        },
+        {
+            "name": "CATANA",
+            "symbol": "CATG.PA"
+        },
+        {
+            "name": "CISCO SYSTEM",
+            "symbol": "CSCO"
+        },
+        {
+            "name": "CREDIT AGRICOLE SA",
+            "symbol": "ACA.PA",
+            "menu_list": "Finance"
+        },
+        {
+            "name": "DANONE",
+            "symbol": "BN.PA"
+        },
+        {
+            "name": "DASSAULT AVIATION",
+            "symbol": "AM.PA",
+            "menu_list": "Industrie"
+        },
+        {
+            "name": "DOMINOS'S PIZZA",
+            "symbol": "DPZ"
+        },
+        {
+            "name": " D-Wave Quantum",
+            "symbol": "QBTS",
+            "exchange": "NYQ",
+            "menu_list": "NASDAQ"
+        },
+        {
+            "name": "EMEIS",
+            "symbol": "EMEIS.PA",
+            "menu_list": "E"
+        },
+        {
+            "name": "EUROAPI",
+            "symbol": "EAPI.PA",
+            "menu_list": "E"
+        },
+        {
+            "name": "EUROFINS SCIENTIFIC",
+            "symbol": "ERF.PA",
+            "menu_list": "E"
+        },
+        {
+            "name": "EUTELSAT",
+            "symbol": "ETL.PA",
+            "menu_list": "E"
+        },
+        {
+            "name": "EXOSENS",
+            "symbol": "EXENS.PA",
+            "menu_list": "E"
+        },
+        {
+            "name": "FRANCAISE DES JEUX",
+            "symbol": "FDJ.PA",
+            "menu_list": "F"
+        },
+        {
+            "name": "FIGEAC AERO",
+            "symbol": "FGA.PA",
+            "menu_list": "F"
+        },
+        {
+            "name": "I2S",
+            "symbol": "ALI2S.PA",
+            "menu_list": "I"
+        },
+        {
+            "name": "IONQ",
+            "symbol": "IONQ",
+            "exchange": "NYQ",
+            "menu_list": "NASDAQ"
+        },
+        {
+            "name": "IPSOS",
+            "symbol": "IPS.PA",
+            "menu_list": "I"
+        },
+        {
+            "name": "LEGRAND",
+            "symbol": "LR.PA",
+            "menu_list": "Portefeuille"
+        },
+        {
+            "name": "LVMH",
+            "symbol": "MC.PA"
+        },
+        {
+            "name": "MAUREL & PROM",
+            "symbol": "MAU.PA"
+        },
+        {
+            "name": "MEDINCELL",
+            "symbol": "MEDCL.PA",
+            "menu_list": "Pharma"
+        },
+        {
+            "name": "MICHELIN",
+            "symbol": "ML.PA"
+        },
+        {
+            "name": "MICROSOFT",
+            "symbol": "MSFT",
+            "menu_list": "TECH",
+            "exchange": "NMS"
+        },
+        {
+            "name": "MONGODB-A",
+            "symbol": "MDB"
+        },
+        {
+            "name": "MONGODB-A LSE",
+            "symbol": "0KKZ.L"
+        },
+        {
+            "name": "NSE",
+            "symbol": "ALNSE.PA"
+        },
+        {
+            "name": "PALANTIR",
+            "symbol": "PLTR",
+            "exchange": "NMS",
+            "menu_list": "NASDAQ"
+        },
+        {
+            "name": "QUANTUM COMP",
+            "symbol": "QUBT",
+            "exchange": "NCM",
+            "menu_list": "NASDAQ"
+        },
+        {
+            "name": "QUANTUM CORP",
+            "symbol": "QMCO",
+            "exchange": "NGM",
+            "menu_list": "Q"
+        },
+        {
+            "name": "RAMSAY GENERALE",
+            "symbol": "GDS.PA",
+            "is_monitoring": false
+        },
+        {
+            "name": "RENAULT",
+            "symbol": "RNO.PA",
+            "is_monitoring": false
+        },
+        {
+            "name": "RUBIS",
+            "symbol": "RUI.PA"
+        },
+        {
+            "name": "SANOFY",
+            "symbol": "SAN.PA",
+            "menu_list": "Pharma"
+        },
+        {
+            "name": "SEB",
+            "symbol": "SK.PA",
+            "menu_list": "S"
+        },
+        {
+            "name": "SENTINELONE RG-A",
+            "symbol": "S",
+            "menu_list": "S"
+        },
+        {
+            "name": "SOITEC",
+            "symbol": "SOI.PA",
+            "menu_list": "Portefeuille"
+        },
+        {
+            "name": "SCHNEIDER ELECTRIC",
+            "symbol": "SU.PA",
+            "menu_list": "S"
+        },
+        {
+            "name": "SNOWFLAKE RG-A",
+            "symbol": "SNOW",
+            "menu_list": "S"
+        },
+        {
+            "name": "STELLANTIS",
+            "symbol": "STLAP.PA",
+            "menu_list": "Portefeuille"
+        },
+        {
+            "name": "STMICROELECTRONICS",
+            "symbol": "STMPA.PA"
+        },
+        {
+            "name": "THALES",
+            "symbol": "HO.PA"
+        },
+        {
+            "name": "TRIGANO",
+            "symbol": "TRI.PA"
+        },
+        {
+            "name": "TESLA",
+            "symbol": "TSLA",
+            "price_high": 145.0,
+            "price_low": 125.0,
+            "volume_max": 1000000,
+            "is_monitoring": false
+        },
+        {
+            "name": "TOTALENERGIES",
+            "symbol": "TTE.PA"
+        },
+        {
+            "name": "TECHNIP ENERGIES",
+            "symbol": "TE.PA"
+        },
+        {
+            "name": "VALEO",
+            "symbol": "FR.PA",
+            "menu_list": "V",
+            "is_monitoring": false
+        },
+        {
+            "name": "VEOLIA",
+            "symbol": "VIE.PA",
+            "menu_list": "V",
+            "is_monitoring": false
+        },
+        {
+            "name": "VOLKSWAGEN",
+            "symbol": "VOW.DE",
+            "menu_list": "V"
+        },
+        {
+            "name": "VICAT",
+            "symbol": "VCT.PA",
+            "menu_list": "V",
+            "is_monitoring": false
+        },
+        {
+            "name": "VUSIONGROUP",
+            "symbol": "VU.PA",
+            "menu_list": "V"
+        }
+    ]
+}

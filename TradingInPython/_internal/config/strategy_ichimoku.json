@@ -1,0 +1,64 @@
+{
+    "stocks": [
+        {
+            "name": "DEFAULT",
+            "MA1": 9,
+            "MA2": 26,
+            "MA3": 52
+        },
+        {
+            "name": "DEFAULT_SHORT",
+            "MA1": 5,
+            "MA2": 20,
+            "MA3": 40
+        },
+        {
+            "name": "DEFAULT_LONG",
+            "MA1": 12,
+            "MA2": 30,
+            "MA3": 60
+        },
+        {
+            "name": "BENETEAU",
+            "MA1": 7,
+            "MA2": 14,
+            "MA3": 23
+        },
+        {
+            "name": "DASSAULT AVIATION",
+            "MA1": 5,
+            "MA2": 20,
+            "MA3": 40
+        },
+        {
+            "name": "ALSTOM",
+            "MA1": 7,
+            "MA2": 20,
+            "MA3": 40
+        },
+        {
+            "name": "EUROAPI",
+            "MA1": 7,
+            "MA2": 26,
+            "MA3": 52
+        },
+        {
+            "name": "TESLA",
+            "MA1": 5,
+            "MA2": 20,
+            "MA3": 40
+        },
+        {
+            "name": "VICAT",
+            "MA1": 5,
+            "MA2": 20,
+            "MA3": 40
+        },
+        {
+            "name": "AIRBUS",
+            "MA1": 9,
+            "MA2": 26,
+            "MA3": 52
+        }
+    ]
+}

@@ -1,0 +1,7 @@
+# To use with 'dark_background'
+
+font.size: 10
+grid.color: grey
+grid.linestyle: --
+grid.linewidth: 0.8
+figure.facecolor: dimgrey

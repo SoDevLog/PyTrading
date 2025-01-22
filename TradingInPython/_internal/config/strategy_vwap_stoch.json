@@ -1,0 +1,46 @@
+{
+    "stocks": [
+        {
+            "name": "DEFAULT",
+            "STOCH_k": 14,
+            "STOCH_d": 3,
+            "SMOOTH_k": 3
+        },
+        {
+            "name": "DEFAULT_SHORT",
+            "STOCH_k": 28,
+            "STOCH_d": 6,
+            "SMOOTH_k": 6
+        },
+        {
+            "name": "DEFAULT_LONG",
+            "STOCH_k": 56,
+            "STOCH_d": 12,
+            "SMOOTH_k": 12
+        },
+        {
+            "name": "ATOS",
+            "STOCH_k": 56,
+            "STOCH_d": 12,
+            "SMOOTH_k": 12
+        },
+        {
+            "name": "SOITEC",
+            "STOCH_k": 56,
+            "STOCH_d": 12,
+            "SMOOTH_k": 12
+        },
+        {
+            "name": "PALANTIR",
+            "STOCH_k": 56,
+            "STOCH_d": 12,
+            "SMOOTH_k": 12
+        },
+        {
+            "name": "IONQ",
+            "STOCH_k": 28,
+            "STOCH_d": 6,
+            "SMOOTH_k": 6
+        }
+    ]
+}

@@ -1,0 +1,14 @@
+{
+    "stocks": [
+        {
+            "name": "DEFAULT",
+            "BOLL_WIDTH": 26,
+            "STAND_DEV": 2
+        },
+        {
+            "name": "CARREFOUR",
+            "BOLL_WIDTH": 18,
+            "STAND_DEV": 2
+        }
+    ]
+}

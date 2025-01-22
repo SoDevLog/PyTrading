@@ -1,0 +1,5 @@
+# tradingplot.mplstyle
+
+figure.facecolor: whitesmoke
+grid.color: gainsboro
+grid.linestyle: --

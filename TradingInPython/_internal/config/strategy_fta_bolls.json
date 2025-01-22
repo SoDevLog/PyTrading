@@ -1,0 +1,39 @@
+{
+    "stocks": [
+        {
+            "name": "DEFAULT",
+            "FTA_1": 18,
+            "FTA_2": 36,
+            "FTA_3": 72,
+            "FTA_4": 144
+        },
+        {
+            "name": "DEFAULT_SHORT",
+            "FTA_1": 12,
+            "FTA_2": 24,
+            "FTA_3": 48,
+            "FTA_4": 96
+        },
+        {
+            "name": "DEFAULT_LONG",
+            "FTA_1": 25,
+            "FTA_2": 50,
+            "FTA_3": 100,
+            "FTA_4": 200
+        },
+        {
+            "name": "AIR LIQUIDE",
+            "FTA_1": 10,
+            "FTA_2": 20,
+            "FTA_3": 50,
+            "FTA_4": 100
+        },
+        {
+            "name": "LEGRAND",
+            "FTA_1": 10,
+            "FTA_2": 20,
+            "FTA_3": 50,
+            "FTA_4": 100
+        }
+    ]
+}
