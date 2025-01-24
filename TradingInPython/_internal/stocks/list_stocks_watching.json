@@ -10,6 +10,32 @@
     },
     "stocks": [
         {
+            "name": "CAC 40",
+            "symbol": "^FCHI",
+            "menu_list": "INDICES"
+        },
+        {
+            "name": "Euronext Amsterdam",
+            "symbol": "^AEX",
+            "menu_list": "INDICES"
+        },
+        {
+            "name": "NYSE Composite",
+            "symbol": "^NYA",
+            "menu_list": "INDICES"
+        },
+        {
+            "name": "S&P 500",
+            "symbol": "^GSPC",
+            "menu_list": "INDICES"
+        },
+        {
+            "name": " D-Wave Quantum",
+            "symbol": "QBTS",
+            "exchange": "NYQ",
+            "menu_list": "NASDAQ"
+        },
+        {
             "name": "AB SCIENCE",
             "symbol": "AB.PA",
             "price_purchase": 10.15,
@@ -25,52 +51,18 @@
             "is_monitoring": false
         },
         {
-            "name": "CAC 40",
-            "symbol": "^FCHI",
-            "menu_list": "INDICES"
-        },
-        {
-            "name": "S&P 500",
-            "symbol": "^GSPC",
-            "menu_list": "INDICES"
-        },
-        {
-            "name": "NYSE Composite",
-            "symbol": "^NYA",
-            "menu_list": "INDICES"
-        },
-        {
-            "name": "Euronext Amsterdam",
-            "symbol": "^AEX",
-            "menu_list": "INDICES"
-        },
-        {
             "name": "ACCOR",
             "symbol": "AC.PA",
             "menu_list": "A"
-        },
-        {
-            "name": "AIRBUS",
-            "symbol": "AIR.PA",
-            "menu_list": "Industrie"
         },
         {
             "name": "AIR LIQUIDE",
             "symbol": "AI.PA"
         },
         {
-            "name": "Aéroport de Paris SA",
-            "symbol": "ADP.PA"
-        },
-        {
-            "name": "AirFrance KML",
-            "symbol": "AF.PA",
-            "menu_list": "A"
-        },
-        {
-            "name": "AUBAY",
-            "symbol": "AUB.PA",
-            "menu_list": "A"
+            "name": "AIRBUS",
+            "symbol": "AIR.PA",
+            "menu_list": "Industrie"
         },
         {
             "name": "ALSTOM",
@@ -88,8 +80,8 @@
             "is_monitoring": false
         },
         {
-            "name": "AYVENS",
-            "symbol": "AYV.PA",
+            "name": "AUBAY",
+            "symbol": "AUB.PA",
             "menu_list": "A"
         },
         {
@@ -98,9 +90,18 @@
             "menu_list": "A"
         },
         {
-            "name": "BOUYGUES",
-            "symbol": "EN.PA",
-            "menu_list": "B"
+            "name": "AYVENS",
+            "symbol": "AYV.PA",
+            "menu_list": "A"
+        },
+        {
+            "name": "AirFrance KML",
+            "symbol": "AF.PA",
+            "menu_list": "A"
+        },
+        {
+            "name": "Aéroport de Paris SA",
+            "symbol": "ADP.PA"
         },
         {
             "name": "BELIEVE",
@@ -116,6 +117,11 @@
             "name": "BNP PARIBAS",
             "symbol": "BNP.PA",
             "menu_list": "Finance"
+        },
+        {
+            "name": "BOUYGUES",
+            "symbol": "EN.PA",
+            "menu_list": "B"
         },
         {
             "name": "CAPGEMINI",
@@ -154,12 +160,6 @@
             "symbol": "DPZ"
         },
         {
-            "name": " D-Wave Quantum",
-            "symbol": "QBTS",
-            "exchange": "NYQ",
-            "menu_list": "NASDAQ"
-        },
-        {
             "name": "EMEIS",
             "symbol": "EMEIS.PA",
             "menu_list": "E"
@@ -185,13 +185,13 @@
             "menu_list": "E"
         },
         {
-            "name": "FRANCAISE DES JEUX",
-            "symbol": "FDJ.PA",
+            "name": "FIGEAC AERO",
+            "symbol": "FGA.PA",
             "menu_list": "F"
         },
         {
-            "name": "FIGEAC AERO",
-            "symbol": "FGA.PA",
+            "name": "FRANCAISE DES JEUX",
+            "symbol": "FDJ.PA",
             "menu_list": "F"
         },
         {
@@ -288,6 +288,11 @@
             "menu_list": "Pharma"
         },
         {
+            "name": "SCHNEIDER ELECTRIC",
+            "symbol": "SU.PA",
+            "menu_list": "S"
+        },
+        {
             "name": "SEB",
             "symbol": "SK.PA",
             "menu_list": "S"
@@ -298,19 +303,14 @@
             "menu_list": "S"
         },
         {
-            "name": "SOITEC",
-            "symbol": "SOI.PA",
-            "menu_list": "Portefeuille"
-        },
-        {
-            "name": "SCHNEIDER ELECTRIC",
-            "symbol": "SU.PA",
-            "menu_list": "S"
-        },
-        {
             "name": "SNOWFLAKE RG-A",
             "symbol": "SNOW",
             "menu_list": "S"
+        },
+        {
+            "name": "SOITEC",
+            "symbol": "SOI.PA",
+            "menu_list": "Portefeuille"
         },
         {
             "name": "STELLANTIS",
@@ -322,12 +322,8 @@
             "symbol": "STMPA.PA"
         },
         {
-            "name": "THALES",
-            "symbol": "HO.PA"
-        },
-        {
-            "name": "TRIGANO",
-            "symbol": "TRI.PA"
+            "name": "TECHNIP ENERGIES",
+            "symbol": "TE.PA"
         },
         {
             "name": "TESLA",
@@ -338,12 +334,16 @@
             "is_monitoring": false
         },
         {
+            "name": "THALES",
+            "symbol": "HO.PA"
+        },
+        {
             "name": "TOTALENERGIES",
             "symbol": "TTE.PA"
         },
         {
-            "name": "TECHNIP ENERGIES",
-            "symbol": "TE.PA"
+            "name": "TRIGANO",
+            "symbol": "TRI.PA"
         },
         {
             "name": "VALEO",
@@ -358,15 +358,15 @@
             "is_monitoring": false
         },
         {
-            "name": "VOLKSWAGEN",
-            "symbol": "VOW.DE",
-            "menu_list": "V"
-        },
-        {
             "name": "VICAT",
             "symbol": "VCT.PA",
             "menu_list": "V",
             "is_monitoring": false
+        },
+        {
+            "name": "VOLKSWAGEN",
+            "symbol": "VOW.DE",
+            "menu_list": "V"
         },
         {
             "name": "VUSIONGROUP",
