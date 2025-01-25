@@ -32,17 +32,17 @@ Informations on the next version, by your feed back you can participate to the n
 
 - [Trading Platform's Release notes](https://www.trading-et-data-analyses.com/p/notes-de-publication.html)
 
-# Get a free trial licence
+# Get a free trial license
 
 We need customers or partners to develop the Community of python traders and continue to develop of the platform.
 
-By sending an email to : [contact@sodevlog.com](mailto:contact@sodevlog.com?subject=My%20licences%20trading%20in%20python)
+By sending an email to : [plateforme@sodevlog.com](mailto:plateforme@sodevlog.com?subject=My%20license%20trading%20in%20python)
 
 you'll get a **free license for 10 days**.
 
 If you include helpful feedback in your email, you may be able to get a more days license.
 
-# Get your licence
+# Get your license
 
 After the trial period you will need to get a license to continue using the platform.
 
