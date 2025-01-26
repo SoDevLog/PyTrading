@@ -36,7 +36,7 @@ Informations on the next version, by your feed back you can participate to the n
 
 We need customers or partners to develop the Community of python traders and continue to develop of the platform.
 
-By sending an email to : [plateforme@sodevlog.com](mailto:plateforme@sodevlog.com?subject=My%20license%20trading%20in%20python)
+By sending an email to : [plateforme@sodevlog.com](mailto:plateforme@sodevlog.com?subject=My%20license%20trading%20in%20python&body=Thanks%20to%20send%20me%20a%20license)
 
 you'll get a **free license for 10 days**.
 
