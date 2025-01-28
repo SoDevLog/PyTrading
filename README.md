@@ -46,7 +46,7 @@ If you include helpful feedback in your email, you may be able to get a more day
 
 After the trial period you will need to get a license to continue using the platform.
 
-- [By your licence](https://www.trading-et-data-analyses.com/p/acheter.html)
+- [Buy your licence](https://www.trading-et-data-analyses.com/p/acheter.html)
 
 You will receive it by email to activate your Trading platform.
 
