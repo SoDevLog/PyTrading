@@ -1,4 +1,4 @@
-# Python Trading Platform
+# TradingInPython - Trading Platform in Python
 
 Here you can download the platform to make data analysis trading on stocks market.
 
