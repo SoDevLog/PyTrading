@@ -2,17 +2,17 @@
 
 Here you can download the platform to make data analysis trading on stocks market.
 
-Just clic on button **"<> Code"** then **"Download ZIP"** you will get the zip. Its a little long about 200 Mo to download but you'll get a stand alone executable. Nothing to install just run **TradingInPython.exe**
+Just clic on **"<> Code"** then **"Download ZIP"** you will get the zip. Its a little long, about 200 Mo to download, but you'll get a stand alone executable. Nothing to install just run **TradingInPython.exe**
 
-Once you get **PyTrading-main.zip** don't forget to unlock it before **extract all** where you want.
+Once you get **PyTrading-main.zip** don't forget to **unlock** it before **extract all** where you want.
 
 Inside folder **PyTrading-main** you'll find:
 - TradingInPyhton
 - README.md
 
-Clic on **TradingInPyhton**
+Clic on directory **TradingInPyhton**
 
-Then clic on **TradingInPython.exe** then Trading Platform in python will launched.
+Then clic on executable **TradingInPython.exe** then Trading Platform in python will launched.
 
 # Rapid Tour
 
