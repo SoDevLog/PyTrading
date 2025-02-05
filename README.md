@@ -1,5 +1,7 @@
 # TradingInPython - Trading Platform in Python
 
+<img style="margin: 10px" src="images/TradingInPython.png" alt="TradingInPython" />
+
 Here you can download the platform to make data analysis trading on stocks market.
 
 Just clic on **"<> Code"** then **"Download ZIP"** you will get the zip. Its a little long, about 200 Mo to download, but you'll get a stand alone executable. Nothing to install just run **TradingInPython.exe**
@@ -16,7 +18,7 @@ Then clic on executable **TradingInPython.exe** then Trading Platform in python 
 
 # Rapid Tour
 
-You can have a rapid presentation of what you'll be able to do with the Trading platform, it's in french but you can translate easily :
+You can have a rapid presentation of what you'll be able to do with the Trading platform, it's in french but you can translate easily by choosing your language in GoogleTranslate :
 
 - [Rapid Tour of the Trading Platform in Python](https://www.trading-et-data-analyses.com/p/plateforme-de-trading-and-data-analyse.html)
 
@@ -34,7 +36,7 @@ Informations on the next version, by your feed back you can participate to the n
 
 # Get a free trial license
 
-We need customers or partners to develop the Community of python traders and continue to develop of the platform.
+We need customers or partners to develop the Community of python traders and continue to develop of this platform TradingInPython and add new features.
 
 By sending an email to : [plateforme@sodevlog.com](mailto:plateforme@sodevlog.com?subject=My%20license%20trading%20in%20python&body=Thanks%20to%20send%20me%20a%20license)
 
@@ -50,7 +52,7 @@ After the trial period you will need to get a license to continue using the plat
 
 You will receive it by email to activate your Trading platform.
 
-## Requirements
+# Requirements
 
 - On Windows 7 you can try but most of the time you'll get error, so you need a Windows more than 7
 - On MacOS and Linux you **must wait** a while but remember Python is all platforms compatible
