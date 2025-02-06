@@ -57,4 +57,10 @@ You will receive it by email to activate your Trading platform.
 - On Windows 7 you can try but most of the time you'll get error, so you need a Windows more than 7
 - On MacOS and Linux you **must wait** a while but remember Python is all platforms compatible
 
+# Disclaimer
+
+This software is provided "as is", without any express or implied warranties. The user assumes full responsibility for its use and any consequences that may arise. Under no circumstances shall the author or contributors be held liable for any direct, indirect, incidental, or consequential damages resulting from the use of this software.
+
+The user is encouraged to verify the accuracy of the data and not to rely solely on the results provided by the software. Any commercial or financial use is at the user's own risk.
+
 
