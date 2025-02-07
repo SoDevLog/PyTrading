@@ -34,9 +34,9 @@ Informations on the next version, by your feed back you can participate to the n
 
 - [Trading Platform's Release notes](https://www.trading-et-data-analyses.com/p/notes-de-publication.html)
 
-# Get a free trial license
+# Get a free license
 
-We need customers or partners to develop the Community of python traders and continue to develop of this platform TradingInPython and add new features.
+We need customers or partners to develop the Community of python traders and continue to develop of this platform **TradingInPython** and add new features.
 
 By sending an email to : [plateforme@sodevlog.com](mailto:plateforme@sodevlog.com?subject=My%20license%20trading%20in%20python&body=Thanks%20to%20send%20me%20a%20license)
 
@@ -48,14 +48,14 @@ If you include helpful feedback in your email, you may be able to get a more day
 
 After the trial period you will need to get a license to continue using the platform.
 
-- [Buy your licence](https://www.trading-et-data-analyses.com/p/acheter.html)
+- [Buy your licence](https://www.trading-et-data-analyses.com/p/abonnement.html)
 
 You will receive it by email to activate your Trading platform.
 
 # Requirements
 
 - On Windows 7 you can try but most of the time you'll get error, so you need a Windows more than 7
-- On MacOS and Linux you **must wait** a while but remember Python is all platforms compatible
+- On MacOS and Linux you **must wait** a while, but remember Python is all platforms compatible
 
 # Disclaimer
 
