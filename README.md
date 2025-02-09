@@ -22,6 +22,12 @@ You can have a rapid presentation of what you'll be able to do with the Trading 
 
 - [Rapid Tour of the Trading Platform in Python](https://www.trading-et-data-analyses.com/p/plateforme-de-trading-and-data-analyse.html)
 
+You will be able to run the Ichimoku Kinko Hyo's strategie :
+
+<img src="images/IchimokuKinkoHyo.png" alt="Strategy Ichimoku Kinko Hyo">
+
+By running TradingInPyhton you will discover many others trading strategies.
+
 # Documentation
 
 You can easely translate this documentation in any langage you need, thanks to google translate.
@@ -48,7 +54,7 @@ If you include helpful feedback in your email, you may be able to get a more day
 
 After the trial period you will need to get a license to continue using the platform.
 
-- [Buy your licence](https://www.trading-et-data-analyses.com/p/abonnement.html)
+- [Pay your subscription license](https://www.trading-et-data-analyses.com/p/abonnement.html)
 
 You will receive it by email to activate your Trading platform.
 
