@@ -2,9 +2,9 @@
 
 <img style="margin: 10px" src="images/TradingInPython.png" alt="TradingInPython" />
 
-Here you can download the platform to make data analysis trading on stocks market.
+Here you can download the platform **TradingInPython** to make data analysis trading on stocks market.
 
-## Install
+# Install
 
 Just clic on **"<> Code"** then **"Download ZIP"** you will get the zip. Its a little long, about 200 Mo to download, but you'll get a stand alone executable. Nothing to install just run **TradingInPython.exe**
 
@@ -54,7 +54,9 @@ We need customers or partners to develop the Community of python traders and con
 
 By sending an email to : [plateforme@sodevlog.com](mailto:plateforme@sodevlog.com?subject=My%20license%20trading%20in%20python&body=Thanks%20to%20send%20me%20a%20license)
 
-you'll get a **free license for 10 days**.
+You'll get a **free license for 10 days**.
+
+If you **do not receive** the automatic response with your license. Please wait a few time, we are processing your message and you will get a response.
 
 If you include helpful feedback in your email, you may be able to get a more days license.
 
