@@ -4,19 +4,28 @@
 
 Here you can download the platform **TradingInPython** to make data analysis trading on stocks market.
 
+This is the **lightweight** version to allow you a smaller download for your daily trading routine without making predictions.
+
 # Install
+
+First choose **"ligth"** branch to download :
+
+<img style="margin: 10px" src="images/git-doc-000.png" alt="TradingInPython" />
+
+1. Clic button that open branchs
+2. Choose **light**
 
 Just clic on **"<> Code"** then **"Download ZIP"** you will get the zip. Its a little long, about 200 Mo to download, but you'll get a stand alone executable. Nothing to install just run **TradingInPython.exe**
 
-Once you get **PyTrading-main.zip** don't forget to **unlock** it before **extract all** where you want.
+Once you get **PyTrading-light.zip** don't forget to **unlock** it before **extract all** where you want.
 
-Inside folder **PyTrading-main** you'll find:
+Inside folder **PyTrading-light** you'll find:
 - TradingInPyhton
 - README.md
 
 Clic on directory **TradingInPyhton**
 
-Then clic on executable **TradingInPython.exe** then Trading Platform in python will launched.
+Then clic on executable **TradingInPython-Light.exe** then Trading Platform in python will launched.
 
 ## Clone
 
