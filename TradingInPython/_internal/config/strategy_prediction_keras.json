@@ -1,0 +1,10 @@
+{
+    "DAYS_IN_PAST": 80,
+    "DAYS_IN_FUTUR": 12,
+    "EPOCHS": 10,
+    "LSTM_UNITS": 50,
+    "DROP_OUT_RATE": 0.2,
+    "WIDTH_MA1": 20,
+    "WIDTH_MA2": 200,
+    "WIDTH_MAE": 35
+}
