@@ -19,7 +19,7 @@
         "max",
         "none"
     ],
-    "SELECTED_PERIOD": "5d",
+    "SELECTED_PERIOD": "6mo",
     "INTERVAL": [
         "1m",
         "2m",
@@ -35,7 +35,7 @@
         "1mo",
         "3mo"
     ],
-    "SELECTED_INTERVAL": "5m",
+    "SELECTED_INTERVAL": "1d",
     "SELECTED_INTERVAL_DATES": "1d",
-    "SELECTED_COMPANY_NAME": "STELLANTIS"
+    "SELECTED_COMPANY_NAME": "AIR LIQUIDE"
 }
