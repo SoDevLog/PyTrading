@@ -30,11 +30,18 @@ You can have a rapid presentation of what you'll be able to do with the Trading 
 
 - [Rapid Tour of the Trading Platform in Python](https://www.trading-et-data-analyses.com/p/plateforme-de-trading-and-data-analyse.html)
 
-You will be able to run the Ichimoku Kinko Hyo's strategie :
+You will be able to run the **Ichimoku Kinko Hyo's** strategie :
 
 <img src="images/IchimokuKinkoHyo.png" alt="Strategy Ichimoku Kinko Hyo">
 
 By running TradingInPyhton you will discover many others trading strategies.
+
+## Strategy Prediction with Keras
+
+Perform technical analysis of stock market with **deep learning** and Keras neural networks :
+
+<img src="images/Prediction_Keras.png" alt="Strategy Prediction with Keras">
+
 
 # Documentation
 
