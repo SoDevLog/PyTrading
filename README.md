@@ -6,7 +6,7 @@ Here you can download the platform **TradingInPython** to make data analysis tra
 
 # Install
 
-Just clic on **"<> Code"** then **"Download ZIP"** you will get the zip. Its a little long, about 200 Mo to download, but you'll get a stand alone executable. Nothing to install just run **TradingInPython.exe**
+Just clic on **"<> Code"** then **"Download ZIP"** you will get the zip. Its a little long, about 400 Mo to download, but you'll get a stand alone executable. Nothing to install just run **TradingInPython.exe**
 
 Once you get **PyTrading-main.zip** don't forget to **unlock** it before **extract all** where you want.
 
@@ -20,9 +20,9 @@ Then clic on executable **TradingInPython.exe** then Trading Platform in python 
 
 ## Clone
 
-To make it easier to enjoy upcoming releases and software improvements, if you know GitHub you can make a Clone from this Repo.
+To make it easier to enjoy upcoming releases and software improvements, if you know **GitHub** you can make a Clone from this Repo.
 
-To get new features you'll just had to make a Pull.
+To get new features you'll just had to make a Pull wich is lighter than downloading the whole zip.
 
 # Rapid Tour
 
@@ -34,7 +34,7 @@ You will be able to run the **Ichimoku Kinko Hyo's** strategie :
 
 <img src="images/IchimokuKinkoHyo.png" alt="Strategy Ichimoku Kinko Hyo">
 
-By running TradingInPyhton you will discover many others trading strategies.
+By running **TradingInPyhton** you will discover many others trading strategies.
 
 ## Strategy Prediction with Keras
 
@@ -42,6 +42,7 @@ Perform technical analysis of stock market with **deep learning** and Keras neur
 
 <img src="images/Prediction_Keras.png" alt="Strategy Prediction with Keras">
 
+Discover many others strategies while downloading and running the platform **TradingInPyhton**.
 
 # Documentation
 
