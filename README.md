@@ -1,6 +1,10 @@
 # TradingInPython - Trading Platform in Python
 
-<img style="margin: 10px" src="images/TradingInPython.png" alt="TradingInPython" />
+<div align="center">
+  <a href="https://www.trading-et-data-analyses.com/p/plateforme-de-trading-and-data-analyse.html">
+    <img src="images/TradingInPython.png" alt="Blog TradingInPython" />
+  </a>
+</div>
 
 Here you can download the platform **TradingInPython** to make data analysis trading on stocks market.
 
@@ -38,7 +42,7 @@ By running **TradingInPyhton** you will discover many others trading strategies.
 
 ## Strategy Prediction with Keras
 
-Perform technical analysis of stock market with **deep learning** and Keras neural networks :
+Perform technical analysis of stock market with **deep learning** and **Keras** neural networks and **Jax**:
 
 <img src="images/Prediction_Keras.png" alt="Strategy Prediction with Keras">
 
