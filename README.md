@@ -46,6 +46,10 @@ Perform technical analysis of stock market with **deep learning** and **Keras** 
 
 <img src="images/Prediction_Keras.png" alt="Strategy Prediction with Keras">
 
+Take a deep dive into digital signal processing with Keras prediction algorithms applied to the Ichimoku Kinko Hyo strategy:
+
+- [Ichimoku Kinko Hyo prediction alorithms](https://github.com/SoDevLog/PyTrading/blob/main/TradingInPython/_internal/digitsignalprocessing/ichimoku_kinko_hyo.py)
+
 Discover many others strategies while downloading and running the platform **TradingInPyhton**.
 
 # Documentation
@@ -53,6 +57,16 @@ Discover many others strategies while downloading and running the platform **Tra
 You can easely translate this documentation in any langage you need, thanks to google translate.
 
 - [Trading Platform's Documentation](https://www.trading-et-data-analyses.com/p/documentation-plateforme-de-trading.html)
+
+Python software distribution with **PyInstaller** is a very open system. 
+
+We publish TradingInPython's algorithms in directory:
+
+- [Digital signal processing](./TradingInPython/_internal/digitsignalprocessing)
+
+So you can take a look at the platform engine and understand in depth the indicators used in the trading strategies:
+
+- [Digital signal processing/indicators.py](./TradingInPython/_internal/digitsignalprocessing/indicators.py)
 
 # Release notes
 
