@@ -3,9 +3,9 @@
     The modernized Ichimoku Kinko Hyo indicator is based on a combination of several elements of the traditional Ichimoku indicator,
     adjusted by the Average True Range (ATR) to account for volatility.
 
-	1. Buy Signal
+    1. Buy Signal
     -------------
-	Condition :
+    Condition :
         The Tenkan-sen line (conversion line) crosses above the Kijun-sen (base line).
         The closing price is above both boundaries of the Ichimoku cloud (Senkou Span A and Senkou Span B).
     Interpretation :
@@ -13,11 +13,11 @@
         suggests that buyers are in control of the market.
         Adding bands based on ATR helps estimate volatility and adjust the probability of a continued upward move.
     Action :
-        Traders may consider entering a long position (buy) or maintaining existing positions if these conditions are met.	
+        Traders may consider entering a long position (buy) or maintaining existing positions if these conditions are met.    
 
- 	2. Sell Signal
+     2. Sell Signal
     --------------------------------
-	Condition :
+    Condition :
         The Tenkan-sen line crosses below the Kijun-sen.
         The closing price is below both boundaries of the Ichimoku cloud (Senkou Span A and Senkou Span B).
     Interpretation :
@@ -30,27 +30,27 @@
     The strength of the trend is greater if these signals occur when the price is well above (for an uptrend)
     or well below (for a downtrend) the cloud.
     
-	3. Neutral or Undecided Zones
+    3. Neutral or Undecided Zones
     -----------------------------
-	Condition :
-		The price is inside the Ichimoku cloud.
-		Crossbreeding between Tenkan-sen and Kijun-sen is unclear or repeated over a short period of time.
-	Interpretation :
+    Condition :
+        The price is inside the Ichimoku cloud.
+        Crossbreeding between Tenkan-sen and Kijun-sen is unclear or repeated over a short period of time.
+    Interpretation :
         When the price is in the cloud, it indicates an area of indecision where neither buyers nor sellers are taking control. The market
         may be in a consolidation phase or transitioning to a new trend.
-	Action :
+    Action :
         Traders may choose to stay out of the market until a clearer direction emerges.
         Orders can be placed outside the cloud to capture a potential breakout.
     
-	4. Confirmation Signal and Volatility (via ATR and Kijun_sen_upper and Kijun_sen_lower)
+    4. Confirmation Signal and Volatility (via ATR and Kijun_sen_upper and Kijun_sen_lower)
     -----------------------------------------------------------------------------------------
-	Condition :
-		ATR based bands (Kijun_sen_upper and Kijun_sen_lower) can be used to confirm signals or to manage risks.
-	Interprétation :
-		If the price moves significantly away from the bands, it could indicate an over-volatility move. Traders could interpret this
+    Condition :
+        ATR based bands (Kijun_sen_upper and Kijun_sen_lower) can be used to confirm signals or to manage risks.
+    Interprétation :
+        If the price moves significantly away from the bands, it could indicate an over-volatility move. Traders could interpret this
         as a signal of trend exhaustion or use the information to adjust their stop-loss.
-	Action :
-		Adjust positions or stop orders based on the widening or narrowing of these bands, taking into account current market volatility.
+    Action :
+        Adjust positions or stop orders based on the widening or narrowing of these bands, taking into account current market volatility.
 
         - Kijun_sen_upper : This upper band represents a dynamic resistance.
         The higher the volatility (ATR), the further this band will be from the Kijun-sen.
