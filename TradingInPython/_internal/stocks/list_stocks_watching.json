@@ -25,6 +25,11 @@
             "menu_list": "INDICES"
         },
         {
+            "name": "NASDAQ",
+            "symbol": "^IXIC",
+            "menu_list": "INDICES"
+        },
+        {
             "name": "NYSE Composite",
             "symbol": "^NYA",
             "menu_list": "INDICES"
@@ -61,14 +66,7 @@
         {
             "name": "AIRBUS",
             "symbol": "AIR.PA",
-            "price_purchase": 134.91,
-            "price_high": 135.0,
-            "price_low": 135.0,
-            "trading_plan_high": "Dépasse le prix de revient",
-            "trading_plan_low": "Redescend snif!",
-            "volume_max": 2500,
-            "menu_list": "Industrie",
-            "is_monitoring": true
+            "menu_list": "Industrie"
         },
         {
             "name": "ALIBABA",
@@ -98,6 +96,11 @@
             "volume_max": 5000,
             "menu_list": "Industrie",
             "is_monitoring": true
+        },
+        {
+            "name": "APPLE",
+            "symbol": "AAPL",
+            "menu_list": "NASDAQ"
         },
         {
             "name": "ASSYSTEM",
@@ -291,7 +294,7 @@
         {
             "name": "EIFFAGE",
             "symbol": "FGR.PA",
-            "menu_list": "Construction"
+            "menu_list": "Construction-Ingé"
         },
         {
             "name": "EMEIS",
@@ -321,6 +324,11 @@
         {
             "name": "EUROFINS SCIENTIFIC",
             "symbol": "ERF.PA"
+        },
+        {
+            "name": "EURONEXT",
+            "symbol": "ENX.PA",
+            "menu_list": "E"
         },
         {
             "name": "EUTELSAT",
@@ -412,6 +420,11 @@
             "menu_list": "Chinois"
         },
         {
+            "name": "KLEPIERRE",
+            "symbol": "LI.PA",
+            "menu_list": "K"
+        },
+        {
             "name": "LEBON",
             "symbol": "ALBON.PA",
             "price_high": 97.5,
@@ -488,6 +501,11 @@
         {
             "name": "NEURONES",
             "symbol": "NRO.PA"
+        },
+        {
+            "name": "NOVO NORDISK",
+            "symbol": "NVO",
+            "menu_list": "Pharma"
         },
         {
             "name": "NSE",
@@ -577,7 +595,12 @@
         {
             "name": "SAFRAN",
             "symbol": "SAF.PA",
-            "menu_list": "Défense et aérospacial"
+            "menu_list": "Portefeuille"
+        },
+        {
+            "name": "SAINT-GOBAIN",
+            "symbol": "SGO.PA",
+            "menu_list": "Construction-Ingé"
         },
         {
             "name": "SANOFI",
@@ -664,7 +687,8 @@
             "price_high": 145.0,
             "price_low": 125.0,
             "volume_max": 1000000,
-            "is_monitoring": false
+            "is_monitoring": false,
+            "menu_list": "NASDAQ"
         },
         {
             "name": "THALES",
@@ -721,6 +745,11 @@
             "symbol": "VCT.PA",
             "menu_list": "V",
             "is_monitoring": false
+        },
+        {
+            "name": "VINCI",
+            "symbol": "DG.PA",
+            "menu_list": "Construction-Ingé"
         },
         {
             "name": "VISA RG-A",
