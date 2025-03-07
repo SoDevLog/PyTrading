@@ -34,7 +34,7 @@ You can have a rapid presentation of what you'll be able to do with the Trading 
 
 - [Rapid Tour of the Trading Platform in Python](https://www.trading-et-data-analyses.com/p/plateforme-de-trading-and-data-analyse.html)
 
-You will be able to run the **Ichimoku Kinko Hyo's** strategie :
+You will be able to run the **Ichimoku Kinko Hyo's** strategie and prediction with [scikit-learn](https://scikit-learn.org/stable/index.html) :
 
 <img src="images/IchimokuKinkoHyo.png" alt="Strategy Ichimoku Kinko Hyo">
 
@@ -42,7 +42,7 @@ By running **TradingInPyhton** you will discover many others trading strategies.
 
 ## Strategy Prediction with Keras
 
-Perform technical analysis of stock market with **deep learning** and **Keras** neural networks and **Jax**:
+Perform technical analysis of stock market **deep learning** with [Keras](https://keras.io/)'s **neural networks** and [Jax](https://docs.jax.dev/en/latest/quickstart.html) :
 
 <img src="images/Prediction_Keras.png" alt="Strategy Prediction with Keras">
 
