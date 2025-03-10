@@ -14,15 +14,15 @@
         },
         {
             "name": "DEFAULT_SHORT",
-            "MA1": 5,
-            "MA2": 20,
-            "MA3": 40
+            "MA1": 7,
+            "MA2": 22,
+            "MA3": 44
         },
         {
             "name": "DEFAULT_LONG",
-            "MA1": 12,
-            "MA2": 30,
-            "MA3": 60
+            "MA1": 20,
+            "MA2": 60,
+            "MA3": 120
         },
         {
             "name": "BENETEAU",
