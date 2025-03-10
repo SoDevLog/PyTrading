@@ -1,4 +1,10 @@
 {
+    "forcast": [
+        {
+            "NB_DAYS_FORCASTED": 12,
+            "NB_DAYS_IN_PAST": 26
+        }
+    ],
     "stocks": [
         {
             "name": "DEFAULT",
