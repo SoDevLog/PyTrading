@@ -99,6 +99,14 @@ You will receive it by email to activate your Trading platform.
 - On Windows 7 you can try but most of the time you'll get error, so you need a Windows more than 7
 - On MacOS and Linux you **must wait** a while, but remember Python is all platforms compatible
 
+# Fundamental analysis
+
+Algorithmic trading is great, but it's even better when it's confirmed by fundamental analysis.
+
+Find algorithms that will enables you to perform accounting analysis of stocks market with **yfinance**.
+
+- [Fundamental analysis](./TradingInPython/Z-Integration/yfinance)
+
 # Disclaimer
 
 This software is provided "as is", without any express or implied warranties. The user assumes full responsibility for its use and any consequences that may arise. Under no circumstances shall the author or contributors be held liable for any direct, indirect, incidental, or consequential damages resulting from the use of this software.
