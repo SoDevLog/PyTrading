@@ -12,32 +12,32 @@
         {
             "name": "CAC 40",
             "symbol": "^FCHI",
-            "menu_list": "INDICES"
+            "menu_list": "A-INDICES"
         },
         {
             "name": "Dow Jones",
             "symbol": "^DJI",
-            "menu_list": "INDICES"
+            "menu_list": "A-INDICES"
         },
         {
             "name": "Euronext Amsterdam",
             "symbol": "^AEX",
-            "menu_list": "INDICES"
+            "menu_list": "A-INDICES"
         },
         {
             "name": "NASDAQ",
             "symbol": "^IXIC",
-            "menu_list": "INDICES"
+            "menu_list": "A-INDICES"
         },
         {
             "name": "NYSE Composite",
             "symbol": "^NYA",
-            "menu_list": "INDICES"
+            "menu_list": "A-INDICES"
         },
         {
             "name": "S&P 500",
             "symbol": "^GSPC",
-            "menu_list": "INDICES"
+            "menu_list": "A-INDICES"
         },
         {
             "name": "AB SCIENCE",
@@ -74,6 +74,11 @@
             "menu_list": "Chinois"
         },
         {
+            "name": "ALPHA",
+            "symbol": "GOOG",
+            "menu_list": "TECH"
+        },
+        {
             "name": "ALPHA MOS",
             "symbol": "ALNEO.PA",
             "price_purchase": 0.621,
@@ -98,9 +103,23 @@
             "is_monitoring": true
         },
         {
+            "name": "AMD",
+            "symbol": "AMD",
+            "menu_list": "TECH"
+        },
+        {
             "name": "APPLE",
             "symbol": "AAPL",
-            "menu_list": "NASDAQ"
+            "menu_list": "TECH"
+        },
+        {
+            "name": "ASML",
+            "symbol": "ASML",
+            "menu_list": "TECH"
+        },
+        {
+            "name": "ASML HLDG",
+            "symbol": "ASML"
         },
         {
             "name": "ASSYSTEM",
@@ -234,6 +253,10 @@
             "symbol": "CSCO"
         },
         {
+            "name": "CORE SCIENTIFIC",
+            "symbol": "CORZ"
+        },
+        {
             "name": "CREDIT AGRICOLE SA",
             "symbol": "ACA.PA",
             "menu_list": "Finance"
@@ -292,13 +315,18 @@
             "symbol": "DPZ"
         },
         {
+            "name": "DRONE VOLT",
+            "symbol": "ALDRV.PA"
+        },
+        {
             "name": "EIFFAGE",
             "symbol": "FGR.PA",
             "menu_list": "Construction-Ingé"
         },
         {
             "name": "EMEIS",
-            "symbol": "EMEIS.PA"
+            "symbol": "EMEIS.PA",
+            "menu_list": "E"
         },
         {
             "name": "ENGIE",
@@ -308,7 +336,12 @@
             "trading_plan_high": "Remonté l'opportunité d'achat s'éloigne",
             "trading_plan_low": "Poursuit la descente bientôt acheter ?",
             "volume_max": 50000,
-            "is_monitoring": false
+            "is_monitoring": false,
+            "menu_list": "E"
+        },
+        {
+            "name": "ESSILORLUXOTTICA",
+            "symbol": "EL.PA"
         },
         {
             "name": "EUROAPI",
@@ -322,8 +355,9 @@
             "is_monitoring": false
         },
         {
-            "name": "EUROFINS SCIENTIFIC",
-            "symbol": "ERF.PA"
+            "name": "EUROFINS SCIENT.",
+            "symbol": "ERF.PA",
+            "menu_list": "E"
         },
         {
             "name": "EURONEXT",
@@ -341,6 +375,10 @@
         {
             "name": "Euronet Worldwide",
             "symbol": "EEFT"
+        },
+        {
+            "name": "FDJU",
+            "symbol": "FDJ.PA"
         },
         {
             "name": "FIGEAC AERO",
@@ -377,6 +415,10 @@
             "menu_list": "F"
         },
         {
+            "name": "GE AEROSPACE",
+            "symbol": "GE"
+        },
+        {
             "name": "GENERAL MOTORS",
             "symbol": "GM",
             "exchange": "NYQ",
@@ -385,6 +427,11 @@
         {
             "name": "GITLAB RG-A",
             "symbol": "GTLB"
+        },
+        {
+            "name": "GLOBAL X URA",
+            "symbol": "URA",
+            "menu_list": "ETF"
         },
         {
             "name": "Gaztransport & Technigaz SA",
@@ -444,6 +491,15 @@
             "name": "LVMH",
             "symbol": "MC.PA",
             "menu_list": "L"
+        },
+        {
+            "name": "LVMH",
+            "symbol": "MC.PA",
+            "menu_list": "L"
+        },
+        {
+            "name": "LightOn",
+            "symbol": "ALTAI.PA"
         },
         {
             "name": "MAT PHARMA",
@@ -514,7 +570,7 @@
         {
             "name": "NVIDIA",
             "symbol": "NVDA",
-            "menu_list": "NASDAQ"
+            "menu_list": "TECH"
         },
         {
             "name": "ORANGE",
@@ -541,6 +597,11 @@
             "symbol": "PLTR",
             "exchange": "NMS",
             "menu_list": "NASDAQ"
+        },
+        {
+            "name": "PARROT",
+            "symbol": "PARRO.PA",
+            "menu_list": "P"
         },
         {
             "name": "POUJOULAT",
@@ -633,6 +694,11 @@
             "menu_list": "Portefeuille"
         },
         {
+            "name": "SPDR S&P 500 ETF Trust",
+            "symbol": "SPY",
+            "menu_list": "A-INDICES"
+        },
+        {
             "name": "SPIE",
             "symbol": "SPIE.PA",
             "price_purchase": 34.501,
@@ -668,6 +734,11 @@
             "menu_list": "Portefeuille"
         },
         {
+            "name": "Sprott Uranium",
+            "symbol": "URNM",
+            "menu_list": "ETF"
+        },
+        {
             "name": "TARKETT",
             "symbol": "TKTT.PA",
             "menu_list": "Construction"
@@ -700,7 +771,8 @@
         },
         {
             "name": "THERMO FISHER",
-            "symbol": "TMO"
+            "symbol": "TMO",
+            "menu_list": "T"
         },
         {
             "name": "TOTALENERGIES",
@@ -769,6 +841,11 @@
         {
             "name": "VUSIONGROUP",
             "symbol": "VU.PA"
+        },
+        {
+            "name": "VanEck Uranium + Nuclear",
+            "symbol": "NLR",
+            "menu_list": "ETF"
         },
         {
             "name": "WALMART",
