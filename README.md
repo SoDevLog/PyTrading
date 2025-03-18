@@ -58,19 +58,21 @@ You can easely translate this documentation in any langage you need, thanks to g
 
 - [Trading Platform's Documentation](https://www.trading-et-data-analyses.com/p/documentation-plateforme-de-trading.html)
 
+## Open source
+
 Python software distribution with **PyInstaller** is a very open system. 
 
 We publish TradingInPython's algorithms in directory:
 
 - [Digital signal processing](./TradingInPython/_internal/digitsignalprocessing)
 
-So you can take a look at the platform engine and understand in depth the indicators used in the trading strategies:
+So you can take a look at the **platform engine** and understand in depth the indicators used in the trading strategies:
 
 - [Digital signal processing/indicators.py](./TradingInPython/_internal/digitsignalprocessing/indicators.py)
 
-# Release notes
+## Release notes
 
-Informations on the next version, by your feed back you can participate to the next version of the Tradnig Plateform.
+Informations on the **next version**, by your feed back you can participate to the next version of the Tradnig Plateform.
 
 - [Trading Platform's Release notes](https://www.trading-et-data-analyses.com/p/notes-de-publication.html)
 
