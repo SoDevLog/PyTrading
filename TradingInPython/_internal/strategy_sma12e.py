@@ -54,7 +54,7 @@ class strategy_sma12e:
 		self.name = name
 
 	def set_fig( self, fig ):
-		self.fig = fig
+		pass
 
 	def create_config_window( self ):
 
@@ -527,6 +527,7 @@ class strategy_sma12e:
 			labels_formatted = data['DateSaved'].dt.strftime( _date_mask )
 			ax_main.set_xticks( data['Date2num'][::step] )
 			ax_main.set_xticklabels( labels_formatted[::step]) 
+			ax_main.set_xlim( data['Date2num'].min(), data['Date2num'].max() ) # after manipulations reset xlim
 				
 		ax_main.grid(True)
 
