@@ -34,7 +34,7 @@ The Ichimoku Kinko Hyo strategy is a very popular strategy in trading. Here we h
 
 You can find the algorithm that implements the Ichimoku Kinko Hyo strategy here:
 
-- [Ichimoku Kinko Hyo prediction alorithms](ichimoku_kinko_hyo.py)
+- [Ichimoku Kinko Hyo prediction alorithms.py](ichimoku_kinko_hyo.py)
 
 ## Other strategies
 

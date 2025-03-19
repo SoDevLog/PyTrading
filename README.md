@@ -70,9 +70,21 @@ So you can take a look at the **platform engine** and understand in depth the in
 
 - [Digital signal processing/indicators.py](./TradingInPython/_internal/digitsignalprocessing/indicators.py)
 
+### Automatic trading strategies in python
+
+You can integrate your own trading strategies in the platform **TradingInPyhton**, by adding your own algorithms, this is how to do it.
+
+Have a look and take example to the **trading strategies** used in the platform:
+
+- [Strategy single moving average and exponential.py](./TradingInPython/_internal/strategy_sma12e.py)
+
+Read the documentation on the plateforme's API :
+
+- [Develop your strategy using TradingInPython's API](https://www.trading-et-data-analyses.com/p/strategies-dans-tradinginpython.html)
+
 ## Release notes
 
-Informations on the **next version**, by your feed back you can participate to the next version of the Tradnig Plateform.
+Informations on the **next version**, by your feed back you can participate to the next version of the Trading Plateform.
 
 - [Trading Platform's Release notes](https://www.trading-et-data-analyses.com/p/notes-de-publication.html)
 
