@@ -20,9 +20,10 @@ import helper as h
 # -----------------------------------------------------------------------------
 
 ticker = { 'name': "DASSAULT AVIATION", 'symbol': "AM.PA" }
+ticker = { 'name': "PALANTIR", 'symbol': "PLTR" }
 
 # Date de début et date actuelle pour la fin
-date_start = '2025-01-01' # h.datetime_past(0)
+date_start = '2024-01-01' # h.datetime_past(0)
 date_end = h.datetime_now()
 interval_dates = '1d'
 
@@ -203,19 +204,239 @@ def enhanced_parabolic_sar_3( highs, lows, af_start=0.02, af_max=0.2, window_smo
 
     return sar.rolling(window=window_smoothing, min_periods=1).mean()
 
+# -----------------------------------------------------------------------------
+# Donné par "Claude"
+# -----------------------------------------------------------------------------
+
+def claude_calculate_sar( price_data: pandas.DataFrame, step: float = 0.02, max_step: float = 0.2):
+    """
+    Calcule le Parabolic SAR avec des opérations pandas vectorisées
+    
+    Parameters:
+    -----------
+    price_data : pandas.DataFrame
+        DataFrame avec colonnes 'High', 'Low', 'close'
+    step : float, default 0.02
+        Pas d'accélération
+    max_step : float, default 0.2
+        Pas maximum d'accélération
+    
+    Returns:
+    --------
+    pandas.Series
+        Valeurs du SAR
+    """
+    # Copie des données pour éviter les modifications
+    df = price_data.copy()
+    
+    # Initialisation des colonnes
+    df.loc[:, 'sar'] = numpy.nan
+    df.loc[:, 'trend'] = numpy.nan
+    df.loc[:, 'af'] = numpy.nan
+    
+    # Premiers paramètres
+    df.loc[df.index[0], 'sar'] = df.loc[ df.index[0], 'Low' ]
+    df.loc[df.index[0], 'trend'] = 1
+    df.loc[df.index[0], 'af'] = step
+    
+    # Calcul itératif
+    for i in range(1, len(df)):
+        prev = df.index[i-1]
+        curr = df.index[i]
+        
+        prev_sar = df.loc[prev, 'sar']
+        prev_trend = df.loc[prev, 'trend']
+        prev_af = df.loc[prev, 'af']
+        
+        if prev_trend == 1:  # Tendance haussière
+            if prev_sar > df.loc[ prev, 'Low' ]:
+                # Inversion de tendance
+                df.loc[curr, 'trend'] = -1
+                df.loc[curr, 'sar'] = df.loc[ prev, 'High' ]
+                df.loc[curr, 'af'] = step
+            else:
+                df.loc[curr, 'trend'] = prev_trend
+                
+                # Point le plus haut
+                extreme_point = max(df.loc[prev, 'High'], df.loc[curr, 'High'])
+                
+                # Mise à jour du facteur d'accélération
+                if extreme_point > df.loc[ prev, 'High' ]:
+                    df.loc[curr, 'af'] = min( prev_af + step, max_step )
+                else:
+                    df.loc[curr, 'af'] = prev_af
+                
+                df.loc[curr, 'sar'] = prev_sar + df.loc[curr, 'af'] * (extreme_point - prev_sar)
+        
+        else:  # Tendance baissière
+            if prev_sar < df.loc[prev, 'High']:
+                # Inversion de tendance
+                df.loc[curr, 'trend'] = 1
+                df.loc[curr, 'sar'] = df.loc[prev, 'Low']
+                df.loc[curr, 'af'] = step
+            else:
+                df.loc[curr, 'trend'] = prev_trend
+                
+                # Point le plus bas
+                extreme_point = min(df.loc[prev, 'Low'], df.loc[curr, 'Low'])
+                
+                # Mise à jour du facteur d'accélération
+                if extreme_point < df.loc[prev, 'Low']:
+                    df.loc[curr, 'af'] = min(prev_af + step, max_step)
+                else:
+                    df.loc[curr, 'af'] = prev_af
+                
+                df.loc[curr, 'sar'] = prev_sar - df.loc[curr, 'af'] * (prev_sar - extreme_point)
+    
+    return df[ 'sar']
+
+# -----------------------------------------------------------------------------
+
+def calculate_dynamic_acceleration_factor(df: pandas.DataFrame, 
+                                          base_step: float = 0.02, 
+                                          max_step: float = 0.2, 
+                                          volatility_window: int = 20) -> pandas.Series:
+    """
+    Calcule un facteur d'accélération dynamique basé sur la volatilité du marché
+    
+    Parameters:
+    -----------
+    df : pandas.DataFrame
+        DataFrame avec colonnes 'High', 'Low', 'close'
+    base_step : float, default 0.02
+        Pas d'accélération de base
+    max_step : float, default 0.2
+        Pas maximum d'accélération
+    volatility_window : int, default 20
+        Fenêtre de calcul de la volatilité
+    
+    Returns:
+    --------
+    pandas.Series
+        Facteur d'accélération dynamique pour chaque période
+    """
+    # Calcul de la volatilité historique
+    volatility = df['Close'].pct_change().rolling(window=volatility_window).std()
+    
+    # Normalisation de la volatilité
+    normalized_volatility = (volatility - volatility.mean()) / volatility.std()
+    
+    # Calcul du facteur d'accélération dynamique
+    dynamic_af = base_step + numpy.abs(normalized_volatility) * (max_step - base_step)
+    
+    # Limiter le facteur d'accélération entre base_step et max_step
+    dynamic_af = dynamic_af.clip(base_step, max_step)
+    
+    # Gérer les premières périodes sans volatilité calculée
+    dynamic_af.fillna(base_step, inplace=True)
+    
+    return dynamic_af
+
+# -----------------------------------------------------------------------------
+
+def calculate_sar_with_dynamic_af(df: pandas.DataFrame, 
+                                   base_step: float = 0.02, 
+                                   max_step: float = 0.2, 
+                                   volatility_window: int = 20) -> pandas.Series:
+    """
+    Calcul du SAR avec facteur d'accélération dynamique
+    
+    Parameters:
+    -----------
+    df : pandas.DataFrame
+        DataFrame avec colonnes 'High', 'Low', 'close'
+    base_step : float, default 0.02
+        Pas d'accélération de base
+    max_step : float, default 0.2
+        Pas maximum d'accélération
+    volatility_window : int, default 20
+        Fenêtre de calcul de la volatilité
+    
+    Returns:
+    --------
+    pandas.Series
+        Valeurs du SAR
+    """
+    # Calculer le facteur d'accélération dynamique
+    df['dynamic_af'] = calculate_dynamic_acceleration_factor(
+        df, base_step, max_step, volatility_window
+    )
+    
+    # Initialisation
+    sar_df = df.copy()
+    sar_df['sar'] = numpy.nan
+    sar_df['ep'] = numpy.nan  # Extreme Point
+    sar_df['is_long'] = True
+    
+    # Valeurs initiales
+    sar_df.loc[sar_df.index[0], 'sar'] = sar_df.loc[sar_df.index[0], 'Low']
+    sar_df.loc[sar_df.index[0], 'ep'] = sar_df.loc[sar_df.index[0], 'High']
+    
+    # Calcul séquentiel
+    for i in range(1, len(sar_df)):
+        prev = sar_df.index[i-1]
+        curr = sar_df.index[i]
+        
+        # Récupération des valeurs précédentes
+        prev_sar = sar_df.loc[prev, 'sar']
+        prev_ep = sar_df.loc[prev, 'ep']
+        prev_is_long = sar_df.loc[prev, 'is_long']
+        curr_dynamic_af = sar_df.loc[curr, 'dynamic_af']
+        
+        # Calcul du SAR selon la tendance
+        if prev_is_long:
+            # Tendance haussière
+            sar = prev_sar + curr_dynamic_af * (prev_ep - prev_sar)
+            
+            # Vérification d'inversion
+            if sar > sar_df.loc[curr, 'Low']:
+                # Inversion de tendance
+                sar = prev_ep
+                is_long = False
+                new_ep = sar_df.loc[curr, 'Low']
+            else:
+                # Continuation de la tendance
+                is_long = True
+                new_ep = max(prev_ep, sar_df.loc[curr, 'High'])
+        else:
+            # Tendance baissière
+            sar = prev_sar - curr_dynamic_af * (prev_sar - prev_ep)
+            
+            # Vérification d'inversion
+            if sar < sar_df.loc[curr, 'High']:
+                # Inversion de tendance
+                sar = prev_ep
+                is_long = True
+                new_ep = sar_df.loc[curr, 'High']
+            else:
+                # Continuation de la tendance
+                is_long = False
+                new_ep = min(prev_ep, sar_df.loc[curr, 'Low'])
+        
+        # Mise à jour des valeurs
+        sar_df.loc[curr, 'sar'] = sar
+        sar_df.loc[curr, 'ep'] = new_ep
+        sar_df.loc[curr, 'is_long'] = is_long
+    
+    return sar_df['sar']
+
 # Calculate SAR
 data["SAR"] = parabolic_sar( data["High"], data["Low"] )
 data["SAR_enhanced"] = enhanced_parabolic_sar( data["High"], data["Low"] )
 data["SAR_enhanced_2"] = enhanced_parabolic_sar_2( data["High"], data["Low"] )
 data["SAR_enhanced_3"] = enhanced_parabolic_sar_3( data["High"], data["Low"] )
+data["SAR_claude"] = claude_calculate_sar( data )
+data["SAR_claude_2"] = calculate_sar_with_dynamic_af( data )
 
 plt.figure( figsize=(10, 5) )
 plt.plot( data.index, data["High"], label="High", color="blue", linestyle="dotted" )
 plt.plot( data.index, data["Low"], label="Low", color="red", linestyle="dotted" )
 plt.plot( data.index, data["SAR"], label="SAR Parabolique", color="green", marker="o", linestyle="None", alpha=0.4 )
 plt.plot( data.index, data["SAR_enhanced"], label="SAR Enhanced", color="orange", marker="s", linestyle="None", alpha=0.6 )
-plt.plot( data.index, data["SAR_enhanced_2"], label="SAR Enhanced 2.0", color="blue", marker="^", linestyle="None", alpha=0.8 )
-plt.plot( data.index, data["SAR_enhanced_3"], label="SAR Enhanced 3.0", color="red", marker="x", linestyle="None", alpha=0.9 )
+plt.plot( data.index, data["SAR_enhanced_2"], label="SAR Enhanced 2", color="blue", marker="^", linestyle="None", alpha=0.8 )
+plt.plot( data.index, data["SAR_enhanced_3"], label="SAR Enhanced 3", color="red", marker="p", linestyle="None", alpha=0.9 )
+plt.plot( data.index, data["SAR_claude"], label="SAR Claude", color="red", marker="x", linestyle="None", alpha=0.9 )
+plt.plot( data.index, data["SAR_claude_2"], label="SAR Claude 2", color="gold", marker=".", linestyle="None", alpha=1 )
 plt.legend()
 plt.gcf().autofmt_xdate()
 plt.tight_layout()
