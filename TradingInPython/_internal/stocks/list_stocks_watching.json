@@ -20,6 +20,11 @@
             "menu_list": "A-INDICES"
         },
         {
+            "name": "Euronext 100",
+            "symbol": "^N100",
+            "menu_list": "A-INDICES"
+        },
+        {
             "name": "Euronext Amsterdam",
             "symbol": "^AEX",
             "menu_list": "A-INDICES"
@@ -35,9 +40,24 @@
             "menu_list": "A-INDICES"
         },
         {
+            "name": "Nikkei 225",
+            "symbol": "^N225",
+            "menu_list": "A-INDICES"
+        },
+        {
             "name": "S&P 500",
             "symbol": "^GSPC",
             "menu_list": "A-INDICES"
+        },
+        {
+            "name": "S&P 500 (TR)",
+            "symbol": "^SP500TR",
+            "menu_list": "A-INDICES"
+        },
+        {
+            "name": "AAA",
+            "symbol": "AAA",
+            "menu_list": "A"
         },
         {
             "name": "AB SCIENCE",
@@ -61,7 +81,8 @@
         },
         {
             "name": "AIR LIQUIDE",
-            "symbol": "AI.PA"
+            "symbol": "AI.PA",
+            "menu_list": "A"
         },
         {
             "name": "AIRBUS",
@@ -172,9 +193,17 @@
             "symbol": "ADP.PA"
         },
         {
+            "name": "BAE SYSTEMS",
+            "symbol": "BA"
+        },
+        {
             "name": "BAIDU Inc",
             "symbol": "BIDU",
             "menu_list": "Chinois"
+        },
+        {
+            "name": "BASTIDE LE CONFORT",
+            "symbol": "BLC.PA"
         },
         {
             "name": "BE Semiconductor",
@@ -319,6 +348,10 @@
             "symbol": "ALDRV.PA"
         },
         {
+            "name": "EATON",
+            "symbol": "ETN"
+        },
+        {
             "name": "EIFFAGE",
             "symbol": "FGR.PA",
             "menu_list": "Construction-Ingé"
@@ -378,7 +411,7 @@
         },
         {
             "name": "FDJU",
-            "symbol": "FDJ.PA"
+            "symbol": "FDJU.PA"
         },
         {
             "name": "FIGEAC AERO",
@@ -410,9 +443,8 @@
             "menu_list": "F"
         },
         {
-            "name": "FRANCAISE DES JEUX",
-            "symbol": "FDJ.PA",
-            "menu_list": "F"
+            "name": "GAZTRANSPORT & Technigaz",
+            "symbol": "GTT.PA"
         },
         {
             "name": "GE AEROSPACE",
@@ -432,10 +464,6 @@
             "name": "GLOBAL X URA",
             "symbol": "URA",
             "menu_list": "ETF"
-        },
-        {
-            "name": "Gaztransport & Technigaz SA",
-            "symbol": "GTT.PA"
         },
         {
             "name": "I2S",
@@ -467,6 +495,11 @@
             "menu_list": "Chinois"
         },
         {
+            "name": "KERING",
+            "symbol": "KER.PA",
+            "menu_list": "Luxe"
+        },
+        {
             "name": "KLEPIERRE",
             "symbol": "LI.PA",
             "menu_list": "K"
@@ -488,9 +521,8 @@
             "menu_list": "Portefeuille"
         },
         {
-            "name": "LVMH",
-            "symbol": "MC.PA",
-            "menu_list": "L"
+            "name": "LEONARDO",
+            "symbol": "LDO.MI"
         },
         {
             "name": "LVMH",
@@ -782,6 +814,11 @@
             "name": "TRIGANO",
             "symbol": "TRI.PA",
             "menu_list": "Loisir bateaux"
+        },
+        {
+            "name": "UBISOFT",
+            "symbol": "UBI.PA",
+            "menu_list": "U"
         },
         {
             "name": "VALEO",
