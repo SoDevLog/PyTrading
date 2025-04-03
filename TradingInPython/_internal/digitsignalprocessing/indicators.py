@@ -10,6 +10,8 @@
     - atr   
 
 """
+import pandas
+import numpy
 
 """ RSI - Relative Strength Index - Relative Strength Index
 
@@ -250,19 +252,22 @@ def bollinger_bands( data, window, n_std=2 ):
 
 """
 def atr( data, period ):
-    atr_values = []
-    for i in range( len(data) ):
-        if i == 0:
-            atr_values.append( 0 )
-        else:
-            high_low = data['High'].iloc[i] - data['Low'].iloc[i]
-            high_close = abs( data['High'].iloc[i] - data['Close'].iloc[i - 1] )
-            low_close = abs( data['Low'].iloc[i] - data['Close'].iloc[i - 1] )
-            true_range = max( high_low, high_close, low_close )
-            if i < period:
-                # Simple average over TR values ​​from index 1 to i (ignoring the initial 0)
-                atr_values.append( sum(atr_values) / len(atr_values) if atr_values else true_range )
-            else:
-                # Using Wilder's formula for ATR
-                atr_values.append( (atr_values[-1] * (period - 1) + true_range) / period )
-    return atr_values
+    high = numpy.array( data['High'] )
+    low = numpy.array( data['Low'] )
+    close = numpy.array( data['Close'] )
+
+    high_low = numpy.abs( high - low )
+    high_close = numpy.abs( high - numpy.roll(close, 1) )
+    low_close = numpy.abs( low - numpy.roll(close, 1) )
+
+    # Numpy ne supporte pas plus de deux arguments en une seule fois.
+    true_range = numpy.maximum( high_low, numpy.maximum( high_close, low_close ) )
+
+    atr = numpy.zeros_like( true_range )
+    atr[ 0:period ] = numpy.mean( true_range[0:period] )
+    
+    for i in range( period, len(true_range) ):
+        atr[i] = ( atr[i-1] * (period-1) + true_range[i]) / period
+        
+    return atr
+
