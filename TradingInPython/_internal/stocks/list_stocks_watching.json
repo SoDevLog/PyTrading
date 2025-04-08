@@ -55,6 +55,11 @@
             "menu_list": "A-INDICES"
         },
         {
+            "name": "VIX",
+            "symbol": "^VIX",
+            "menu_list": "A-INDICES"
+        },
+        {
             "name": "AAA",
             "symbol": "AAA",
             "menu_list": "A"
