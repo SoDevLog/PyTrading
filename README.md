@@ -1,7 +1,7 @@
 # TradingInPython - Trading Platform in Python
 
 <div align="center">
-  <a href="https://www.trading-et-data-analyses.com/p/plateforme-de-trading-and-data-analyse.html">
+  <a href="https://www.trading-et-data-analyses.com/p/plateforme-de-trading-technique.html">
     <img src="images/TradingInPython.png" alt="Blog TradingInPython" />
   </a>
 </div>
@@ -15,6 +15,7 @@ Just clic on **"<> Code"** then **"Download ZIP"** you will get the zip. Its a l
 Once you get **PyTrading-main.zip** don't forget to **unlock** it before **extract all** where you want.
 
 Inside folder **PyTrading-main** you'll find:
+
 - TradingInPyhton
 - README.md
 
@@ -32,7 +33,7 @@ To get new features you'll just had to make a Pull wich is lighter than download
 
 You can have a rapid presentation of what you'll be able to do with the Trading platform, it's in french but you can translate easily by choosing your language in GoogleTranslate :
 
-- [Rapid Tour of the Trading Platform in Python](https://www.trading-et-data-analyses.com/p/plateforme-de-trading-and-data-analyse.html)
+- [Rapid Tour of the Trading Platform in Python](https://www.trading-et-data-analyses.com/p/plateforme-de-trading-technique.html)
 
 You will be able to run the **Ichimoku Kinko Hyo's** strategie and prediction with [scikit-learn](https://scikit-learn.org/stable/index.html) :
 
@@ -60,7 +61,7 @@ You can easely translate this documentation in any langage you need, thanks to g
 
 ## Open source
 
-Python software distribution with **PyInstaller** is a very open system. 
+Python software distribution with **PyInstaller** is a very open system.
 
 We publish TradingInPython's algorithms in directory:
 
@@ -126,5 +127,3 @@ Find algorithms that will enables you to perform accounting analysis of stocks m
 This software is provided "as is", without any express or implied warranties. The user assumes full responsibility for its use and any consequences that may arise. Under no circumstances shall the author or contributors be held liable for any direct, indirect, incidental, or consequential damages resulting from the use of this software.
 
 The user is encouraged to verify the accuracy of the data and not to rely solely on the results provided by the software. Any commercial or financial use is at the user's own risk.
-
-
