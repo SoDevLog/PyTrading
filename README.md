@@ -59,7 +59,7 @@ You can easely translate this documentation in any langage you need, thanks to g
 
 - [Trading Platform's Documentation](https://www.trading-et-data-analyses.com/p/documentation-plateforme-de-trading.html)
 
-## Open source
+## Open software
 
 Python software distribution with **PyInstaller** is a very open system.
 
