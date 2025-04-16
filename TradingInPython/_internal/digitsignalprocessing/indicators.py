@@ -271,3 +271,18 @@ def atr( data, period ):
         
     return atr
 
+# -----------------------------------------------------------------------------
+
+def calculate_balance_of_power( open, high, low, close ):
+    """ Balance of Power """
+    bop = numpy.zeros_like( close )
+    
+    # BOP = (Close - Open) / (High - Low)
+    for i in range( len(close) ):
+        range_hl = high[i] - low[i]
+        if range_hl != 0:  # Éviter la division par zéro
+            bop[i] = ( close[i] - open[i] ) / range_hl
+        else:
+            bop[i] = 0
+            
+    return bop
