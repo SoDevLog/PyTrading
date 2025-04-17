@@ -1,5 +1,7 @@
 # TradingInPython - Trading Platform in Python
 
+Open software plateform for traders who want to master technical trading.
+
 <div align="center">
   <a href="https://www.trading-et-data-analyses.com/p/plateforme-de-trading-technique.html">
     <img src="images/TradingInPython.png" alt="Blog TradingInPython" />
@@ -22,6 +24,10 @@ Inside folder **PyTrading-main** you'll find:
 Clic on directory **TradingInPyhton**
 
 Then clic on executable **TradingInPython.exe** then Trading Platform in python will launched.
+
+## Installer for windows
+
+- [Installer](https://github.com/SoDevLog/PyTrading/releases)
 
 ## Clone
 
