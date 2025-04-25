@@ -51,7 +51,7 @@ def moving_average_diy( signal, window_size ):
 # -----------------------------------------------------------------------------
 # signal is shifted to window_size / 2
 #
-def moving_average_pandas( signal, window_size ):
+def moving_average_rolling( signal, window_size ):
     return signal.rolling( window=window_size, min_periods=1 ).mean()
 
 # ewm: exponential window
