@@ -55,14 +55,9 @@
             "menu_list": "A-INDICES"
         },
         {
-            "name": "VIX",
+            "name": "VIX Volatilité",
             "symbol": "^VIX",
             "menu_list": "A-INDICES"
-        },
-        {
-            "name": "AAA",
-            "symbol": "AAA",
-            "menu_list": "A"
         },
         {
             "name": "AB SCIENCE",
@@ -139,13 +134,24 @@
             "menu_list": "TECH"
         },
         {
+            "name": "ARAMIS",
+            "symbol": "ARAMI.PA",
+            "menu_list": "A"
+        },
+        {
+            "name": "ARKEMA",
+            "symbol": "AKE.PA",
+            "menu_list": "A"
+        },
+        {
             "name": "ASML",
             "symbol": "ASML",
             "menu_list": "TECH"
         },
         {
             "name": "ASML HLDG",
-            "symbol": "ASML"
+            "symbol": "ASML",
+            "menu_list": "A"
         },
         {
             "name": "ASSYSTEM",
@@ -191,11 +197,13 @@
             "trading_plan_high": "Remonte",
             "trading_plan_low": "Descente à racheter ?",
             "volume_max": 25000,
-            "is_monitoring": false
+            "is_monitoring": false,
+            "menu_list": "A"
         },
         {
             "name": "Aéroport de Paris SA",
-            "symbol": "ADP.PA"
+            "symbol": "ADP.PA",
+            "menu_list": "A"
         },
         {
             "name": "BAE SYSTEMS",
@@ -245,6 +253,11 @@
         {
             "name": "BRAZE RG-A",
             "symbol": "BRZE"
+        },
+        {
+            "name": "BYD",
+            "symbol": "BYDDF",
+            "menu_list": "Automobile"
         },
         {
             "name": "CAPGEMINI",
@@ -357,6 +370,11 @@
             "symbol": "ETN"
         },
         {
+            "name": "EDENRED",
+            "symbol": "EDEN.PA",
+            "menu_list": "E"
+        },
+        {
             "name": "EIFFAGE",
             "symbol": "FGR.PA",
             "menu_list": "Construction-Ingé"
@@ -382,6 +400,11 @@
             "symbol": "EL.PA"
         },
         {
+            "name": "EURO=DOLLAR",
+            "symbol": "EURUSD=X",
+            "menu_list": "CHANGE"
+        },
+        {
             "name": "EUROAPI",
             "symbol": "EAPI.PA",
             "price_high": 3.93,
@@ -404,7 +427,8 @@
         },
         {
             "name": "EUTELSAT",
-            "symbol": "ETL.PA"
+            "symbol": "ETL.PA",
+            "menu_list": "E"
         },
         {
             "name": "EXOSENS",
@@ -495,6 +519,11 @@
             "symbol": "IBE5.F"
         },
         {
+            "name": "Invesco QQQ (Nasdaq 100)",
+            "symbol": "QQQ",
+            "menu_list": "ETF"
+        },
+        {
             "name": "JD.com",
             "symbol": "JD",
             "menu_list": "Chinois"
@@ -510,6 +539,11 @@
             "menu_list": "K"
         },
         {
+            "name": "L'OREAL",
+            "symbol": "OR.PA",
+            "menu_list": "L"
+        },
+        {
             "name": "LEBON",
             "symbol": "ALBON.PA",
             "price_high": 97.5,
@@ -523,7 +557,7 @@
         {
             "name": "LEGRAND",
             "symbol": "LR.PA",
-            "menu_list": "Portefeuille"
+            "menu_list": "L"
         },
         {
             "name": "LEONARDO",
@@ -650,6 +684,11 @@
             "symbol": "RIP.XC"
         },
         {
+            "name": "Prysmian",
+            "symbol": "AEU.F",
+            "menu_list": "P"
+        },
+        {
             "name": "QUANTUM COMP",
             "symbol": "QUBT",
             "exchange": "NCM",
@@ -680,6 +719,11 @@
             "symbol": "RGTI",
             "exchange": "NCM",
             "menu_list": "NASDAQ"
+        },
+        {
+            "name": "ROBERTET",
+            "symbol": "RBT.PA",
+            "menu_list": "R"
         },
         {
             "name": "RTX",
@@ -731,9 +775,9 @@
             "menu_list": "Portefeuille"
         },
         {
-            "name": "SPDR S&P 500 ETF Trust",
+            "name": "SPDR S&P 500 ETF",
             "symbol": "SPY",
-            "menu_list": "A-INDICES"
+            "menu_list": "ETF"
         },
         {
             "name": "SPIE",
@@ -768,7 +812,7 @@
             "trading_plan_low": "Baisse",
             "volume_max": 100000,
             "is_monitoring": false,
-            "menu_list": "Portefeuille"
+            "menu_list": "S"
         },
         {
             "name": "Sprott Uranium",
@@ -804,7 +848,8 @@
             "price_high": 145.0,
             "price_low": 125.0,
             "volume_max": 1000000,
-            "is_monitoring": false
+            "is_monitoring": false,
+            "menu_list": "Portefeuille"
         },
         {
             "name": "THERMO FISHER",
@@ -878,11 +923,7 @@
         {
             "name": "VUSIONGROUP",
             "symbol": "VU.PA",
-            "menu_list": "V"
-        },
-        {
-            "name": "VUSIONGROUP",
-            "symbol": "VU.PA"
+            "menu_list": "Portefeuille"
         },
         {
             "name": "VanEck Uranium + Nuclear",
