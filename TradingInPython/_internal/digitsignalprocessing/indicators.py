@@ -1,66 +1,105 @@
-""" Secondary indicators
+""" Secondary indicators plateform TradingInPython
 
     - rsi
+    - rsi_welles_wilder
     - macd
     - cmf
     - accdist
     - stochastic_oscillator
     - volume_weighted_average_price
     - bollinger_bands
-    - atr   
+    - atr
+    - calculate_balance_of_power
+    - coppock
+    - macd_zero_lag  
 
 """
 import pandas
 import numpy
 
-""" RSI - Relative Strength Index - Relative Strength Index
 
-    Assessing the strength or weakness of a financial asset by comparing recent gains and losses over a specific period. It was developed by financial analyst Welles Wilder.
+""" RSI - Relative Strength Index - Indice de force relative
 
-    The RSI is usually calculated over a 14-day period and ranges from 0 to 100.
+	Evaluer la force ou la faiblesse d'un actif financier en comparant les gains et les pertes
+ 	récents sur une période spécifique. Il a été développé par l'analyste financier Welles Wilder.
 
-    Values ​​above 70 indicate that the asset is overbought, meaning
-    that it could be due for a downward correction.
+	Le RSI est généralement calculé sur une période de 14 jours et oscille entre 0 et 100. 
 
-    Values ​​below 30 often indicate that the asset is oversold, which may suggest
-    a buying opportunity.
+  	Les valeurs supérieures à 70 indiquent que l'actif est suracheté, ce qui signifie 
+  	qu'il pourrait être dû pour une correction à la baisse.
 
-    However, it is important to note that the RSI is a momentum indicator and should not be used alone to make investment decisions.
+   	Les valeurs inférieures à 30 indiquent souvent que l'actif est survendu, ce qui peut suggérer 
+    une opportunité d'achat.
 
-    A "momentum indicator" assesses the speed or strength of price movement in a given direction.
-    It provides information on the strength of a trend.
-    
+	Cependant, il est important de noter que le RSI est un indicateur de momentum et ne doit pas 
+ 	être utilisé seul pour prendre des décisions d'investissement.
+
+	Un "indicateur de momentum" évalue la vitesse ou la force du mouvement des prix dans une direction donnée. 
+ 	Il fournit une information sur la force d'un tendance.
 """
 def rsi( data, window=14 ):
     delta = data['Close'].diff(1)
-    gain = (delta.where(delta > 0, 0)).rolling(window=window).mean()
-    loss = (-delta.where(delta < 0, 0)).rolling(window=window).mean()
+    delta[0] = delta[1] # 0 is always NaN, delta[1] is better than NaN
+    
+    gain = ( delta.where(delta > 0, 0) )
+    loss = ( -delta.where(delta < 0, 0) )
 
-    rs = gain / loss
+    avg_gain = gain.rolling( window=window, min_periods=1 ).mean()
+    avg_loss = loss.rolling( window=window, min_periods=1 ).mean()
+    
+    rs = avg_gain / avg_loss
     rsi = 100 - (100 / (1 + rs))
     
     return rsi
 
-""" MACD Indicator - Moving Average Convergence Divergence
+""" RSI plus fidèle à son implémentation originale par J. Welles Wilder. 
+    Utilise la méthode de calcul de moyenne exponentielle pondérée (EMA) 
+    comme Wilder l'a conçue initialement.
+"""
+def rsi_welles_wilder( data, window=14 ):
+    # Le alpha original de Wilder est 1/window
+    alpha = 1.0 / window
+    
+    # Calculer les variations de prix
+    delta = data['Close'].diff(1)
+    
+    # Séparer les hausses et les baisses
+    up, down = delta.copy(), delta.copy()
+    up[up < 0] = 0
+    down[down > 0] = 0
+    down = abs(down)
+    
+    # Calculer les moyennes mobiles exponentielles pondérées
+    # Le adjust=False reproduit l'approche de Wilder
+    avg_up = up.ewm( alpha=alpha, adjust=False ).mean()
+    avg_down = down.ewm( alpha=alpha, adjust=False ).mean()
+    
+    # Calculer le RS et le RSI
+    rs = avg_up / avg_down
+    rsi = 100 - (100 / (1 + rs))
+    
+    return rsi
 
-    Example of use:
-        Suppose you have a DataFrame called 'df' with a column 'Close' containing the closing prices
-        You can calculate the MACD like this:
+""" Indicateur MACD - Moving Average Convergence Divergence
+
+    Exemple d'utilisation:
+        Supposons que vous ayez un DataFrame appelé 'df' avec une colonne 'Close' contenant les prix de clôture
+        Vous pouvez calculer le MACD ainsi :
         macd, signal_line = calculate_macd(df)
         df: pandas.DataFrame
 
-    EWMA (Exponential Weighted Moving Average)
+    EWMA (Exponential Weighted Moving Average) 
 
-    When the MACD (Moving Average Convergence Divergence) is below its signal line,
-    it usually indicates a downtrend in the market.
-    This pattern is often considered a sell signal
-    or a confirmation that the downtrend may continue.
-
-    Explanations:
-        Bullish crossover: When the MACD line crosses above the signal line,
-        it can indicate that the momentum is turning bullish, suggesting a buy signal.
-        Bearish crossover: When the MACD line crosses below the signal line,
-        it may mean that the momentum is turning bearish, suggesting a sell signal.
+    Lorsque le MACD (Moving Average Convergence Divergence) est inférieur à sa ligne de signal, 
+    cela indique généralement une tendance à la baisse dans le marché. 
+    Cette configuration est souvent considérée comme un signal de vente 
+    ou comme une confirmation que la tendance à la baisse pourrait se poursuivre.
+    
+    Explications:
+    Croisement haussier (Bullish crossover) : Lorsque la ligne MACD croise au-dessus de la ligne de signal, 
+    cela peut indiquer que le momentum devient haussier, suggérant un signal d'achat.
+    Croisement baissier (Bearish crossover) : Lorsque la ligne MACD croise en dessous de la ligne de signal, 
+    cela peut signifier que le momentum devient baissier, suggérant un signal de vente.
 
 """
 def macd( data, histo=False, short_window=12, long_window=26, signal_window=9 ):
@@ -81,7 +120,7 @@ def macd( data, histo=False, short_window=12, long_window=26, signal_window=9 ):
         histogram = macd - signal_line
         macd_range = macd.max() - macd.min()
         hist_range = histogram.max() - histogram.min()
-        if hist_range != 0:
+        if (hist_range != 0).all():
              scaling_factor = macd_range / hist_range
         else:
             scaling_factor = 1
@@ -91,20 +130,27 @@ def macd( data, histo=False, short_window=12, long_window=26, signal_window=9 ):
         return macd, signal_line
 
 
-""" The Chaikin Money Flow (CMF) indicator is a technical analysis tool that measures the buying pressure 
-    (accumulation) versus selling pressure (distribution) of a security over a given period1.
-    It was developed by stock analyst Mark Chaikin.
+""" L'indicateur Chaikin Money Flow (CMF) est un outil d'analyse technique qui mesure la pression d'achat (accumulation) par rapport à la pression de vente (distribution) d'un titre sur une période donnée1. 
+    Il a été développé par l'analyste boursier Mark Chaikin.
 
-    The CMF is based on the idea that the closer the closing price is to the high of a security, the greater the buying pressure (more accumulation has occurred). Conversely, the closer the closing price is to the low, the greater the distribution.
+    Le CMF repose sur l'idée que plus le cours de clôture est proche du sommet d'un titre, plus la pression d'achat 
+    est forte (davantage d'accumulation s'est produite). Au contraire, plus le cours de clôture est proche du creux, 
+    plus la distribution est forte.
 
-    On a chart, the Chaikin Money Flow indicator can be measured between +100 and -100. Areas
-    between 0 and 100 represent accumulation, while areas below 0 represent distribution.
+    Sur un graphique, l'indicateur Chaikin Money Flow peut être évalué entre +100 et -100. Les zones comprises 
+    entre 0 et 100 représentent l'accumulation, tandis que celles inférieures à 0 représentent la distribution.
 
-    Situations where the indicator is above or below 0 for a period of 6 to 9 months
-    (known as money flow persistence) can be signs of significant buying or selling pressure by large institutions. Such situations have a much more pronounced impact on price action.
+    Les situations où l'indicateur se situe au-dessus ou en dessous de 0 pendant une période de 6 à 9 mois 
+    (connues sous le nom de persistance des flux monétaires) peuvent être des signes de pressions d'achat 
+    ou de vente significatives par de grandes institutions. De telles situations ont un impact 
+    beaucoup plus prononcé sur l'action des prix.
 
-    The CMF is similar to the MACD (Moving Average Convergence Divergence) indicator, which is more popular among investors and analysts. It uses two individual exponentially weighted moving averages (EMAs) to measure momentum. The CMF analyzes the difference between a 3-day EMA and the 10-day EMA of the accumulation/distribution line, which is actually a separate indicator created by Chaikin to measure inflows and how they impact security prices.
-
+    Le CMF est similaire à l'indicateur MACD (Moving Average Convergence Divergence-convergence et divergence des 
+    moyennes mobiles), qui est plus populaire parmi les investisseurs et les analystes. Il utilise deux moyennes 
+    mobiles individuelles pondérées exponentiellement (MME) pour mesurer le momentum. Le CMF analyse la différence 
+    entre une MME de 3 jours et la MME de 10 jours de la ligne d'accumulation/distribution, qui est en fait un 
+    indicateur distinct créé par Chaikin pour mesurer les entrées d'argent et la façon dont elles impactent les prix 
+    des titres.
 """
 def cmf( data, period=20 ):
     """ Calculate Chaikin Money Flow (CMF) financial indicator
@@ -126,31 +172,30 @@ def cmf( data, period=20 ):
     cmf = money_flow_volume.rolling(window=period).sum() / data['Volume'].rolling(window=period).sum()
     return cmf.fillna(0)
 
-""" Indicator - ACCDIST Accumulation/Distribution Line
+""" Indicateur - ACCDIST Accumulation/Distribution Line
 
-    The Accumulation/Distribution ACCDIST indicator relates prices to volumes. It was developed
-    by Larry Williams, a famous futures trader.
+	L'indicateur Accumulation/Distribution ACCDIST met en relation les cours et les volumes. Il a été développé
+ 	par Larry Williams, un célèbre trader sur contrats à terme. 
 
-    This indicator measures the strength between supply and demand by detecting whether investors are
-    generally in Accumulation (buying) or Distribution (selling).
+	Cet indicateur mesure la force entre l'offre et la demande en détectant si les investisseurs sont généralement
+ 	en Accumulation (acheteur) ou en Distribution (vendeur).
 
-    The Accumulation/Distribution is calculated using the closing price, the high price, the low price
-    and the volume of the period. It helps to identify accumulation and distribution phases. A negative value
-    represents an outflow of capital and a positive value represents an inflow of capital.
+	L'Accumulation/Distribution est calculé en utilisant le prix de clôture, le prix le plus haut, le prix le plus
+ 	bas et le volume de la période. Il permet de repérer les phases d'accumulation et de distribution. Une valeur 
+  	négative représente une sortie de capital et une valeur positive représente une entrée de capital.
 
-    ACCDIST is increasing, this suggests a net accumulation, investors are buying more shares
-    than they are selling. This can indicate a positive sentiment towards the financial asset,
-    as there is upward pressure on prices.
+	ACCDIST augmente, cela suggère une accumulation nette, les investisseurs achètent plus d'actions
+ 	qu'ils n'en vendent. Cela peut indiquer un sentiment positif à l'égard de l'actif financier, 
+  	car il y a une pression à la hausse sur les prix.
 
-    If the ACCDIST is decreasing, this indicates a distribution net, with more sales than purchases.
-    This may suggest a negative sentiment towards the financial asset,
-    as there is downward pressure on prices.
+	Si l'ACCDIST diminue, cela indique une distribution nette, avec plus de ventes que d'achats. 
+ 	Cela peut suggérer un sentiment négatif à l'égard de l'actif financier, 
+  	car il y a une pression à la baisse sur les prix.
 
-    Summary: The ACCDIST is used to assess the flow of capital, it provides an indication
-    of the underlying market trends.
+   	Résumé : l'ACCDIST est utilisé pour évaluer le flux de capitaux, il fournit une indication 
+    sur la tendances de fond du marché. 
 
-    It can be used alone.
-    
+    Il peut être utilisé seul.
 """
 def accdist( data ):
     # Close Location Volume
@@ -161,22 +206,22 @@ def accdist( data ):
     #accdist_normalized = ((accdist - accdist.min()) / (accdist.max() - accdist.min())) * 200 - 100
     return accdist #accdist_normalized
 
-""" STOCH - Developed by George Lane, momentum indicator measures momentum.
+""" STOCH - Développé par George Lane, indicateur de momentum mesure de l'élan.
 
-    STOCH > 80 the asset is in an overbought zone potentially overvalued.
-    STOCH < 20 the asset is in an oversold zone potentially undervalued.
+    STOCH > 80 l'actif est zone de surachat potentiellement surévalué.
+    STOCH < 20 l'actif est en zone de survente potentiellement sous-évalué.
 
-    Buy/Sell Signals:
-    - If the fast line %K crosses the slow line %D upwards, this can indicate a buy signal.
-    even more if the crossover occurs in the green zone < 20
+    Signaux Achat/Vente :
+    - Si la ligne rapide %K croise la ligne lente %D vers le haut, cela peut indiquer un signal d'achat.
+      encore plus si le croisement s'effectue dans la zone verte < 20
+      
+    - Si elle croise vers le bas, cela peut signaler une opportunité de vente.
+      encore plus si le croisement se pase en zone rouge > 80
 
-    - If it crosses downwards, this can signal a sell opportunity.
-    even more if the crossover occurs in the red zone > 80
-
-    Divergences:
-    A divergence between the indicator and the price (for example, decreasing highs on the Stoch
-    while prices form increasing highs) indicates an imminent trend reversal.
-
+    Divergences :
+        Une divergence entre l'indicateur et le prix (par exemple, des sommets décroissants sur le Stoch
+        tandis que les prix forment des sommets croissants) indiquent une inversion imminente de tendance.
+        
 """
 def stochastic_oscillator( data, k=14, d=3, k_smooth=3 ):
     low_min = data['Low'].rolling( window=k ).min()
@@ -189,41 +234,40 @@ def stochastic_oscillator( data, k=14, d=3, k_smooth=3 ):
     data['STOCH_d'] = stoch_d.rolling( window=k_smooth ).mean()
     
 
-""" VWAP (Volume Weighted Average Price )
+"""	
+	VWAP (Volume Weighted Average Price )
 
-    How VWAP (Volume Weighted Average Price) works:
-        VWAP is calculated by taking the cumulative sum of prices multiplied by trading volumes (price * volume) over a period,
-        then dividing this sum by the cumulative total volume. In other words, it weights the price according to volume to give a
-        more accurate picture of the average value of an asset across trades.
+	Fonctionnement du VWAP (Volume Weighted Average Price) :
+	Le VWAP est calculé en prenant la somme cumulée des prix multipliés par les volumes des transactions (prix * volume) sur une période, 
+ 	puis en divisant cette somme par le volume total cumulé. En d'autres termes, il pondère le prix en fonction du volume pour donner une 
+  	image plus précise de la valeur moyenne d'un actif à travers les échanges.
 
-    Interpretation:
-        - Price above VWAP: If the price is above VWAP, this may indicate that the asset is potentially overvalued,
-        as it is trading at a price higher than its volume weighted average. This can be seen as a sell signal.
-
-        - Price below VWAP: If the price is below VWAP, this may signal that it is undervalued, as it is
-        trading at a price lower than its average. This can be seen as an opportunity purchase.
-
+	Interprétation :
+	  - Prix au-dessus du VWAP : Si le prix est au-dessus du VWAP, cela peut indiquer que l'actif est potentiellement surévalué, 
+  	    car il se négocie à un prix supérieur à sa moyenne pondérée par le volume. Cela peut être perçu comme un signal de vente.
+     
+	  - Prix en dessous du VWAP : Si le prix est en dessous du VWAP, cela peut signaler qu'il est sous-évalué, car il se négocie à 
+  	    un prix inférieur à sa moyenne. Cela peut être perçu comme une opportunité d'achat.
+        
 """
 def volume_weighted_average_price( data ):
     cum_price_vol = (data['Close'] * data['Volume']).cumsum()
     cum_volume = data['Volume'].cumsum()
     data['VWAP'] = cum_price_vol / cum_volume
 
-""" Market volatility can be studied using Bollinger Bands.
-
-    Volatility in the stock market refers to the frequency and amplitude of market movements.
-
-    The greater and more frequent the price changes, the higher the volatility.
-    Statistically, volatility represents the standard deviation of a market's annualized returns
-    over a given period.
-
-    The closer the price is to the upper band, the closer the asset is to overbought conditions.
-
-    The closer the price is to the lower band, the closer the asset is to oversold conditions.
+""" 
+	La volatilité du marché peut-être étudier grâce aux Bandes de Bollinger.
+ 
+ 	La volatilité sur le marché boursier, désigne la fréquence et l'amplitude des mouvements du marché. 
+  	Plus les variations de prix sont importantes et fréquentes, plus la volatilité est élevée. 
+   	Sur le plan statistique, la volatilité représente l'écart-type des rendements annualisés d'un marché
+    au cours d'une période donnée.
     
+	Plus le prix est proche de la bande supérieure, plus l'actif est proche des conditions de surachat.
+	Plus le prix est proche de la bande inférieure, plus l'actif est proche de la survente.
 """
 def bollinger_bands( data, window, n_std=2 ):
-    """ Calculate Bollinger Bands for a given number of periods and standard deviations.
+    """ Calculer les bandes de Bollinger pour un nombre de périodes et des écarts-types donnés.
 		**data** : data frame
 		**window** : int largeur de la fenêtre
 		**n_std** : multiplicateur de l'écart type
@@ -236,20 +280,18 @@ def bollinger_bands( data, window, n_std=2 ):
 
 
 """ Average True Range (ATR) - Measurement of market volatility.
-
-    Volatility indicator developed by J. Welles Wilder.
-
-    It measures the average amplitude of price movements over a given period, without indicating the direction of the movement.
-
-    The higher the ATR, the more volatile the market.
-
-    An increase in the ATR signals an increase in volatility, often associated with a breakout.
-
-    A decrease in the ATR indicates a phase of consolidation or low volatility.
-
-    Stop-loss placement: use the ATR to adjust their stops dynamically. For example:
-    StopLoss at X*ATR below (or above) the entry price.
-
+    
+    Indicateur de volatilité développé par J. Welles Wilder. 
+    Il mesure l'amplitude moyenne des mouvements de prix sur une période donnée, sans indiquer la direction du mouvement.
+    
+    Plus l'ATR est élevé, plus le marché est volatil.
+    
+    Une hausse de l'ATR signale une augmentation de la volatilité, souvent associée à un breakout.
+    Une baisse de l'ATR indique une phase de consolidation ou de faible volatilité.
+    
+    Placement de stop-loss : utilisation l'ATR pour ajuster leurs stops dynamiquement. Par exemple :
+    StopLoss à X*ATR en dessous (ou au-dessus) du prix d'entrée.
+    
 """
 def atr( data, period ):
     high = numpy.array( data['High'] )
@@ -273,6 +315,147 @@ def atr( data, period ):
 
 # -----------------------------------------------------------------------------
 
+def calculate_dynamic_acceleration_factor(
+        df: pandas.DataFrame,
+        base_step: float = 0.02, 
+        max_step: float = 0.2, 
+        volatility_window: int = 20
+    ) -> pandas.Series:
+    """
+    Calcule un facteur d'accélération dynamique basé sur la volatilité du marché
+    
+    Parameters:
+    -----------
+    df : pandas.DataFrame
+        DataFrame avec colonnes 'High', 'Low', 'close'
+    base_step : float, default 0.02
+        Pas d'accélération de base
+    max_step : float, default 0.2
+        Pas maximum d'accélération
+    volatility_window : int, default 20
+        Fenêtre de calcul de la volatilité
+    
+    Returns:
+    --------
+    pandas.Series
+        Facteur d'accélération dynamique pour chaque période
+    """
+    # Calcul de la volatilité historique
+    volatility = df['Close'].pct_change().rolling(window=volatility_window).std()
+    
+    # Normalisation de la volatilité
+    normalized_volatility = (volatility - volatility.mean()) / volatility.std()
+    
+    # Calcul du facteur d'accélération dynamique
+    dynamic_af = base_step + numpy.abs(normalized_volatility) * (max_step - base_step)
+    
+    # Limiter le facteur d'accélération entre base_step et max_step
+    dynamic_af = dynamic_af.clip(base_step, max_step)
+    
+    # Gérer les premières périodes sans volatilité calculée
+    dynamic_af.fillna(base_step, inplace=True)
+    
+    return dynamic_af
+
+# -----------------------------------------------------------------------------
+
+def calculate_sar_with_dynamic_af(
+        df: pandas.DataFrame, 
+        base_step: float = 0.02, 
+        max_step: float = 0.2, 
+        volatility_window: int = 20
+    ) -> pandas.Series:
+    """
+    Calcul du SAR avec facteur d'accélération dynamique
+    
+    Parameters:
+    -----------
+    df : pandas.DataFrame
+        DataFrame avec colonnes 'High', 'Low', 'close'
+    base_step : float, default 0.02
+        Pas d'accélération de base
+    max_step : float, default 0.2
+        Pas maximum d'accélération
+    volatility_window : int, default 20
+        Fenêtre de calcul de la volatilité
+    
+    Returns:
+    --------
+    pandas.Series
+        Valeurs du SAR
+    """
+    # Calculer le facteur d'accélération dynamique
+    df['dynamic_af'] = calculate_dynamic_acceleration_factor(
+        df, base_step, max_step, volatility_window
+    )
+    
+    # Initialisation
+    sar_df = df.copy()
+    sar_df['sar'] = numpy.nan
+    sar_df['ep'] = numpy.nan  # Extreme Point
+    sar_df['is_long'] = True
+    
+    # Valeurs initiales
+    sar_df.loc[sar_df.index[0], 'sar'] = sar_df.loc[sar_df.index[0], 'Low']
+    sar_df.loc[sar_df.index[0], 'ep'] = sar_df.loc[sar_df.index[0], 'High']
+    
+    # Calcul séquentiel
+    for i in range(1, len(sar_df)):
+        prev = sar_df.index[i-1]
+        curr = sar_df.index[i]
+        
+        # Récupération des valeurs précédentes
+        prev_sar = sar_df.loc[prev, 'sar']
+        prev_ep = sar_df.loc[prev, 'ep']
+        prev_is_long = sar_df.loc[prev, 'is_long']
+        curr_dynamic_af = sar_df.loc[curr, 'dynamic_af']
+        
+        # Calcul du SAR selon la tendance
+        if prev_is_long:
+            # Tendance haussière
+            sar = prev_sar + curr_dynamic_af * (prev_ep - prev_sar)
+            
+            # Vérification d'inversion
+            if sar > sar_df.loc[curr, 'Low']:
+                # Inversion de tendance
+                sar = prev_ep
+                is_long = False
+                new_ep = sar_df.loc[curr, 'Low']
+            else:
+                # Continuation de la tendance
+                is_long = True
+                new_ep = max(prev_ep, sar_df.loc[curr, 'High'])
+        else:
+            # Tendance baissière
+            sar = prev_sar - curr_dynamic_af * (prev_sar - prev_ep)
+            
+            # Vérification d'inversion
+            if sar < sar_df.loc[curr, 'High']:
+                # Inversion de tendance
+                sar = prev_ep
+                is_long = True
+                new_ep = sar_df.loc[curr, 'High']
+            else:
+                # Continuation de la tendance
+                is_long = False
+                new_ep = min(prev_ep, sar_df.loc[curr, 'Low'])
+        
+        # Mise à jour des valeurs
+        sar_df.loc[curr, 'sar'] = sar
+        sar_df.loc[curr, 'ep'] = new_ep
+        sar_df.loc[curr, 'is_long'] = is_long
+    
+    return sar_df['sar']
+
+# -----------------------------------------------------------------------------
+# Normalise data upon 'n'
+#
+def normalise( data, n ):
+    norm = (data - data.min()) / (data.max() - data.min()) * n
+    return norm
+
+# -----------------------------------------------------------------------------
+
 def calculate_balance_of_power( open, high, low, close ):
     """ Balance of Power """
     bop = numpy.zeros_like( close )
@@ -286,3 +469,54 @@ def calculate_balance_of_power( open, high, low, close ):
             bop[i] = 0
             
     return bop
+
+# -----------------------------------------------------------------------------
+# ROC: Rate of Change
+# 
+def coppock( close, roc_long=14, roc_short=11, ema_period=10, signal_period=5 ):
+    roc1 = 100 * (close - close.shift(roc_long)) / close.shift(roc_long)
+    roc2 = 100 * (close - close.shift(roc_short)) / close.shift(roc_short)
+    coppock_raw = roc1 + roc2
+
+    coppock = coppock_raw.ewm( span=ema_period, adjust=False ).mean()
+    signal = coppock.ewm( span=signal_period, adjust=False ).mean()
+    derivative = coppock.diff()
+
+    return pandas.DataFrame({
+        "Coppock": coppock,
+        "Signal": signal,
+        "Derivative": derivative
+    })
+    
+# -----------------------------------------------------------------------------
+# MACD classique : plus lent, plus lissé, plus conservateur.
+# MACD Zéro Lag : plus réactif, signale les retournements plus tôt, 
+# mais parfois plus sensible au bruit.
+#
+def zero_lag_ema( series, span ):
+    """ EMA avec correction de retard (zéro lag) """
+    ema = series.ewm( span=span, adjust=False ).mean()
+    ema_of_ema = ema.ewm( span=span, adjust=False ).mean()
+    zlema = 2 * ema - ema_of_ema
+    return zlema
+
+def macd_zero_lag( data, short_window=12, long_window=26, signal_window=9, histo=True ):
+    close = data['Close']
+    short_zlema = zero_lag_ema( close, short_window )
+    long_zlema = zero_lag_ema( close, long_window )
+
+    macd_zl = short_zlema - long_zlema
+    signal_zl = zero_lag_ema( macd_zl, signal_window )
+
+    if histo:
+        histogram = macd_zl - signal_zl
+        return pandas.DataFrame({
+            'MACD_ZL': macd_zl,
+            'Signal_ZL': signal_zl,
+            'Histogram_ZL': histogram
+        })
+    else:
+        return pandas.DataFrame({
+            'MACD_ZL': macd_zl,
+            'Signal_ZL': signal_zl
+        })
