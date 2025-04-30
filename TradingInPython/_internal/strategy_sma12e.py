@@ -10,6 +10,7 @@
   	- update_interface
    	- complete_graph_window
 	- toggle_visibility
+	- update_graph
 	- draw_main_graph
 	- add_title
 	- set_data
@@ -17,13 +18,10 @@
 	
 """
 import json
-import pandas
 import numpy
 import tkinter as tk
 import config.func as conf
-import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
-import debug.func as debug
 import digitsignalprocessing.func as dsp
 import helper as h
 import figure.helper as fighelper
@@ -54,43 +52,214 @@ class strategy_sma12e:
   
 		self.get_configuration()
 
+	# -------------------------------------------------------------------------
+
 	def set_data( self, data, name ):
 		self.data = data
 		self.name = name
 
 	def set_fig( self, fig ):
-		pass
+		self.fig = fig
 
+	def set_canvas( self, canvas ):
+		self.canvas = canvas
+
+	def set_title( self, template ):
+		self.template = template	
+		return template.format( self.add_title() )
+
+	# -------------------------------------------------------------------------
+
+	def on_slider_mobile_average_1_change( self, value ):
+
+		# Filtrer les valeurs de value
+		if isinstance( value, str ):
+			value = int( float(value) )
+			self.mobile_average_1.set( value )
+        
+		if value == -1:
+			v = self.mobile_average_1.get()
+			value = v - 1
+			self.mobile_average_1.set( value )
+
+		if value == +1:
+			v = self.mobile_average_1.get()
+			value = v + 1
+			self.mobile_average_1.set( value )
+   
+		self.update_graph()
+
+	# ----------------------------------------------------------------------------  
+
+	def on_slider_mobile_average_2_change( self, value ):
+
+		# Filtrer les valeurs de value
+		if isinstance( value, str ):
+			value = int( float(value) )
+			self.mobile_average_2.set( value )
+   		
+		if value == -1:
+			v = self.mobile_average_2.get()
+			value = v - 1
+			self.mobile_average_2.set( value )
+
+		if value == +1:
+			v = self.mobile_average_2.get()
+			value = v + 1
+			self.mobile_average_2.set( value )
+   
+		self.update_graph()
+  
+  	# ----------------------------------------------------------------------------  
+
+	def on_slider_mobile_average_exp_change( self, value ):
+
+		# Filtrer les valeurs de value
+		if isinstance( value, str ):
+			value = int( float(value) )
+			self.mobile_average_exp.set( value )
+   		
+		if value == -1:
+			v = self.mobile_average_exp.get()
+			value = v - 1
+			self.mobile_average_exp.set( value )
+
+		if value == +1:
+			v = self.mobile_average_exp.get()
+			value = v + 1
+			self.mobile_average_exp.set( value )
+   
+		self.update_graph()
+  
+	# ----------------------------------------------------------------------------  
+	# Mettre à jour le graphique seulement quand on relâche le slider
+	# ou lorsque la valeur change significativement
+	#	
+	def update_graph( self ):
+
+		# Bloquer l'autoscale pour que les graphes reste en place
+		self.ax_main.set_autoscale_on( False )
+
+		# self.ax_main.clear() DO NOT clear() otherwise annotations won't work
+		for l in self.lines:
+			l.remove()
+   
+		self.draw_main_graph( self.ax_main, self.intraday, self.width )
+		self.ax_main.set_title( self.template.format( self.add_title() ) )
+		self.toggle_visibility()
+		#self.fig.autofmt_xdate()
+		self.canvas.draw_idle() # rafraichit lorsque le proce est dispo
+    
+    # ----------------------------------------------------------------------------
+    #
 	def create_config_window( self ):
 
 		self.window.title('MA1/2 MAE')
 		content = ttk.Frame( self.window, padding=( 15, 10, 15, 10 ) ) # left top right bottom   
-		content.grid( column=3, row=0 )
+		content.grid( row=0, column=0, sticky="nsew" )
+		
 		tk_row = 0 
 		padding_options = {'padx': 5, 'pady': 5}
-		
-		ttk.Label( content, text="Mobile Average 1   :").grid( row=tk_row, column=0, sticky="e" )
-		self.mobile_average_1 = tk.IntVar( value=self.get_stock('MA1'))
-		_tki = ttk.Entry( content, width=10, textvariable=self.mobile_average_1 )
-		_tki.grid( row=tk_row, column=1, sticky="w", **padding_options )
-		
-		tk_row += 1    
 
-		# ------------------------------------------------------------------------
-		
-		ttk.Label( content, text="Mobile Average 2   :").grid( row=tk_row, column=0, sticky="e" )
-		self.mobile_average_2 = tk.IntVar( value=self.get_stock('MA2') )
-		_tki = ttk.Entry( content, width=10, textvariable=self.mobile_average_2 )
-		_tki.grid( row=tk_row, column=1, sticky="w", **padding_options )
+		frame_ma12e = ttk.Frame( content )
+		frame_ma12e.grid( row=0, column=0, columnspan=3, sticky="nsew" )
+        
+        # ------------------------------------------------------------------------
+
+		ttk.Label( frame_ma12e, text="Moyenne Mobile 1").grid( row=tk_row, column=0, columnspan=2, sticky="e" )
+		self.mobile_average_1 = tk.IntVar( value=self.get_stock('MA1'))
 		
 		tk_row += 1
+  
+		# Minus button
+		_ttk = ttk.Button( frame_ma12e, text="-", width=2, command=lambda: self.on_slider_mobile_average_1_change(-1) )
+		_ttk.grid( row=tk_row, column=0, sticky="w" )
+        
+		# Slider pour la période de la moyenne mobile (de 5 à 200 jours)
+		self.slider_ma1 = ttk.Scale(
+			frame_ma12e,
+			from_=5,
+			to=200,
+			orient=tk.HORIZONTAL,
+			variable=self.mobile_average_1,
+			length=130,
+			command=self.on_slider_mobile_average_1_change
+		).grid( row=tk_row, column=1, sticky="w" )
+    
+		# Plus button
+		_ttk = ttk.Button( frame_ma12e, text="+", width=2, command=lambda: self.on_slider_mobile_average_1_change(+1) )
+		_ttk.grid( row=tk_row, column=2, sticky="w" )
+  
+        # Entry pour afficher la valeur actuelle du slider
+		_ttk = ttk.Entry( frame_ma12e, width=5, textvariable=self.mobile_average_1 )
+		_ttk.grid( row=tk_row, column=3, sticky="e", **padding_options )
+		_ttk.bind( "<Return>", lambda e: self.on_slider_mobile_average_1_change( self.mobile_average_1.get() ) )
+		
+		tk_row += 1 
 
 		# ------------------------------------------------------------------------
+
+		ttk.Label( frame_ma12e, text="Moyenne Mobile 2").grid( row=tk_row, column=0, columnspan=2, sticky="e" )
+		self.mobile_average_2 = tk.IntVar( value=self.get_stock('MA1'))
 		
-		ttk.Label( content, text="Mobile Average Exp :").grid( row=tk_row, column=0, sticky="e" )
-		self.mobile_average_exp = tk.IntVar( value=self.get_stock('MAE') )
-		_tki = ttk.Entry( content, width=10, textvariable=self.mobile_average_exp )
-		_tki.grid( row=tk_row, column=1, sticky="w", **padding_options )
+		tk_row += 1
+  
+		# Minus button
+		_ttk = ttk.Button( frame_ma12e, text="-", width=2, command=lambda: self.on_slider_mobile_average_2_change(-1) )
+		_ttk.grid( row=tk_row, column=0, sticky="w" )
+        
+		# Slider pour la période de la moyenne mobile (de 5 à 200 jours)
+		self.slider_ma2 = ttk.Scale(
+			frame_ma12e,
+			from_=5,
+			to=200,
+			orient=tk.HORIZONTAL,
+			variable=self.mobile_average_2,
+			length=130,
+			command=self.on_slider_mobile_average_2_change
+		).grid( row=tk_row, column=1, sticky="w" )
+
+		# Plus button
+		_ttk = ttk.Button( frame_ma12e, text="+", width=2, command=lambda: self.on_slider_mobile_average_2_change(+1) )
+		_ttk.grid( row=tk_row, column=2, sticky="w" )
+  
+        # Entry pour afficher la valeur actuelle du slider
+		_ttk = ttk.Entry( frame_ma12e, width=5, textvariable=self.mobile_average_2 )
+		_ttk.grid( row=tk_row, column=3, sticky="e", **padding_options )
+		_ttk.bind( "<Return>", lambda e: self.on_slider_mobile_average_2_change( self.mobile_average_2.get() ) )
+		
+		tk_row += 1 
+  		
+		# ------------------------------------------------------------------------
+
+		ttk.Label( frame_ma12e, text="Moyenne Mobile Exp").grid( row=tk_row, column=0, columnspan=2, sticky="e" )
+		self.mobile_average_exp = tk.IntVar( value=self.get_stock('MA1'))
+		
+		tk_row += 1
+  
+		# Minus button
+		_ttk = ttk.Button( frame_ma12e, text="-", width=2, command=lambda: self.on_slider_mobile_average_exp_change(-1) )
+		_ttk.grid( row=tk_row, column=0, sticky="w" )
+        
+		# Slider pour la période de la moyenne mobile (de 5 à 200 jours)
+		self.slider_ma2 = ttk.Scale(
+			frame_ma12e,
+			from_=5,
+			to=200,
+			orient=tk.HORIZONTAL,
+			variable=self.mobile_average_exp,
+			length=130,
+			command=self.on_slider_mobile_average_exp_change
+		).grid( row=tk_row, column=1, sticky="w" )
+    
+		# Plus button
+		_ttk = ttk.Button( frame_ma12e, text="+", width=2, command=lambda: self.on_slider_mobile_average_exp_change(+1) )
+		_ttk.grid( row=tk_row, column=2, sticky="w" )
+  
+        # Entry pour afficher la valeur actuelle du slider
+		_ttk = ttk.Entry( frame_ma12e, width=5, textvariable=self.mobile_average_exp )
+		_ttk.grid( row=tk_row, column=3, sticky="e", **padding_options )
+		_ttk.bind( "<Return>", lambda e: self.on_slider_mobile_average_exp_change( self.mobile_average_exp.get() ) )
 		
 		tk_row += 1
   
@@ -269,6 +438,7 @@ class strategy_sma12e:
 				break
 
 		self.message_entry.config( text=f"Default config", foreground="green" )
+		self.on_slider_mobile_average_1_change( 0 )
 			
 	# ----------------------------------------------------------------------------
 
@@ -532,6 +702,9 @@ class strategy_sma12e:
 	#
 	def draw_main_graph( self, ax_main, intraday, width ):
 		data = self.data
+		self.ax_main = ax_main
+		self.intraday = intraday
+		self.width = width
 		continus_graph = self.var60.get()
 		
 		WIDTH_MA1 = self.mobile_average_1.get()
