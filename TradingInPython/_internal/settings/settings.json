@@ -1,0 +1,36 @@
+{
+    "RSI": {
+        "window": 14
+    },
+    "MACD": {
+        "histo": true,
+        "short_window": 12,
+        "long_window": 26,
+        "signal_window": 9
+    },
+    "CMF": {
+        "period": 20
+    },
+    "STOCH": {
+        "k": 14,
+        "d": 3,
+        "k_smooth": 3
+    },
+    "BOP": {
+        "atr_period": 14,
+        "sma_period": 20,
+        "intensity_threshold": 0.2
+    },
+    "COPPOCK": {
+        "roc_long": 14,
+        "roc_short": 11,
+        "ema_period": 10,
+        "signal_period": 5
+    },
+    "MACDZL": {
+        "short_window": 12,
+        "long_window": 26,
+        "signal_window": 9,
+        "histo": true
+    }
+}
