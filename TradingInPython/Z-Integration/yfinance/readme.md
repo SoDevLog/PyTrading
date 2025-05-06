@@ -1,4 +1,10 @@
-### FCF (Free Cash Flow)
+# Check YahooFinance
+
+C'est très rare mais parfois cela arrive, le serveur de datas de YahooFinance est down et là, si votre script ne le prévois pas, vous ne voyez rien.
+
+Alors pour détailler les erreurs de **yfinance** voici le script **check-yfinance.py**
+
+# FCF - Free Cash Flow
 
 Juste Valeur d'une action à partir de la projection du Free Cash Flow FCF
 
@@ -17,7 +23,7 @@ Il faut regarder les valeurs de : cash_flow.loc['Free Cash Flow'] pour certaines
 - beta < 1 : L'action est moins volatile que le marché. Un beta de 0,5 signifie que l'action est 50% moins volatile que le marché.
 - beta négatif : Cela suggère que l'action pourrait se déplacer en sens inverse du marché, bien que cela soit assez rare.
 
-#### Paramètres
+## Paramètres
 
 risk_free_rate = 0.02 # Taux sans risque (par exemple, 2%)
 market_return = 0.08  # Rendement attendu du marché
@@ -25,7 +31,7 @@ cost_of_debt = 0.03  # Supposons un coût de la dette de 3%
 tax_rate = 0.30  # Taux d'imposition supposé de 30%
 growth_rate = 0.03  # Taux de croissance supposé des FCF de 3%
 
-### DATAROMA Warren Buffett
+# DATAROMA Warren Buffett
 
 **Return On Equity (ROE)** = Résultat Net / Capitaux propres
         - ROE élevé signifie que l'entreprise génère un bon rendement sur l'argent investi par ses actionnaires.
@@ -42,7 +48,7 @@ growth_rate = 0.03  # Taux de croissance supposé des FCF de 3%
         - P/B < 1 : L'entreprise est sous-évaluée par rapport à ses actifs, ce qui peut être une opportunité d'investissement ou le signe d'un problème structurel.
         - P/B ≈ 1 : L'entreprise est valorisée proche de sa valeur comptable.
 
-### EPS et PER
+# EPS et PER
 
 Le **PER** (Price Earning Ratio) est le cours de l'action divisé pas le bénéfice par action (EPS). Il permet de comparer la valorisation d'une entreprise par rapport à ses bénéfices. Plus le PER est élevé, plus l'entreprise est chère par rapport à ses bénéfices.
 
