@@ -35,6 +35,11 @@
             "menu_list": "A-INDICES"
         },
         {
+            "name": "NASDAQ100",
+            "symbol": "^NDX",
+            "menu_list": "A-INDICES"
+        },
+        {
             "name": "NYSE Composite",
             "symbol": "^NYA",
             "menu_list": "A-INDICES"
@@ -78,6 +83,11 @@
             "name": "ACCOR",
             "symbol": "AC.PA",
             "menu_list": "A"
+        },
+        {
+            "name": "ADOCIA",
+            "symbol": "ADOC.PA",
+            "menu_list": "Pharma"
         },
         {
             "name": "AIR LIQUIDE",
@@ -364,6 +374,11 @@
         {
             "name": "DRONE VOLT",
             "symbol": "ALDRV.PA"
+        },
+        {
+            "name": "DUKE ENERGY",
+            "symbol": "DUK",
+            "menu_list": "NASDAQ"
         },
         {
             "name": "EATON",
@@ -804,6 +819,11 @@
             "menu_list": "Portefeuille"
         },
         {
+            "name": "STIF",
+            "symbol": "ALSTI.PA",
+            "menu_list": "S"
+        },
+        {
             "name": "STMICROELECTRONICS",
             "symbol": "STMPA.PA",
             "price_high": 37.62,
@@ -840,6 +860,11 @@
             "price_low": 125.0,
             "volume_max": 1000000,
             "is_monitoring": false,
+            "menu_list": "NASDAQ"
+        },
+        {
+            "name": "TEXAS INSTRUMENTS",
+            "symbol": "TXN",
             "menu_list": "NASDAQ"
         },
         {
