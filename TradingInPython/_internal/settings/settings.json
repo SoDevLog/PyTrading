@@ -1,6 +1,6 @@
 {
     "MODE": {
-        "dark": true
+        "dark": false
     },
     "RSI": {
         "window": 14

@@ -1,7 +1,77 @@
-# To use with 'dark_background'
+# To be useed with 'dark_background'
+#
+# darktradingplot.mplstyle
+#
+# Style personnalisé pour les graphiques financiers en mode sombre
+# Enregistrer dans un sous-dossier 'styles' du projet
 
-font.size: 10
-grid.color: grey
+# General
+font.size: 12.0
+
+# Couleurs de base pour le mode sombre
+figure.facecolor : "#082757"
+axes.facecolor : "#061D40"
+axes.edgecolor : "#30363d"
+axes.labelcolor : "#c9d1d9"
+xtick.color : "#c9d1d9"
+ytick.color : "#c9d1d9"
+text.color : "#c9d1d9"
+figure.edgecolor : "#21262d"
+
+# Grille
+axes.grid: True
+grid.alpha: 0.3
+grid.color : "#3471B8"
 grid.linestyle: --
-grid.linewidth: 0.8
-figure.facecolor: dimgrey
+grid.linewidth: 0.5
+
+# Taille de la figure et résolution
+# figure.figsize: 12, 7
+figure.dpi: 80.0
+savefig.dpi: 300
+
+# Style des lignes et points
+lines.linewidth: 1.5
+lines.markersize: 5
+lines.markeredgewidth: 0.5
+
+# Palette de couleurs pour les trading plots
+axes.prop_cycle: cycler('color', ["#2f81f7", "#da3633", "#3fb950", "#a371f7", "#f0883e", "#58a6ff", "#e6edf3", "#db61a2"])
+
+# Légende
+legend.frameon: True
+legend.framealpha: 0.7
+legend.facecolor : "#161b22"
+legend.edgecolor : "#30363d"
+legend.fontsize: 10
+
+# Axes et étiquettes
+axes.titlesize: 14
+axes.labelsize: 12
+xtick.labelsize: 10
+ytick.labelsize: 10
+xtick.major.width: 0.8
+xtick.minor.width: 0.5
+ytick.major.width: 0.8
+ytick.minor.width: 0.5
+xtick.major.size: 3.5
+xtick.minor.size: 2
+ytick.major.size: 3.5
+ytick.minor.size: 2
+
+# Histogrammes
+hist.bins: 50
+
+# Patches (pour les candlesticks, barres, etc.)
+patch.facecolor : "#2f81f7"
+patch.edgecolor : "#58a6ff"
+
+# Sauvegarde des figures
+savefig.facecolor : "#0d1117"
+savefig.edgecolor : "#21262d"
+savefig.bbox: tight
+savefig.transparent: False
+
+# Bordures des sous-graphiques
+axes.spines.top: False
+axes.spines.right: False
