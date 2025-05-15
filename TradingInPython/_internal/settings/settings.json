@@ -1,4 +1,7 @@
 {
+    "MODE": {
+        "dark": true
+    },
     "RSI": {
         "window": 14
     },
