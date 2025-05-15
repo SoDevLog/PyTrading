@@ -6,6 +6,12 @@ When strated to install from zero a new python's environnement I found no way to
 
 It'always empty.
 
+<div align="center">
+  <a href="https://www.trading-et-data-analyses.com">
+    <img src="2025-05-14_16h53_24.png" alt="pymeeus not present" />
+  </a>
+</div>
+
 So a create a test script: test_workalendar.py
 
 Otherwize I'll get this error.
