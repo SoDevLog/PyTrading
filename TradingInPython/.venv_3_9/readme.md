@@ -4,7 +4,7 @@ When strated to install from zero a new python's environnement I found no way to
 
 "\.venv_3_9\Lib\site-packages\pymeeus"
 
-It'always empty.
+It's always empty.
 
 <div align="center">
   <a href="https://www.trading-et-data-analyses.com">
