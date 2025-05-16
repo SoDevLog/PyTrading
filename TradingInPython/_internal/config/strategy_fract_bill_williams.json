@@ -4,67 +4,37 @@
             "name": "DEFAULT",
             "MA1": 3,
             "MA2": 4,
-            "MAE": 12
-        },
-        {
-            "name": "ADOCIA",
-            "MA1": 8,
-            "MA2": 15,
-            "MAE": 15
-        },
-        {
-            "name": "ALSTOM",
-            "MA1": 3,
-            "MA2": 12,
-            "MAE": 18
-        },
-        {
-            "name": "ORANGE",
-            "MA1": 12,
-            "MA2": 15,
-            "MAE": 15
-        },
-        {
-            "name": "AYVENS",
-            "MA1": 8,
-            "MA2": 12,
-            "MAE": 25
-        },
-        {
-            "name": "BENETEAU",
-            "MA1": 8,
-            "MA2": 12,
-            "MAE": 25
-        },
-        {
-            "name": "CAPGEMINI",
-            "MA1": 8,
-            "MA2": 15,
-            "MAE": 15
+            "MAE": 12,
+            "BASE_STEP": 0.02,
+            "MAX_STEP": 0.2,
+            "VOLATILITY_WINDOW": 20
         },
         {
             "name": "STELLANTIS",
-            "MA1": 4,
+            "MA1": 5,
             "MA2": 4,
-            "MAE": 12
+            "MAE": 12,
+            "BASE_STEP": 0.02,
+            "MAX_STEP": 0.12,
+            "VOLATILITY_WINDOW": 50
         },
         {
             "name": "AIRBUS",
             "MA1": 3,
             "MA2": 4,
-            "MAE": 12
+            "MAE": 12,
+            "BASE_STEP": 0.02,
+            "MAX_STEP": 0.2,
+            "VOLATILITY_WINDOW": 20
         },
         {
-            "name": "TRIGANO",
+            "name": "THALES",
             "MA1": 3,
             "MA2": 4,
-            "MAE": 12
-        },
-        {
-            "name": "MONGODB-A",
-            "MA1": 5,
-            "MA2": 4,
-            "MAE": 12
+            "MAE": 12,
+            "BASE_STEP": 0.02,
+            "MAX_STEP": 0.15,
+            "VOLATILITY_WINDOW": 25
         }
     ]
 }
