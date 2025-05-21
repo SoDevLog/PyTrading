@@ -631,6 +631,11 @@
             "symbol": "0KKZ.L"
         },
         {
+            "name": "MSCI Worl ETF",
+            "symbol": "IWDA.AS",
+            "menu_list": "A-INDICES"
+        },
+        {
             "name": "Miller Industries",
             "symbol": "5OJ.F",
             "menu_list": "Surveiller"
