@@ -9,6 +9,7 @@
     - volume_weighted_average_price
     - bollinger_bands
     - atr
+    - calculate_sar_with_dynamic_af
     - calculate_balance_of_power
     - coppock
     - macd_zero_lag  
@@ -223,15 +224,15 @@ def accdist( data ):
         tandis que les prix forment des sommets croissants) indiquent une inversion imminente de tendance.
         
 """
-def stochastic_oscillator( data, k=14, d=3, k_smooth=3 ):
-    low_min = data['Low'].rolling( window=k ).min()
-    high_max = data['High'].rolling( window=k ).max()
+def stochastic_oscillator( data, k=14, d=3, k_smooth=3, min_periods=1 ):
+    low_min = data['Low'].rolling( window=k, min_periods=min_periods ).min()
+    high_max = data['High'].rolling( window=k, min_periods=min_periods ).max()
     
     stoch_k = ((data['Close'] - low_min) / (high_max - low_min)) * 100
     stoch_d = stoch_k.rolling( window=d ).mean()
 
-    data['STOCH_k'] = stoch_k.rolling( window=k_smooth ).mean()
-    data['STOCH_d'] = stoch_d.rolling( window=k_smooth ).mean()
+    data['STOCH_k'] = stoch_k.rolling( window=k_smooth, min_periods=min_periods ).mean()
+    data['STOCH_d'] = stoch_d.rolling( window=k_smooth, min_periods=min_periods ).mean()
     
 
 """	
@@ -272,8 +273,8 @@ def bollinger_bands( data, window, n_std=2 ):
 		**window** : int largeur de la fenêtre
 		**n_std** : multiplicateur de l'écart type
     """
-    sma = data['Close'].rolling( window=window ).mean()  # Moyenne mobile simple
-    std = data['Close'].rolling( window=window ).std()   # Ecart-type
+    sma = data['Close'].rolling( window=window, min_periods=1 ).mean()  # Moyenne mobile simple
+    std = data['Close'].rolling( window=window, min_periods=1 ).std()   # Ecart-type
     upper_band = sma + (std * n_std)                     # Bande supérieure
     lower_band = sma - (std * n_std)                     # Bande inférieure
     return sma, upper_band, lower_band
