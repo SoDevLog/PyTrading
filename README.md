@@ -1,6 +1,6 @@
 # TradingInPython - Trading Platform in Python
 
-Open software plateform for traders who want to master technical trading.
+Free Open Software Plateform for traders who want to master technical trading.
 
 <div align="center">
   <a href="https://www.trading-et-data-analyses.com/p/plateforme-de-trading-technique.html">
