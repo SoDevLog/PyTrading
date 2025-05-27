@@ -101,15 +101,15 @@ We need customers or partners to develop the Community of python traders and con
 
 By sending an email to : [plateforme@sodevlog.com](mailto:plateforme@sodevlog.com?subject=My%20license%20trading%20in%20python&body=Thanks%20to%20send%20me%20a%20license)
 
-You'll get a **free license for 10 days**.
+You'll get a **free license for 10 days** more or less.
 
-If you **do not receive** the automatic response with your license. Please wait a few time, we are processing your message and you will get a response.
+If you **do not receive** the automatic response with your license or if it's wrong due to your emailer, please, wait a few time, we are processing your message and you will get a response.
 
-If you include helpful feedback in your email, you may be able to get a more days license.
+If you include **helpful feedback** in your email, you may be able to get a more days license.
 
 # Get your license
 
-After the trial period you will need to get a license to continue using the platform.
+After the trial period, you will need to obtain a license to use paid strategies.
 
 - [Pay your subscription license](https://www.trading-et-data-analyses.com/p/abonnement.html)
 
