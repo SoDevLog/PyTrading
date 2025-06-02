@@ -451,9 +451,10 @@ def calculate_sar_with_dynamic_af(
 # -----------------------------------------------------------------------------
 # Normalise data upon 'n'
 #
-def normalise( data, n ):
-    norm = (data - data.min()) / (data.max() - data.min()) * n
-    return norm
+def normalise( data, max=1, min=0 ):
+    norm = ( data - data.min() ) / ( data.max() - data.min() )
+    scaled = norm * (max - min) + min
+    return scaled
 
 # -----------------------------------------------------------------------------
 
