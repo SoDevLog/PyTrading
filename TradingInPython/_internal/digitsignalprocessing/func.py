@@ -183,7 +183,7 @@ def linregress( x, y ):
     #r_squared = rvalue ** 2
 
     # Erreur standard de la pente
-    stderr = numpy.sqrt(ss_res / (n - 2)) / numpy.sqrt(numpy.sum((x - x_mean) ** 2))
+    stderr = numpy.sqrt(ss_res / (n - 2)) * numpy.sqrt(numpy.sum((x - x_mean) ** 2))
 
     # Calcul de la valeur-p (distribution t de Student)
     #t_stat = rvalue * numpy.sqrt((n - 2) / (1 - r_squared))
