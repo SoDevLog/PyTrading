@@ -1,5 +1,6 @@
 """ strategy_tool - SMA12E - Simple Mobile Average 12 and Exponential
 
+	- update_graph
 	- create_config_window
 	- get_stock
 	- get_configuration
@@ -10,7 +11,6 @@
   	- update_interface
    	- complete_graph_window
 	- toggle_visibility
-	- update_graph
 	- draw_main_graph
 	- add_title
 	- set_data
@@ -29,14 +29,17 @@ import figure.helper as fighelper
 from tkinter import ttk
 from matplotlib.ticker import ScalarFormatter, StrMethodFormatter
 from mplfinance.original_flavor import candlestick_ohlc
+from figure.linedeltaselector import LineDeltaSelector
 
 # -----------------------------------------------------------------------------
 
 class strategy_sma12e:
-	def __init__( self, window, message_entry, intraday ):
+	def __init__( self, window, message_entry, intraday, display ):
 		self.window = window
 		self.message_entry = message_entry
 		self.intraday = intraday	
+		self.display = display # tkinter checkbox
+  
 		self.name = None
 		self.mobile_average_1 = None
 		self.mobile_average_2 = None
@@ -141,6 +144,8 @@ class strategy_sma12e:
 		self.ax_main.set_autoscale_on( False )
 
 		# self.ax_main.clear() DO NOT clear() otherwise annotations won't work
+		# remove alls lines because strategy by/sell has to be recalculate
+		#
 		for l in self.lines:
 			l.remove()
    
@@ -160,6 +165,8 @@ class strategy_sma12e:
 		
 		tk_row = 0 
 		padding_options = {'padx': 5, 'pady': 5}
+
+        # ------------------------------------------------------------------------
 
 		frame_ma12e = ttk.Frame( content )
 		frame_ma12e.grid( row=0, column=0, columnspan=3, sticky="nsew" )
@@ -701,6 +708,8 @@ class strategy_sma12e:
 	# I must redraw all things
 	#
 	def draw_main_graph( self, ax_main, intraday, width ):
+		global selector # for event to be called by main program  
+
 		data = self.data
 		self.ax_main = ax_main
 		self.intraday = intraday
@@ -749,6 +758,10 @@ class strategy_sma12e:
 		# ------------------------------
 		fighelper.set_axe( ax_main, data )
 
+		# Set the delta selector
+		selector = LineDeltaSelector( ax_main, self.fig, self.display )
+		selector.set_curve_data( axe_x, data['Close'] )
+  
 		# Tendency Line Calculation
 		# -------------------------
 		# slope, intercept, rvalue, pvalue, stderr, intercept_stderr
