@@ -760,7 +760,7 @@ class strategy_sma12e:
 
 		# Set the delta selector
 		selector = LineDeltaSelector( ax_main, self.fig, self.display )
-		selector.set_curve_data( axe_x, data['Close'] )
+		selector.set_curve_data( data['Date2num'], data['Close'] )
   
 		# Tendency Line Calculation
 		# -------------------------
