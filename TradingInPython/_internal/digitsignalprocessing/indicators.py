@@ -9,10 +9,13 @@
     - volume_weighted_average_price
     - bollinger_bands
     - atr
+    - atr_rolling
     - calculate_sar_with_dynamic_af
     - calculate_balance_of_power
     - coppock
-    - macd_zero_lag  
+    - macd_zero_lag
+    - obv
+    - adx
 
 """
 import pandas
@@ -131,7 +134,9 @@ def macd( data, histo=False, short_window=12, long_window=26, signal_window=9 ):
         return macd, signal_line
 
 
-""" L'indicateur Chaikin Money Flow (CMF) est un outil d'analyse technique qui mesure la pression d'achat (accumulation) par rapport à la pression de vente (distribution) d'un titre sur une période donnée1. 
+""" L'indicateur Chaikin Money Flow (CMF) est un outil d'analyse technique qui mesure la pression d'achat (accumulation) 
+    par rapport à la pression de vente (distribution) d'un titre sur une période donnée.
+    
     Il a été développé par l'analyste boursier Mark Chaikin.
 
     Le CMF repose sur l'idée que plus le cours de clôture est proche du sommet d'un titre, plus la pression d'achat 
@@ -173,7 +178,7 @@ def cmf( data, period=20 ):
     cmf = money_flow_volume.rolling(window=period).sum() / data['Volume'].rolling(window=period).sum()
     return cmf.fillna(0)
 
-""" Indicateur - ACCDIST Accumulation/Distribution Line
+""" ACCDIST - Accumulation/Distribution Line
 
 	L'indicateur Accumulation/Distribution ACCDIST met en relation les cours et les volumes. Il a été développé
  	par Larry Williams, un célèbre trader sur contrats à terme. 
@@ -233,7 +238,6 @@ def stochastic_oscillator( data, k=14, d=3, k_smooth=3, min_periods=1 ):
 
     data['STOCH_k'] = stoch_k.rolling( window=k_smooth, min_periods=min_periods ).mean()
     data['STOCH_d'] = stoch_d.rolling( window=k_smooth, min_periods=min_periods ).mean()
-    
 
 """	
 	VWAP (Volume Weighted Average Price )
@@ -279,7 +283,6 @@ def bollinger_bands( data, window, n_std=2 ):
     lower_band = sma - (std * n_std)                     # Bande inférieure
     return sma, upper_band, lower_band
 
-
 """ Average True Range (ATR) - Measurement of market volatility.
     
     Indicateur de volatilité développé par J. Welles Wilder. 
@@ -294,7 +297,7 @@ def bollinger_bands( data, window, n_std=2 ):
     StopLoss à X*ATR en dessous (ou au-dessus) du prix d'entrée.
     
 """
-def atr( data, period ):
+def atr( data, period=14 ):
     high = numpy.array( data['High'] )
     low = numpy.array( data['Low'] )
     close = numpy.array( data['Close'] )
@@ -316,6 +319,41 @@ def atr( data, period ):
 
 # -----------------------------------------------------------------------------
 
+def atr_rolling( data, period=14 ):
+    """
+    ATR avec des valeurs calculées dès la première période, similaire au comportement d'un rolling window.
+    Version optimisée utilisant les fonctions numpy pour de meilleures performances
+    """
+    high = numpy.array(data['High'])
+    low = numpy.array(data['Low'])
+    close = numpy.array(data['Close'])
+
+    # Calcul du True Range
+    high_low = high - low
+    high_close = numpy.concatenate([[0], numpy.abs(high[1:] - close[:-1])])
+    low_close = numpy.concatenate([[0], numpy.abs(low[1:] - close[:-1])])
+
+    true_range = numpy.maximum(high_low, numpy.maximum(high_close, low_close))
+    
+    atr = numpy.zeros_like(true_range)
+    atr[0] = true_range[0]
+    
+    # Utiliser numpy.cumsum pour calculer les moyennes cumulatives
+    cumsum_tr = numpy.cumsum(true_range)
+    
+    for i in range(1, len(true_range)):
+        if i < period:
+            # Moyenne simple des éléments disponibles
+            atr[i] = cumsum_tr[i] / (i + 1)
+        else:
+            # Formule de Wilder
+            atr[i] = (atr[i-1] * (period-1) + true_range[i]) / period
+    
+    return atr
+
+# -----------------------------------------------------------------------------
+# SAR (Stop and Reverse)
+#
 def calculate_dynamic_acceleration_factor(
         df: pandas.DataFrame,
         base_step: float = 0.02, 
@@ -522,3 +560,120 @@ def macd_zero_lag( data, short_window=12, long_window=26, signal_window=9, histo
             'MACD_ZL': macd_zl,
             'Signal_ZL': signal_zl
         })
+
+""" OBV - On-Balance Volume
+
+    Hausse de l’OBV : accumulation (volume acheteur > vendeur)
+    Baisse de l’OBV : distribution (volume vendeur > acheteur)
+    Divergence prix/OBV :
+    Si les prix montent mais que l’OBV baisse : risque de retournement baissier.
+    Si les prix baissent mais que l’OBV monte : possible retournement haussier.
+
+    Quand préférer l’OBV ?
+    Indicateur ultra léger et cumulatif basé sur le volume.
+    Travaille avec les divergences prix/volume.
+    En complément d’indicateurs de tendance ou momentum (MACD, RSI, ADX).
+"""
+def obv( prices, volumes ):
+    
+    # Sanity check
+    if len( prices ) != len( volumes ):
+        raise ValueError("Les listes prices et volumes doivent avoir la même longueur")
+    
+    if len(prices) < 2:
+        raise ValueError("Il faut au moins 2 valeurs pour calculer l'OBV")
+    
+    obv = [0]  # Premier jour, OBV = 0
+    
+    for i in range(1, len(prices)):
+        if prices[i] > prices[i-1]:
+            # Prix en hausse : ajouter le volume
+            obv.append(obv[-1] + volumes[i])
+        elif prices[i] < prices[i-1]:
+            # Prix en baisse : soustraire le volume
+            obv.append(obv[-1] - volumes[i])
+        else:
+            # Prix inchangé : OBV reste identique
+            obv.append(obv[-1])
+    
+    return obv
+
+""" ADX - Average Directional Index
+
+    Indicateur de tendance développé par J. Welles Wilder. 
+    Il fait partie de l'ensemble des Directional Movement Indicators (DMI), 
+    Inclut également les courbes :
+    +DI (Positive Directional Indicator) 
+    -DI (Negative Directional Indicator).
+
+    L'ADX mesure la force d'une tendance (0-100), tandis que +DI et -DI indiquent la direction. 
+    Les valeurs ADX > 25 suggèrent généralement une tendance forte.
+"""
+def adx( high, low, close, period=14 ):
+    
+    # Conversion en numpy arrays si nécessaire
+    high = numpy.array(high)
+    low = numpy.array(low)
+    close = numpy.array(close)
+    
+    # Calcul du True Range (TR)
+    def true_range(h, l, c):
+        tr1 = h[1:] - l[1:]  # High - Low
+        tr2 = numpy.abs(h[1:] - c[:-1])  # |High - Close précédent|
+        tr3 = numpy.abs(l[1:] - c[:-1])  # |Low - Close précédent|
+        
+        return numpy.maximum(tr1, numpy.maximum(tr2, tr3))
+    
+    # Calcul des mouvements directionnels
+    def directional_movement(h, l):
+        up_move = h[1:] - h[:-1]
+        down_move = l[:-1] - l[1:]
+        
+        plus_dm = numpy.where((up_move > down_move) & (up_move > 0), up_move, 0)
+        minus_dm = numpy.where((down_move > up_move) & (down_move > 0), down_move, 0)
+        
+        return plus_dm, minus_dm
+    
+    # Fonction de lissage (Wilder's smoothing)
+    def wilder_smooth( data, period ):
+        smoothed = numpy.zeros_like( data )
+        smoothed[ period-1 ] = numpy.mean( data[:period] )
+        
+        for i in range( period, len(data) ):
+            smoothed[i] = ( smoothed[i-1] * (period - 1) + data[i] ) / period
+            
+        return smoothed
+    
+    # Calculs
+    tr = true_range(high, low, close)
+    plus_dm, minus_dm = directional_movement(high, low)
+    
+    # Lissage avec la méthode de Wilder
+    atr = wilder_smooth(tr, period)
+    plus_di_smooth = wilder_smooth(plus_dm, period)
+    minus_di_smooth = wilder_smooth(minus_dm, period)
+    
+    # Calcul des indicateurs directionnels
+    # Calcul des indicateurs directionnels (éviter division par zéro)
+    plus_di = numpy.zeros_like(atr)
+    minus_di = numpy.zeros_like(atr)
+    mask = atr != 0
+    plus_di[mask] = 100 * plus_di_smooth[mask] / atr[mask]
+    minus_di[mask] = 100 * minus_di_smooth[mask] / atr[mask]
+    
+    # Calcul de l'ADX (éviter division par zéro)
+    sum_di = plus_di + minus_di
+    dx = numpy.zeros_like( sum_di )
+    mask = sum_di != 0
+    dx[mask] = 100 * numpy.abs(plus_di[mask] - minus_di[mask]) / sum_di[mask]
+    
+    adx = wilder_smooth(dx, period)
+    
+    # Ajouter des NaN au début pour aligner avec les données originales
+    padding = numpy.full(len(high) - len(adx), numpy.nan)
+    
+    return {
+        'ADX': numpy.concatenate([padding, adx]),
+        '+DI': numpy.concatenate([padding, plus_di]),
+        '-DI': numpy.concatenate([padding, minus_di])
+    }

@@ -13,19 +13,19 @@
     Tracking temporal evolution: By smoothing a signal, rolling averaging can make it easier to track large temporal changes while minimizing unnecessary fluctuations.
 
     Improved visualization: When graphing temporal data, using the rolling average can make the visualization more readable by reducing noise and highlighting trends.
-
-    mode='same' : The result will be the same size as the input signal.
-    mode='valid' : The result will be smaller, only the parts of the signal where the full window can be applied.
-    mode='full' : The result will be larger, including the edges where the window is partially applied.
-
+    
+    mode='same' : Le résultat aura la même taille que le signal d'entrée.
+    mode='valid' : Le résultat aura une taille plus petite, uniquement les parties du signal où la fenêtre complète peut être appliquée.
+    mode='full' : Le résultat aura une taille plus grande, en incluant les bords où la fenêtre est partiellement appliquée.
+    
     min_periods :
-    If the number of values in the window is less than min_periods, the .rolling().mean() method will return NaN for that position, because it does not have enough data to calculate the average.
-    If the number of values in the window is greater than or equal to min_periods, the method will calculate the average of the values ​​available in the window.
+    Si le nombre de valeurs dans la fenêtre est inférieur à min_periods, la méthode .rolling().mean() renverra NaN pour cette position, car elle n'a pas assez de données pour calculer la moyenne.
+    Si le nombre de valeurs dans la fenêtre est supérieur ou égal à min_periods, la méthode calculera la moyenne des valeurs disponibles dans la fenêtre.
 
-    Typical usage of min_periods :
-    min_periods=1 : This means that the moving average will be calculated from the first point. The first value will therefore be equal to itself, the second value will be the average of the first two points, and so on, until the window is completely filled.
-    min_periods=window_size : In this case, the moving average will only be calculated once the full window is available.
-    Before that, the first values will be NaN.
+    Utilisation typique de min_periods :
+    min_periods=1 : Cela signifie que la moyenne mobile sera calculée dès le premier point. La première valeur sera donc égale à elle-même, la deuxième valeur sera la moyenne des deux premiers points, et ainsi de suite, jusqu'à ce que la fenêtre soit entièrement remplie.
+    min_periods=window_size : Dans ce cas, la moyenne mobile ne sera calculée qu'une fois que la fenêtre complète est disponible. 
+    Avant cela, les premières valeurs seront NaN.
 
 """
 import numpy
@@ -38,18 +38,28 @@ def moving_average_diy( signal, window_size ):
     
     sma = numpy.zeros( len(signal) )
     
+    # Sanity check
+    if len(signal) <  window_size:
+        window_size = len(signal)
+        
     # Initialize first values
     for i in range( window_size - 1 ):
         sma[i] = numpy.mean( signal[:i+1] )  # Partial window averaging
 
-    # Calculating the average for other windows
+    # Calcul de la moyenne pour les autres fenêtres
     for i in range(window_size - 1, len(signal)):
         sma[i] = numpy.mean( signal[i - window_size + 1 : i + 1] )  # Average over the sliding window
 
     return sma
 
 # -----------------------------------------------------------------------------
-# signal is shifted to window_size / 2
+# Moving average rolling
+# -----------------------------------------------------------------------------
+# Get values from signal's start 
+# on 0 value is 0
+# on 1 value is average between 0 and 1
+# on 2 value is average between 0 and 1 and 2
+# ...
 #
 def moving_average_rolling( signal, window_size ):
     return signal.rolling( window=window_size, min_periods=1 ).mean()
@@ -134,25 +144,24 @@ def reshape( signal1, signal2 ):
             s2reshaped = numpy.append(s2reshaped, s2reshaped[len(signal2)-1] )
         return s2reshaped
 
-""" The goal is to not use scipy.stats which is 30 MB in size 
-    But finally scipy is used by sklearn ... Grrr
+""" Le but est de na pas utiliser scipy.stats dont la taille est de 30 Mo
+    Mais finalement scipy est utilisée par sklearn ... Grrr
 """
 
 
 def linregress( x, y ):
     """
-    Linear regression using only NumPy.
-
-    Reproduces the main features of scipy.stats.linregress.
+    Régression linéaire utilisant uniquement NumPy.
+    Reproduit les fonctionnalités principales de scipy.stats.linregress.
 
     Parameters :
-    - x : array-like, the independent data.
-    - y : array-like, the dependent data.
+    - x : array-like, les données indépendantes.
+    - y : array-like, les données dépendantes.
 
     Return :
-    - slope : slope of the regression.
-    - intercept : y-intercept.
-    - stderr : standard error of the slope.
+    - slope : pente de la régression.
+    - intercept : ordonnée à l'origine.
+    - stderr : erreur standard de la pente.
     """
 
     # namedtuple for results
@@ -161,20 +170,20 @@ def linregress( x, y ):
         ["slope", "intercept", "stderr"]
     )
             
-    # Conversion to NumPy arrays
+    # Conversion en tableaux NumPy
     x = numpy.asarray(x, dtype=float)
     y = numpy.asarray(y, dtype=float)
 
-    # Data averages and sizes
+    # Moyennes et tailles des données
     n = len(x)
     x_mean = numpy.mean(x)
     y_mean = numpy.mean(y)
 
-    # Calculation of slope and intercept
+    # Calcul de la pente et de l'intercept
     slope = numpy.sum((x - x_mean) * (y - y_mean)) / numpy.sum((x - x_mean) ** 2)
     intercept = y_mean - slope * x_mean
 
-    # Correlation coefficient
+    # Coefficient de corrélation
     #ss_tot = numpy.sum((y - y_mean) ** 2)
     ss_res = numpy.sum((y - (slope * x + intercept)) ** 2)
     #rvalue = numpy.sqrt(1 - (ss_res / ss_tot)) * numpy.sign(slope)
