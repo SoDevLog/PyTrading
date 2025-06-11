@@ -110,18 +110,6 @@
             "menu_list": "TECH"
         },
         {
-            "name": "ALPHA MOS",
-            "symbol": "ALNEO.PA",
-            "price_purchase": 0.621,
-            "price_high": 0.74,
-            "price_low": 0.528,
-            "trading_plan_high": "Remontée vendre ?",
-            "trading_plan_low": "Perd encore vendre ?",
-            "volume_max": 500,
-            "menu_list": "A",
-            "is_monitoring": true
-        },
-        {
             "name": "ALSTOM",
             "symbol": "ALO.PA",
             "price_purchase": 17.962,
@@ -147,6 +135,11 @@
             "name": "ARAMIS",
             "symbol": "ARAMI.PA",
             "menu_list": "A"
+        },
+        {
+            "name": "ARGENT (SF)",
+            "symbol": "SI=F",
+            "menu_list": "Métaux précieux"
         },
         {
             "name": "ARKEMA",
@@ -254,6 +247,11 @@
             "name": "BNP PARIBAS",
             "symbol": "BNP.PA",
             "menu_list": "Finance"
+        },
+        {
+            "name": "BNP Paribas Easy MSCI",
+            "symbol": "ESAF.DE",
+            "menu_list": "ETF"
         },
         {
             "name": "BOUYGUES",
@@ -631,7 +629,7 @@
             "symbol": "0KKZ.L"
         },
         {
-            "name": "MSCI Worl ETF",
+            "name": "MSCI World ETF",
             "symbol": "IWDA.AS",
             "menu_list": "A-INDICES"
         },
@@ -662,6 +660,11 @@
             "name": "NVIDIA",
             "symbol": "NVDA",
             "menu_list": "TECH"
+        },
+        {
+            "name": "OR (GF)",
+            "symbol": "GC=F",
+            "menu_list": "Métaux précieux"
         },
         {
             "name": "ORANGE",
@@ -812,6 +815,10 @@
             "is_monitoring": false
         },
         {
+            "name": "SPOTIFY",
+            "symbol": "SPOT"
+        },
+        {
             "name": "STELLANTIS",
             "symbol": "STLAP.PA",
             "price_purchase": 18.881,
@@ -899,6 +906,10 @@
             "name": "UBISOFT",
             "symbol": "UBI.PA",
             "menu_list": "U"
+        },
+        {
+            "name": "Unibail Rodamco",
+            "symbol": "SGURG.PA"
         },
         {
             "name": "VALEO",
