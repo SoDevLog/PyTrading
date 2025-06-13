@@ -1,0 +1,32 @@
+[
+  {
+    "name": "CAC 40",
+    "symbol": "^FCHI",
+    "menu_list": "A-INDICES"
+  },
+  {
+    "name": "Dow Jones",
+    "symbol": "^DJI",
+    "menu_list": "A-INDICES"
+  },
+  {
+    "name": "Euronext Amsterdam",
+    "symbol": "^AEX",
+    "menu_list": "A-INDICES"
+  },
+  {
+    "name": "NASDAQ",
+    "symbol": "^IXIC",
+    "menu_list": "A-INDICES"
+  },
+  {
+    "name": "Nikkei 225",
+    "symbol": "^N225",
+    "menu_list": "A-INDICES"
+  },
+  {
+    "name": "S&P 500",
+    "symbol": "^GSPC",
+    "menu_list": "A-INDICES"
+  }
+]

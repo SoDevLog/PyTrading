@@ -1,0 +1,27 @@
+[
+  {
+    "name": "CAC 40",
+    "symbol": "^FCHI",
+    "menu_list": "A-INDICES"
+  },
+  {
+    "name": "Dow Jones",
+    "symbol": "^DJI",
+    "menu_list": "A-INDICES"
+  },
+  {
+    "name": "Euronext Amsterdam",
+    "symbol": "^AEX",
+    "menu_list": "A-INDICES"
+  },
+  {
+    "name": "NASDAQ",
+    "symbol": "^IXIC",
+    "menu_list": "A-INDICES"
+  },
+  {
+    "name": "AIR LIQUIDE",
+    "symbol": "AI.PA",
+    "menu_list": "A"
+  }
+]

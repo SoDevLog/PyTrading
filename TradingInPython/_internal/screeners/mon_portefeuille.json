@@ -1,0 +1,43 @@
+[
+  {
+    "name": "BENETEAU",
+    "symbol": "BEN.PA",
+    "price_purchase": 9.674,
+    "price_high": 9.4,
+    "price_low": 7.9,
+    "volume_max": 5500,
+    "is_monitoring": true,
+    "menu_list": "Loisir bateaux"
+  },
+  {
+    "name": "CAPGEMINI",
+    "symbol": "CAP.PA",
+    "price_purchase": 191.67,
+    "price_high": 194.9,
+    "price_low": 193.28,
+    "trading_plan_high": "Début de journéé",
+    "trading_plan_low": "Stop Loss",
+    "menu_list": "Portefeuille"
+  },
+  {
+    "name": "DASSAULT AVIATION",
+    "symbol": "AM.PA",
+    "price_purchase": 176.19,
+    "price_high": 192.2,
+    "price_low": 190.8,
+    "trading_plan_high": "Résistance",
+    "trading_plan_low": "Support",
+    "volume_max": 550,
+    "menu_list": "Portefeuille",
+    "is_monitoring": true
+  },
+  {
+    "name": "LEGRAND",
+    "symbol": "LR.PA",
+    "menu_list": "Portefeuille"
+  },
+  {
+    "name": "LEONARDO",
+    "symbol": "LDO.MI"
+  }
+]

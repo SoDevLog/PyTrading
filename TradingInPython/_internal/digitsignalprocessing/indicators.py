@@ -236,8 +236,10 @@ def stochastic_oscillator( data, k=14, d=3, k_smooth=3, min_periods=1 ):
     stoch_k = ((data['Close'] - low_min) / (high_max - low_min)) * 100
     stoch_d = stoch_k.rolling( window=d ).mean()
 
-    data['STOCH_k'] = stoch_k.rolling( window=k_smooth, min_periods=min_periods ).mean()
-    data['STOCH_d'] = stoch_d.rolling( window=k_smooth, min_periods=min_periods ).mean()
+    smoothedstoch_k = stoch_k.rolling( window=k_smooth, min_periods=min_periods ).mean()
+    smoothedstoch_d = stoch_d.rolling( window=k_smooth, min_periods=min_periods ).mean()
+    
+    return smoothedstoch_k, smoothedstoch_d
 
 """	
 	VWAP (Volume Weighted Average Price )
@@ -258,7 +260,8 @@ def stochastic_oscillator( data, k=14, d=3, k_smooth=3, min_periods=1 ):
 def volume_weighted_average_price( data ):
     cum_price_vol = (data['Close'] * data['Volume']).cumsum()
     cum_volume = data['Volume'].cumsum()
-    data['VWAP'] = cum_price_vol / cum_volume
+    wap = cum_price_vol / cum_volume
+    return wap
 
 """ 
 	La volatilité du marché peut-être étudier grâce aux Bandes de Bollinger.

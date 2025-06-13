@@ -1,0 +1,32 @@
+[
+  {
+    "name": "ALPHA",
+    "symbol": "GOOG",
+    "menu_list": "TECH"
+  },
+  {
+    "name": "APPLE",
+    "symbol": "AAPL",
+    "menu_list": "TECH"
+  },
+  {
+    "name": "MICROSOFT",
+    "symbol": "MSFT",
+    "menu_list": "TECH",
+    "exchange": "NMS"
+  },
+  {
+    "name": "NVIDIA",
+    "symbol": "NVDA",
+    "menu_list": "TECH"
+  },
+  {
+    "name": "TESLA",
+    "symbol": "TSLA",
+    "price_high": 145.0,
+    "price_low": 125.0,
+    "volume_max": 1000000,
+    "is_monitoring": false,
+    "menu_list": "NASDAQ"
+  }
+]
