@@ -1,0 +1,36 @@
+[
+  {
+    "name": "ARQIT QUANTUM",
+    "symbol": "ARQQ",
+    "menu_list": "NASDAQ"
+  },
+  {
+    "name": "D-Wave Quantum",
+    "symbol": "QBTS",
+    "exchange": "NYQ",
+    "menu_list": "NASDAQ"
+  },
+  {
+    "name": "IONQ",
+    "symbol": "IONQ",
+    "menu_list": "NASDAQ"
+  },
+  {
+    "name": "PALANTIR",
+    "symbol": "PLTR",
+    "exchange": "NMS",
+    "menu_list": "NASDAQ"
+  },
+  {
+    "name": "QUANTUM COMP",
+    "symbol": "QUBT",
+    "exchange": "NCM",
+    "menu_list": "NASDAQ"
+  },
+  {
+    "name": "RIGETTI COMP",
+    "symbol": "RGTI",
+    "exchange": "NCM",
+    "menu_list": "NASDAQ"
+  }
+]
