@@ -147,6 +147,11 @@
             "menu_list": "A"
         },
         {
+            "name": "ARQIT QUANTUM",
+            "symbol": "ARQQ",
+            "menu_list": "NASDAQ"
+        },
+        {
             "name": "ASML",
             "symbol": "ASML",
             "menu_list": "TECH"
@@ -263,6 +268,11 @@
             "symbol": "BRZE"
         },
         {
+            "name": "BROADCOM",
+            "symbol": "AVGO",
+            "menu_list": "Semi-conducteurs"
+        },
+        {
             "name": "BYD",
             "symbol": "BYDDF",
             "menu_list": "Automobile"
@@ -275,7 +285,7 @@
             "price_low": 193.28,
             "trading_plan_high": "Début de journéé",
             "trading_plan_low": "Stop Loss",
-            "menu_list": "Portefeuille"
+            "menu_list": "ESN"
         },
         {
             "name": "CARMAT",
@@ -518,6 +528,11 @@
             "menu_list": "I"
         },
         {
+            "name": "INTEL",
+            "symbol": "INTC",
+            "menu_list": "Semi-conducteurs"
+        },
+        {
             "name": "IONQ",
             "symbol": "IONQ",
             "menu_list": "NASDAQ"
@@ -526,6 +541,11 @@
             "name": "IPSOS",
             "symbol": "IPS.PA",
             "menu_list": "I"
+        },
+        {
+            "name": "ISHARES 20+ YTB",
+            "symbol": "TLT",
+            "menu_list": "ETF"
         },
         {
             "name": "Iberdrola",
@@ -540,6 +560,16 @@
             "name": "JD.com",
             "symbol": "JD",
             "menu_list": "Chinois"
+        },
+        {
+            "name": "JPMorgan Eq (S&P500)",
+            "symbol": "JEPI",
+            "menu_list": "ETF"
+        },
+        {
+            "name": "JPMorgan Eq Prem (NASDAQ)",
+            "symbol": "JEPQ",
+            "menu_list": "ETF"
         },
         {
             "name": "KERING",
@@ -586,6 +616,11 @@
             "symbol": "ALTAI.PA"
         },
         {
+            "name": "MARVELL TECH",
+            "symbol": "MRVL",
+            "menu_list": "Semi-conducteurs"
+        },
+        {
             "name": "MAT PHARMA",
             "symbol": "MAAT.PA",
             "price_high": 9.6,
@@ -601,6 +636,11 @@
             "symbol": "MAU.PA"
         },
         {
+            "name": "MEDIATEK",
+            "symbol": "2454.TW",
+            "menu_list": "Semi-conducteurs"
+        },
+        {
             "name": "MEDINCELL",
             "symbol": "MEDCL.PA",
             "menu_list": "Pharma"
@@ -613,6 +653,11 @@
         {
             "name": "MICHELIN",
             "symbol": "ML.PA"
+        },
+        {
+            "name": "MICRON TECHNOLOGY",
+            "symbol": "MU",
+            "menu_list": "NASDAQ"
         },
         {
             "name": "MICROSOFT",
@@ -659,7 +704,7 @@
         {
             "name": "NVIDIA",
             "symbol": "NVDA",
-            "menu_list": "TECH"
+            "menu_list": "Portefeuille"
         },
         {
             "name": "OR (GF)",
@@ -703,6 +748,11 @@
             "menu_list": "Construction"
         },
         {
+            "name": "PUBLICIS",
+            "symbol": "PUB.PA",
+            "menu_list": "COMM"
+        },
+        {
             "name": "Pernod Ricard",
             "symbol": "RIP.XC"
         },
@@ -710,6 +760,11 @@
             "name": "Prysmian",
             "symbol": "AEU.F",
             "menu_list": "P"
+        },
+        {
+            "name": "QUALCOM",
+            "symbol": "QCOM",
+            "menu_list": "Semi-conducteurs"
         },
         {
             "name": "QUANTUM COMP",
@@ -780,6 +835,11 @@
         {
             "name": "SEB",
             "symbol": "SK.PA",
+            "menu_list": "S"
+        },
+        {
+            "name": "SECHE ENV",
+            "symbol": "SECVY",
             "menu_list": "S"
         },
         {
@@ -901,6 +961,11 @@
             "name": "TRIGANO",
             "symbol": "TRI.PA",
             "menu_list": "Loisir bateaux"
+        },
+        {
+            "name": "TSMC",
+            "symbol": "TSM",
+            "menu_list": "Semi-conducteurs"
         },
         {
             "name": "UBISOFT",
