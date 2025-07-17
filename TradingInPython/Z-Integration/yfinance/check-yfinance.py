@@ -1,4 +1,11 @@
 """ Details of error message send back from YahooFinance
+
+    Totalement inutile quand il y a un problème de mise à jour de yfinance 
+    car le message le taux de requêtes est dépassé est totalement faux il faut faire :
+    comme pour le passage de la v0.2.54 à 0.2.58
+    
+    >pip install --upgrade yfinance
+    
 """
 import yfinance
 import pandas as pd
