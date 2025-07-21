@@ -122,9 +122,19 @@
             "is_monitoring": true
         },
         {
+            "name": "AMAZON",
+            "symbol": "AMZN",
+            "menu_list": "Retails"
+        },
+        {
             "name": "AMD",
             "symbol": "AMD",
             "menu_list": "TECH"
+        },
+        {
+            "name": "AMUNDI S&P 500 UCITS",
+            "symbol": "500.PA",
+            "menu_list": "ETF"
         },
         {
             "name": "APPLE",
@@ -155,11 +165,6 @@
             "name": "ASML",
             "symbol": "ASML",
             "menu_list": "TECH"
-        },
-        {
-            "name": "ASML HLDG",
-            "symbol": "ASML",
-            "menu_list": "A"
         },
         {
             "name": "ASSYSTEM",
@@ -306,7 +311,7 @@
         },
         {
             "name": "CATANA",
-            "symbol": "CATG.PA",
+            "symbol": "ALCAT.PA",
             "menu_list": "Loisir bateaux"
         },
         {
@@ -354,7 +359,7 @@
             "trading_plan_high": "Résistance",
             "trading_plan_low": "Support",
             "volume_max": 550,
-            "menu_list": "Portefeuille",
+            "menu_list": "Défense",
             "is_monitoring": true
         },
         {
@@ -391,6 +396,11 @@
         {
             "name": "EATON",
             "symbol": "ETN"
+        },
+        {
+            "name": "EBAY",
+            "symbol": "EBAY",
+            "menu_list": "Retails"
         },
         {
             "name": "EDENRED",
@@ -471,6 +481,11 @@
             "menu_list": "F"
         },
         {
+            "name": "FNAC DARTY",
+            "symbol": "FNAC.PA",
+            "menu_list": "Retails"
+        },
+        {
             "name": "FONCIERE INEA",
             "symbol": "INEA.PA"
         },
@@ -521,6 +536,11 @@
             "name": "I2S",
             "symbol": "ALI2S.PA",
             "menu_list": "I"
+        },
+        {
+            "name": "ICADE",
+            "symbol": "ICAD.PA",
+            "menu_list": "Immobilier"
         },
         {
             "name": "ID LOGISTICS",
@@ -616,6 +636,10 @@
             "symbol": "ALTAI.PA"
         },
         {
+            "name": "MARK & SPENCER",
+            "symbol": "MKS.L"
+        },
+        {
             "name": "MARVELL TECH",
             "symbol": "MRVL",
             "menu_list": "Semi-conducteurs"
@@ -674,6 +698,10 @@
             "symbol": "0KKZ.L"
         },
         {
+            "name": "MP MATERIALS",
+            "symbol": "MP"
+        },
+        {
             "name": "MSCI World ETF",
             "symbol": "IWDA.AS",
             "menu_list": "A-INDICES"
@@ -730,6 +758,11 @@
             "trading_plan_low": "Support",
             "volume_max": 3900,
             "is_monitoring": true
+        },
+        {
+            "name": "OVS",
+            "symbol": "OVS.MI",
+            "menu_list": "Frabrication vêtements"
         },
         {
             "name": "PALANTIR",
@@ -1000,6 +1033,11 @@
             "is_monitoring": false
         },
         {
+            "name": "VENTE PRIVEE",
+            "symbol": "SRP.PA",
+            "menu_list": "Retails"
+        },
+        {
             "name": "VEOLIA",
             "symbol": "VIE.PA",
             "menu_list": "V",
@@ -1049,6 +1087,11 @@
             "name": "YUM",
             "symbol": "YUM",
             "menu_list": "Chinois"
+        },
+        {
+            "name": "ZALANDO",
+            "symbol": "ZAL.DE",
+            "menu_list": "Retails"
         }
     ]
 }
