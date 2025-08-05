@@ -80,6 +80,11 @@
             "is_monitoring": false
         },
         {
+            "name": "ABIVAX",
+            "symbol": "ABVX.PA",
+            "menu_list": "Pharma"
+        },
+        {
             "name": "ACCOR",
             "symbol": "AC.PA",
             "menu_list": "A"
@@ -129,7 +134,12 @@
         {
             "name": "AMD",
             "symbol": "AMD",
-            "menu_list": "TECH"
+            "menu_list": "Semi-conducteurs"
+        },
+        {
+            "name": "AMUNDI PEA MSCI EUROPE",
+            "symbol": "PCEU.PA",
+            "menu_list": "ETF"
         },
         {
             "name": "AMUNDI S&P 500 UCITS",
@@ -254,6 +264,11 @@
             "symbol": "BTC-USD"
         },
         {
+            "name": "BMW",
+            "symbol": "BMW.DE",
+            "menu_list": "Automobile"
+        },
+        {
             "name": "BNP PARIBAS",
             "symbol": "BNP.PA",
             "menu_list": "Finance"
@@ -359,7 +374,7 @@
             "trading_plan_high": "Résistance",
             "trading_plan_low": "Support",
             "volume_max": 550,
-            "menu_list": "Défense",
+            "menu_list": "Aerospace-defense",
             "is_monitoring": true
         },
         {
@@ -510,6 +525,11 @@
             "menu_list": "F"
         },
         {
+            "name": "FUBOTV",
+            "symbol": "FUBO",
+            "menu_list": "Broadcasting"
+        },
+        {
             "name": "GAZTRANSPORT & Technigaz",
             "symbol": "GTT.PA"
         },
@@ -531,6 +551,11 @@
             "name": "GLOBAL X URA",
             "symbol": "URA",
             "menu_list": "ETF"
+        },
+        {
+            "name": "HYUNDIA",
+            "symbol": "005380.KQ",
+            "menu_list": "Automobile"
         },
         {
             "name": "I2S",
@@ -565,6 +590,11 @@
         {
             "name": "ISHARES 20+ YTB",
             "symbol": "TLT",
+            "menu_list": "ETF"
+        },
+        {
+            "name": "ISHARES S&P 500 Swap PEA UCITS",
+            "symbol": "SPEA.PA",
             "menu_list": "ETF"
         },
         {
@@ -826,10 +856,20 @@
             "is_monitoring": false
         },
         {
+            "name": "REWORLD MEDIA",
+            "symbol": "ALREW.PA",
+            "menu_list": "Divertissement"
+        },
+        {
             "name": "RIGETTI COMP",
             "symbol": "RGTI",
             "exchange": "NCM",
             "menu_list": "NASDAQ"
+        },
+        {
+            "name": "RIVIAN AUTO",
+            "symbol": "RIVN",
+            "menu_list": "Automobile"
         },
         {
             "name": "ROBERTET",
@@ -837,9 +877,14 @@
             "menu_list": "R"
         },
         {
+            "name": "ROCKET LAB",
+            "symbol": "RKLB",
+            "menu_list": "Aerospace-defense"
+        },
+        {
             "name": "RTX",
             "symbol": "RTX",
-            "menu_list": "Aeronautique"
+            "menu_list": "Aerospace-defense"
         },
         {
             "name": "RUBIS",
@@ -937,7 +982,7 @@
             "trading_plan_low": "Baisse",
             "volume_max": 100000,
             "is_monitoring": false,
-            "menu_list": "S"
+            "menu_list": "Semi-conducteurs"
         },
         {
             "name": "Sprott Uranium",
@@ -965,7 +1010,7 @@
             "price_low": 125.0,
             "volume_max": 1000000,
             "is_monitoring": false,
-            "menu_list": "NASDAQ"
+            "menu_list": "Automobile"
         },
         {
             "name": "TEXAS INSTRUMENTS",
@@ -989,6 +1034,11 @@
         {
             "name": "TOTALENERGIES",
             "symbol": "TTE.PA"
+        },
+        {
+            "name": "TOYOTA",
+            "symbol": "7203.T",
+            "menu_list": "Automobile"
         },
         {
             "name": "TRIGANO",
@@ -1057,6 +1107,11 @@
         {
             "name": "VISA RG-A",
             "symbol": "V",
+            "menu_list": "V"
+        },
+        {
+            "name": "VIVENDI",
+            "symbol": "VIV.PA",
             "menu_list": "V"
         },
         {
