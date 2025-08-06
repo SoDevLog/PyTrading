@@ -10,6 +10,61 @@
     },
     "stocks": [
         {
+            "name": "CAC 40",
+            "symbol": "^FCHI",
+            "menu_list": "A-INDICES"
+        },
+        {
+            "name": "Dow Jones",
+            "symbol": "^DJI",
+            "menu_list": "A-INDICES"
+        },
+        {
+            "name": "Euronext 100",
+            "symbol": "^N100",
+            "menu_list": "A-INDICES"
+        },
+        {
+            "name": "Euronext Amsterdam",
+            "symbol": "^AEX",
+            "menu_list": "A-INDICES"
+        },
+        {
+            "name": "NASDAQ",
+            "symbol": "^IXIC",
+            "menu_list": "A-INDICES"
+        },
+        {
+            "name": "NASDAQ100",
+            "symbol": "^NDX",
+            "menu_list": "A-INDICES"
+        },
+        {
+            "name": "NYSE Composite",
+            "symbol": "^NYA",
+            "menu_list": "A-INDICES"
+        },
+        {
+            "name": "Nikkei 225",
+            "symbol": "^N225",
+            "menu_list": "A-INDICES"
+        },
+        {
+            "name": "S&P 500",
+            "symbol": "^GSPC",
+            "menu_list": "A-INDICES"
+        },
+        {
+            "name": "S&P 500 (TR)",
+            "symbol": "^SP500TR",
+            "menu_list": "A-INDICES"
+        },
+        {
+            "name": "VIX Volatilité",
+            "symbol": "^VIX",
+            "menu_list": "A-INDICES"
+        },
+        {
             "name": "AB SCIENCE",
             "symbol": "AB.PA",
             "price_purchase": 10.15,
@@ -25,28 +80,23 @@
             "is_monitoring": false
         },
         {
-            "name": "CAC 40",
-            "symbol": "^FCHI",
-            "menu_list": "INDICES"
-        },
-        {
-            "name": "S&P 500",
-            "symbol": "^GSPC",
-            "menu_list": "INDICES"
-        },
-        {
-            "name": "NYSE Composite",
-            "symbol": "^NYA",
-            "menu_list": "INDICES"
-        },
-        {
-            "name": "Euronext Amsterdam",
-            "symbol": "^AEX",
-            "menu_list": "INDICES"
+            "name": "ABIVAX",
+            "symbol": "ABVX.PA",
+            "menu_list": "Pharma"
         },
         {
             "name": "ACCOR",
             "symbol": "AC.PA",
+            "menu_list": "A"
+        },
+        {
+            "name": "ADOCIA",
+            "symbol": "ADOC.PA",
+            "menu_list": "Pharma"
+        },
+        {
+            "name": "AIR LIQUIDE",
+            "symbol": "AI.PA",
             "menu_list": "A"
         },
         {
@@ -55,17 +105,92 @@
             "menu_list": "Industrie"
         },
         {
-            "name": "AIR LIQUIDE",
-            "symbol": "AI.PA"
+            "name": "ALIBABA",
+            "symbol": "BABA",
+            "menu_list": "Chinois"
         },
         {
-            "name": "Aéroport de Paris SA",
-            "symbol": "ADP.PA"
+            "name": "ALPHA",
+            "symbol": "GOOG",
+            "menu_list": "TECH"
         },
         {
-            "name": "AirFrance KML",
-            "symbol": "AF.PA",
+            "name": "ALSTOM",
+            "symbol": "ALO.PA",
+            "price_purchase": 17.962,
+            "price_high": 17.1,
+            "price_low": 16.89,
+            "trading_plan_high": "Le plus haut du jour",
+            "trading_plan_low": "Retour au plus bas",
+            "volume_max": 5000,
+            "menu_list": "Industrie",
+            "is_monitoring": true
+        },
+        {
+            "name": "AMAZON",
+            "symbol": "AMZN",
+            "menu_list": "Retails"
+        },
+        {
+            "name": "AMD",
+            "symbol": "AMD",
+            "menu_list": "Semi-conducteurs"
+        },
+        {
+            "name": "AMUNDI PEA MSCI EUROPE",
+            "symbol": "PCEU.PA",
+            "menu_list": "ETF"
+        },
+        {
+            "name": "AMUNDI S&P 500 UCITS",
+            "symbol": "500.PA",
+            "menu_list": "ETF"
+        },
+        {
+            "name": "APPLE",
+            "symbol": "AAPL",
+            "menu_list": "TECH"
+        },
+        {
+            "name": "ARAMIS",
+            "symbol": "ARAMI.PA",
             "menu_list": "A"
+        },
+        {
+            "name": "ARGENT (SF)",
+            "symbol": "SI=F",
+            "menu_list": "Métaux précieux"
+        },
+        {
+            "name": "ARKEMA",
+            "symbol": "AKE.PA",
+            "menu_list": "A"
+        },
+        {
+            "name": "ARQIT QUANTUM",
+            "symbol": "ARQQ",
+            "menu_list": "NASDAQ"
+        },
+        {
+            "name": "ASML",
+            "symbol": "ASML",
+            "menu_list": "TECH"
+        },
+        {
+            "name": "ASSYSTEM",
+            "symbol": "ASY.PA",
+            "menu_list": "Construction-Ingé"
+        },
+        {
+            "name": "ATOS",
+            "symbol": "ATO.PA",
+            "price_high": 1.32,
+            "price_low": 1.26,
+            "trading_plan_high": "Remonte",
+            "trading_plan_low": "Redescend",
+            "volume_max": 500000,
+            "menu_list": "ESN",
+            "is_monitoring": false
         },
         {
             "name": "AUBAY",
@@ -73,23 +198,8 @@
             "menu_list": "A"
         },
         {
-            "name": "ALSTOM",
-            "symbol": "ALO.PA",
-            "menu_list": "Industrie"
-        },
-        {
-            "name": "ASSYSTEM",
-            "symbol": "ASY.PA"
-        },
-        {
-            "name": "ATOS",
-            "symbol": "ATO.PA",
-            "menu_list": "ESN",
-            "is_monitoring": false
-        },
-        {
-            "name": "AYVENS",
-            "symbol": "AYV.PA",
+            "name": "AXA",
+            "symbol": "CS.PA",
             "menu_list": "A"
         },
         {
@@ -98,24 +208,94 @@
             "menu_list": "A"
         },
         {
-            "name": "BOUYGUES",
-            "symbol": "EN.PA",
-            "menu_list": "B"
+            "name": "AYVENS",
+            "symbol": "AYV.PA",
+            "menu_list": "A"
+        },
+        {
+            "name": "AirFrance KML",
+            "symbol": "AF.PA",
+            "price_high": 8.47,
+            "price_low": 8.3,
+            "trading_plan_high": "Remonte",
+            "trading_plan_low": "Descente à racheter ?",
+            "volume_max": 25000,
+            "is_monitoring": false,
+            "menu_list": "A"
+        },
+        {
+            "name": "Aéroport de Paris SA",
+            "symbol": "ADP.PA",
+            "menu_list": "A"
+        },
+        {
+            "name": "BAE SYSTEMS",
+            "symbol": "BA"
+        },
+        {
+            "name": "BAIDU Inc",
+            "symbol": "BIDU",
+            "menu_list": "Chinois"
+        },
+        {
+            "name": "BASTIDE LE CONFORT",
+            "symbol": "BLC.PA"
+        },
+        {
+            "name": "BE Semiconductor",
+            "symbol": "BESI.AS"
         },
         {
             "name": "BELIEVE",
-            "symbol": "BLV.PA",
-            "menu_list": "B"
+            "symbol": "BLV.PA"
         },
         {
             "name": "BENETEAU",
             "symbol": "BEN.PA",
-            "menu_list": "B"
+            "price_purchase": 9.674,
+            "price_high": 9.4,
+            "price_low": 7.9,
+            "volume_max": 5500,
+            "is_monitoring": true,
+            "menu_list": "Loisir bateaux"
+        },
+        {
+            "name": "BITCOIN",
+            "symbol": "BTC-USD"
+        },
+        {
+            "name": "BMW",
+            "symbol": "BMW.DE",
+            "menu_list": "Automobile"
         },
         {
             "name": "BNP PARIBAS",
             "symbol": "BNP.PA",
             "menu_list": "Finance"
+        },
+        {
+            "name": "BNP Paribas Easy MSCI",
+            "symbol": "ESAF.DE",
+            "menu_list": "ETF"
+        },
+        {
+            "name": "BOUYGUES",
+            "symbol": "EN.PA",
+            "menu_list": "Construction-Ingé"
+        },
+        {
+            "name": "BRAZE RG-A",
+            "symbol": "BRZE"
+        },
+        {
+            "name": "BROADCOM",
+            "symbol": "AVGO",
+            "menu_list": "Semi-conducteurs"
+        },
+        {
+            "name": "BYD",
+            "symbol": "BYDDF",
+            "menu_list": "Automobile"
         },
         {
             "name": "CAPGEMINI",
@@ -125,20 +305,61 @@
             "price_low": 193.28,
             "trading_plan_high": "Début de journéé",
             "trading_plan_low": "Stop Loss",
-            "menu_list": "Portefeuille"
+            "menu_list": "ESN"
+        },
+        {
+            "name": "CARMAT",
+            "symbol": "ALCAR.PA",
+            "price_purchase": 2.995,
+            "price_high": 3.3,
+            "price_low": 3.2,
+            "trading_plan_high": "La monté se poursuit",
+            "trading_plan_low": "Dommage redescente",
+            "volume_max": 10000,
+            "menu_list": "Pharma",
+            "is_monitoring": false
+        },
+        {
+            "name": "CARREFOUR",
+            "symbol": "CA.PA",
+            "is_monitoring": false
         },
         {
             "name": "CATANA",
-            "symbol": "CATG.PA"
+            "symbol": "ALCAT.PA",
+            "menu_list": "Loisir bateaux"
+        },
+        {
+            "name": "CIE DES ALPES",
+            "symbol": "CDA.PA"
         },
         {
             "name": "CISCO SYSTEM",
             "symbol": "CSCO"
         },
         {
+            "name": "CORE SCIENTIFIC",
+            "symbol": "CORZ"
+        },
+        {
             "name": "CREDIT AGRICOLE SA",
             "symbol": "ACA.PA",
             "menu_list": "Finance"
+        },
+        {
+            "name": "CROCS",
+            "symbol": "CROX",
+            "price_high": 130.0,
+            "price_low": 118.2,
+            "trading_plan_high": "Ascension irrésistible potentiel supérieur à 30%",
+            "volume_max": 124617,
+            "is_monitoring": false
+        },
+        {
+            "name": "D-Wave Quantum",
+            "symbol": "QBTS",
+            "exchange": "NYQ",
+            "menu_list": "NASDAQ"
         },
         {
             "name": "DANONE",
@@ -147,17 +368,64 @@
         {
             "name": "DASSAULT AVIATION",
             "symbol": "AM.PA",
-            "menu_list": "Industrie"
+            "price_purchase": 176.19,
+            "price_high": 192.2,
+            "price_low": 190.8,
+            "trading_plan_high": "Résistance",
+            "trading_plan_low": "Support",
+            "volume_max": 550,
+            "menu_list": "Aerospace-defense",
+            "is_monitoring": true
+        },
+        {
+            "name": "DASSAULT SYSTEMES",
+            "symbol": "DSY.PA",
+            "price_high": 38.33,
+            "price_low": 37.6,
+            "trading_plan_high": "La monté se poursuit",
+            "trading_plan_low": "En chute libre depuis le 31 janv 2024",
+            "volume_max": 400000,
+            "is_monitoring": false
+        },
+        {
+            "name": "DEUTSCHE POST",
+            "symbol": "DHL.DE",
+            "price_high": 40.0,
+            "price_low": 39.0,
+            "volume_max": 1000000,
+            "is_monitoring": false
         },
         {
             "name": "DOMINOS'S PIZZA",
             "symbol": "DPZ"
         },
         {
-            "name": " D-Wave Quantum",
-            "symbol": "QBTS",
-            "exchange": "NYQ",
+            "name": "DRONE VOLT",
+            "symbol": "ALDRV.PA"
+        },
+        {
+            "name": "DUKE ENERGY",
+            "symbol": "DUK",
             "menu_list": "NASDAQ"
+        },
+        {
+            "name": "EATON",
+            "symbol": "ETN"
+        },
+        {
+            "name": "EBAY",
+            "symbol": "EBAY",
+            "menu_list": "Retails"
+        },
+        {
+            "name": "EDENRED",
+            "symbol": "EDEN.PA",
+            "menu_list": "E"
+        },
+        {
+            "name": "EIFFAGE",
+            "symbol": "FGR.PA",
+            "menu_list": "Construction-Ingé"
         },
         {
             "name": "EMEIS",
@@ -165,13 +433,44 @@
             "menu_list": "E"
         },
         {
-            "name": "EUROAPI",
-            "symbol": "EAPI.PA",
+            "name": "ENGIE",
+            "symbol": "ENGI.PA",
+            "price_high": 15.56,
+            "price_low": 15.36,
+            "trading_plan_high": "Remonté l'opportunité d'achat s'éloigne",
+            "trading_plan_low": "Poursuit la descente bientôt acheter ?",
+            "volume_max": 50000,
+            "is_monitoring": false,
             "menu_list": "E"
         },
         {
-            "name": "EUROFINS SCIENTIFIC",
+            "name": "ESSILORLUXOTTICA",
+            "symbol": "EL.PA"
+        },
+        {
+            "name": "EURO=DOLLAR",
+            "symbol": "EURUSD=X",
+            "menu_list": "CHANGE"
+        },
+        {
+            "name": "EUROAPI",
+            "symbol": "EAPI.PA",
+            "price_high": 3.93,
+            "price_low": 3.85,
+            "trading_plan_high": "Toujours plus haut",
+            "trading_plan_low": "Plus bas du jour",
+            "volume_max": "10000",
+            "menu_list": "Pharma",
+            "is_monitoring": false
+        },
+        {
+            "name": "EUROFINS SCIENT.",
             "symbol": "ERF.PA",
+            "menu_list": "E"
+        },
+        {
+            "name": "EURONEXT",
+            "symbol": "ENX.PA",
             "menu_list": "E"
         },
         {
@@ -181,13 +480,15 @@
         },
         {
             "name": "EXOSENS",
-            "symbol": "EXENS.PA",
-            "menu_list": "E"
+            "symbol": "EXENS.PA"
         },
         {
-            "name": "FRANCAISE DES JEUX",
-            "symbol": "FDJ.PA",
-            "menu_list": "F"
+            "name": "Euronet Worldwide",
+            "symbol": "EEFT"
+        },
+        {
+            "name": "FDJU",
+            "symbol": "FDJU.PA"
         },
         {
             "name": "FIGEAC AERO",
@@ -195,14 +496,90 @@
             "menu_list": "F"
         },
         {
+            "name": "FNAC DARTY",
+            "symbol": "FNAC.PA",
+            "menu_list": "Retails"
+        },
+        {
+            "name": "FONCIERE INEA",
+            "symbol": "INEA.PA"
+        },
+        {
+            "name": "FONTAINE PAJOT",
+            "symbol": "ALFPC.PA"
+        },
+        {
+            "name": "FORTINET",
+            "symbol": "FTNT",
+            "menu_list": "TECH"
+        },
+        {
+            "name": "FORVIA",
+            "symbol": "FRVIA.PA",
+            "price_high": 15.6,
+            "price_low": 14.6,
+            "trading_plan_high": "Alors ça ça m'étonnerait",
+            "trading_plan_low": "Regarder le RSI mais c'est la chute encore",
+            "volume_max": 677851,
+            "is_monitoring": false,
+            "menu_list": "F"
+        },
+        {
+            "name": "FUBOTV",
+            "symbol": "FUBO",
+            "menu_list": "Broadcasting"
+        },
+        {
+            "name": "GAZTRANSPORT & Technigaz",
+            "symbol": "GTT.PA"
+        },
+        {
+            "name": "GE AEROSPACE",
+            "symbol": "GE"
+        },
+        {
+            "name": "GENERAL MOTORS",
+            "symbol": "GM",
+            "exchange": "NYQ",
+            "menu_list": "NASDAQ"
+        },
+        {
+            "name": "GITLAB RG-A",
+            "symbol": "GTLB"
+        },
+        {
+            "name": "GLOBAL X URA",
+            "symbol": "URA",
+            "menu_list": "ETF"
+        },
+        {
+            "name": "HYUNDIA",
+            "symbol": "005380.KQ",
+            "menu_list": "Automobile"
+        },
+        {
             "name": "I2S",
             "symbol": "ALI2S.PA",
             "menu_list": "I"
         },
         {
+            "name": "ICADE",
+            "symbol": "ICAD.PA",
+            "menu_list": "Immobilier"
+        },
+        {
+            "name": "ID LOGISTICS",
+            "symbol": "IDL.PA",
+            "menu_list": "I"
+        },
+        {
+            "name": "INTEL",
+            "symbol": "INTC",
+            "menu_list": "Semi-conducteurs"
+        },
+        {
             "name": "IONQ",
             "symbol": "IONQ",
-            "exchange": "NYQ",
             "menu_list": "NASDAQ"
         },
         {
@@ -211,17 +588,111 @@
             "menu_list": "I"
         },
         {
+            "name": "ISHARES 20+ YTB",
+            "symbol": "TLT",
+            "menu_list": "ETF"
+        },
+        {
+            "name": "ISHARES S&P 500 Swap PEA UCITS",
+            "symbol": "SPEA.PA",
+            "menu_list": "ETF"
+        },
+        {
+            "name": "Iberdrola",
+            "symbol": "IBE5.F"
+        },
+        {
+            "name": "Invesco QQQ (Nasdaq 100)",
+            "symbol": "QQQ",
+            "menu_list": "ETF"
+        },
+        {
+            "name": "JD.com",
+            "symbol": "JD",
+            "menu_list": "Chinois"
+        },
+        {
+            "name": "JPMorgan Eq (S&P500)",
+            "symbol": "JEPI",
+            "menu_list": "ETF"
+        },
+        {
+            "name": "JPMorgan Eq Prem (NASDAQ)",
+            "symbol": "JEPQ",
+            "menu_list": "ETF"
+        },
+        {
+            "name": "KERING",
+            "symbol": "KER.PA",
+            "menu_list": "Luxe"
+        },
+        {
+            "name": "KLEPIERRE",
+            "symbol": "LI.PA",
+            "menu_list": "K"
+        },
+        {
+            "name": "L'OREAL",
+            "symbol": "OR.PA",
+            "menu_list": "L"
+        },
+        {
+            "name": "LEBON",
+            "symbol": "ALBON.PA",
+            "price_high": 97.5,
+            "price_low": 97.0,
+            "trading_plan_high": "Remonte",
+            "trading_plan_low": "Rechute",
+            "volume_max": 100,
+            "menu_list": "Finance",
+            "is_monitoring": false
+        },
+        {
             "name": "LEGRAND",
             "symbol": "LR.PA",
-            "menu_list": "Portefeuille"
+            "menu_list": "L"
+        },
+        {
+            "name": "LEONARDO",
+            "symbol": "LDO.MI"
         },
         {
             "name": "LVMH",
-            "symbol": "MC.PA"
+            "symbol": "MC.PA",
+            "menu_list": "L"
+        },
+        {
+            "name": "LightOn",
+            "symbol": "ALTAI.PA"
+        },
+        {
+            "name": "MARK & SPENCER",
+            "symbol": "MKS.L"
+        },
+        {
+            "name": "MARVELL TECH",
+            "symbol": "MRVL",
+            "menu_list": "Semi-conducteurs"
+        },
+        {
+            "name": "MAT PHARMA",
+            "symbol": "MAAT.PA",
+            "price_high": 9.6,
+            "price_low": 8.75,
+            "trading_plan_high": "Belle montée",
+            "trading_plan_low": "C'est la descente",
+            "volume_max": 1000000,
+            "menu_list": "Pharma",
+            "is_monitoring": false
         },
         {
             "name": "MAUREL & PROM",
             "symbol": "MAU.PA"
+        },
+        {
+            "name": "MEDIATEK",
+            "symbol": "2454.TW",
+            "menu_list": "Semi-conducteurs"
         },
         {
             "name": "MEDINCELL",
@@ -230,7 +701,17 @@
         },
         {
             "name": "MICHELIN",
+            "symbol": "ML.PA",
+            "menu_list": "Pneu"
+        },
+        {
+            "name": "MICHELIN",
             "symbol": "ML.PA"
+        },
+        {
+            "name": "MICRON TECHNOLOGY",
+            "symbol": "MU",
+            "menu_list": "NASDAQ"
         },
         {
             "name": "MICROSOFT",
@@ -247,14 +728,106 @@
             "symbol": "0KKZ.L"
         },
         {
+            "name": "MP MATERIALS",
+            "symbol": "MP"
+        },
+        {
+            "name": "MSCI World ETF",
+            "symbol": "IWDA.AS",
+            "menu_list": "A-INDICES"
+        },
+        {
+            "name": "Miller Industries",
+            "symbol": "5OJ.F",
+            "menu_list": "Surveiller"
+        },
+        {
+            "name": "NEOEN",
+            "symbol": "NEOEN.PA",
+            "menu_list": "N"
+        },
+        {
+            "name": "NEURONES",
+            "symbol": "NRO.PA"
+        },
+        {
+            "name": "NOVO NORDISK",
+            "symbol": "NVO",
+            "menu_list": "Pharma"
+        },
+        {
             "name": "NSE",
             "symbol": "ALNSE.PA"
+        },
+        {
+            "name": "NVIDIA",
+            "symbol": "NVDA",
+            "menu_list": "Portefeuille"
+        },
+        {
+            "name": "OR (GF)",
+            "symbol": "GC=F",
+            "menu_list": "Métaux précieux"
+        },
+        {
+            "name": "ORANGE",
+            "symbol": "ORA.PA",
+            "price_high": 10.0,
+            "price_low": 9.72,
+            "trading_plan_high": "Casse la résistance",
+            "trading_plan_low": "Retour début de séance",
+            "volume_max": 30000,
+            "is_monitoring": false
+        },
+        {
+            "name": "OVHCloud",
+            "symbol": "OVH.PA",
+            "price_high": 6.17,
+            "price_low": 5.43,
+            "trading_plan_high": "Résistance",
+            "trading_plan_low": "Support",
+            "volume_max": 3900,
+            "is_monitoring": true
+        },
+        {
+            "name": "OVS",
+            "symbol": "OVS.MI",
+            "menu_list": "Frabrication vêtements"
         },
         {
             "name": "PALANTIR",
             "symbol": "PLTR",
             "exchange": "NMS",
             "menu_list": "NASDAQ"
+        },
+        {
+            "name": "PARROT",
+            "symbol": "PARRO.PA",
+            "menu_list": "P"
+        },
+        {
+            "name": "POUJOULAT",
+            "symbol": "ALPJT.PA",
+            "menu_list": "Construction"
+        },
+        {
+            "name": "PUBLICIS",
+            "symbol": "PUB.PA",
+            "menu_list": "COMM"
+        },
+        {
+            "name": "Pernod Ricard",
+            "symbol": "RIP.XC"
+        },
+        {
+            "name": "Prysmian",
+            "symbol": "AEU.F",
+            "menu_list": "P"
+        },
+        {
+            "name": "QUALCOM",
+            "symbol": "QCOM",
+            "menu_list": "Semi-conducteurs"
         },
         {
             "name": "QUANTUM COMP",
@@ -276,20 +849,75 @@
         {
             "name": "RENAULT",
             "symbol": "RNO.PA",
+            "price_high": 42.0,
+            "price_low": 36.5,
+            "trading_plan_high": "Était encore à  36,50 il y a un mois",
+            "volume_max": 100000,
             "is_monitoring": false
+        },
+        {
+            "name": "REWORLD MEDIA",
+            "symbol": "ALREW.PA",
+            "menu_list": "Divertissement"
+        },
+        {
+            "name": "RIGETTI COMP",
+            "symbol": "RGTI",
+            "exchange": "NCM",
+            "menu_list": "NASDAQ"
+        },
+        {
+            "name": "RIVIAN AUTO",
+            "symbol": "RIVN",
+            "menu_list": "Automobile"
+        },
+        {
+            "name": "ROBERTET",
+            "symbol": "RBT.PA",
+            "menu_list": "R"
+        },
+        {
+            "name": "ROCKET LAB",
+            "symbol": "RKLB",
+            "menu_list": "Aerospace-defense"
+        },
+        {
+            "name": "RTX",
+            "symbol": "RTX",
+            "menu_list": "Aerospace-defense"
         },
         {
             "name": "RUBIS",
             "symbol": "RUI.PA"
         },
         {
-            "name": "SANOFY",
+            "name": "SAFRAN",
+            "symbol": "SAF.PA",
+            "menu_list": "Portefeuille"
+        },
+        {
+            "name": "SAINT-GOBAIN",
+            "symbol": "SGO.PA",
+            "menu_list": "Construction-Ingé"
+        },
+        {
+            "name": "SANOFI",
             "symbol": "SAN.PA",
             "menu_list": "Pharma"
         },
         {
+            "name": "SCHNEIDER ELECTRIC",
+            "symbol": "SU.PA",
+            "menu_list": "S"
+        },
+        {
             "name": "SEB",
             "symbol": "SK.PA",
+            "menu_list": "S"
+        },
+        {
+            "name": "SECHE ENV",
+            "symbol": "SECVY",
             "menu_list": "S"
         },
         {
@@ -298,36 +926,82 @@
             "menu_list": "S"
         },
         {
-            "name": "SOITEC",
-            "symbol": "SOI.PA",
-            "menu_list": "Portefeuille"
-        },
-        {
-            "name": "SCHNEIDER ELECTRIC",
-            "symbol": "SU.PA",
-            "menu_list": "S"
-        },
-        {
             "name": "SNOWFLAKE RG-A",
             "symbol": "SNOW",
             "menu_list": "S"
         },
         {
-            "name": "STELLANTIS",
-            "symbol": "STLAP.PA",
+            "name": "SOITEC",
+            "symbol": "SOI.PA",
             "menu_list": "Portefeuille"
         },
         {
+            "name": "SPDR S&P 500 ETF",
+            "symbol": "SPY",
+            "menu_list": "ETF"
+        },
+        {
+            "name": "SPIE",
+            "symbol": "SPIE.PA",
+            "price_purchase": 34.501,
+            "price_high": 35.0,
+            "price_low": 34.0,
+            "trading_plan_high": "Petite victoire",
+            "trading_plan_low": "Encore perdant",
+            "volume_max": 100000,
+            "menu_list": "S",
+            "is_monitoring": false
+        },
+        {
+            "name": "SPOTIFY",
+            "symbol": "SPOT"
+        },
+        {
+            "name": "STELLANTIS",
+            "symbol": "STLAP.PA",
+            "price_purchase": 18.881,
+            "price_high": 15.2,
+            "price_low": 13.3,
+            "trading_plan_high": "Résistance",
+            "trading_plan_low": "Support",
+            "volume_max": 20000,
+            "is_monitoring": true,
+            "menu_list": "Portefeuille"
+        },
+        {
+            "name": "STIF",
+            "symbol": "ALSTI.PA",
+            "menu_list": "S"
+        },
+        {
             "name": "STMICROELECTRONICS",
-            "symbol": "STMPA.PA"
+            "symbol": "STMPA.PA",
+            "price_high": 37.62,
+            "price_low": 34.5,
+            "trading_plan_high": "Hausse",
+            "trading_plan_low": "Baisse",
+            "volume_max": 100000,
+            "is_monitoring": false,
+            "menu_list": "Semi-conducteurs"
         },
         {
-            "name": "THALES",
-            "symbol": "HO.PA"
+            "name": "Sprott Uranium",
+            "symbol": "URNM",
+            "menu_list": "ETF"
         },
         {
-            "name": "TRIGANO",
-            "symbol": "TRI.PA"
+            "name": "TARKETT",
+            "symbol": "TKTT.PA",
+            "menu_list": "Construction"
+        },
+        {
+            "name": "TECHNIP ENERGIES",
+            "symbol": "TE.PA"
+        },
+        {
+            "name": "TENCENT",
+            "symbol": "TCEHY",
+            "menu_list": "Chinois"
         },
         {
             "name": "TESLA",
@@ -335,21 +1009,83 @@
             "price_high": 145.0,
             "price_low": 125.0,
             "volume_max": 1000000,
-            "is_monitoring": false
+            "is_monitoring": false,
+            "menu_list": "Automobile"
+        },
+        {
+            "name": "TEXAS INSTRUMENTS",
+            "symbol": "TXN",
+            "menu_list": "NASDAQ"
+        },
+        {
+            "name": "THALES",
+            "symbol": "HO.PA",
+            "price_high": 145.0,
+            "price_low": 125.0,
+            "volume_max": 1000000,
+            "is_monitoring": false,
+            "menu_list": "Portefeuille"
+        },
+        {
+            "name": "THERMO FISHER",
+            "symbol": "TMO",
+            "menu_list": "T"
         },
         {
             "name": "TOTALENERGIES",
             "symbol": "TTE.PA"
         },
         {
-            "name": "TECHNIP ENERGIES",
-            "symbol": "TE.PA"
+            "name": "TOYOTA",
+            "symbol": "7203.T",
+            "menu_list": "Automobile"
+        },
+        {
+            "name": "TRIGANO",
+            "symbol": "TRI.PA",
+            "menu_list": "Loisir bateaux"
+        },
+        {
+            "name": "TSMC",
+            "symbol": "TSM",
+            "menu_list": "Semi-conducteurs"
+        },
+        {
+            "name": "UBISOFT",
+            "symbol": "UBI.PA",
+            "menu_list": "U"
+        },
+        {
+            "name": "Unibail Rodamco",
+            "symbol": "SGURG.PA"
         },
         {
             "name": "VALEO",
             "symbol": "FR.PA",
+            "price_purchase": 11.965,
+            "price_high": 11.6,
+            "price_low": 11.1,
+            "trading_plan_high": "Remontée vers le prix de revient ?",
+            "trading_plan_low": "Stop LOSS",
+            "volume_max": 5000,
             "menu_list": "V",
             "is_monitoring": false
+        },
+        {
+            "name": "VALNEVA",
+            "symbol": "VLA.PA",
+            "price_high": 3.4,
+            "price_low": 2.9,
+            "trading_plan_high": "Remonté inespérée",
+            "trading_plan_low": "Ecroulement général",
+            "volume_max": 70000,
+            "menu_list": "Pharma",
+            "is_monitoring": false
+        },
+        {
+            "name": "VENTE PRIVEE",
+            "symbol": "SRP.PA",
+            "menu_list": "Retails"
         },
         {
             "name": "VEOLIA",
@@ -358,20 +1094,59 @@
             "is_monitoring": false
         },
         {
-            "name": "VOLKSWAGEN",
-            "symbol": "VOW.DE",
-            "menu_list": "V"
-        },
-        {
             "name": "VICAT",
             "symbol": "VCT.PA",
             "menu_list": "V",
             "is_monitoring": false
         },
         {
+            "name": "VINCI",
+            "symbol": "DG.PA",
+            "menu_list": "Construction-Ingé"
+        },
+        {
+            "name": "VISA RG-A",
+            "symbol": "V",
+            "menu_list": "V"
+        },
+        {
+            "name": "VIVENDI",
+            "symbol": "VIV.PA",
+            "menu_list": "V"
+        },
+        {
+            "name": "VOLKSWAGEN",
+            "symbol": "VOW.DE",
+            "menu_list": "V"
+        },
+        {
             "name": "VUSIONGROUP",
             "symbol": "VU.PA",
-            "menu_list": "V"
+            "menu_list": "Portefeuille"
+        },
+        {
+            "name": "VanEck Uranium + Nuclear",
+            "symbol": "NLR",
+            "menu_list": "ETF"
+        },
+        {
+            "name": "WALMART",
+            "symbol": "WMT",
+            "menu_list": "Portefeuille"
+        },
+        {
+            "name": "WHEATON PRECIOUS",
+            "symbol": "WPM"
+        },
+        {
+            "name": "YUM",
+            "symbol": "YUM",
+            "menu_list": "Chinois"
+        },
+        {
+            "name": "ZALANDO",
+            "symbol": "ZAL.DE",
+            "menu_list": "Retails"
         }
     ]
 }
