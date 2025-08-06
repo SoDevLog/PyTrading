@@ -516,9 +516,9 @@ class strategy_sma12e:
 		# lines = [line_price, line_price2, line_ma1, line_ma2, line_mae, line_ma4, line_ma4, fill1, fill2, line_stem1, line_stem2]
 		
 		# Init
-		self.var20.set(1)
+		self.var20.set(0)
 		self.var21.set(0)
-		self.var22.set(0) # candles
+		self.var22.set(1) # candles
 		self.var31.set(1)
 		self.var32.set(1)
 		self.var33.set(1)
