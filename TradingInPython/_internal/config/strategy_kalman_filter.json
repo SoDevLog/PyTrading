@@ -1,0 +1,28 @@
+{
+    "stocks": [
+        {
+            "name": "INTRADAY",
+            "N_FORECAST": 5,
+            "PROCESS_NOISE_FACTOR": 0.05,
+            "MEASUREMENT_NOISE_FACTOR": 0.02,
+            "LOOK_BACK": 20,
+            "VOLATILITY_WINDOW": 10
+        },
+        {
+            "name": "SWING_TRADING",
+            "N_FORECAST": 10,
+            "PROCESS_NOISE_FACTOR": 0.01,
+            "MEASUREMENT_NOISE_FACTOR": 0.05,
+            "LOOK_BACK": 30,
+            "VOLATILITY_WINDOW": 15
+        },
+        {
+            "name": "INVESTMENT",
+            "N_FORECAST": 10,
+            "PROCESS_NOISE_FACTOR": 0.005,
+            "MEASUREMENT_NOISE_FACTOR": 0.1,
+            "LOOK_BACK": 50,
+            "VOLATILITY_WINDOW": 25
+        }
+    ]
+}
