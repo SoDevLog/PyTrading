@@ -63,6 +63,18 @@ Take a deep dive into digital signal processing with Keras prediction algorithms
 
 Discover many others strategies while downloading and running the platform **TradingInPyhton**.
 
+## Strategy Prediction with Kalman Filter
+
+Perform trend and volatility analyses of stocks market with using Kalman Filter algorithm :
+
+<img src="images/Kalman_filter.png" alt="Strategy Prediction Trend with Kalman Filter">
+
+Take a deep dive into digital signal processing with Kalman filter trend prediction algorithms applied to trading strategy:
+
+- [Kalman filter alorithms](https://github.com/SoDevLog/PyTrading/blob/main/TradingInPython/_internal/strategies/kalman_filter_forcast.py)
+
+Discover many others strategies while downloading and running the platform **TradingInPyhton**.
+
 # Documentation
 
 You can easely translate this documentation in any langage you need, thanks to google translate.
