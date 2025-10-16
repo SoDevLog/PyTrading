@@ -31,7 +31,7 @@ Then clic on executable **TradingInPython.exe** then Trading Platform in python 
 
 You need help for installation have a look to :
 
-- [Guide d'Installation](https://github.com/SoDevLog/PyTrading/wiki/Installation)
+- [Installation Guide](https://github.com/SoDevLog/PyTrading/wiki/Installation)
 
 ## Clone
 
