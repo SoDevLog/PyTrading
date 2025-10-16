@@ -29,6 +29,10 @@ Then clic on executable **TradingInPython.exe** then Trading Platform in python 
 
 - [Installer](https://github.com/SoDevLog/PyTrading/releases)
 
+You need help for installation have a look to :
+
+- [Guide d'Installation](https://github.com/SoDevLog/PyTrading/wiki/Installation)
+
 ## Clone
 
 To make it easier to enjoy upcoming releases and software improvements, if you know **GitHub** you can make a Clone from this Repo.
