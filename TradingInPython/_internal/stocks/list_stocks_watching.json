@@ -105,6 +105,11 @@
             "menu_list": "Industrie"
         },
         {
+            "name": "AIXTRON",
+            "symbol": "AIX2.F",
+            "menu_list": "Semi-conducteurs"
+        },
+        {
             "name": "ALIBABA",
             "symbol": "BABA",
             "menu_list": "Chinois"
@@ -112,7 +117,7 @@
         {
             "name": "ALPHA",
             "symbol": "GOOG",
-            "menu_list": "TECH"
+            "menu_list": "Techno"
         },
         {
             "name": "ALSTOM",
@@ -137,6 +142,10 @@
             "menu_list": "Semi-conducteurs"
         },
         {
+            "name": "AMPHENOL",
+            "symbol": "APH"
+        },
+        {
             "name": "AMUNDI PEA MSCI EUROPE",
             "symbol": "PCEU.PA",
             "menu_list": "ETF"
@@ -149,7 +158,7 @@
         {
             "name": "APPLE",
             "symbol": "AAPL",
-            "menu_list": "TECH"
+            "menu_list": "Techno"
         },
         {
             "name": "ARAMIS",
@@ -172,9 +181,14 @@
             "menu_list": "NASDAQ"
         },
         {
+            "name": "ASM Internat. NV",
+            "symbol": "ASMIY",
+            "menu_list": "Semi-conducteurs"
+        },
+        {
             "name": "ASML",
             "symbol": "ASML",
-            "menu_list": "TECH"
+            "menu_list": "Techno"
         },
         {
             "name": "ASSYSTEM",
@@ -203,6 +217,11 @@
             "menu_list": "A"
         },
         {
+            "name": "AXON",
+            "symbol": "AXON",
+            "menu_list": "Aerospace-defense"
+        },
+        {
             "name": "AXWAY SOFTWARE",
             "symbol": "AXW.PA",
             "menu_list": "A"
@@ -224,13 +243,29 @@
             "menu_list": "A"
         },
         {
+            "name": "Amundi PEA Nasdaq-100",
+            "symbol": "PUST.PA",
+            "menu_list": "ETF"
+        },
+        {
+            "name": "Amundi PEA SCI China",
+            "symbol": "PASI.PA",
+            "menu_list": "ETF"
+        },
+        {
             "name": "Aéroport de Paris SA",
             "symbol": "ADP.PA",
             "menu_list": "A"
         },
         {
+            "name": "BADGER METER",
+            "symbol": "BMI",
+            "menu_list": "Scientific-tech- inst"
+        },
+        {
             "name": "BAE SYSTEMS",
-            "symbol": "BA"
+            "symbol": "BA",
+            "menu_list": "Aerospace-defense"
         },
         {
             "name": "BAIDU Inc",
@@ -243,7 +278,8 @@
         },
         {
             "name": "BE Semiconductor",
-            "symbol": "BESI.AS"
+            "symbol": "BESI.AS",
+            "menu_list": "Semi-conducteurs"
         },
         {
             "name": "BELIEVE",
@@ -406,7 +442,12 @@
         {
             "name": "DUKE ENERGY",
             "symbol": "DUK",
-            "menu_list": "NASDAQ"
+            "menu_list": "Electrical"
+        },
+        {
+            "name": "Dow Jones Futures",
+            "symbol": "YM=F",
+            "menu_list": "Futures"
         },
         {
             "name": "EATON",
@@ -441,7 +482,7 @@
             "trading_plan_low": "Poursuit la descente bientôt acheter ?",
             "volume_max": 50000,
             "is_monitoring": false,
-            "menu_list": "E"
+            "menu_list": "Electrical"
         },
         {
             "name": "ESSILORLUXOTTICA",
@@ -479,6 +520,11 @@
             "menu_list": "E"
         },
         {
+            "name": "EXAIL TECHNO",
+            "symbol": "EXA.PA",
+            "menu_list": "Aerospace-defense"
+        },
+        {
             "name": "EXOSENS",
             "symbol": "EXENS.PA"
         },
@@ -511,7 +557,7 @@
         {
             "name": "FORTINET",
             "symbol": "FTNT",
-            "menu_list": "TECH"
+            "menu_list": "Software-infra"
         },
         {
             "name": "FORVIA",
@@ -531,7 +577,8 @@
         },
         {
             "name": "GAZTRANSPORT & Technigaz",
-            "symbol": "GTT.PA"
+            "symbol": "GTT.PA",
+            "menu_list": "Oil & Gas"
         },
         {
             "name": "GE AEROSPACE",
@@ -554,13 +601,18 @@
         },
         {
             "name": "HYUNDIA",
+            "symbol": "HYMTF",
+            "menu_list": "Automobile"
+        },
+        {
+            "name": "HYUNDIACorée",
             "symbol": "005380.KQ",
             "menu_list": "Automobile"
         },
         {
             "name": "I2S",
             "symbol": "ALI2S.PA",
-            "menu_list": "I"
+            "menu_list": "Electrical"
         },
         {
             "name": "ICADE",
@@ -571,6 +623,16 @@
             "name": "ID LOGISTICS",
             "symbol": "IDL.PA",
             "menu_list": "I"
+        },
+        {
+            "name": "INDRA SISTEMAS",
+            "symbol": "IDR.MC",
+            "menu_list": "Aerospace-defense"
+        },
+        {
+            "name": "INFINEON",
+            "symbol": "IFX.F",
+            "menu_list": "Semi-conducteurs"
         },
         {
             "name": "INTEL",
@@ -650,15 +712,21 @@
         {
             "name": "LEGRAND",
             "symbol": "LR.PA",
-            "menu_list": "L"
+            "menu_list": "Electrical"
         },
         {
             "name": "LEONARDO",
-            "symbol": "LDO.MI"
+            "symbol": "LDO.MI",
+            "menu_list": "Aerospace-defense"
         },
         {
             "name": "LVMH",
             "symbol": "MC.PA",
+            "menu_list": "L"
+        },
+        {
+            "name": "Latécoère",
+            "symbol": "LAT.PA",
             "menu_list": "L"
         },
         {
@@ -700,6 +768,11 @@
             "menu_list": "Pharma"
         },
         {
+            "name": "MELEXIS",
+            "symbol": "MEX.BE",
+            "menu_list": "Semi-conducteurs"
+        },
+        {
             "name": "MICHELIN",
             "symbol": "ML.PA",
             "menu_list": "Pneu"
@@ -729,7 +802,8 @@
         },
         {
             "name": "MP MATERIALS",
-            "symbol": "MP"
+            "symbol": "MP",
+            "menu_list": "Exploitation minière"
         },
         {
             "name": "MSCI World ETF",
@@ -742,11 +816,6 @@
             "menu_list": "Surveiller"
         },
         {
-            "name": "NEOEN",
-            "symbol": "NEOEN.PA",
-            "menu_list": "N"
-        },
-        {
             "name": "NEURONES",
             "symbol": "NRO.PA"
         },
@@ -756,13 +825,23 @@
             "menu_list": "Pharma"
         },
         {
-            "name": "NSE",
+            "name": "NSE S.A.",
             "symbol": "ALNSE.PA"
         },
         {
             "name": "NVIDIA",
             "symbol": "NVDA",
             "menu_list": "Portefeuille"
+        },
+        {
+            "name": "NXP Semiconductors",
+            "symbol": "NXPI",
+            "menu_list": "Semi-conducteurs"
+        },
+        {
+            "name": "Nasdaq 100 Futures",
+            "symbol": "NQ=F",
+            "menu_list": "Futures"
         },
         {
             "name": "OR (GF)",
@@ -798,7 +877,11 @@
             "name": "PALANTIR",
             "symbol": "PLTR",
             "exchange": "NMS",
-            "menu_list": "NASDAQ"
+            "menu_list": "Software-infra"
+        },
+        {
+            "name": "PALO ALTO NET.",
+            "symbol": "PANW"
         },
         {
             "name": "PARROT",
@@ -823,6 +906,11 @@
             "name": "Prysmian",
             "symbol": "AEU.F",
             "menu_list": "P"
+        },
+        {
+            "name": "Pétrole brut",
+            "symbol": "BZ=F",
+            "menu_list": "Futures"
         },
         {
             "name": "QUALCOM",
@@ -861,6 +949,10 @@
             "menu_list": "Divertissement"
         },
         {
+            "name": "RHEINMETALL",
+            "symbol": "RHM.HM"
+        },
+        {
             "name": "RIGETTI COMP",
             "symbol": "RGTI",
             "exchange": "NCM",
@@ -874,7 +966,7 @@
         {
             "name": "ROBERTET",
             "symbol": "RBT.PA",
-            "menu_list": "R"
+            "menu_list": "Chimie"
         },
         {
             "name": "ROCKET LAB",
@@ -888,12 +980,23 @@
         },
         {
             "name": "RUBIS",
-            "symbol": "RUI.PA"
+            "symbol": "RUI.PA",
+            "menu_list": "Oil & Gas"
+        },
+        {
+            "name": "Russell 2000 Futures",
+            "symbol": "RTY=F",
+            "menu_list": "Futures"
+        },
+        {
+            "name": "S&P 500 Futures",
+            "symbol": "ES=F",
+            "menu_list": "Futures"
         },
         {
             "name": "SAFRAN",
             "symbol": "SAF.PA",
-            "menu_list": "Portefeuille"
+            "menu_list": "Aerospace-defense"
         },
         {
             "name": "SAINT-GOBAIN",
@@ -908,7 +1011,7 @@
         {
             "name": "SCHNEIDER ELECTRIC",
             "symbol": "SU.PA",
-            "menu_list": "S"
+            "menu_list": "Electrical"
         },
         {
             "name": "SEB",
@@ -933,7 +1036,7 @@
         {
             "name": "SOITEC",
             "symbol": "SOI.PA",
-            "menu_list": "Portefeuille"
+            "menu_list": "Semi-conducteurs"
         },
         {
             "name": "SPDR S&P 500 ETF",
@@ -949,12 +1052,13 @@
             "trading_plan_high": "Petite victoire",
             "trading_plan_low": "Encore perdant",
             "volume_max": 100000,
-            "menu_list": "S",
+            "menu_list": "Construction-Ingé",
             "is_monitoring": false
         },
         {
             "name": "SPOTIFY",
-            "symbol": "SPOT"
+            "symbol": "SPOT",
+            "menu_list": "S"
         },
         {
             "name": "STELLANTIS",
@@ -966,7 +1070,7 @@
             "trading_plan_low": "Support",
             "volume_max": 20000,
             "is_monitoring": true,
-            "menu_list": "Portefeuille"
+            "menu_list": "Automobile"
         },
         {
             "name": "STIF",
@@ -985,9 +1089,19 @@
             "menu_list": "Semi-conducteurs"
         },
         {
+            "name": "SUPER MICRO COMP.",
+            "symbol": "SMCI",
+            "menu_list": "Techno"
+        },
+        {
             "name": "Sprott Uranium",
             "symbol": "URNM",
             "menu_list": "ETF"
+        },
+        {
+            "name": "Sucre",
+            "symbol": "SB=F",
+            "menu_list": "CAT"
         },
         {
             "name": "TARKETT",
@@ -1004,6 +1118,11 @@
             "menu_list": "Chinois"
         },
         {
+            "name": "TERNA",
+            "symbol": "TRN.MI",
+            "menu_list": "Electrical"
+        },
+        {
             "name": "TESLA",
             "symbol": "TSLA",
             "price_high": 145.0,
@@ -1015,7 +1134,7 @@
         {
             "name": "TEXAS INSTRUMENTS",
             "symbol": "TXN",
-            "menu_list": "NASDAQ"
+            "menu_list": "Semi-conducteurs"
         },
         {
             "name": "THALES",
@@ -1024,16 +1143,17 @@
             "price_low": 125.0,
             "volume_max": 1000000,
             "is_monitoring": false,
-            "menu_list": "Portefeuille"
+            "menu_list": "Aerospace-defense"
         },
         {
             "name": "THERMO FISHER",
             "symbol": "TMO",
-            "menu_list": "T"
+            "menu_list": "Pharma"
         },
         {
             "name": "TOTALENERGIES",
-            "symbol": "TTE.PA"
+            "symbol": "TTE.PA",
+            "menu_list": "Oil & Gas"
         },
         {
             "name": "TOYOTA",
@@ -1053,11 +1173,7 @@
         {
             "name": "UBISOFT",
             "symbol": "UBI.PA",
-            "menu_list": "U"
-        },
-        {
-            "name": "Unibail Rodamco",
-            "symbol": "SGURG.PA"
+            "menu_list": "Gaming-multimedia"
         },
         {
             "name": "VALEO",
@@ -1081,6 +1197,10 @@
             "volume_max": 70000,
             "menu_list": "Pharma",
             "is_monitoring": false
+        },
+        {
+            "name": "VAT Group AG",
+            "symbol": "VTTGF"
         },
         {
             "name": "VENTE PRIVEE",
@@ -1122,7 +1242,7 @@
         {
             "name": "VUSIONGROUP",
             "symbol": "VU.PA",
-            "menu_list": "Portefeuille"
+            "menu_list": "Software-app"
         },
         {
             "name": "VanEck Uranium + Nuclear",
@@ -1131,12 +1251,16 @@
         },
         {
             "name": "WALMART",
-            "symbol": "WMT",
-            "menu_list": "Portefeuille"
+            "symbol": "WMT"
         },
         {
             "name": "WHEATON PRECIOUS",
             "symbol": "WPM"
+        },
+        {
+            "name": "X-FAB",
+            "symbol": "XFB.MU",
+            "menu_list": "Semi-conducteurs"
         },
         {
             "name": "YUM",
@@ -1147,6 +1271,11 @@
             "name": "ZALANDO",
             "symbol": "ZAL.DE",
             "menu_list": "Retails"
+        },
+        {
+            "name": "ams-OSRAM",
+            "symbol": "AMSSY",
+            "menu_list": "Semi-conducteurs"
         }
     ]
 }
