@@ -30,6 +30,7 @@ from tkinter import ttk
 from matplotlib.ticker import ScalarFormatter, StrMethodFormatter
 from mplfinance.original_flavor import candlestick_ohlc
 from figure.linedeltaselector import LineDeltaSelector
+from tkinterh.helper import Tooltip
 
 # -----------------------------------------------------------------------------
 
@@ -207,7 +208,7 @@ class strategy_sma12e:
 		# ------------------------------------------------------------------------
 
 		ttk.Label( frame_ma12e, text="Moyenne Mobile 2").grid( row=tk_row, column=0, columnspan=2, sticky="e" )
-		self.mobile_average_2 = tk.IntVar( value=self.get_stock('MA1'))
+		self.mobile_average_2 = tk.IntVar( value=self.get_stock('MA2'))
 		
 		tk_row += 1
   
@@ -235,12 +236,12 @@ class strategy_sma12e:
 		_ttk.grid( row=tk_row, column=3, sticky="e", **padding_options )
 		_ttk.bind( "<Return>", lambda e: self.on_slider_mobile_average_2_change( self.mobile_average_2.get() ) )
 		
-		tk_row += 1 
+		tk_row += 1
   		
 		# ------------------------------------------------------------------------
 
 		ttk.Label( frame_ma12e, text="Moyenne Mobile Exp").grid( row=tk_row, column=0, columnspan=2, sticky="e" )
-		self.mobile_average_exp = tk.IntVar( value=self.get_stock('MA1'))
+		self.mobile_average_exp = tk.IntVar( value=self.get_stock('MAE'))
 		
 		tk_row += 1
   
@@ -533,10 +534,11 @@ class strategy_sma12e:
 		self.var_all.set(0)
 		
 		# CONTINUS
-		chk60 = ttk.Checkbutton( check_frame, text="CONTINUS", variable=self.var60, command=command_update_graphs)
+		chk60 = ttk.Checkbutton( check_frame, text="CONTINUS", variable=self.var60, command=command_update_graphs )
 
 		# Strategy
-		chk70 = ttk.Checkbutton( check_frame, text="Strat1/2", variable=self.var70, command=command_update_graphs)
+		chk70 = ttk.Checkbutton( check_frame, text="Strat1/2", variable=self.var70, command=command_update_graphs )
+		Tooltip( chk70, "Stratégie de filtrage des signaux avec condition sur le cours + 1" )
 	
 		chk20 = ttk.Checkbutton( check_frame, text="Price", variable=self.var20, command=command_update_lines)
 		chk21 = ttk.Checkbutton( check_frame, text="AdjClose", variable=self.var21, command=command_update_lines)
