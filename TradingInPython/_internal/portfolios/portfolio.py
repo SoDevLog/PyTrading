@@ -31,7 +31,7 @@ from config.path import BASE_PORTFOLIO_DIR
 from tkinterh.helper import Tooltip
 import config.func as conf
 
-PORTFOLIO_FILE_NAME = BASE_PORTFOLIO_DIR / "portfolio.json"
+PORTFOLIO_FILE_PATH = BASE_PORTFOLIO_DIR / "portfolio.json"
 
 class PortfolioManager:
 
@@ -242,14 +242,11 @@ class PortfolioApp:
         _r = conf.get_fetch_data_configuration()
         if _r != 0:
             self.conf_fetch_data = _r
-            if self.conf_fetch_data['PORTFOLIO_FILE_NAME'] == "":
-                self.conf_fetch_data['PORTFOLIO_FILE_NAME'] = PORTFOLIO_FILE_NAME
-                _portfolio_file_name = PORTFOLIO_FILE_NAME
-            else:
-                _portfolio_file_name = self.conf_fetch_data['PORTFOLIO_FILE_NAME']
+            if self.conf_fetch_data['PORTFOLIO_FILE_PATH'] == "":
+                self.conf_fetch_data['PORTFOLIO_FILE_PATH'] = PORTFOLIO_FILE_PATH
         
         # Portfolio Manager
-        self.portfolio = PortfolioManager( _portfolio_file_name )
+        self.portfolio = PortfolioManager( Path( self.conf_fetch_data['PORTFOLIO_FILE_PATH'] ) )
         
         # Configuration du style TTK
         self.setup_styles()
@@ -430,22 +427,23 @@ class PortfolioApp:
     def reload_portfolio_json( self ):
     
         # Ouvre une boîte de dialogue pour choisir un fichier .json
+        _file_name = Path( self.portfolio.filename )
         filepath = filedialog.askopenfilename(
             title="Sélectionnez un fichier portefeuille",
             filetypes=[("Fichiers JSON", "*.json")],
-            initialfile=os.path.basename( self.portfolio.filename )
+            initialdir=_file_name.parent,
+            initialfile=os.path.basename( _file_name )
         )
         
         if filepath:
-            
             # Set portfolio path file name
-            self.portfolio.filename = filepath
+            self.portfolio.filename = Path( filepath )
             
             # Reload data into portfolio
             self.portfolio.load_data()
             
             # Sauver le nouveau choix utilisateur
-            self.conf_fetch_data['PORTFOLIO_FILE_NAME'] = str( filepath )
+            self.conf_fetch_data['PORTFOLIO_FILE_PATH'] = str( self.portfolio.filename )
             conf.save_fecth_data_json( self.conf_fetch_data )
             
             # Update title_label with new path.stem
@@ -582,7 +580,7 @@ class PortfolioApp:
         self.stats_labels = {}
         stats_names = [
             ("Solde Net Investi", "net_invested", "Total des achats - Total des ventes"),
-            ("Valeur Actuelle", "current_value", "Quantité actuelle des positions x Prix courant"),
+            ("Valeur Actuelle", "current_value", "Quantité des positions en cours x Prix courant"),
             ("P&L Réalisé", "realized_pnl", "P&L (Profit and Loss) Profit ou Perte réalisé sur les positions clôturées"),
             ("P&L Non Réalisé", "unrealized_pnl", "Profit ou Perte non encore réalisé sur les positions en cours"),
             ("P&L Total", "total_pnl", "Profit ou Perte total"),
