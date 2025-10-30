@@ -1,0 +1,15 @@
+{
+  "AI.PA": [
+    {
+      "alert_type": "rsi_oversold",
+      "parameters": {
+        "threshold": 30,
+        "period": 14
+      },
+      "enabled": true,
+      "priority": 2,
+      "cooldown_minutes": 120,
+      "last_triggered": null
+    }
+  ]
+}

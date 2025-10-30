@@ -4,6 +4,7 @@
     "symbol": "AI.PA",
     "menu_list": "A",
     "price_purchase": 0.0,
+    "purchase_date": "",
     "price_current": 0.0,
     "price_high": "",
     "price_high_current": 0.0,
@@ -19,13 +20,16 @@
     "volume": 0,
     "vol_tot": 0,
     "vol_max": 0,
-    "is_monitoring": true
+    "cooldown_minutes": "",
+    "is_monitoring": true,
+    "price_low_alert_last_triggered": "2025-10-30T09:51:55.956576"
   },
   {
     "name": "AMD",
     "symbol": "AMD",
     "menu_list": "TECH",
     "price_purchase": 0.0,
+    "purchase_date": "",
     "price_current": 0.0,
     "price_high": "",
     "price_high_current": 0.0,
@@ -41,13 +45,17 @@
     "volume": 0,
     "vol_tot": 0,
     "vol_max": 0,
-    "is_monitoring": true
+    "cooldown_minutes": "",
+    "is_monitoring": true,
+    "price_low_alert_last_triggered": "2025-10-03T17:32:53.438244",
+    "message_date_alert_last_triggered": "2025-10-30T09:51:56.133571"
   },
   {
     "name": "NVIDIA",
     "symbol": "NVDA",
     "menu_list": "TECH",
     "price_purchase": 0.0,
+    "purchase_date": "",
     "price_current": 0.0,
     "price_high": "",
     "price_high_current": 0.0,
@@ -63,6 +71,7 @@
     "volume": 0,
     "vol_tot": 0,
     "vol_max": 0,
+    "cooldown_minutes": "",
     "is_monitoring": true
   },
   {
@@ -70,6 +79,7 @@
     "symbol": "SAF.PA",
     "menu_list": "Portefeuille",
     "price_purchase": 0.0,
+    "purchase_date": "",
     "price_current": 0.0,
     "price_high": "",
     "price_high_current": 0.0,
@@ -85,13 +95,15 @@
     "volume": 0,
     "vol_tot": 0,
     "vol_max": 0,
-    "is_monitoring": true
+    "cooldown_minutes": "",
+    "is_monitoring": false
   },
   {
     "name": "THALES",
     "symbol": "HO.PA",
     "menu_list": "Portefeuille",
     "price_purchase": 0.0,
+    "purchase_date": "",
     "price_current": 0.0,
     "price_high": 145.0,
     "price_high_current": 0.0,
@@ -107,7 +119,8 @@
     "volume": 0,
     "vol_tot": 0,
     "vol_max": 0,
-    "is_monitoring": true,
+    "cooldown_minutes": "",
+    "is_monitoring": false,
     "volume_max": 1000000
   }
 ]
