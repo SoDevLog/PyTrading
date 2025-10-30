@@ -39,6 +39,7 @@ class PortfolioManager:
         self.filename = filename
         self.transactions = []
         self.current_prices = {}
+        self.ticker_names = {}  # Cache pour les noms des tickers
         self.load_data()
     
     def load_data( self ):
@@ -55,6 +56,22 @@ class PortfolioManager:
         with open(self.filename, 'w', encoding='utf-8') as f:
             json.dump(self.transactions, f, indent=2, ensure_ascii=False)
     
+    def get_ticker_name( self, ticker: str ) -> str:
+        """Récupère le nom du ticker depuis yfinance (avec cache)"""
+        if ticker in self.ticker_names:
+            return self.ticker_names[ticker]
+        
+        try:
+            _ticker = yfinance.Ticker( ticker )
+            stock_info = _ticker.get_info()
+            _short_name = stock_info.get( 'shortName', 'N/A' )
+            self.ticker_names[ticker] = _short_name
+            return _short_name
+        except Exception as e:
+            print(f"Erreur lors de la récupération du nom pour {ticker} : {e}")
+            self.ticker_names[ticker] = 'N/A'
+            return 'N/A'
+    
     def add_transaction( self, type_transaction: str, ticker: str, quantity: float, 
                        price: float, date: str = None, fees: float = 0.0 ):
         """Ajoute une transaction (achat ou vente)"""
@@ -66,10 +83,15 @@ class PortfolioManager:
         else:
             total = quantity * price - fees
         
+        # Récupération du nom du ticker
+        ticker_upper = ticker.upper()
+        name = self.get_ticker_name( ticker_upper )
+        
         transaction = {
             'id': len(self.transactions) + 1,
             'type': type_transaction.lower(),
-            'ticker': ticker.upper(),
+            'ticker': ticker_upper,
+            'name': name,
             'quantity': quantity,
             'price': price,
             'date': date,
@@ -94,7 +116,8 @@ class PortfolioManager:
             "quantity": 0.0,
             "total_cost": 0.0,
             "total_sales": 0.0,
-            "realized_pnl": 0.0
+            "realized_pnl": 0.0,
+            "name": "N/A"
         })
 
         for t in self.transactions:
@@ -103,6 +126,11 @@ class PortfolioManager:
             price = float(t["price"])
             fees = float(t.get("fees", 0.0))
             side = t["type"].lower()
+            name = t.get("name", "N/A")
+
+            # Stocker le nom si disponible
+            if name != "N/A":
+                positions[ticker]["name"] = name
 
             # Achat : on augmente la position
             if side == "achat":
@@ -113,7 +141,7 @@ class PortfolioManager:
             elif side == "vente":
                 current_qty = positions[ticker]["quantity"]
                 if current_qty <= 0:
-                    # Vente sans position existante — on ignore ou on log
+                    # Vente sans position existante – on ignore ou on log
                     continue
 
                 avg_cost = positions[ticker]["total_cost"] / current_qty
@@ -137,6 +165,11 @@ class PortfolioManager:
             else:
                 pos["avg_cost"] = 0.0
 
+            # Si le nom n'est toujours pas disponible, on le récupère
+            # Compatibilité ascendante avec les transactions sans le champ 'name'
+            #
+            if pos["name"] == "N/A":
+                pos["name"] = self.get_ticker_name( ticker )            
         return dict( positions )
 
     # -------------------------------------------------------------------------
@@ -283,7 +316,7 @@ class PortfolioApp:
         }
         
         # 'flat'	▭ Plat	Aucun relief, sans bordure apparente
-        # 'raised'	⧉ Relief sortant	Fait ressortir le widget, comme s’il était au-dessus du plan
+        # 'raised'	⧉ Relief sortant	Fait ressortir le widget, comme s'il était au-dessus du plan
         # 'sunken'	⧋ Relief enfoncé	Fait paraître le widget enfoncé dans le plan
         # 'ridge'	⧠ Bord en relief double	Une bordure double légèrement surélevée
         # 'groove'	⧠ Bord en creux double	Une bordure double légèrement enfoncée
@@ -409,7 +442,7 @@ class PortfolioApp:
 
         # Onglet Transactions
         transactions_frame = ttk.Frame( notebook, style='Main.TFrame' )
-        notebook.add( transactions_frame, text="📝 Transactions" )
+        notebook.add( transactions_frame, text="📋 Transactions" )
         self.create_transactions_tab( transactions_frame )
 
         # Onglet Positions
@@ -498,7 +531,7 @@ class PortfolioApp:
             else:
                 messagebox.showwarning(
                     "Avertissement",
-                    f"Le fichier existe déjà!\n"
+                    f"Le fichier existe déjà !\n"
                     f"Chemin: {file_path}\n"
                     f"Voulez-vous le remplacer ?",
                     icon='warning'
@@ -616,6 +649,7 @@ class PortfolioApp:
             style='Primary.TButton'
         )
         self.update_button.pack()
+        self.update_button.config( state=tk.DISABLED, text="⏳ Mise à jour..." )        
         
         self.last_update_label = ttk.Label(
             update_frame,
@@ -710,7 +744,7 @@ class PortfolioApp:
 
         self.transactions_tree = ttk.Treeview( 
             tree_frame,
-            columns=("ID", "Date", "Type", "Ticker", "Quantité", "Prix", "Frais", "Total"),
+            columns=("ID", "Date", "Type", "Ticker", "Nom", "Quantité", "Prix", "Frais", "Total"),
             show="headings",
             yscrollcommand=scrollbar.set,
             height=6
@@ -722,16 +756,17 @@ class PortfolioApp:
                 
         columns_config = [
             ("ID", 40),
-            ("Date", 100),
+            ("Date", 90),
             ("Type", 80),
-            ("Ticker", 80),
-            ("Quantité", 100),
-            ("Prix", 100),
+            ("Ticker", 70),
+            ("Nom", 120),
+            ("Quantité", 80),
+            ("Prix", 120),
             ("Frais", 80),
             ("Total", 120)
         ]
         
-        self.transactions_tree["displaycolumns"] = ("Date", "Type", "Ticker", "Quantité", "Prix", "Frais", "Total")
+        self.transactions_tree["displaycolumns"] = ("Date", "Type", "Ticker", "Nom", "Quantité", "Prix", "Frais", "Total")
         
         for col, width in columns_config:
             self.transactions_tree.heading( col, text=col)
@@ -751,16 +786,33 @@ class PortfolioApp:
     
     def create_positions_tab( self, parent ):
         """Crée l'onglet des positions du portefeuille"""
-        positions_frame = ttk.Frame( parent, style='Card.TFrame', padding=15)
-        positions_frame.pack( fill=tk.BOTH, expand=True, padx=10, pady=10)
+        positions_frame = ttk.Frame( parent, style='Card.TFrame', padding=15 )
+        positions_frame.pack( fill=tk.BOTH, expand=True, padx=10, pady=10 )
+
+        # Frame pour aligner le titre et le checkbutton
+        header_frame = ttk.Frame( positions_frame, style='Card.TFrame' )
+        header_frame.pack( fill=tk.X, pady=( 15, 15) )
+
+        # Frame vide à gauche pour équilibrer
+        left_spacer = ttk.Frame( header_frame, style='Card.TFrame' )
+        left_spacer.pack( side=tk.LEFT, expand=True )
 
         title = ttk.Label( 
-            positions_frame,
+            header_frame,
             text="📊 Positions Actuelles du Portefeuille",
             style='Subtitle.TLabel'
         )
-        title.pack( pady=( 0, 15))
-        
+        title.pack( side=tk.LEFT )
+
+        # Frame à droite contenant le checkbutton
+        right_frame = ttk.Frame( header_frame, style='Card.TFrame' )
+        right_frame.pack( side=tk.LEFT, expand=True )
+
+        self.var_filter_positions = tk.BooleanVar( False )
+        _chk = ttk.Checkbutton( right_frame, text="Positions Ouvertes", variable=self.var_filter_positions, command=self.command_filter_position )
+        _chk.pack( side=tk.LEFT )
+        Tooltip( _chk, "Filtrer les positions ouvertes")
+            
         tree_frame = ttk.Frame( positions_frame)
         tree_frame.pack( fill=tk.BOTH, expand=True)
 
@@ -778,9 +830,9 @@ class PortfolioApp:
         scrollbar.config( command=self.positions_tree.yview)
         
         columns_config = [
-            ("Ticker", 90),
-            ("Nom", 100),
-            ("Quantité", 90),
+            ("Ticker", 70),
+            ("Nom", 120),
+            ("Quantité", 80),
             ("Coût Moyen", 120),
             ("Prix Courant", 120),
             ("Valeur Actuelle", 130),
@@ -874,6 +926,13 @@ class PortfolioApp:
     
     # -------------------------------------------------------------------------
     
+    def command_filter_position( self ):
+        """ Filtre les positions ouvertes """
+        
+        self.update_positions_list()
+
+    # -------------------------------------------------------------------------
+    
     def on_transactions_tree_item_selected( self, event ):
         
         selected = self.transactions_tree.selection()
@@ -911,7 +970,7 @@ class PortfolioApp:
     
     def _on_prices_updated( self ):
         """Callback après mise à jour des prix"""
-        self.update_button.config(state=tk.NORMAL, text="🔄 Actualiser les Prix")
+        self.update_button.config( state=tk.NORMAL, text="🔄 Actualiser les Prix" )
         self.last_update_label.config(
             text=f"Dernière mise à jour: {datetime.now().strftime('%H:%M:%S')}"
         )
@@ -962,6 +1021,7 @@ class PortfolioApp:
                     t['date'],
                     t['type'].upper(),
                     t['ticker'],
+                    t.get('name', 'N/A'),
                     f"{t['quantity']:.0f}",
                     f"{t['price']:.2f} €",
                     f"{t['fees']:.2f} €",
@@ -977,11 +1037,12 @@ class PortfolioApp:
     
     def update_positions_list( self ):
         """Met à jour la liste des positions"""
+        
         for item in self.positions_tree.get_children():
             self.positions_tree.delete( item )
         
         positions = self.portfolio.compute_positions()
-        
+
         for ticker, pos in sorted( positions.items() ):
             quantity = pos['quantity']
             avg_cost = pos['total_cost'] / quantity if quantity != 0 else 0.0
@@ -994,20 +1055,11 @@ class PortfolioApp:
             unrealized_pnl_text = f"{'+' if unrealized_pnl >= 0 else ''}{unrealized_pnl:.2f} €" if current_price > 0 else "N/A"
             realized_pnl_text = f"{'+' if pos['realized_pnl'] >= 0 else ''}{pos['realized_pnl']:.2f} €"
             
-            # Dont try to get stock info if current_value_text is N/A
-            # current_value_text == "N/A" means ticker does not exist
-            #
-            _short_name = "N/A"
-            if current_value_text != "N/A":
-                _ticker = yfinance.Ticker( ticker )
-                stock_info = _ticker.get_info()
-                _short_name = stock_info.get( 'shortName' )
+            # Récupération du nom depuis la position (déjà mis en cache)
+            _short_name = pos.get('name', 'N/A')
 
             _condition_positive = pos['realized_pnl'] + unrealized_pnl >= 0
-            self.positions_tree.insert( 
-                '', 
-                'end',
-                values=(
+            val = (
                     ticker,
                     _short_name,
                     f"{pos['quantity']:.0f}",
@@ -1016,7 +1068,20 @@ class PortfolioApp:
                     current_value_text,
                     unrealized_pnl_text,
                     realized_pnl_text
-                ), 
+            )
+            
+            # Filtrer les positions fermée
+            #
+            if self.var_filter_positions.get() == True:
+                
+                # N'afficher que les positions avec 'quantity' != 0
+                if pos['quantity'] == 0: # quantité
+                    continue
+                
+            self.positions_tree.insert( 
+                '', 
+                'end',
+                values=val, 
                 tags=( 'positive' if _condition_positive else 'negative',)
             )
         
@@ -1064,7 +1129,7 @@ class PortfolioApp:
         report += "\n"
         
         # Transactions
-        report += "📝 HISTORIQUE DES TRANSACTIONS\n"
+        report += "📋 HISTORIQUE DES TRANSACTIONS\n"
         report += "-"*80 + "\n"
         
         if self.portfolio.transactions:
