@@ -1,6 +1,6 @@
 # Digital Signal Processing
 
-You are at the heart of the algorithms used by the [TradingInPython](https://www.trading-et-data-analyses.com/p/plateforme-de-trading-and-data-analyse.html) platform.
+You are at the heart of the algorithms used by the [TradingInPython](https://www.trading-et-data-analyses.com/p/plateforme-de-trading-technique.html) platform.
 
 This is where you can find the algorithms that make up the trading strategies. It's the open source part of the platform.
 
@@ -39,4 +39,3 @@ You can find the algorithm that implements the Ichimoku Kinko Hyo strategy here:
 ## Other strategies
 
 You will discover many other strategies by downloading and running the platform **TradingInPyhton**.
-
