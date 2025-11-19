@@ -76,7 +76,7 @@
             "message_date_to_sent": false,
             "message_date_content": "Message d'exemple",
             "volume_max": 400000,
-            "menu_list": "A",
+            "menu_list": "Pharma",
             "is_monitoring": false
         },
         {
@@ -327,6 +327,10 @@
             "name": "BROADCOM",
             "symbol": "AVGO",
             "menu_list": "Semi-conducteurs"
+        },
+        {
+            "name": "BWXT",
+            "symbol": "BWXT"
         },
         {
             "name": "BYD",

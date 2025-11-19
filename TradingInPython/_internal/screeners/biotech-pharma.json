@@ -4,6 +4,7 @@
     "symbol": "ABVX.PA",
     "menu_list": "Pharma",
     "price_purchase": 0.0,
+    "purchase_date": "",
     "price_current": 0.0,
     "price_high": "",
     "price_high_current": 0.0,
@@ -19,6 +20,7 @@
     "volume": 0,
     "vol_tot": 0,
     "vol_max": 0,
+    "cooldown_minutes": "",
     "is_monitoring": false
   },
   {
@@ -26,6 +28,7 @@
     "symbol": "ADOC.PA",
     "menu_list": "Pharma",
     "price_purchase": 0.0,
+    "purchase_date": "",
     "price_current": 0.0,
     "price_high": "",
     "price_high_current": 0.0,
@@ -41,6 +44,7 @@
     "volume": 0,
     "vol_tot": 0,
     "vol_max": 0,
+    "cooldown_minutes": "",
     "is_monitoring": false
   },
   {
@@ -48,6 +52,7 @@
     "symbol": "ALCAR.PA",
     "menu_list": "Pharma",
     "price_purchase": 2.995,
+    "purchase_date": "",
     "price_current": 0.0,
     "price_high": 3.3,
     "price_high_current": 0.0,
@@ -63,13 +68,17 @@
     "volume": 0,
     "vol_tot": 0,
     "vol_max": 0,
-    "is_monitoring": true
+    "cooldown_minutes": "",
+    "is_monitoring": true,
+    "price_low_alert_last_triggered": "2025-09-24T09:14:08.483300",
+    "message_date_alert_last_triggered": "2025-09-24T09:14:08.483300"
   },
   {
     "name": "EUROAPI",
     "symbol": "EAPI.PA",
     "menu_list": "Pharma",
     "price_purchase": 0.0,
+    "purchase_date": "",
     "price_current": 0.0,
     "price_high": 3.93,
     "price_high_current": 0.0,
@@ -85,6 +94,7 @@
     "volume": 0,
     "vol_tot": 0,
     "vol_max": 0,
+    "cooldown_minutes": "",
     "is_monitoring": false,
     "volume_max": "10000"
   },
@@ -93,6 +103,7 @@
     "symbol": "MAAT.PA",
     "menu_list": "Pharma",
     "price_purchase": 0.0,
+    "purchase_date": "",
     "price_current": 0.0,
     "price_high": 9.6,
     "price_high_current": 0.0,
@@ -108,6 +119,7 @@
     "volume": 0,
     "vol_tot": 0,
     "vol_max": 0,
+    "cooldown_minutes": "",
     "is_monitoring": false,
     "volume_max": 1000000
   },
@@ -116,6 +128,7 @@
     "symbol": "MEDCL.PA",
     "menu_list": "Pharma",
     "price_purchase": 0.0,
+    "purchase_date": "",
     "price_current": 0.0,
     "price_high": "",
     "price_high_current": 0.0,
@@ -131,6 +144,7 @@
     "volume": 0,
     "vol_tot": 0,
     "vol_max": 0,
+    "cooldown_minutes": "",
     "is_monitoring": true
   },
   {
@@ -138,6 +152,7 @@
     "symbol": "NVO",
     "menu_list": "Pharma",
     "price_purchase": 0.0,
+    "purchase_date": "",
     "price_current": 0.0,
     "price_high": "",
     "price_high_current": 0.0,
@@ -153,6 +168,7 @@
     "volume": 0,
     "vol_tot": 0,
     "vol_max": 0,
+    "cooldown_minutes": "",
     "is_monitoring": false
   },
   {
@@ -160,6 +176,7 @@
     "symbol": "SAN.PA",
     "menu_list": "Pharma",
     "price_purchase": 0.0,
+    "purchase_date": "",
     "price_current": 0.0,
     "price_high": "",
     "price_high_current": 0.0,
@@ -175,6 +192,7 @@
     "volume": 0,
     "vol_tot": 0,
     "vol_max": 0,
+    "cooldown_minutes": "",
     "is_monitoring": false
   },
   {
@@ -182,6 +200,7 @@
     "symbol": "VLA.PA",
     "menu_list": "Pharma",
     "price_purchase": 0.0,
+    "purchase_date": "",
     "price_current": 0.0,
     "price_high": 3.4,
     "price_high_current": 0.0,
@@ -197,6 +216,7 @@
     "volume": 0,
     "vol_tot": 0,
     "vol_max": 0,
+    "cooldown_minutes": "",
     "is_monitoring": false,
     "volume_max": 70000
   }
