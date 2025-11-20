@@ -680,3 +680,38 @@ def adx( high, low, close, period=14 ):
         '+DI': numpy.concatenate([padding, plus_di]),
         '-DI': numpy.concatenate([padding, minus_di])
     }
+
+"""
+    Calcule les fractales de Bill Williams sur un DataFrame de prix.
+    Version optimisée avec opérations vectorisées.
+
+    Parameters:
+    data : DataFrame avec colonnes 'High' et 'Low'
+    period : int, nombre de bougies de chaque côté à vérifier (défaut: 2)
+
+    Returns:
+    DataFrame avec colonnes 'Fractal_Up' et 'Fractal_Down'
+"""    
+def fractales_williams( data, period=2 ):
+
+    
+    high = data['High']
+    low = data['Low']
+    
+    # Initialiser les masques à True
+    is_fractal_up = numpy.ones(len(data), dtype=bool)
+    is_fractal_down = numpy.ones(len(data), dtype=bool)
+    
+    # Vérifier toutes les bougies de 1 à period de chaque côté
+    for i in range(1, period + 1):
+        # Fractale UP : high doit être strictement > tous ses voisins
+        is_fractal_up &= (high > high.shift(i)) & (high > high.shift(-i))
+        
+        # Fractale DOWN : low doit être strictement < tous ses voisins
+        is_fractal_down &= (low < low.shift(i)) & (low < low.shift(-i))
+    
+    # Appliquer les masques et créer les colonnes
+    data['Fractal_Up'] = numpy.where(is_fractal_up, high, numpy.nan)
+    data['Fractal_Down'] = numpy.where(is_fractal_down, low, numpy.nan)
+    
+    return data    
