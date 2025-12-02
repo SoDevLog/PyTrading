@@ -16,6 +16,9 @@
     - macd_zero_lag
     - obv
     - adx
+    - fractales_williams
+    - awesome_oscillator
+    - accelerator_oscillator
 
 """
 import pandas
@@ -715,3 +718,45 @@ def fractales_williams( data, period=2 ):
     data['Fractal_Down'] = numpy.where(is_fractal_down, low, numpy.nan)
     
     return data    
+
+# -----------------------------------------------------------------------------
+# Awesome Oscillator (AO) - Indicateur de momentum
+# -----------------------------------------------------------------------------
+#
+def awesome_oscillator( df, short_period=5, long_period=34 ):
+    """
+    Calcule l'Awesome Oscillator classique
+    """
+    median_price = ( df['High'] + df['Low'] ) / 2
+    sma_short = median_price.rolling( window=short_period, min_periods=1 ).mean()
+    sma_long = median_price.rolling( window=long_period, min_periods=1 ).mean()
+    ao = sma_short - sma_long
+    return ao
+
+# -----------------------------------------------------------------------------
+# Accelerator Oscillator (AC) - Indicateur de momentum
+#
+def accelerator_oscillator( df, ao_column='AO', period=5 ):
+    """
+    Calcule l'Accelerator Oscillator (AC)
+
+    Paramètres:
+    -----------
+    df : pandas.DataFrame
+        DataFrame contenant l'AO déjà calculé
+    ao_column : str
+        Nom de la colonne contenant l'AO
+    period : int
+        Période pour la moyenne mobile de l'AO (défaut: 5)
+    
+    Retourne:
+    ---------
+    pandas.Series : Valeurs de l'AC
+    
+    Formule: AC = AO - SMA(AO, 5)
+    """
+    ao = df[ ao_column ]
+    sma_ao = ao.rolling( window=period, min_periods=1 ).mean()
+    ac = ao - sma_ao
+    
+    return ac
