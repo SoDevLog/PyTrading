@@ -21,10 +21,11 @@ import helper as h
 
 ticker = { 'name': "DASSAULT AVIATION", 'symbol': "AM.PA" }
 ticker = { 'name': "PALANTIR", 'symbol': "PLTR" }
+ticker = { 'name': "SAFRAN", 'symbol': "SAF.PA" }
 
 # Date de début et date actuelle pour la fin
 date_start = '2024-01-01' # h.datetime_past(0)
-date_end = h.datetime_now()
+date_end = h.datetime_now() # '2024-04-03' 
 interval_dates = '1d'
 
 # Conserver la colonne 'Adj Close' pour les graphiques mais en intraday la colonne n'existe plus
@@ -292,10 +293,12 @@ def claude_calculate_sar( price_data: pandas.DataFrame, step: float = 0.02, max_
 
 # -----------------------------------------------------------------------------
 
-def calculate_dynamic_acceleration_factor(df: pandas.DataFrame, 
-                                          base_step: float = 0.02, 
-                                          max_step: float = 0.2, 
-                                          volatility_window: int = 20) -> pandas.Series:
+def calculate_dynamic_acceleration_factor(
+        df: pandas.DataFrame,
+        base_step: float = 0.02, 
+        max_step: float = 0.2, 
+        volatility_window: int = 20
+    ) -> pandas.Series:
     """
     Calcule un facteur d'accélération dynamique basé sur la volatilité du marché
     
@@ -334,10 +337,12 @@ def calculate_dynamic_acceleration_factor(df: pandas.DataFrame,
 
 # -----------------------------------------------------------------------------
 
-def calculate_sar_with_dynamic_af(df: pandas.DataFrame, 
-                                   base_step: float = 0.02, 
-                                   max_step: float = 0.2, 
-                                   volatility_window: int = 20) -> pandas.Series:
+def calculate_sar_with_dynamic_af(
+        df: pandas.DataFrame, 
+        base_step: float = 0.02, 
+        max_step: float = 0.2, 
+        volatility_window: int = 20
+    ) -> pandas.Series:
     """
     Calcul du SAR avec facteur d'accélération dynamique
     
@@ -428,15 +433,15 @@ data["SAR_enhanced_3"] = enhanced_parabolic_sar_3( data["High"], data["Low"] )
 data["SAR_claude"] = claude_calculate_sar( data )
 data["SAR_claude_2"] = calculate_sar_with_dynamic_af( data )
 
-plt.figure( figsize=(10, 5) )
+plt.figure( figsize=(16, 8) )
 plt.plot( data.index, data["High"], label="High", color="blue", linestyle="dotted" )
 plt.plot( data.index, data["Low"], label="Low", color="red", linestyle="dotted" )
 plt.plot( data.index, data["SAR"], label="SAR Parabolique", color="green", marker="o", linestyle="None", alpha=0.4 )
 plt.plot( data.index, data["SAR_enhanced"], label="SAR Enhanced", color="orange", marker="s", linestyle="None", alpha=0.6 )
-plt.plot( data.index, data["SAR_enhanced_2"], label="SAR Enhanced 2", color="blue", marker="^", linestyle="None", alpha=0.8 )
+plt.plot( data.index, data["SAR_enhanced_2"], label="SAR Enhanced 2", color="gold", marker="^", linestyle="None", alpha=0.8 )
 plt.plot( data.index, data["SAR_enhanced_3"], label="SAR Enhanced 3", color="red", marker="p", linestyle="None", alpha=0.9 )
 plt.plot( data.index, data["SAR_claude"], label="SAR Claude", color="red", marker="x", linestyle="None", alpha=0.9 )
-plt.plot( data.index, data["SAR_claude_2"], label="SAR Claude 2", color="gold", marker=".", linestyle="None", alpha=1 )
+plt.plot( data.index, data["SAR_claude_2"], label="SAR Claude 2", color="blue", marker=".", linestyle="-", linewidth=0.5, markersize=12, alpha=1 )
 plt.legend()
 plt.gcf().autofmt_xdate()
 plt.tight_layout()

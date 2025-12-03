@@ -41,7 +41,7 @@ from datetime import datetime
 company = {'symbol': 'STMPA.PA', 'name' : 'STMICROELECTRONICS'}
 #company = {'symbol': 'HO.PA', 'name' : 'THALES'}
 
-date_start = '2024-05-01'
+date_start = '2024-10-01'
 date_end = datetime.now()
 interval_dates = '1d'
 
@@ -273,28 +273,33 @@ lagging_indicator = analyzer.create_lagging_indicator( lag_days=N_LAG_DAYS )
 #
 K_MODULATION = {
     0: 1.0,   # Composante DC
-    1: 1.0,   # Basses fréquences - tendances longues 
+    1: 1.3,   # Basses fréquences - tendances longues 
     2: 1.3,
-    3: 0.1,   # Moyennes fréquences
+    3: 1.3,   # Moyennes fréquences
     4: 0.8,
     5: 0.3,   # Hautes fréquences
-    8: 0.2    # Hautes fréquences
+    6: 0.2,   
+    7: 0.2,
+    8: 0.2,
+    9: 0.2
 }
-weights = analyzer.amplitude_corrector( K_MODULATION )
+weights = analyzer.amplitude_corrector( K_MODULATION, k_default=0.0 )
 trend_follower = analyzer.reconstruct_signal( amplitude_weights=weights )
 
 # Supression de la composante DC et des basses fréquences pour l'oscillateur
 K_MODULATION_OSC = {
     0: 0.0,   # Supression de la composante DC
-    1: 0.2,   # Basses fréquences
-    2: 0.3,
-    3: 1.5,
+    1: 0.1,   # Basses fréquences
+    2: 0.1,
+    3: 0.1,
     4: 1.6,
     5: 1.2,
-    8: 1.0
+    5: 1.2,
+    6: 1.2,
+    7: 1.0
 }
 
-weights = analyzer.amplitude_corrector( K_MODULATION_OSC, k_default=0.8 )
+weights = analyzer.amplitude_corrector( K_MODULATION_OSC, k_default=1.0 )
 oscillator = analyzer.reconstruct_signal( amplitude_weights=weights )
 
 # Normalisation pour l'affichage
@@ -354,7 +359,7 @@ ax3.fill_between( x_axis, np.mean(oscillator_norm), oscillator_norm,
 ax3.fill_between( x_axis, np.mean(oscillator_norm), oscillator_norm,
                  where=(oscillator_norm < np.mean(oscillator_norm)),
                  color='red', alpha=0.3, label='Zone négative')
-ax3.set_title( "Oscillateur - Modulation d'amplitude", fontsize=12 )
+ax3.set_title( f"Oscillateur Rapide - Modulation d'amplitude mod:{K_MODULATION_OSC}", fontsize=12 )
 ax3.legend()
 ax3.grid( True, alpha=0.3 )
 ax3.set_ylabel( 'Oscillation' )
@@ -387,8 +392,8 @@ significant_move = strong_leading | strong_price
 # Divergence quand les signes sont opposés ET qu'il y a un mouvement significatif
 divergence_signal = ( np.sign( leading_trend_norm ) != np.sign( price_trend_norm ) ) & significant_move
 
-ax4.plot( x_axis, leading_trend_norm, label='Tendance indicateur avancé (normalisée)', color='green', linewidth=1.5)
-ax4.plot( x_axis, price_trend_norm, label='Tendance prix (normalisée)', color='blue', linewidth=1.5)
+ax4.plot( x_axis, leading_trend_norm, label='Tendance indicateur avancé (normalisée)', color='green', linewidth=1.5 )
+ax4.plot( x_axis, price_trend_norm, label='Tendance prix (normalisée)', color='blue', linewidth=1.5 )
 ax4.scatter( x_axis[divergence_signal], np.zeros( np.sum(divergence_signal) ), 
            color='red', s=50, alpha=0.8, label=f'Signaux divergence ({np.sum(divergence_signal)})', zorder=5)
 
@@ -506,6 +511,7 @@ divergence_count = np.sum( divergence_signal )
 print( f"   → {divergence_count} signaux de divergence détectés" )
 print( "   → Quand l'indicateur avancé diverge du prix" )
 
-print( K_MODULATION_OSC )
+print( f"    K_MODULATION: {K_MODULATION}" )
+print( f"K_MODULATION_OSC: {K_MODULATION_OSC}" )
 
 plt.show()
