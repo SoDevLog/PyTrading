@@ -43,7 +43,7 @@ To get new features you'll just had to make a Pull wich is lighter than download
 
 You can have a rapid presentation of what you'll be able to do with the Trading platform, it's in french but you can translate easily by choosing your language in GoogleTranslate :
 
-- [Rapid Tour of the Trading Platform in Python](https://www.trading-et-data-analyses.com/p/plateforme-de-trading-technique.html)
+- [Rapid Tour of the Trading Platform in Python](https://trading-in-python.sodevlog.com/tour-rapide/)
 
 You will be able to run the **Ichimoku Kinko Hyo's** strategie and prediction with [scikit-learn](https://scikit-learn.org/stable/index.html) :
 
