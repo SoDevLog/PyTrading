@@ -1,5 +1,6 @@
 """
-    Module Smart Money Concepts (SMC)
+    Module Smart Money Concepts (SMC) - Inner Circle Trading (ICT)
+    
     - Détection : Swings, Structure (HH/HL/LH/LL), CHoCH, BOS
     - Liquidity (EQH/EQL), FVG, Order Blocks (OB)
     - Plotting mplfinance + overlays Matplotlib
@@ -10,7 +11,14 @@
     - generate_sample_data
     - overlay
     - SmartMoneyConcepts
-    - SMC_Tkinter_UI
+        - detect_swings
+        - market_structure
+        - detect_bos_choch
+        - detect_liquidity
+        - detect_fvg
+        - detect_order_blocks
+        - apply
+    - SmartMoneyApp
     
     redraw : with new random data
     plot : with current data
@@ -41,30 +49,40 @@ def generate_sample_data():
     for i in range( NB_DATA ):
         # hausse
         if i < 19:
-            drift = 0.25
-        # baisse
+            drift = 0.41
+            volatility = 0.61
+        # baisse forte
         elif i < 38:
-            drift = -0.2
-        # range
-        elif i < 50:
-            drift = 0.01            
-        # hausse
-        if i < 60:
-            drift = 0.25
-        # range
+            drift = -0.63
+            volatility = 0.86
+        # range étroit
+        elif i < 57:
+            drift = 0.04
+            volatility = 0.25
+        # hausse forte
+        elif i < 75:
+            drift = 0.68
+            volatility = 0.90
+        # range volatil
         elif i < 90:
-            drift = -0.01
-        # baisse
+            drift = 0.1
+            volatility = 0.6
+        # baisse forte
+        elif i < 105:
+            drift = -0.71
+            volatility = 0.4
+        # range final
         else:
-            drift = -0.3
-
-        price += drift + np.random.normal( 0, 0.6 )
+            drift = -0.1
+            volatility = 0.3
+            
+        price += drift + np.random.normal( 0.2, volatility )
         prices.append( price )
 
-    # Créer OHLC réalistes
-    opens = np.array(prices) + np.random.normal( 0, 0.3, NB_DATA )
-    highs = opens + np.abs(np.random.normal( 0.8, 0.3, NB_DATA ))
-    lows = opens - np.abs(np.random.normal( 0.8, 0.3, NB_DATA ))
+    # Créer OHLC réalistes avec plus de volatilité
+    opens = np.array( prices ) + np.random.normal( 0.0, 0.5, NB_DATA )
+    highs = opens + np.abs( np.random.normal( 1.2, 0.3, NB_DATA ) )
+    lows = opens - np.abs( np.random.normal( 1.2, 0.3, NB_DATA ) )
     closes = lows + (highs - lows) * np.random.rand( NB_DATA )
 
     data = {
@@ -74,15 +92,15 @@ def generate_sample_data():
         "Close": closes
     }
     df = pd.DataFrame( data, index=dates )
+    
     return df
 
 # -----------------------------------------------------------------------------
     
 class SmartMoneyConcepts:
-    def __init__( self, lookback=3, fvg_lookback=2, liquidity_threshold=1e-8 ):
+    def __init__( self, lookback=3, fvg_lookback=2 ):
         self.lookback = lookback
         self.fvg_lookback = fvg_lookback
-        self.liquidity_threshold = 0.15 #liquidity_threshold
 
     # ---------------------------------------
     # 1) Swings (pivots) - simple local pivot
@@ -136,29 +154,59 @@ class SmartMoneyConcepts:
         df = df.copy()
         df['CHoCH'] = None
         df['BOS'] = None
-
-        last = None
+        
+        # Variables d'état
+        trend = None  # 'UP' or 'DOWN'
+        last_swing_high = None
+        last_swing_low = None
+        
         for i in range(len(df)):
-            curr = df['Structure'].iloc[i]
-            if pd.isna(curr) or curr is None:
-                continue
+            close = df['Close'].iloc[i]
+            struct = df['Structure'].iloc[i]
+            
+            # Mise à jour swings
+            if df['SwingHigh'].iloc[i]:
+                last_swing_high = df['High'].iloc[i]
+            if df['SwingLow'].iloc[i]:
+                last_swing_low = df['Low'].iloc[i]
 
-            if last is not None:
-                # CHoCH heuristics
-                if (last == 'HH' and curr in ('HL', 'LL')) or (last == 'HL' and curr in ('LH','LL')) or \
-                   (last == 'LL' and curr in ('LH','HH')) or (last == 'LH' and curr in ('HL','HH')):
-                    df.at[ df.index[i], 'CHoCH' ] = 'CHoCH'
-
-                # BOS up
-                if curr == 'HH' and last in ('LH', 'LL'):
+            # Initialisation de la tendance
+            if trend is None:
+                # Détecter la première structure pour initialiser
+                if struct in ('HH', 'HL'):
+                    trend = 'UP'
+                elif struct in ('LH', 'LL'):
+                    trend = 'DOWN'
+                if trend is not None:
+                    continue  # Passer à la prochaine itération
+                    
+            # Détection CHoCH (changement de tendance)
+            if trend == 'DOWN' and last_swing_high is not None:
+                if close > last_swing_high and struct in ('HL', 'LL'):
+                    df.at[df.index[i], 'CHoCH'] = 'CHoCH_UP'
+                    trend = 'UP'
+                    # Reset pour nouveaux BOS
+                    last_swing_low = df['Low'].iloc[i]
+                    continue
+                    
+            if trend == 'UP' and last_swing_low is not None:
+                if close < last_swing_low and struct in ('HH', 'LH'):
+                    df.at[df.index[i], 'CHoCH'] = 'CHoCH_DOWN'
+                    trend = 'DOWN'
+                    last_swing_high = df['High'].iloc[i]
+                    continue
+            
+            # BOS (continuation de tendance)
+            if trend == 'UP' and last_swing_high is not None:
+                if close > last_swing_high:
                     df.at[df.index[i], 'BOS'] = 'BOS_UP'
-
-                # BOS down
-                if curr == 'LL' and last in ('HL', 'HH'):
+                    last_swing_high = close
+                    
+            if trend == 'DOWN' and last_swing_low is not None:
+                if close < last_swing_low:
                     df.at[df.index[i], 'BOS'] = 'BOS_DOWN'
-
-            last = curr
-
+                    last_swing_low = close
+        
         return df
 
     # ----------------------
@@ -169,7 +217,7 @@ class SmartMoneyConcepts:
     #
     def detect_liquidity( self, df, threshold=None, bars_range=2 ):
         df = df.copy()
-        th = self.liquidity_threshold if threshold is None else threshold
+        th = None # seuil adaptatif si None
 
         df['EQH'] = False
         df['EQL'] = False
@@ -177,11 +225,17 @@ class SmartMoneyConcepts:
         df['SSL'] = False # Sell-Side Liquidity
         df['LIQ_TAKEN'] = None  # 'BSL' ou 'SSL'
 
+        # Calculer un seuil adaptatif basé sur l'ATR
+        def calculate_adaptive_threshold( df, period=14 ):
+            atr = df['High'].rolling( period ).max() - df['Low'].rolling( period ).min()
+            return atr.mean() * 0.02  # 2% de l'ATR moyen
+
         # Détection ICT
         for i in range(bars_range, len(df)):
             hi = df['High'].iloc[i]
             lo = df['Low'].iloc[i]
-
+            th = calculate_adaptive_threshold( df ) if threshold is None else threshold
+            
             # Equal High : égalité avec une barre "bars_range" en arrière
             if abs(hi - df['High'].iloc[i - bars_range]) <= th:
                 df.at[df.index[i], 'EQH'] = True
@@ -277,7 +331,7 @@ class SmartMoneyConcepts:
         # BOS lines
         if show_bos and 'BOS' in df.columns:
             for idx in df.index:
-                b = df.loc[idx, 'BOS']
+                b = df.loc[ idx, 'BOS' ]
                 pos = idx_to_pos[idx]
                 if b == 'BOS_UP':
                     y = df.loc[idx, 'High']
@@ -300,35 +354,13 @@ class SmartMoneyConcepts:
                 choch = df.loc[ idx, 'CHoCH' ]
                 if choch is not None:
                     pos = idx_to_pos[idx]
-
-                    # Selon ICT, un CHoCH se place sur le pivot
-                    struct = df.loc[idx, 'Structure']
-
-                    # pivot HIGH
-                    if struct in ('HH','LH'):
-                        y = df.loc[idx, 'High'] + 0.5
+                    if choch == 'CHoCH_UP':
+                        y = df.loc[idx, 'High']
                         va = 'bottom'
                         arrow = '↧' # flèche vers le bas (top → reversal)
-                        
+                        ax.scatter( pos, y, color='orange', s=40, marker='v' )
                         ax.text(
-                            pos, y,
-                            f"CHoCH {arrow}",
-                            color='orange',
-                            fontsize=9,
-                            fontweight='bold',
-                            ha='center',
-                            va=va,
-                            bbox=dict( boxstyle='square,pad=0.25', linewidth=0.5, facecolor='lightcoral', alpha=0.25 )
-                        )
-                    
-                    # pivot LOW
-                    if struct in ('HL', 'LL'):
-                        y = df.loc[idx, 'Low'] - 0.5
-                        va = 'top'
-                        arrow = '↥'  # flèche vers le haut (bottom → reversal)
-
-                        ax.text(
-                            pos, y,
+                            pos, y+0.5,
                             f"CHoCH {arrow}",
                             color='orange',
                             fontsize=9,
@@ -337,7 +369,24 @@ class SmartMoneyConcepts:
                             va=va,
                             bbox=dict( boxstyle='square,pad=0.25', linewidth=0.5, facecolor='lightgreen', alpha=0.25 )
                         )
-
+                    
+                    # pivot LOW
+                    if choch == 'CHoCH_DOWN':
+                        y = df.loc[idx, 'Low']
+                        va = 'top'
+                        arrow = '↥'  # flèche vers le haut (bottom → reversal)
+                        ax.scatter( pos, y, color='orange', s=40, marker='^' )
+                        ax.text(
+                            pos, y-0.5,
+                            f"CHoCH {arrow}",
+                            color='orange',
+                            fontsize=9,
+                            fontweight='bold',
+                            ha='center',
+                            va=va,
+                            bbox=dict( boxstyle='square,pad=0.25', linewidth=0.5, facecolor='lightcoral', alpha=0.25 )
+                        )
+                        
         # Liquidity TAKEN
         if show_liquidity and 'LIQ_TAKEN' in df.columns:
             for idx in df.index:
@@ -461,6 +510,7 @@ class SmartMoneyApp:
             command=self.redraw ).grid(row=row, column=0, pady=(5,15), padx=10)
 
         self.plot()
+        self.root.lift()
         
     def plot(self):
         """Plot avec mplfinance + overlays SMC"""
