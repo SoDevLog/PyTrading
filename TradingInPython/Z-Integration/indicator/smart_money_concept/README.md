@@ -1,6 +1,6 @@
-# Smart Money Concept (SMC) trading methode and ICT
+# Smart Money Concept (SMC) trading methode ICT (Inner Circle Trading)
 
-Conception réalisation d'un moteur SMC
+Conception réalisation d'un moteur SMC Interface Tkinter
 
 - with scenario generator
 
@@ -24,3 +24,10 @@ Conception réalisation d'un moteur SMC
 
 Utilise plot_overlays pour venir tagger un 'ax' du graphe MatPlotLib
 
+## Market Stock State Machine
+
+- détection des BOS (Break Of Structure)
+
+Retrouver cette méthode de trading dans l'application :
+
+- [TradingInPython - Comment décoder la strcuture du marché](https://www.trading-et-data-analyses.com/2025/12/comment-decoder-la-structure-du-marche.html)
