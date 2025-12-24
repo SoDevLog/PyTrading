@@ -421,17 +421,17 @@ class SMC_Engine:
             if df['SwingHigh'].iat[i]:
                 # check next lookahead for bearish impulse (ex: close lower than pivot)
                 end = min( n, i + 1 + lookahead_impulse )
-                impulse = df['Close'].iloc[i+1:end]
+                impulse = df['Close'].iloc[ i+1:end ]
                 if len(impulse) > 0 and impulse.min() < df['Low'].iloc[i]:  # impulsion baissière
                     # choose origin candle of OB: here la bougie juste avant l'impulsion (i)
                     origin_idx = i
                     # we define OB as the body/wick of origin candle (could be expanded)
                     top = df['High'].iloc[origin_idx]
                     bottom = df['Low'].iloc[origin_idx]
-                    df.at[df.index[origin_idx], 'OB_type'] = 'bear'
-                    df.at[df.index[origin_idx], 'OB_top'] = top
-                    df.at[df.index[origin_idx], 'OB_bottom'] = bottom
-                    df.at[df.index[origin_idx], 'OB_origin_idx'] = df.index[origin_idx]
+                    df.at[ df.index[origin_idx], 'OB_type' ] = 'bear'
+                    df.at[ df.index[origin_idx], 'OB_top' ] = top
+                    df.at[ df.index[origin_idx], 'OB_bottom' ] = bottom
+                    df.at[ df.index[origin_idx], 'OB_origin_idx' ] = df.index[origin_idx]
 
             # detect pivot low -> potential bullish order block
             if  df['SwingLow'].iat[i]:
@@ -448,7 +448,7 @@ class SMC_Engine:
 
         # compile list of OBs
         #
-        obs = df[df['OB_type'].notna()][['OB_type','OB_top','OB_bottom']].copy()
+        obs = df[ df['OB_type'].notna() ][ ['OB_type','OB_top','OB_bottom'] ].copy()
 
         # monitor violations -> breaker creation
         #
@@ -458,7 +458,7 @@ class SMC_Engine:
             bottom = row['OB_bottom']
             origin_pos = df.index.get_loc(obs_idx)
             # start scanning after origin_pos + 1
-            for j in range(origin_pos+1, n):
+            for j in range( origin_pos + 1, n ):
                 high_j = df['High'].iloc[j]
                 low_j = df['Low'].iloc[j]
                 close_j = df['Close'].iloc[j]
@@ -496,6 +496,7 @@ class SMC_Engine:
                     break  # stop scanning after first violation
 
         return df
+
     # ---------------------------------------------
     # 7) OTE Optimal Trade Entry / Premium-Discount
     # ---------------------------------------------
@@ -858,7 +859,6 @@ class SMC_Engine:
     
     def overlays_choch( self, df, ax, artists, key, visible_start ):
         
-        # si les colonnes sont absentes → rien à faire
         if not any( col in df.columns for col in ['CHOCH_UP', 'CHOCH_DOWN'] ):
             return
         
@@ -871,12 +871,12 @@ class SMC_Engine:
                 type = 'CHOCH ↑' + df.at[ idx, "CHOCH_TYPE" ]
                 line = ax.hlines(
                     y=y, xmin=pos, xmax=pos+5,
-                    linestyle='-', linewidth=0.8,
+                    linestyle='-', linewidth=1.2,
                     color='dodgerblue', alpha=0.8,
                     visible=visible_start
                 )
                 txt = ax.text(
-                    pos-10, y + 0.003*y, type,
+                    pos-10, y, type,
                     fontsize=8, color='dodgerblue',
                     bbox=dict(boxstyle='square,pad=0.3', facecolor='lightblue', alpha=0.2),
                     visible=visible_start
@@ -889,12 +889,12 @@ class SMC_Engine:
                 type = 'CHOCH ↓' + df.at[ idx, "CHOCH_TYPE" ]
                 line = ax.hlines(
                     y=y, xmin=pos, xmax=pos+5,
-                    linestyle='-', linewidth=0.8,
+                    linestyle='-', linewidth=1.2,
                     color='orange', alpha=0.8,
                     visible=visible_start
                 )
                 txt = ax.text(
-                    pos-10, y - 0.003*y, type,
+                    pos-10, y, type,
                     fontsize=8, color='orange',
                     bbox=dict(boxstyle='square,pad=0.3', facecolor='moccasin', alpha=0.25),
                     visible=visible_start
@@ -1025,13 +1025,13 @@ class SMC_Engine:
             pos = self.idx_to_pos[ idx ]
             ob_type = df.loc[idx, 'OB_type']
             
-            if ob_type is None or not str(ob_type).startswith('breaker_'):
+            if ob_type is None or not str(ob_type).startswith( 'breaker_' ):
                 continue
 
             top = df.loc[idx, 'OB_top']
             bottom = df.loc[idx, 'OB_bottom']
 
-            if pd.isna(top) or pd.isna(bottom):
+            if pd.isna( top ) or pd.isna( bottom ):
                 continue
 
             pos_broken = None
@@ -1044,9 +1044,9 @@ class SMC_Engine:
             # Broken at
             broken = df.loc[idx, 'Broken_at']
             if pd.notna( broken ):
-                pos_broken = self.idx_to_pos[broken]
+                pos_broken = self.idx_to_pos[ broken ]
                 price = df.loc[broken, 'Close']
-                sct = ax.scatter( pos_broken, price, color='black', s=40, marker='x',
+                sct = ax.scatter( pos_broken, price, color='darkblue', s=40, marker='v',
                                visible=visible_start)
                 artists[ key ].append(sct)
 
@@ -1055,7 +1055,7 @@ class SMC_Engine:
             if pd.notna(retest):
                 pos_retest = self.idx_to_pos[retest]
                 price = df.loc[retest, 'Close']
-                sct = ax.scatter( pos_retest, price, color='orange', s=40, marker='x',
+                sct = ax.scatter( pos_retest, price, color='darkorange', s=40, marker='^',
                                visible=visible_start)
                 artists[ key ].append(sct)
 

@@ -18,8 +18,8 @@ def generate_data_yfinance():
     #symbol = 'AAPL' # APLE
     #symbol = 'AM.PA' # DASSAULT AVIATION
                 
-    date_start = '2023-12-01'     # Date de début
-    date_end = '2025-12-11'       # Date de fin
+    date_start = '2023-12-24'     # Date de début
+    date_end = '2025-12-24'       # Date de fin
     interval_fetch = '1d'         # Intervalle de temps (1d, 1wk, 1mo, etc.)
 
     ticker = yfinance.Ticker( symbol )

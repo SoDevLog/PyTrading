@@ -1,13 +1,17 @@
 """
     SMC_Tkinter_UI for SMC/ICT strategy methode
     - Init_Check_Box
+    - on_click souris clique droit pour supprimer un artist
+
 """
 from matplotlib.ticker import StrMethodFormatter
 import numpy
 import pandas
 import tkinter as tk
 import matplotlib.pyplot as plt
-import matplotlib.patches as patches
+from matplotlib.lines import Line2D
+from matplotlib.patches import Rectangle, Patch
+from matplotlib.text import Text
 import matplotlib.dates as mdates
 import mplfinance as mpf
 
@@ -30,6 +34,7 @@ class SMC_Tkinter_UI:
 
         # Stocker les artistes graphiques
         self.artists = {
+            'candles': [],
             'structure': [],
             'swings': [],
             'segments': [],
@@ -73,7 +78,7 @@ class SMC_Tkinter_UI:
         _row = 0
         ttk.Label( frm_params, text="Swing width :" ).grid( row=_row, column=0, sticky="w", padx=5, pady=2 )
         self.var_sw = tk.IntVar( value=self.params.swing_width )
-        ttk.Spinbox( frm_params, from_=2, to=10, textvariable=self.var_sw, width=8).grid( row=_row, column=1, padx=5, pady=2 )
+        ttk.Spinbox( frm_params, from_=2, to=10, textvariable=self.var_sw, width=8, command=self.on_spinbox_click).grid( row=_row, column=1, padx=5, pady=2 )
 
         # Liquidity threshold
         _row += 1
@@ -100,18 +105,20 @@ class SMC_Tkinter_UI:
         frm_overlays.grid( row=1, column=0, padx=5, pady=5, sticky="ew" )
 
         # Init_Check_Box
+        self.show_candles = tk.BooleanVar( value=True )
         self.show_swings = tk.BooleanVar( value=False )
-        self.show_structure = tk.BooleanVar( value=True )
-        self.show_segments = tk.BooleanVar( value=True )
+        self.show_structure = tk.BooleanVar( value=False )
+        self.show_segments = tk.BooleanVar( value=False )
         self.show_displacement = tk.BooleanVar( value=False )
-        self.show_bos = tk.BooleanVar( value=True )
-        self.show_choch = tk.BooleanVar( value=True )
+        self.show_bos = tk.BooleanVar( value=False )
+        self.show_choch = tk.BooleanVar( value=False )
         self.show_liquidity = tk.BooleanVar( value=False )
-        self.show_order_blocks = tk.BooleanVar( value=False )
+        self.show_order_blocks = tk.BooleanVar( value=True )
         self.show_fvg = tk.BooleanVar( value=False )
         self.show_ote = tk.BooleanVar( value=False )
 
         chk = [
+            ("Candles", self.show_candles, 'candles'),
             ("Swings", self.show_swings, 'swings'),
             ("Structure", self.show_structure, 'structure'),
             ("Segments", self.show_segments, 'segments'),
@@ -124,7 +131,7 @@ class SMC_Tkinter_UI:
             ("OTE", self.show_ote, 'ote'),
         ]
 
-        for i, (txt, var, key) in enumerate(chk):
+        for i, (txt, var, key) in enumerate( chk ):
             cb = ttk.Checkbutton( frm_overlays, text=txt, variable=var,
                 command=lambda k=key: self.toggle_overlay(k) )
             cb.grid( row=i, column=0, sticky="w", padx=5, pady=2 )
@@ -135,7 +142,8 @@ class SMC_Tkinter_UI:
 
         ttk.Button( frm_actions, text="Apply", command=self.run_smc ).grid(row=0, column=0, padx=5, pady=2)
         ttk.Button( frm_actions, text="New", command=self.generate_new_data ).grid(row=1, column=0, padx=5, pady=2)
-        ttk.Button( frm_actions, text="Refresh Plot", command=self.refresh_plot ).grid(row=2, column=0, padx=5, pady=2)
+        ttk.Button( frm_actions, text="ReCalcule Plot", command=self.refresh_plot ).grid(row=2, column=0, padx=5, pady=2)
+        ttk.Button( frm_actions, text="ReDraw Plot", command=self.plot ).grid(row=3, column=0, padx=5, pady=2)
 
         # Frame droit : graphique
         right_frame = ttk.Frame( main_frame )
@@ -184,9 +192,69 @@ class SMC_Tkinter_UI:
 
     def refresh_plot( self ):
         """Recrée complètement le graphique (après Apply ou New)"""
+        if self.fig is not None:
+            plt.close( self.fig )
+            self.fig = None
+            self.ax = None
         self.run_smc()
         self.plot()
 
+    def on_spinbox_click( self ):
+        if self.fig is not None:
+            plt.close( self.fig )
+            self.fig = None
+            self.ax = None        
+        self.update_params()
+        self.run_smc()
+        self.plot()        
+
+    # -------------------------------------------------------------------------
+    
+    def on_click(self, event):
+        if event.inaxes != self.ax:
+            return
+
+        if event.button != 3:
+            return
+
+        removed = False
+        ALLOWED = (Line2D, Patch, Text)
+        
+        for artist in list(self.ax.get_children()):
+            if not isinstance(artist, ALLOWED):
+                continue
+
+            # exclure éléments structurels
+            if artist.axes is None:
+                continue
+
+            try:
+                contains, _ = artist.contains(event)
+            except Exception:
+                continue
+
+            if not contains:
+                continue
+
+            try:
+                artist.remove()
+                removed = True
+            except NotImplementedError:
+                # artist non supprimable (ticks, spines, etc.)
+                continue
+
+        if removed:
+            event.canvas.draw_idle()
+    
+    # -------------------------------------------------------------------------
+    
+    def plot_price( self, ax, df ):
+        mpf.plot( df, type='candle', ax=ax, style='charles', show_nontrading=False )
+        self.artists[ 'candles' ] = ax.collections + ax.patches
+        self.toggle_overlay( 'candles' ) # must be done because mpf.plot has no visible param
+    
+    # -------------------------------------------------------------------------
+        
     def plot( self, name=None ):
         self.name = name
         
@@ -207,12 +275,13 @@ class SMC_Tkinter_UI:
         
         # Réinitialiser les artistes
         for key in self.artists:
-            self.artists[key] = []
+            self.artists[ key ] = []
 
         # Créer nouvelle figure
         self.fig, self.ax = plt.subplots( figsize=(12, 7) )
-        mpf.plot( df, type='candle', ax=self.ax, style='charles', show_nontrading=False )
-
+        self.fig.canvas.mpl_connect( "button_press_event", self.on_click )
+        self.plot_price( self.ax, df )
+        
         # Créer les overlays et stocker les artistes
         self.create_overlays( self.ax, df )
         
