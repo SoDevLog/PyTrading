@@ -10,6 +10,7 @@
     - detect_ote : OTE Optimal Trade Entry / Premium-Discount
     
     - overlays_structure
+    - overlays_segments
     - overlays_displacement
     - overlays_bos
     - overlays_choch
@@ -30,6 +31,7 @@ import pandas as pd
 import matplotlib.patches as patches
 
 from matplotlib.patches import Rectangle
+from matplotlib.lines import Line2D
 from numpy.lib.stride_tricks import sliding_window_view
 from dataclasses import dataclass
 from state_machine_bos import MarketStockStateMachine, MarketState
@@ -63,7 +65,7 @@ def atr( df, period=14 ):
 # -------------------------
 @dataclass
 class SMC_Params:
-    swing_width: int = 3           # pivot detection window half-size (3 -> 3 left + 3 right)
+    swing_width: int = 3 # pivot detection ( 3 left + pivot + 3 right)
     liquidity_threshold: float = 0.001
     bos_atr_confirm: float = 0.25
     swing_min_width: int = 3
@@ -91,10 +93,10 @@ class SMC_Engine:
         highs = df['High'].values
         lows = df['Low'].values
         
-        # Windows de taille 2*L+1
+        # Taille de la fenêtre :  2 * L + 1
         window_size = 2 * L + 1
-        high_windows = sliding_window_view(highs, window_size)
-        low_windows = sliding_window_view(lows, window_size)
+        high_windows = sliding_window_view( highs, window_size )
+        low_windows = sliding_window_view( lows, window_size )
         
         # Indices valides (centrer sur L)
         valid_indices = numpy.arange(L, n - L)
@@ -103,20 +105,20 @@ class SMC_Engine:
         
         # Détecter les swings
         is_swing_high = (
-            (center_highs == high_windows.max(axis=1)) &  # Est le max
-            (numpy.sum(high_windows == center_highs[:, None], axis=1) == 1)  # Unique
+            ( center_highs == high_windows.max(axis=1) ) &  # Est le max
+            ( numpy.sum( high_windows == center_highs[:, None], axis=1 ) == 1 )  # Unique
         )
         
         is_swing_low = (
-            (center_lows == low_windows.min(axis=1)) &  # Est le min
-            (numpy.sum(low_windows == center_lows[:, None], axis=1) == 1)  # Unique
+            ( center_lows == low_windows.min(axis=1) ) &  # Est le min
+            ( numpy.sum(low_windows == center_lows[:, None], axis=1) == 1 )  # Unique
         )
         
         # Assigner les résultats avec iloc au lieu de loc
         df['SwingHigh'] = False
         df['SwingLow'] = False
-        df.iloc[valid_indices[is_swing_high], df.columns.get_loc('SwingHigh')] = True
-        df.iloc[valid_indices[is_swing_low], df.columns.get_loc('SwingLow')] = True
+        df.iloc[ valid_indices[is_swing_high], df.columns.get_loc('SwingHigh')] = True
+        df.iloc[ valid_indices[is_swing_low], df.columns.get_loc('SwingLow')] = True
         
         return df
     
@@ -125,29 +127,49 @@ class SMC_Engine:
     # -------------------
     def detect_structure( self, df ):
         df = df.copy()
+        
         df['Structure'] = None
-        last_high_val = None
-        last_low_val = None
-        last_high_idx = None
-        last_low_idx = None
-
+        df['StructurePrice'] = numpy.nan
+        
+        last_swing_high_price = None
+        last_swing_low_price = None
+        
         for i in range( len(df) ):
-            if df['SwingHigh'].iat[i]:
-                h = df['High'].iat[i]
-                if last_high_val is None or h > last_high_val:
-                    df.at[ df.index[i], 'Structure' ] = 'HH'
-                else:
-                    df.at[ df.index[i], 'Structure' ] = 'LH'
-                last_high_val = h
-                last_high_idx = i
-            elif df['SwingLow'].iat[i]:
-                l = df['Low'].iat[i]
-                if last_low_val is None or l > last_low_val:
-                    df.at[ df.index[i], 'Structure' ] = 'HL'
-                else:
-                    df.at[ df.index[i], 'Structure' ] = 'LL'
-                last_low_val = l
-                last_low_idx = i
+            
+            # Nouveau Swing High détecté
+            if df[ 'SwingHigh' ].iloc[i]:
+                current_high = df[ 'High' ].iloc[i]
+                
+                # On a besoin d'un swing high précédent pour déterminer HH ou LH
+                if last_swing_high_price is not None:
+                    if current_high > last_swing_high_price:
+                        # Higher High
+                        df.loc[ df.index[i], 'Structure' ] = 'HH'
+                    else:
+                        # Lower High
+                        df.loc[ df.index[i], 'Structure' ] = 'LH'
+                        
+                    df.loc[ df.index[i], 'StructurePrice' ] = current_high
+                    
+                last_swing_high_price = current_high
+            
+            # Nouveau Swing Low détecté
+            if df['SwingLow'].iloc[i]:
+                current_low = df['Low'].iloc[i]
+                
+                # On a besoin d'un swing low précédent pour déterminer HL ou LL
+                if last_swing_low_price is not None:
+                    if current_low > last_swing_low_price:
+                        # Higher Low
+                        df.loc[ df.index[i], 'Structure' ] = 'HL'
+                    else:
+                        # Lower Low
+                        df.loc[ df.index[i], 'Structure' ] = 'LL'
+                    
+                    df.loc[ df.index[i], 'StructurePrice' ] = current_low
+                    
+                last_swing_low_price = current_low
+        
         return df
 
     # ---------------------------
@@ -165,75 +187,119 @@ class SMC_Engine:
         return val, val >= self.params.displacement_body_ratio
 
     # ------------------------------------
-    # 3) CHoCH ICT strict + BOS ICT strict
+    # 3) CHoCH & BOS ICT
     # ------------------------------------
     def detect_bos_choch( self, df ):
         df = df.copy()
 
-        df["BOS_UP"] = False
-        df["BOS_DOWN"] = False
-        df["CHOCH_UP"] = False
-        df["CHOCH_DOWN"] = False
-        df["MarketState"] = None
+        df['BOS_UP'] = False
+        df['BOS_DOWN'] = False
+        df['CHOCH_UP'] = False
+        df['CHOCH_DOWN'] = False
+        df[ 'MarketState' ] = None
 
+        df['CHOCH_LEVEL'] = None
+        df['CHOCH_TYPE']  = None
+        df['BOS_LEVEL']   = None
 
-        for i in range( len(df) ):
-            # displacement detection ( mark the aggressive candles )
-            val, result = self.is_displacement( df, i )
+        # --- Mark displacement ---
+        df['DISPLACEMENT'] = False
+        df['DISPLACEMENT_VALUE'] = 0.0
+
+        for i in range(len(df)):
+            val, result = self.is_displacement(df, i)
             if result:
-                df.at[ df.index[i], 'DISPLACEMENT' ] = True
-                df.at[ df.index[i], 'DISPLACEMENT_VALUE' ] = val
-                
-        sm = MarketStockStateMachine()
+                df.at[df.index[i], 'DISPLACEMENT'] = True
+                df.at[df.index[i], 'DISPLACEMENT_VALUE'] = val
+
+        state_market = MarketStockStateMachine()
+
+        choch_level = None
+        choch_direction = None   # 'UP' | 'DOWN'
+        choch_active = False
+        
 
         for idx in df.index:
 
-            swing_type = None
-            price = None
-                
-            # Swing High
-            if df.at[idx, "SwingHigh"]:
-                # pivot high → HH ou LH ?
-                if sm.last_HH is None or df.at[idx, "High"] > sm.last_HH:
-                    swing_type = "HH"
-                else:
-                    swing_type = "LH"
-                price = df.at[idx, "High"]
+            structure = df.at[ idx, 'Structure' ]
+            price = df.at[ idx, 'StructurePrice' ] 
 
-            # Swing Low
-            elif df.at[idx, "SwingLow"]:
-                # pivot low → HL ou LL ?
-                if sm.last_HL is None or df.at[idx, "Low"] > sm.last_HL:
-                    swing_type = "HL"
-                else:
-                    swing_type = "LL"
-                price = df.at[idx, "Low"]
+            close = df.at[ idx, 'Close']
+            high  = df.at[ idx, 'High']
+            low   = df.at[ idx, 'Low']
 
-            else:
-                # aucun pivot → skip
-                continue
+            prev_state, new_state = state_market.update( structure, price )
 
-            prev_state, new_state = sm.update( swing_type, price )
-
-            # --- BOS / CHOCH detection ---
+            # -------------------------------------------------
+            # 1️ CHOCH = cassure du pivot opposé
+            # -------------------------------------------------
             if prev_state == MarketState.UPTREND and new_state == MarketState.POTENTIAL_REVERSAL:
-                # cassure du HL précédent → CHOCH down
-                df.at[idx, "CHOCH_DOWN"] = True
+                choch_level = state_market.last_HL_price
+                choch_direction = 'DOWN'
+                choch_active = True
 
-            if prev_state == MarketState.DOWNTREND and new_state == MarketState.POTENTIAL_REVERSAL:
-                # cassure du LH précédent → CHOCH up
-                df.at[idx, "CHOCH_UP"] = True
+            elif prev_state == MarketState.DOWNTREND and new_state == MarketState.POTENTIAL_REVERSAL:
+                choch_level = state_market.last_LH_price
+                choch_direction = 'UP'
+                choch_active = True
 
-            # BOS = confirmation du reversal
-            if prev_state == MarketState.POTENTIAL_REVERSAL and new_state == MarketState.DOWNTREND:
-                #if df.at[ idx, 'DISPLACEMENT' ]:
-                    df.at[idx, "BOS_DOWN"] = True
+            if choch_active and choch_level is not None:
 
-            if prev_state == MarketState.POTENTIAL_REVERSAL and new_state == MarketState.UPTREND:
-                #if df.at[ idx, 'DISPLACEMENT' ]:
-                    df.at[idx, "BOS_UP"] = True
+                # --- CHOCH DOWN ---
+                if choch_direction == 'DOWN':
+                    if close < choch_level:
+                        df.at[ idx, 'CHOCH_DOWN'] = True
+                        df.at[ idx, 'CHOCH_LEVEL'] = choch_level
+                        df.at[ idx, 'CHOCH_TYPE'] = 'CLOSE'
+                        choch_active = False
+                    elif low < choch_level:
+                        df.at[ idx, 'CHOCH_DOWN'] = True
+                        df.at[ idx, 'CHOCH_LEVEL'] = choch_level
+                        df.at[ idx, 'CHOCH_TYPE'] = 'WICK'
+                        choch_active = False
 
-            df.at[idx, "MarketState"] = new_state.name
+                # --- CHOCH UP ---
+                elif choch_direction == 'UP':
+                    if close > choch_level:
+                        df.at[ idx, 'CHOCH_UP'] = True
+                        df.at[ idx, 'CHOCH_LEVEL'] = choch_level
+                        df.at[ idx, 'CHOCH_TYPE'] = 'CLOSE'
+                        choch_active = False
+                    elif high > choch_level:
+                        df.at[ idx, 'CHOCH_UP'] = True
+                        df.at[ idx, 'CHOCH_LEVEL'] = choch_level
+                        df.at[ idx, 'CHOCH_TYPE'] = 'WICK'
+                        choch_active = False
+
+            # -------------------------------------------------
+            # 2️ BOS = confirmation impulsive
+            # -------------------------------------------------
+            if (
+                prev_state == MarketState.UPTREND
+                and new_state == MarketState.POTENTIAL_REVERSAL
+                and choch_direction == 'DOWN'
+                and df.at[ idx, 'DISPLACEMENT' ]
+                and close < choch_level
+            ):
+                df.at[ idx, 'BOS_DOWN' ] = True
+                df.at[ idx, 'BOS_LEVEL' ] = choch_level
+                choch_direction = None
+                choch_level = None
+
+            elif (
+                prev_state == MarketState.DOWNTREND
+                and new_state == MarketState.POTENTIAL_REVERSAL
+                and choch_direction == 'UP'
+                and df.at[ idx, 'DISPLACEMENT' ]
+                and close > choch_level
+            ):
+                df.at[ idx, 'BOS_UP' ] = True
+                df.at[ idx, 'BOS_LEVEL' ] = choch_level
+                choch_direction = None
+                choch_level = None
+
+            # --- Mark machine state market ---
+            df.at[ idx, 'MarketState' ] = new_state.name
 
         return df
 
@@ -463,14 +529,14 @@ class SMC_Engine:
 
         # --- 1) Assure les pivots (SwingHigh / SwingLow) ---
         if 'SwingHigh' not in df.columns or 'SwingLow' not in df.columns:
-            L = getattr(self.params, 'swing_width', 3)
+            L = self.params.swing_width
             highs = df['High'].values
             lows = df['Low'].values
 
             swing_high = numpy.zeros(len(df), dtype=bool)
             swing_low  = numpy.zeros(len(df), dtype=bool)
 
-            for i in range(L, len(df) - L):
+            for i in range( L, len(df) - L ):
                 if highs[i] == highs[i-L:i+L+1].max():
                     swing_high[i] = True
                 if lows[i] == lows[i-L:i+L+1].min():
@@ -490,9 +556,7 @@ class SMC_Engine:
         def price(i, col):
             return float(df.loc[i, col])
 
-        # ==========================================================
-        # 2) Impulsion haussière A(low) → B(high) → retracement C(low)
-        # ==========================================================
+        # --- 2) Impulsion haussière A(low) → B(high) → retracement C(low)
         for b_idx in swing_high_idx:
 
             pos_b = all_idx.index(b_idx)
@@ -555,9 +619,7 @@ class SMC_Engine:
                 else:
                     break
 
-        # ==========================================================
-        # 3) Impulsion baissière A(high) → B(low) → retracement C(high)
-        # ==========================================================
+        # --- 3) Impulsion baissière A(high) → B(low) → retracement C(high)
         for b_idx in swing_low_idx:
 
             pos_b = all_idx.index(b_idx)
@@ -634,6 +696,26 @@ class SMC_Engine:
 
     # -------------------------------------------------------------------------
     
+    def overlays_swings( self, df, ax, artists, key, visible_start ):
+
+        if not all( col in df.columns for col in [ 'SwingHigh', 'SwingLow' ] ):
+            return
+                
+        for idx in df.index:
+            if df.loc[idx, 'SwingHigh']:
+                pos = self.idx_to_pos[ idx ]
+                y = df.loc[idx, 'High']
+                sct = ax.scatter( pos, y, color='green', s=35, marker='v', visible=visible_start )
+                artists[ key ].append( sct )
+
+            if df.loc[idx, 'SwingLow']:
+                pos = self.idx_to_pos[ idx ]
+                y = df.loc[idx, 'Low']
+                sct = ax.scatter( pos, y, color='red', s=35, marker='^', visible=visible_start )
+                artists[ key ].append( sct )
+           
+    # -------------------------------------------------------------------------
+    
     def overlays_structure( self, df, ax, artists, key, visible_start ):
         
         if 'Structure' in df.columns:
@@ -651,6 +733,70 @@ class SMC_Engine:
                     artists[ key ].append(txt)    
 
     # -------------------------------------------------------------------------
+
+    def overlays_segments( self, df, ax, artists, key, visible_start ):
+
+        if not all( col in df.columns for col in [ 'SwingHigh', 'SwingLow', 'MarketState' ] ):
+            return
+
+        last_pos   = None
+        last_price = None
+        last_structure  = None   # 'HL', 'HH', 'LH', 'LL'
+        last_state = None
+
+        for idx in df.index:
+
+            structure = df.at[ idx, 'Structure' ]
+            if structure == None:
+                continue
+            
+            state = df.at[ idx, 'MarketState' ]
+            price = df.at[ idx, 'StructurePrice' ]
+            pos = self.idx_to_pos[ idx ]
+
+            # --- tracé du segment ---
+            valid = False
+
+            if last_structure:
+                if state == 'UPTREND':
+                    valid = (
+                        (last_structure == 'HL' and structure == 'HH') or
+                        (last_structure == 'HH' and structure == 'HL')
+                    )
+                elif state == 'DOWNTREND':
+                    valid = (
+                        (last_structure == 'LH' and structure == 'LL') or
+                        (last_structure == 'LL' and structure == 'LH')
+                    )
+                elif state == 'POTENTIAL_REVERSAL':
+                    valid = (
+                        (last_structure == 'HL' and structure == 'LH') or
+                        (last_structure == 'LH' and structure == 'LL')
+                    )
+
+            # --- tracé ---
+            if valid:
+                color = 'green' if state == 'UPTREND' else 'red'
+
+                line = Line2D(
+                    [last_pos, pos],
+                    [last_price, price],
+                    linewidth=1.3,
+                    color=color,
+                    alpha=0.85,
+                    visible=visible_start
+                )
+
+                ax.add_line(line)
+                artists[key].append(line)
+
+            # --- mise à jour mémoire ---
+            last_pos   = pos
+            last_price = price
+            last_structure  = structure
+            last_state = state
+
+    # -------------------------------------------------------------------------
     
     def overlays_displacement( self, df, ax, artists, key, visible_start ):
         
@@ -666,21 +812,18 @@ class SMC_Engine:
                                    visible=visible_start)
                     artists[ key ].extend([txt, sct])
 
-
     # -------------------------------------------------------------------------
     
     def overlays_bos( self, df, ax, artists, key, visible_start ):
         
-        # si les colonnes sont absentes → rien à faire
         if not any( col in df.columns for col in [ 'BOS_UP', 'BOS_DOWN' ] ):
             return
         
         for idx in df.index:
-            pos = self.idx_to_pos[idx]
+            pos = self.idx_to_pos[ idx ]
 
-            # --- BOS UP ---
-            if 'BOS_UP' in df.columns and df.at[idx, 'BOS_UP']:
-                y = df.at[idx, 'High']
+            if df.at[ idx, 'BOS_UP' ]:
+                y = df.at[ idx, 'BOS_LEVEL' ]
                 line = ax.hlines(
                     y=y, xmin=pos, xmax=pos+20,
                     linestyle='--', linewidth=0.5,
@@ -695,9 +838,8 @@ class SMC_Engine:
                 )
                 artists[key].extend([line, txt])
 
-            # --- BOS DOWN ---
-            if 'BOS_DOWN' in df.columns and df.at[idx, 'BOS_DOWN']:
-                y = df.at[idx, 'Low']
+            if df.at[ idx, 'BOS_DOWN' ]:
+                y = df.at[ idx, 'BOS_LEVEL' ]
                 line = ax.hlines(
                     y=y, xmin=pos, xmax=pos+20,
                     linestyle='--', linewidth=0.5,
@@ -724,16 +866,17 @@ class SMC_Engine:
             pos = self.idx_to_pos[idx]
 
             # --- CHOCH UP ---
-            if 'CHOCH_UP' in df.columns and df.at[idx, 'CHOCH_UP']:
-                y = df.at[ idx, 'High' ]
+            if df.at[idx, 'CHOCH_UP']:
+                y = df.at[ idx, "CHOCH_LEVEL" ]
+                type = 'CHOCH ↑' + df.at[ idx, "CHOCH_TYPE" ]
                 line = ax.hlines(
-                    y=y, xmin=pos, xmax=pos+20,
+                    y=y, xmin=pos, xmax=pos+5,
                     linestyle='-', linewidth=0.8,
                     color='dodgerblue', alpha=0.8,
                     visible=visible_start
                 )
                 txt = ax.text(
-                    pos, y + 0.003*y, 'CHOCH ↑',
+                    pos-10, y + 0.003*y, type,
                     fontsize=8, color='dodgerblue',
                     bbox=dict(boxstyle='square,pad=0.3', facecolor='lightblue', alpha=0.2),
                     visible=visible_start
@@ -741,16 +884,17 @@ class SMC_Engine:
                 artists[key].extend([line, txt])
 
             # --- CHOCH DOWN ---
-            if 'CHOCH_DOWN' in df.columns and df.at[idx, 'CHOCH_DOWN']:
-                y = df.at[idx, 'Low']
+            if df.at[idx, 'CHOCH_DOWN']:
+                y = df.at[ idx, "CHOCH_LEVEL" ]
+                type = 'CHOCH ↓' + df.at[ idx, "CHOCH_TYPE" ]
                 line = ax.hlines(
-                    y=y, xmin=pos, xmax=pos+20,
+                    y=y, xmin=pos, xmax=pos+5,
                     linestyle='-', linewidth=0.8,
                     color='orange', alpha=0.8,
                     visible=visible_start
                 )
                 txt = ax.text(
-                    pos, y - 0.003*y, 'CHOCH ↓',
+                    pos-10, y - 0.003*y, type,
                     fontsize=8, color='orange',
                     bbox=dict(boxstyle='square,pad=0.3', facecolor='moccasin', alpha=0.25),
                     visible=visible_start

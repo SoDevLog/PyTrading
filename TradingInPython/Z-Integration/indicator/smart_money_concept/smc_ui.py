@@ -1,6 +1,6 @@
 """
     SMC_Tkinter_UI for SMC/ICT strategy methode
-    - Init_check_box
+    - Init_Check_Box
 """
 from matplotlib.ticker import StrMethodFormatter
 import numpy
@@ -31,6 +31,8 @@ class SMC_Tkinter_UI:
         # Stocker les artistes graphiques
         self.artists = {
             'structure': [],
+            'swings': [],
+            'segments': [],
             'displacement': [],
             'bos': [],
             'choch': [],
@@ -97,8 +99,10 @@ class SMC_Tkinter_UI:
         frm_overlays = ttk.LabelFrame( left_frame, text="Overlays" )
         frm_overlays.grid( row=1, column=0, padx=5, pady=5, sticky="ew" )
 
-        # Init_check_box
+        # Init_Check_Box
+        self.show_swings = tk.BooleanVar( value=False )
         self.show_structure = tk.BooleanVar( value=True )
+        self.show_segments = tk.BooleanVar( value=True )
         self.show_displacement = tk.BooleanVar( value=False )
         self.show_bos = tk.BooleanVar( value=True )
         self.show_choch = tk.BooleanVar( value=True )
@@ -108,7 +112,9 @@ class SMC_Tkinter_UI:
         self.show_ote = tk.BooleanVar( value=False )
 
         chk = [
+            ("Swings", self.show_swings, 'swings'),
             ("Structure", self.show_structure, 'structure'),
+            ("Segments", self.show_segments, 'segments'),
             ("Displacement", self.show_displacement, 'displacement'),
             ("BOS", self.show_bos, 'bos'),
             ("CHoCH", self.show_choch, 'choch'),
@@ -234,6 +240,15 @@ class SMC_Tkinter_UI:
         """Créer les overlays et stocker les artistes"""
 
         # Structure
+        self.engine.overlays_swings(
+            df=df,
+            ax=ax,
+            artists=self.artists, 
+            key='swings', 
+            visible_start=self.show_swings.get()
+        )
+        
+        # Structure
         self.engine.overlays_structure(
             df=df,
             ax=ax,
@@ -242,6 +257,15 @@ class SMC_Tkinter_UI:
             visible_start=self.show_structure.get()
         )
 
+        # Segments
+        self.engine.overlays_segments(
+            df=df,
+            ax=ax,
+            artists=self.artists, 
+            key='segments', 
+            visible_start=self.show_segments.get()
+        )
+        
         # Displacement
         self.engine.overlays_displacement(
             df=df,
