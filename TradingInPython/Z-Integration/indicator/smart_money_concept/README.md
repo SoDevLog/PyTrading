@@ -1,19 +1,21 @@
 # Smart Money Concept (SMC) trading methode ICT (Inner Circle Trading)
 
-Conception réalisation d'un moteur SMC Interface Tkinter
+Design and implementation of an SMC engine with a Tkinter interface
 
 - with scenario generator
+- sate machine for BoS detection
 
-## main python script
+## Main python script
 
-- smc.py :
+- smc.py # main entry point
     - generate signal
     - run Tkinter UI
 
 ## SMC engine
 
-- smc_engine.py : tag les différents concept ICT dans le dataframe [ 'Open', 'High', 'Low', 'Close' ]
+- smc_engine.py : tag the different ICT concepts in the dataframe [ 'Open', 'High', 'Low', 'Close' ]
 
+- Swings : prestructure HH HL LH LL
 - CHoCH : Change of Character
 - BOS : Break Of Structure
 - Swings : préstructure HH HL LH LL
@@ -22,12 +24,25 @@ Conception réalisation d'un moteur SMC Interface Tkinter
 - OTE : Optimal Trade Entry / Premium-Discount
 - Liquidity (sweep)
 
-Utilise plot_overlays pour venir tagger un 'ax' du graphe MatPlotLib
+Use plot_overlays to tag an 'ax' of the MatPlotLib graph
 
 ## Market Stock State Machine
 
-- détection des BOS (Break Of Structure)
+- detection of BOS (Break Of Structure)
 
-Retrouver cette méthode de trading dans l'application :
+## Build
+
+- install **Python**
+- install **PyInstaller**
+
+- Create windows executable :
+
+>pyinstaller smc.spec --clean
+
+- [SMC.exe](./dist/)
+
+## Formation
+
+Retreive this trading method in the blog TradingInPython :
 
 - [TradingInPython - Comment décoder la strcuture du marché](https://www.trading-et-data-analyses.com/2025/12/comment-decoder-la-structure-du-marche.html)

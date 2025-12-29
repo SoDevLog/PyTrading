@@ -106,14 +106,14 @@ class SMC_Tkinter_UI:
 
         # Init_Check_Box
         self.show_candles = tk.BooleanVar( value=True )
-        self.show_swings = tk.BooleanVar( value=False )
-        self.show_structure = tk.BooleanVar( value=False )
-        self.show_segments = tk.BooleanVar( value=False )
+        self.show_swings = tk.BooleanVar( value=True )
+        self.show_structure = tk.BooleanVar( value=True )
+        self.show_segments = tk.BooleanVar( value=True )
         self.show_displacement = tk.BooleanVar( value=False )
         self.show_bos = tk.BooleanVar( value=False )
         self.show_choch = tk.BooleanVar( value=False )
         self.show_liquidity = tk.BooleanVar( value=False )
-        self.show_order_blocks = tk.BooleanVar( value=True )
+        self.show_order_blocks = tk.BooleanVar( value=False )
         self.show_fvg = tk.BooleanVar( value=False )
         self.show_ote = tk.BooleanVar( value=False )
 

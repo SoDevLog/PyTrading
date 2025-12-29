@@ -1,6 +1,9 @@
 """
     - Génération du scénario
     - Exécution de la Tkinter App
+    
+    Build:
+    - pyinstaller smc.spec --clean
 """
 import pandas
 import yfinance
@@ -45,12 +48,13 @@ def generate_data_yfinance():
 
 # -----------------------------------------------------------------------------
 
-df = generate_data_yfinance()
-#df = generate_sample_data( seed=43 ) # for CHoCH detection
-#df, _ = generate_smc_scenario( lg_data=150, start_price=100.0, seed=42 )
-ui = SMC_Tkinter_UI( df )
-#ui = SMC_Tkinter_UI( df, generate_data=generate_sample_data )
-ui.run_smc() # create SMC_Engine apply parameters
-ui.plot( stock_name ) # afficher un premier graphique
-ui.run()
-
+if __name__ == "__main__":
+    from smc_ui import SMC_Tkinter_UI
+    df = generate_data_yfinance()
+    # For using generated sample data in smc_generateur_scenario.py
+    #df = generate_sample_data( seed=43 ) # for CHoCH detection
+    #df, _ = generate_smc_scenario( lg_data=150, start_price=100.0, seed=42 )
+    app = SMC_Tkinter_UI( df )
+    app.run_smc() # create SMC_Engine apply parameters
+    app.plot( stock_name ) # afficher un premier graphique
+    app.run()
