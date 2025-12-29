@@ -39,7 +39,13 @@ Use plot_overlays to tag an 'ax' of the MatPlotLib graph
 
 >pyinstaller smc.spec --clean
 
-- [SMC.exe](./dist/)
+## Windows runable SMC
+
+Download SMC.zip:
+
+- [Download SMC.zip](./dist/SMC.zip)
+
+Dezip SMC.zip to get SMC.exe (executable for windows)
 
 ## Formation
 

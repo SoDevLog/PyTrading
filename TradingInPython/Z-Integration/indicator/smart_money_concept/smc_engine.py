@@ -3,7 +3,7 @@
     - detect_swings
     - detect_structure
     - is_displacement
-    - detect_bos_choch
+    - detect_bos_choch : BoS (Break of Stucture) - CHoCH (CHange of CHaracters) changement de Structure ou MSS pour Market Structure Shift
     - detect_liquidity
     - detect_fvg : Fair Value Gap
     - detect_order_blocks : Order Blocks : Zones où de grands ordres ont été exécutés, pouvant agir comme des niveaux de support/résistance.
@@ -12,6 +12,7 @@
     - overlays_structure
     - overlays_segments
     - overlays_displacement
+    - overlays_market_state
     - overlays_bos
     - overlays_choch
     - overlays_liquidity
@@ -79,7 +80,21 @@ class SMC_Engine:
     def __init__(self, params: SMC_Params = None):
         self.params = params or SMC_Params()
         self.idx_to_pos = None
-    
+
+        # Colors for overlays_market_state
+        self.colors = {
+            'RANGE': ("#adadad", 0.15),              # Gris transparent
+            'UPTREND': ("#7cff7c", 0.15),         # Vert très clair transparent
+            'DOWNTREND': ("#ff8686", 0.15),       # Rouge très clair transparent
+            'POTENTIAL_REVERSAL': ("#7c7cff", 0.15)  # Bleu très clair transparent
+        }
+        
+        self.state_labels = {
+            'RANGE': 'RANGE',
+            'UPTREND': 'UP',
+            'DOWNTREND': 'DOWN',
+            'POTENTIAL_REVERSAL': 'REVERSAL'
+        }    
     # ---------------------------------------------
     # 1) Detect swings
     # ---------------------------------------------
@@ -192,19 +207,23 @@ class SMC_Engine:
     def detect_bos_choch( self, df ):
         df = df.copy()
 
-        df['BOS_UP'] = False
-        df['BOS_DOWN'] = False
         df['CHOCH_UP'] = False
         df['CHOCH_DOWN'] = False
-        df[ 'MarketState' ] = None
-
         df['CHOCH_LEVEL'] = None
-        df['CHOCH_TYPE']  = None
-        df['BOS_LEVEL']   = None
+        df['CHOCH_TYPE'] = None
+        df['CHOCH_IDX'] = None
+
+        df['BOS_UP'] = False
+        df['BOS_DOWN'] = False
+        df['BOS_LEVEL'] = None
+        df['BOS_IDX'] = None
 
         # --- Mark displacement ---
         df['DISPLACEMENT'] = False
         df['DISPLACEMENT_VALUE'] = 0.0
+        
+        # --- Market State -- #
+        df['MarketState'] = None
 
         for i in range(len(df)):
             val, result = self.is_displacement(df, i)
@@ -216,91 +235,77 @@ class SMC_Engine:
 
         choch_level = None
         choch_direction = None   # 'UP' | 'DOWN'
-        choch_active = False
-        
 
         for idx in df.index:
 
             structure = df.at[ idx, 'Structure' ]
-            price = df.at[ idx, 'StructurePrice' ] 
-
             close = df.at[ idx, 'Close']
-            high  = df.at[ idx, 'High']
-            low   = df.at[ idx, 'Low']
 
-            prev_state, new_state = state_market.update( structure, price )
+            prev_state, new_state = state_market.update( structure, idx, close )
+            df.at[ idx, 'MarketState'] = new_state.name # set market state for overlays_market_state
 
-            # -------------------------------------------------
-            # 1️ CHOCH = cassure du pivot opposé
-            # -------------------------------------------------
-            if prev_state == MarketState.UPTREND and new_state == MarketState.POTENTIAL_REVERSAL:
-                choch_level = state_market.last_HL_price
-                choch_direction = 'DOWN'
-                choch_active = True
+            # --- CHoCH --- #
+            if new_state == MarketState.POTENTIAL_REVERSAL and prev_state == MarketState.UPTREND:
+                if close < state_market.last_HL[1]:
+                    df.at[ idx, 'CHOCH_LEVEL'] = state_market.last_HL[1] # price
+                    df.at[ idx, 'CHOCH_IDX'] = state_market.last_HL[0] # save x position
+                    df.at[ idx, 'CHOCH_TYPE'] = 'OPEN'
+                    df.at[ idx, 'CHOCH_DOWN'] = True
+                    choch_level = state_market.last_HL[1]
+                    choch_direction = 'DOWN'
 
-            elif prev_state == MarketState.DOWNTREND and new_state == MarketState.POTENTIAL_REVERSAL:
-                choch_level = state_market.last_LH_price
-                choch_direction = 'UP'
-                choch_active = True
+            elif new_state == MarketState.POTENTIAL_REVERSAL and prev_state == MarketState.DOWNTREND:
+                if close > state_market.last_LH[1]:
+                    df.at[ idx, 'CHOCH_LEVEL'] = state_market.last_LH[1] # price
+                    df.at[ idx, 'CHOCH_IDX'] = state_market.last_LH[0] # save x position
+                    df.at[ idx, 'CHOCH_TYPE'] = 'OPEN'
+                    df.at[ idx, 'CHOCH_UP'] = True
+                    choch_level = state_market.last_LH[1]
+                    choch_direction = 'UP'
 
-            if choch_active and choch_level is not None:
-
-                # --- CHOCH DOWN ---
-                if choch_direction == 'DOWN':
-                    if close < choch_level:
-                        df.at[ idx, 'CHOCH_DOWN'] = True
-                        df.at[ idx, 'CHOCH_LEVEL'] = choch_level
-                        df.at[ idx, 'CHOCH_TYPE'] = 'CLOSE'
-                        choch_active = False
-                    elif low < choch_level:
-                        df.at[ idx, 'CHOCH_DOWN'] = True
-                        df.at[ idx, 'CHOCH_LEVEL'] = choch_level
-                        df.at[ idx, 'CHOCH_TYPE'] = 'WICK'
-                        choch_active = False
-
-                # --- CHOCH UP ---
-                elif choch_direction == 'UP':
-                    if close > choch_level:
-                        df.at[ idx, 'CHOCH_UP'] = True
-                        df.at[ idx, 'CHOCH_LEVEL'] = choch_level
-                        df.at[ idx, 'CHOCH_TYPE'] = 'CLOSE'
-                        choch_active = False
-                    elif high > choch_level:
-                        df.at[ idx, 'CHOCH_UP'] = True
-                        df.at[ idx, 'CHOCH_LEVEL'] = choch_level
-                        df.at[ idx, 'CHOCH_TYPE'] = 'WICK'
-                        choch_active = False
-
-            # -------------------------------------------------
-            # 2️ BOS = confirmation impulsive
-            # -------------------------------------------------
-            if (
-                prev_state == MarketState.UPTREND
-                and new_state == MarketState.POTENTIAL_REVERSAL
-                and choch_direction == 'DOWN'
-                and df.at[ idx, 'DISPLACEMENT' ]
-                and close < choch_level
+            # --- BOS DOWN --- #
+            if ( 
+                 choch_direction == 'DOWN'
+                 and prev_state == MarketState.DOWNTREND
+                 and close < choch_level
+                 and df.at[ idx, 'DISPLACEMENT' ]
             ):
                 df.at[ idx, 'BOS_DOWN' ] = True
-                df.at[ idx, 'BOS_LEVEL' ] = choch_level
+                df.at[ idx, 'BOS_LEVEL' ] = state_market.last_LL[1]
+                df.at[ idx, 'BOS_IDX' ] =  state_market.last_LL[0]
                 choch_direction = None
                 choch_level = None
 
-            elif (
-                prev_state == MarketState.DOWNTREND
-                and new_state == MarketState.POTENTIAL_REVERSAL
-                and choch_direction == 'UP'
-                and df.at[ idx, 'DISPLACEMENT' ]
-                and close > choch_level
+            # --- BOS UP --- #
+            if ( 
+                 choch_direction == 'UP'
+                 and prev_state == MarketState.UPTREND
+                 and close > choch_level
+                 and df.at[ idx, 'DISPLACEMENT' ]
             ):
                 df.at[ idx, 'BOS_UP' ] = True
-                df.at[ idx, 'BOS_LEVEL' ] = choch_level
+                df.at[ idx, 'BOS_LEVEL' ] = state_market.last_HH[1]
+                df.at[ idx, 'BOS_IDX' ] = state_market.last_HH[0]
                 choch_direction = None
                 choch_level = None
-
-            # --- Mark machine state market ---
-            df.at[ idx, 'MarketState' ] = new_state.name
-
+            
+            # --- CHoCH Closure --- #
+            if choch_direction == 'DOWN' and choch_level:
+                if close > state_market.last_HL[1]:
+                    df.at[ idx, 'CHOCH_LEVEL'] = choch_level
+                    df.at[ idx, 'CHOCH_IDX'] = idx
+                    df.at[ idx, 'CHOCH_TYPE'] = 'CLOSE'
+                    choch_direction = None
+                    choch_level = None
+                    
+            elif choch_direction == 'UP' and choch_level:
+                if close < state_market.last_LH[1]:
+                    df.at[ idx, 'CHOCH_LEVEL'] = choch_level
+                    df.at[ idx, 'CHOCH_IDX'] = idx
+                    df.at[ idx, 'CHOCH_TYPE'] = 'CLOSE'
+                    choch_direction = None
+                    choch_level = None
+                    
         return df
 
     # --------------------------------------------
@@ -759,26 +764,27 @@ class SMC_Engine:
             valid = False
 
             if last_structure:
-                if state == 'UPTREND':
+                if state == MarketState.UPTREND.name:
                     valid = (
                         (last_structure == 'HL' and structure == 'HH') or
                         (last_structure == 'HH' and structure == 'HL')
                     )
-                elif state == 'DOWNTREND':
+                    color = 'green'
+                elif state == MarketState.DOWNTREND.name:
                     valid = (
                         (last_structure == 'LH' and structure == 'LL') or
                         (last_structure == 'LL' and structure == 'LH')
                     )
-                elif state == 'POTENTIAL_REVERSAL':
+                    color = 'red'
+                elif state == MarketState.POTENTIAL_REVERSAL.name:
                     valid = (
-                        (last_structure == 'HL' and structure == 'LH') or
-                        (last_structure == 'LH' and structure == 'LL')
+                        (last_structure == 'HH' and structure == 'LL') or
+                        (last_structure == 'LL' and structure == 'HH')
                     )
+                    color = 'grey'
 
             # --- tracé ---
             if valid:
-                color = 'green' if state == 'UPTREND' else 'red'
-
                 line = Line2D(
                     [last_pos, pos],
                     [last_price, price],
@@ -809,10 +815,66 @@ class SMC_Engine:
                     v = "{:.2f}".format(df.loc[idx, 'DISPLACEMENT_VALUE'])
                     txt = ax.text(pos, y+0.1, v, ha='center', fontsize=7, color='red',
                                 visible=visible_start)
-                    sct = ax.scatter(pos, y, color='red', s=35, marker='v',
+                    sct = ax.scatter(pos, y, color='red', s=20, marker='v',
                                    visible=visible_start)
-                    artists[ key ].extend([txt, sct])
+                    artists[ key ].extend( [txt, sct] )
 
+    # -------------------------------------------------------------------------
+    
+    def overlays_market_state( self, df, ax, artists, key, visible_start ):
+
+        if 'MarketState' in df.columns:
+            timestamps = list( range( len( df ) ) )
+            prices = df['Close'].values
+            states = df['MarketState'].values
+            
+            # Tracer les bandes verticales pour chaque état
+            current_state = states[ 0 ]
+            start_idx = 0
+            
+            for i in range( 1, len( states ) + 1 ):
+                # Changement d'état ou fin des données
+                if i == len( states ) or states[i] != current_state:
+                    end_idx = i if i < len( states ) else i - 1
+                    
+                    # Récupérer la couleur et l'alpha pour cet état
+                    color, alpha = self.colors.get( current_state, ('gray', 0.15) )
+                    
+                    # Dessiner la bande verticale
+                    vspan = ax.axvspan(
+                        timestamps[ start_idx ], 
+                        timestamps[ end_idx ], 
+                        facecolor=color, 
+                        alpha=alpha,
+                        visible=visible_start, 
+                        zorder=0
+                    )
+                    
+                    # Ne pas affiche le texte pour l'état 'POTENTIAL_REVERSAL'
+                    txt_visible = visible_start
+                    if states[ start_idx ] == MarketState.POTENTIAL_REVERSAL.name:
+                        txt_visible = False
+                    
+                    # Ajouter le label de l'état au milieu de la bande    
+                    mid_idx = ( start_idx + end_idx ) // 2
+                    label = self.state_labels.get( current_state, 'none' )
+                    y_pos = prices.min() * 1.02
+                    txt = ax.text(
+                        timestamps[ mid_idx ], 
+                        y_pos, 
+                        label,
+                        ha='center', va='top', fontsize=6, 
+                        bbox=dict(boxstyle='square,pad=0.3', facecolor=color, alpha=0.2),
+                        visible=txt_visible,
+                        zorder=5
+                    )
+                        
+                    artists[key].extend([vspan, txt])
+                    
+                    if i < len( states ):
+                        current_state = states[i]
+                        start_idx = i
+                        
     # -------------------------------------------------------------------------
     
     def overlays_bos( self, df, ax, artists, key, visible_start ):
@@ -823,37 +885,52 @@ class SMC_Engine:
         for idx in df.index:
             pos = self.idx_to_pos[ idx ]
 
+            # --- BOS UP --- #
             if df.at[ idx, 'BOS_UP' ]:
                 y = df.at[ idx, 'BOS_LEVEL' ]
+                idx_x = df.at[ idx, "BOS_IDX" ]
+                pos_x = self.idx_to_pos[ idx_x ]                
                 line = ax.hlines(
-                    y=y, xmin=pos, xmax=pos+20,
-                    linestyle='--', linewidth=0.5,
-                    color='green', alpha=0.7,
+                    y=y, xmin=pos_x, xmax=pos,
+                    linestyle='--', linewidth=0.8,
+                    color='green', alpha=0.8,
                     visible=visible_start
                 )
+                pos_txt = (pos + pos_x) // 2
                 txt = ax.text(
-                    pos, y + 0.003*y, 'BOS ↑',
+                    pos_txt, y * 1.003, 'BoS ↑',
                     fontsize=8, color='green',
                     bbox=dict(boxstyle='square,pad=0.3', facecolor='lightgreen', alpha=0.2),
                     visible=visible_start
                 )
-                artists[key].extend([line, txt])
+                artists[ key ].extend([line, txt])
+                
+                sct = ax.scatter( pos, y, color='green', s=30, marker='>', visible=visible_start )
+                artists[ key ].append(sct)
 
+            # --- BOS DOWN --- #
             if df.at[ idx, 'BOS_DOWN' ]:
                 y = df.at[ idx, 'BOS_LEVEL' ]
+                idx_x = df.at[ idx, "BOS_IDX" ]
+                pos_x = self.idx_to_pos[ idx_x ]                
                 line = ax.hlines(
-                    y=y, xmin=pos, xmax=pos+20,
-                    linestyle='--', linewidth=0.5,
-                    color='red', alpha=0.7,
+                    y=y, xmin=pos_x, xmax=pos,
+                    linestyle='--', linewidth=0.8,
+                    color='red', alpha=0.8,
                     visible=visible_start
                 )
+                pos_txt = (pos + pos_x) // 2
                 txt = ax.text(
-                    pos, y - 0.003*y, 'BOS ↓',
+                    pos_txt, y * 0.997, 'BoS ↓',
                     fontsize=8, color='red',
                     bbox=dict(boxstyle='square,pad=0.3', facecolor='lightcoral', alpha=0.2),
                     visible=visible_start
                 )
-                artists[key].extend([line, txt])
+                artists[key].extend( [line, txt] )
+                
+                sct = ax.scatter( pos, y, color='red', s=30, marker='>', visible=visible_start )
+                artists[ key ].append(sct)
+
 
     # -------------------------------------------------------------------------
     
@@ -863,38 +940,48 @@ class SMC_Engine:
             return
         
         for idx in df.index:
-            pos = self.idx_to_pos[idx]
+            pos = self.idx_to_pos[ idx ]
 
-            # --- CHOCH UP ---
-            if df.at[idx, 'CHOCH_UP']:
+            # --- CHOCH UP --- #
+            if df.at[ idx, 'CHOCH_UP' ]:
+                type = 'CHoCH ↑'
+                if df.at[ idx, "CHOCH_TYPE" ] == 'CLOSE': # mark CLOSE type only
+                    type += df.at[ idx, "CHOCH_TYPE" ]
                 y = df.at[ idx, "CHOCH_LEVEL" ]
-                type = 'CHOCH ↑' + df.at[ idx, "CHOCH_TYPE" ]
+                idx_x = df.at[ idx, "CHOCH_IDX" ]
+                pos_x = self.idx_to_pos[ idx_x ]
                 line = ax.hlines(
-                    y=y, xmin=pos, xmax=pos+5,
-                    linestyle='-', linewidth=1.2,
+                    y=y, xmin=pos_x, xmax=pos,
+                    linestyle='--', linewidth=0.8,
                     color='dodgerblue', alpha=0.8,
                     visible=visible_start
                 )
-                txt = ax.text(
-                    pos-10, y, type,
+                pos_txt = (pos + pos_x) // 2
+                txt = ax.text( 
+                    pos_txt, y * 1.003, type,
                     fontsize=8, color='dodgerblue',
                     bbox=dict(boxstyle='square,pad=0.3', facecolor='lightblue', alpha=0.2),
                     visible=visible_start
                 )
                 artists[key].extend([line, txt])
 
-            # --- CHOCH DOWN ---
+            # --- CHOCH DOWN --- #
             if df.at[idx, 'CHOCH_DOWN']:
+                type = 'CHoCH ↓'
+                if df.at[ idx, "CHOCH_TYPE" ] == 'CLOSE': # mark CLOSE type only
+                    type += df.at[ idx, "CHOCH_TYPE" ]
                 y = df.at[ idx, "CHOCH_LEVEL" ]
-                type = 'CHOCH ↓' + df.at[ idx, "CHOCH_TYPE" ]
+                idx_x = df.at[ idx, "CHOCH_IDX" ]
+                pos_x = self.idx_to_pos[ idx_x ]
                 line = ax.hlines(
-                    y=y, xmin=pos, xmax=pos+5,
-                    linestyle='-', linewidth=1.2,
+                    y=y, xmin=pos_x, xmax=pos,
+                    linestyle='--', linewidth=0.8,
                     color='orange', alpha=0.8,
                     visible=visible_start
                 )
+                pos_txt = (pos + pos_x) // 2
                 txt = ax.text(
-                    pos-10, y, type,
+                    pos_txt, y * 1.003, type,
                     fontsize=8, color='orange',
                     bbox=dict(boxstyle='square,pad=0.3', facecolor='moccasin', alpha=0.25),
                     visible=visible_start

@@ -7,6 +7,8 @@
 """
 import pandas
 import yfinance
+from datetime import datetime
+
 from smc_generateur_scenario import generate_sample_data, generate_smc_scenario
 from smc_ui import SMC_Tkinter_UI
 
@@ -20,9 +22,9 @@ def generate_data_yfinance():
     symbol = 'AI.PA' # AIR LIQUIDE
     #symbol = 'AAPL' # APLE
     #symbol = 'AM.PA' # DASSAULT AVIATION
-                
-    date_start = '2023-12-24'     # Date de début
-    date_end = '2025-12-24'       # Date de fin
+
+    date_start = '2023-10-30'     # Date de début
+    date_end = datetime.now() # '2026-01-02'       # Date de fin
     interval_fetch = '1d'         # Intervalle de temps (1d, 1wk, 1mo, etc.)
 
     ticker = yfinance.Ticker( symbol )

@@ -4,17 +4,15 @@
     - on_click souris clique droit pour supprimer un artist
 
 """
-from matplotlib.ticker import StrMethodFormatter
-import numpy
-import pandas
+import os
+import threading
 import tkinter as tk
 import matplotlib.pyplot as plt
-from matplotlib.lines import Line2D
-from matplotlib.patches import Rectangle, Patch
-from matplotlib.text import Text
-import matplotlib.dates as mdates
 import mplfinance as mpf
 
+from matplotlib.lines import Line2D
+from matplotlib.patches import Patch
+from matplotlib.text import Text
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
 from tkinter import ttk
 
@@ -28,7 +26,6 @@ class SMC_Tkinter_UI:
         self.generate_data = generate_data
         self.random_seed = 43
         self.df_smc = None
-
         self.params = SMC_Params()
         self.engine = SMC_Engine( self.params )
 
@@ -39,6 +36,7 @@ class SMC_Tkinter_UI:
             'swings': [],
             'segments': [],
             'displacement': [],
+            'market_state': [],
             'bos': [],
             'choch': [],
             'liquidity': [],
@@ -54,8 +52,10 @@ class SMC_Tkinter_UI:
         self.toolbar = None
 
         self.root = tk.Tk()
+        self.root.protocol( "WM_DELETE_WINDOW", self.on_close )
         self.root.title("TradingInPython - SMC Engine")
-
+        self.stop_event = threading.Event()
+        
         # Frame principal avec deux colonnes
         main_frame = ttk.Frame( self.root )
         main_frame.grid( row=0, column=0, sticky="nsew" )
@@ -109,9 +109,10 @@ class SMC_Tkinter_UI:
         self.show_swings = tk.BooleanVar( value=True )
         self.show_structure = tk.BooleanVar( value=True )
         self.show_segments = tk.BooleanVar( value=True )
+        self.show_market_state = tk.BooleanVar( value=True )
         self.show_displacement = tk.BooleanVar( value=False )
-        self.show_bos = tk.BooleanVar( value=False )
-        self.show_choch = tk.BooleanVar( value=False )
+        self.show_bos = tk.BooleanVar( value=True )
+        self.show_choch = tk.BooleanVar( value=True )
         self.show_liquidity = tk.BooleanVar( value=False )
         self.show_order_blocks = tk.BooleanVar( value=False )
         self.show_fvg = tk.BooleanVar( value=False )
@@ -122,6 +123,7 @@ class SMC_Tkinter_UI:
             ("Swings", self.show_swings, 'swings'),
             ("Structure", self.show_structure, 'structure'),
             ("Segments", self.show_segments, 'segments'),
+            ("Market state", self.show_market_state, 'market_state'),
             ("Displacement", self.show_displacement, 'displacement'),
             ("BOS", self.show_bos, 'bos'),
             ("CHoCH", self.show_choch, 'choch'),
@@ -149,6 +151,27 @@ class SMC_Tkinter_UI:
         right_frame = ttk.Frame( main_frame )
         right_frame.grid( row=0, column=1, sticky="nsew" )
 
+    # -------------------------------------------------------------------------
+    
+    def run( self ):
+        self.root.mainloop()
+    
+    # -------------------------------------------------------------------------
+
+    def on_close( self ):
+        self.stop_event.set()
+
+        try:
+            plt.close( 'all' )
+            self.root.quit()
+            self.root.destroy()
+        except Exception:
+            pass
+
+        os._exit( 0 )
+    
+    # -------------------------------------------------------------------------
+    
     def update_params( self ):
         self.params.swing_width = self.var_sw.get()
         self.params.liquidity_threshold = self.var_liquidity.get()
@@ -159,6 +182,8 @@ class SMC_Tkinter_UI:
         print( f"atr_period: {self.params.atr_period}" )
         print( f"displacement_body_ratio: {self.params.displacement_body_ratio}" )
         print( f"random_seed: {self.random_seed}" )
+
+    # -------------------------------------------------------------------------
         
     def generate_new_data( self ):
         if self.generate_data is not None:
@@ -168,12 +193,16 @@ class SMC_Tkinter_UI:
             self.df_smc = self.engine.apply( self.df_raw )
             print( f"Nouvelles données générées seed: {self.random_seed}." )
             self.plot()
+    
+    # -------------------------------------------------------------------------
         
     def run_smc( self ):
         self.update_params()
         self.engine = SMC_Engine( self.params )
         self.df_smc = self.engine.apply( self.df_raw )
         print( "----------------- SMC appliqué." )
+
+    # -------------------------------------------------------------------------
 
     def toggle_overlay( self, overlay_key ):
         """Active ou désactive la visibilité d'un overlay"""
@@ -190,6 +219,8 @@ class SMC_Tkinter_UI:
         if self.canvas:
             self.canvas.draw_idle()
 
+    # -------------------------------------------------------------------------
+
     def refresh_plot( self ):
         """Recrée complètement le graphique (après Apply ou New)"""
         if self.fig is not None:
@@ -198,6 +229,8 @@ class SMC_Tkinter_UI:
             self.ax = None
         self.run_smc()
         self.plot()
+
+    # -------------------------------------------------------------------------
 
     def on_spinbox_click( self ):
         if self.fig is not None:
@@ -335,6 +368,15 @@ class SMC_Tkinter_UI:
             visible_start=self.show_segments.get()
         )
         
+        # Market state
+        self.engine.overlays_market_state(
+            df=df,
+            ax=ax,
+            artists=self.artists,
+            key='market_state',
+            visible_start=self.show_market_state.get()
+        )
+
         # Displacement
         self.engine.overlays_displacement(
             df=df,
@@ -342,7 +384,7 @@ class SMC_Tkinter_UI:
             artists=self.artists,
             key='displacement',
             visible_start=self.show_displacement.get()
-        )        
+        ) 
 
         # BOS
         self.engine.overlays_bos(
@@ -398,8 +440,3 @@ class SMC_Tkinter_UI:
             key='ote', 
             visible_start=self.show_ote.get()
         )  
-
-    # -------------------------------------------------------------------------
-    
-    def run(self):
-        self.root.mainloop()
