@@ -105,15 +105,15 @@ class SMC_Tkinter_UI:
         frm_overlays.grid( row=1, column=0, padx=5, pady=5, sticky="ew" )
 
         # Init_Check_Box
-        self.show_candles = tk.BooleanVar( value=True )
-        self.show_swings = tk.BooleanVar( value=True )
-        self.show_structure = tk.BooleanVar( value=True )
-        self.show_segments = tk.BooleanVar( value=True )
-        self.show_market_state = tk.BooleanVar( value=True )
+        self.show_candles = tk.BooleanVar( value=False )
+        self.show_swings = tk.BooleanVar( value=False )
+        self.show_structure = tk.BooleanVar( value=False )
+        self.show_segments = tk.BooleanVar( value=False )
+        self.show_market_state = tk.BooleanVar( value=False )
         self.show_displacement = tk.BooleanVar( value=False )
-        self.show_bos = tk.BooleanVar( value=True )
-        self.show_choch = tk.BooleanVar( value=True )
-        self.show_liquidity = tk.BooleanVar( value=False )
+        self.show_bos = tk.BooleanVar( value=False )
+        self.show_choch = tk.BooleanVar( value=False )
+        self.show_liquidity = tk.BooleanVar( value=True )
         self.show_order_blocks = tk.BooleanVar( value=False )
         self.show_fvg = tk.BooleanVar( value=False )
         self.show_ote = tk.BooleanVar( value=False )
@@ -247,14 +247,14 @@ class SMC_Tkinter_UI:
         if event.inaxes != self.ax:
             return
 
-        if event.button != 3:
+        if event.button != 1: # left only
             return
 
         removed = False
-        ALLOWED = (Line2D, Patch, Text)
+        ALLOWED = ( Line2D, Patch, Text )
         
-        for artist in list(self.ax.get_children()):
-            if not isinstance(artist, ALLOWED):
+        for artist in list( self.ax.get_children() ):
+            if not isinstance( artist, ALLOWED ):
                 continue
 
             # exclure éléments structurels
@@ -270,7 +270,11 @@ class SMC_Tkinter_UI:
                 continue
 
             try:
-                artist.remove()
+                #artist.remove()
+                if event.key == 'd': # not visible
+                    artist.set_visible( False )
+                if event.key == 'v': # set visible
+                    artist.set_visible( True )
                 removed = True
             except NotImplementedError:
                 # artist non supprimable (ticks, spines, etc.)

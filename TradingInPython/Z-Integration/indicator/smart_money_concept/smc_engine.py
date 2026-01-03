@@ -67,7 +67,7 @@ def atr( df, period=14 ):
 @dataclass
 class SMC_Params:
     swing_width: int = 3 # pivot detection ( 3 left + pivot + 3 right)
-    liquidity_threshold: float = 0.001
+    liquidity_threshold: float = 0.005  # 0.5% for Equal Highs/Lows
     bos_atr_confirm: float = 0.25
     swing_min_width: int = 3
     swing_max_width: int = 5
@@ -94,7 +94,8 @@ class SMC_Engine:
             'UPTREND': 'UP',
             'DOWNTREND': 'DOWN',
             'POTENTIAL_REVERSAL': 'REVERSAL'
-        }    
+        }
+        
     # ---------------------------------------------
     # 1) Detect swings
     # ---------------------------------------------
@@ -202,7 +203,7 @@ class SMC_Engine:
         return val, val >= self.params.displacement_body_ratio
 
     # ------------------------------------
-    # 3) CHoCH & BOS ICT
+    # 3) CHoCH & BOS ICT + Market State
     # ------------------------------------
     def detect_bos_choch( self, df ):
         df = df.copy()
@@ -308,75 +309,82 @@ class SMC_Engine:
                     
         return df
 
-    # --------------------------------------------
-    # 4) Liquidity detection (EQH/EQL + LIQ_TAKEN)
-    # --------------------------------------------
+    # ---------------------------------------------------
+    # 4) Liquidity detection EQH/EQL Sweep_High/Sweep_Low
+    # ---------------------------------------------------
     def detect_liquidity( self, df ):
         """
-        Détection de la liquidité basée sur les pivots SwingHigh / SwingLow.
-        Compatible ICT / SMC.
+            Advanced Liquidity Detection ICT/SMC
+            - EQH/EQL (resting liquidity)
+            - Sweep with reintegration (taken liquidity)
+            - STRONG/WEAK classification
+            - CHoCH precondition
         """
+
         df = df.copy()
 
         # Colonnes de sortie
-        df["EQH"] = False
-        df["EQL"] = False
+        df["EQH"] = False # Equal Highs
+        df["EQL"] = False # Equal Lows
         df["BSL"] = False # Buy-Side Liquidity
         df["SSL"] = False # Sell-Side Liquidity
+
         df["Sweep_High"] = False
         df["Sweep_Low"] = False
 
-        # Récupération des swings
+        df["BSL_STRENGTH"] = None
+        df["SSL_STRENGTH"] = None
+
+        df["PRE_CHOCH"] = False
+
         swing_high_idx = df.index[ df["SwingHigh"] ].tolist()
         swing_low_idx  = df.index[ df["SwingLow"] ].tolist()
 
         highs = df["High"]
         lows  = df["Low"]
+        closes = df["Close"]
+        
+        states = df['MarketState'].values
 
-        # ===== 1) Equal Highs / Equal Lows (liquidité reposante) =====
-        # On compare chaque swing à ses voisins précédents
-        for i in range( 1, len(swing_high_idx) ):
-            idx_curr = swing_high_idx[i]
-            idx_prev = swing_high_idx[i - 1]
-
-            h1 = highs[idx_curr]
-            h2 = highs[idx_prev]
-
-            if abs(h1 - h2) / h1 < self.params.liquidity_threshold:
-                df.at[idx_curr, "EQH"] = True
-                df.at[idx_prev, "EQH"] = True
-                df.at[idx_curr, "BSL"] = True
-                df.at[idx_prev, "BSL"] = True
+        # --- 1) Mark EQH / EQL ---
+        for i in range( 1, len( swing_high_idx ) ):
+            idx_curr, idx_prev = swing_high_idx[ i ], swing_high_idx[ i-1 ]
+            if abs( highs[idx_curr] - highs[idx_prev] ) / highs[idx_curr] < self.params.liquidity_threshold:
+                df.at[ idx_curr, "EQH" ] = df.at[ idx_prev, "EQH" ] = True
+                df.at[ idx_curr, "BSL" ] = df.at[ idx_prev, "BSL" ] = True
 
         for i in range( 1, len(swing_low_idx) ):
-            idx_curr = swing_low_idx[i]
-            idx_prev = swing_low_idx[i - 1]
+            idx_curr, idx_prev = swing_low_idx[i], swing_low_idx[i-1]
+            if abs( lows[idx_curr] - lows[idx_prev] ) / lows[idx_curr] < self.params.liquidity_threshold:
+                df.at[idx_curr, "EQL"] = df.at[idx_prev, "EQL"] = True
+                df.at[idx_curr, "SSL"] = df.at[idx_prev, "SSL"] = True
+        
+        # --- 2) Sweeps ICT valides ---
+        for i in range( 1, len(swing_high_idx) ):
+            idx_curr, idx_prev = swing_high_idx[i], swing_high_idx[i-1]
+            market_state = states[ df.index.get_loc( idx_curr ) ]
+            
+            if highs[idx_curr] > highs[idx_prev] and closes[idx_curr] < highs[idx_prev]:
+                df.at[idx_curr, "Sweep_High"] = True
+                df.at[idx_curr, "PRE_CHOCH"] = True
 
-            l1 = lows[idx_curr]
-            l2 = lows[idx_prev]
+                if market_state in ( MarketState.RANGE.name, MarketState.DOWNTREND.name ):
+                    df.at[idx_curr, "BSL_STRENGTH"] = "STRONG"
+                else:
+                    df.at[idx_curr, "BSL_STRENGTH"] = "WEAK"
 
-            if abs(l1 - l2) / l1 < self.params.liquidity_threshold:
-                df.at[idx_curr, "EQL"] = True
-                df.at[idx_prev, "EQL"] = True
-                df.at[idx_curr, "SSL"] = True
-                df.at[idx_prev, "SSL"] = True
-
-        # ===== 2) Sweeps (liquidité prise) =====
-        # Sweep High = un nouveau swing high > précédent swing high
-        for i in range(1, len(swing_high_idx)):
-            idx_curr = swing_high_idx[i]
-            idx_prev = swing_high_idx[i - 1]
-
-            if highs[idx_curr] > highs[idx_prev]:
-                df.at[idx_curr, "Sweep_High"] = True  # prise BSL
-
-        # Sweep Low = un nouveau swing low < précédent swing low
         for i in range(1, len(swing_low_idx)):
-            idx_curr = swing_low_idx[i]
-            idx_prev = swing_low_idx[i - 1]
+            idx_curr, idx_prev = swing_low_idx[i], swing_low_idx[i-1]
+            market_state = states[ df.index.get_loc( idx_curr ) ]
+            
+            if lows[idx_curr] < lows[idx_prev] and closes[idx_curr] > lows[idx_prev]:
+                df.at[ idx_curr, "Sweep_Low" ] = True
+                df.at[ idx_curr, "PRE_CHOCH" ] = True
 
-            if lows[idx_curr] < lows[idx_prev]:
-                df.at[idx_curr, "Sweep_Low"] = True   # prise SSL
+                if market_state in ( MarketState.RANGE.name, MarketState.UPTREND.name ):
+                    df.at[idx_curr, "SSL_STRENGTH"] = "STRONG"
+                else:
+                    df.at[idx_curr, "SSL_STRENGTH"] = "WEAK"
 
         return df
 
@@ -748,7 +756,6 @@ class SMC_Engine:
         last_pos   = None
         last_price = None
         last_structure  = None   # 'HL', 'HH', 'LH', 'LL'
-        last_state = None
 
         for idx in df.index:
 
@@ -760,10 +767,28 @@ class SMC_Engine:
             price = df.at[ idx, 'StructurePrice' ]
             pos = self.idx_to_pos[ idx ]
 
-            # --- tracé du segment ---
+            # --- Tracé du segment --- #
             valid = False
+            linestyle = '-'
+            linewidth = 1.3
+            
+            # Impulsion institutionnelle
+            if ( last_structure == 'HH' and structure == 'LL' ) or \
+               ( last_structure == 'LL' and structure == 'HH' ):
+                linestyle = '-.'
+                linewidth = 1.6  
+                color = 'darkblue'
+                valid = True
 
-            if last_structure:
+            # Rechargement ou distribution
+            if ( last_structure == 'HL' and structure == 'LH' ) or \
+               ( last_structure == 'LH' and structure == 'HL' ):
+                linestyle = '-.'
+                linewidth = 1.6
+                color = 'darkorange'
+                valid = True
+
+            if valid == False:
                 if state == MarketState.UPTREND.name:
                     valid = (
                         (last_structure == 'HL' and structure == 'HH') or
@@ -788,8 +813,9 @@ class SMC_Engine:
                 line = Line2D(
                     [last_pos, pos],
                     [last_price, price],
-                    linewidth=1.3,
+                    linewidth=linewidth,
                     color=color,
+                    linestyle=linestyle,
                     alpha=0.85,
                     visible=visible_start
                 )
@@ -797,11 +823,10 @@ class SMC_Engine:
                 ax.add_line(line)
                 artists[key].append(line)
 
-            # --- mise à jour mémoire ---
+            # --- mise à jour mémoire --- #
             last_pos   = pos
             last_price = price
             last_structure  = structure
-            last_state = state
 
     # -------------------------------------------------------------------------
     
@@ -813,9 +838,9 @@ class SMC_Engine:
                     pos = self.idx_to_pos[ idx ]
                     y = df.loc[idx, 'High']
                     v = "{:.2f}".format(df.loc[idx, 'DISPLACEMENT_VALUE'])
-                    txt = ax.text(pos, y+0.1, v, ha='center', fontsize=7, color='red',
+                    txt = ax.text(pos, y+0.25, v, ha='center', fontsize=7, color='red',
                                 visible=visible_start)
-                    sct = ax.scatter(pos, y, color='red', s=20, marker='v',
+                    sct = ax.scatter(pos, y, color='red', s=35, marker='v',
                                    visible=visible_start)
                     artists[ key ].extend( [txt, sct] )
 
@@ -989,26 +1014,37 @@ class SMC_Engine:
                 artists[key].extend([line, txt])
 
     # -------------------------------------------------------------------------
-    
+
     def overlays_liquidity( self, df, ax, artists, key, visible_start ):
+
+        if not all( col in df.columns for col in [ 'EQH', 'EQL', 'BSL_STRENGTH', 'SSL_STRENGTH' ] ):
+            return
         
         cluster_threshold = self.params.liquidity_threshold
-        
-        color_high = '#cc66ff33'
-        color_low = '#66ddff33'
-        
+
+        # Couleurs
+        color_bsl_strong = '#cc000055'
+        color_bsl_weak   = '#cc000022'
+        color_ssl_strong = '#00aa6655'
+        color_ssl_weak   = '#00aa6622'
+
+        color_sweep_strong = '#ff9900'
+        color_sweep_weak   = '#ffcc99'
+
         highs = []
         lows = []
 
+        # -- Collecte EQH / EQL --- #
         for idx in df.index:
-            if df.loc[idx, "EQH"]:
-                highs.append((idx, df.loc[idx, "High"]))
-            if df.loc[idx, "EQL"]:
-                lows.append((idx, df.loc[idx, "Low"]))
+            if df.loc[ idx, "EQH" ]:
+                highs.append( (idx, df.loc[ idx, "High" ]) )
+            if df.loc[ idx, "EQL" ]:
+                lows.append( (idx, df.loc[ idx, "Low" ]) )
 
-        if len(highs) == 0 and len(lows) == 0:
+        if not highs and not lows:
             return
-
+        
+        # Clustering
         def cluster_points( points, threshold ):
             if not points:
                 return []
@@ -1027,51 +1063,94 @@ class SMC_Engine:
             return clusters
 
         high_clusters = cluster_points( highs, cluster_threshold )
-        low_clusters = cluster_points( lows, cluster_threshold )
+        low_clusters  = cluster_points( lows, cluster_threshold )
 
-        def add_liquidity_zone( cluster, color, is_high=True ):
+        # --- Zones de liquidité --- #
+        def add_liquidity_zone( cluster, is_high=True ):
             idx_list = [c[0] for c in cluster]
             price_list = [c[1] for c in cluster]
-            price = numpy.median(price_list)
+            price = numpy.median( price_list )
 
             x_left = min( self.idx_to_pos[idx] for idx in idx_list )
             x_right = max( self.idx_to_pos[idx] for idx in idx_list )
 
             if is_high:
+                strength = df.loc[ idx_list[-1], "BSL_STRENGTH" ]
+                color = color_bsl_strong if strength == "STRONG" else color_bsl_weak
                 y_bottom = price
-                y_top = y_bottom + y_bottom * cluster_threshold
+                y_top = y_bottom * ( 1 + cluster_threshold )
+                label = "EQH"
             else:
+                strength = df.loc[ idx_list[-1], "SSL_STRENGTH" ]
+                color = color_ssl_strong if strength == "STRONG" else color_ssl_weak
                 y_top = price
-                y_bottom = y_top - y_top * cluster_threshold
+                y_bottom = y_top * ( 1 - cluster_threshold )
+                label = "EQL"
 
-            rect = patches.Rectangle( (x_left, y_bottom), x_right - x_left, y_top - y_bottom,
-                                      linewidth=0, edgecolor=None, facecolor=color, visible=visible_start )
+            rect = patches.Rectangle(
+                (x_left, y_bottom),
+                x_right - x_left,
+                y_top - y_bottom,
+                linewidth=0,
+                facecolor=color,
+                visible=visible_start
+            )
             ax.add_patch(rect)
-            artists[ key ].append(rect)
+            artists[key].append(rect)
 
-            txt = ax.text( (x_left + x_right) / 2, price, "EQH" if is_high else "EQL",
-                        color=color[:7], fontsize=7, ha="center",
-                        va="bottom" if is_high else "top", visible=visible_start )
+            txt = ax.text(
+                (x_left + x_right) / 2,
+                price,
+                label,
+                color=color[:7], # don't use alpha in text color
+                fontsize=7,
+                ha="center",
+                va="bottom" if is_high else "top",
+                visible=visible_start
+            )
             artists[ key ].append( txt )
 
         for cluster in high_clusters:
-            add_liquidity_zone(cluster, color_high, is_high=True)
+            add_liquidity_zone( cluster, is_high=True )
 
         for cluster in low_clusters:
-            add_liquidity_zone(cluster, color_low, is_high=False)
+            add_liquidity_zone( cluster, is_high=False )
 
-        # Sweeps
+        # --- Sweeps (liquidité prise) --- #
         for idx in df.index:
-            x = self.idx_to_pos[ idx ]
-            if df.loc[idx, "Sweep_High"]:
-                txt = ax.annotate( "▼", (x, df.loc[idx, "High"] + 0.01*df.loc[idx, "High"]), color=color_high,
-                                fontsize=7, ha="center", va="bottom", visible=visible_start )
-                artists[ key ].append( txt )
+            x = self.idx_to_pos[idx]
 
-            if df.loc[idx, "Sweep_Low"]:
-                txt = ax.annotate("▲", (x, df.loc[idx, "Low"] + 0.01*df.loc[idx, "Low"]), color=color_low,
-                                fontsize=7, ha="center", va="top", visible=visible_start )
-                artists[ key ].append( txt )                    
+            if df.loc[ idx, "Sweep_High" ]:
+                strength = df.loc[ idx, "BSL_STRENGTH" ]
+                color = color_sweep_strong if strength == "STRONG" else color_sweep_weak
+                symbol = "▼" if strength == "STRONG" else "▽"
+
+                txt = ax.annotate(
+                    symbol,
+                    (x, df.loc[idx, "High"] * 1.01),
+                    color=color,
+                    fontsize=9,
+                    ha="center",
+                    va="bottom",
+                    visible=visible_start
+                )
+                artists[key].append(txt)
+
+            if df.loc[ idx, "Sweep_Low" ]:
+                strength = df.loc[ idx, "SSL_STRENGTH" ]
+                color = color_sweep_strong if strength == "STRONG" else color_sweep_weak
+                symbol = "▲" if strength == "STRONG" else "△"
+
+                txt = ax.annotate(
+                    symbol,
+                    (x, df.loc[idx, "Low"] * 0.99),
+                    color=color,
+                    fontsize=9,
+                    ha="center",
+                    va="top",
+                    visible=visible_start
+                )
+                artists[ key ].append( txt )
 
     # -------------------------------------------------------------------------
     
@@ -1133,19 +1212,18 @@ class SMC_Engine:
             if pd.notna( broken ):
                 pos_broken = self.idx_to_pos[ broken ]
                 price = df.loc[broken, 'Close']
-                sct = ax.scatter( pos_broken, price, color='darkblue', s=40, marker='v',
-                               visible=visible_start)
-                artists[ key ].append(sct)
+                # sct = ax.scatter( pos_broken, price, color='darkblue', s=40, marker='v',
+                #                visible=visible_start)
+                # artists[ key ].append(sct)
 
             # Retest at
             retest = df.loc[idx, 'Retest_at']
             if pd.notna(retest):
                 pos_retest = self.idx_to_pos[retest]
                 price = df.loc[retest, 'Close']
-                sct = ax.scatter( pos_retest, price, color='darkorange', s=40, marker='^',
-                               visible=visible_start)
-                artists[ key ].append(sct)
-
+                # sct = ax.scatter( pos_retest, price, color='darkorange', s=40, marker='^',
+                #                visible=visible_start)
+                # artists[ key ].append(sct)
 
             if pos_broken != None or pos_retest != None:
                 color = 'green' if 'bull' in ob_type_reel else 'red'
