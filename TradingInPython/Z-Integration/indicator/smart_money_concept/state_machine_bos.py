@@ -11,14 +11,16 @@ class MarketState(Enum):
     POTENTIAL_REVERSAL = auto()
 
 class MarketStockStateMachine:
-    def __init__(self, max_reversal_count=2, price_compression_threshold=0.02):
-        self.state = MarketState.RANGE
-        self.structure = 'LL'
-        
+    def __init__( self, max_reversal_count=3, price_compression_threshold=0.02 ):
+       
         # Paramètres pour détecter un RANGE
-        self.max_reversal_count = max_reversal_count  # Nb max de POTENTIAL_REVERSAL avant RANGE
+        self.max_reversal_count = max_reversal_count  # nb max de POTENTIAL_REVERSAL avant RANGE
         self.price_compression_threshold = price_compression_threshold  # 2% par défaut
-        
+
+        # Structure initiale
+        self.state = MarketState.RANGE
+        self.structure = None
+                
         # Compteurs
         self.reversal_count = 0
         self.structure_count_in_state = 0
@@ -48,15 +50,15 @@ class MarketStockStateMachine:
 
     def _is_structure_confused(self):
         """Détecte une confusion dans la structure (alternance incohérente)"""
-        if len(self.recent_structures) < 4:
+        if len( self.recent_structures ) < 4:
             return False
         
         # Compte les structures haussières vs baissières dans l'historique récent
-        bullish = sum(1 for s in self.recent_structures if s in ("HH", "HL"))
-        bearish = sum(1 for s in self.recent_structures if s in ("LL", "LH"))
+        bullish = sum( 1 for s in self.recent_structures if s in ("HH", "HL") )
+        bearish = sum( 1 for s in self.recent_structures if s in ("LL", "LH") )
         
         # Si alternance équilibrée = range
-        return abs(bullish - bearish) <= 1
+        return abs( bullish - bearish ) <= 1
 
     def _check_range_conditions(self):
         """Vérifie si les conditions de RANGE sont remplies"""
@@ -87,7 +89,7 @@ class MarketStockStateMachine:
             # Mise à jour de l'historique
             self.recent_structures.append( self.structure )
             if len( self.recent_structures ) > self.max_history:
-                self.recent_structures.pop(0)
+                self.recent_structures.pop( 0 )
             
             self.structure_count_in_state += 1
             
@@ -154,16 +156,14 @@ class MarketStockStateMachine:
             # Sortie du RANGE vers UPTREND
             if self.structure in ("HH", "HL"):
                 # Besoin de 2 structures cohérentes pour sortir du RANGE
-                if len( self.recent_structures ) >= 2 and \
-                   all(s in ("HH", "HL") for s in self.recent_structures[-2:]):
+                if all(s in ("HH", "HL") for s in self.recent_structures[-2:]):
                     self.state = MarketState.UPTREND
                     self.reversal_count = 0
                     self.structure_count_in_state = 0
             
             # Sortie du RANGE vers DOWNTREND
             elif self.structure in ("LL", "LH"):
-                if len(self.recent_structures) >= 2 and \
-                   all(s in ("LL", "LH") for s in self.recent_structures[-2:]):
+                if all(s in ("LL", "LH") for s in self.recent_structures[-2:]):
                     self.state = MarketState.DOWNTREND
                     self.reversal_count = 0
                     self.structure_count_in_state = 0
