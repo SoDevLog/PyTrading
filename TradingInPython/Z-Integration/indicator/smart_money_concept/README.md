@@ -28,7 +28,14 @@ Use plot_overlays to tag an 'ax' of the MatPlotLib graph
 
 ## Market Stock State Machine
 
+- states machine RANGE, UPTREND, DOWNTREND, POTENTIAL_REVERSAL
 - detection of BOS (Break Of Structure)
+
+<div align="center">
+  <a href="https://www.trading-et-data-analyses.com/p/plateforme-de-trading-technique.html">
+    <img src="images/smart_money_concepts.png" alt="Blog TradingInPython" />
+  </a>
+</div>
 
 ## Build
 

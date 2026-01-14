@@ -1,20 +1,22 @@
 """
     SMC_Tkinter_UI for SMC/ICT strategy methode
-    - Init_Check_Box
+    - Init_Check_Box ui check box init
     - on_click souris clique droit pour supprimer un artist
 
 """
 import os
 import threading
+import numpy
 import tkinter as tk
 import matplotlib.pyplot as plt
-import mplfinance as mpf
 
+from tkinter import ttk
 from matplotlib.lines import Line2D
 from matplotlib.patches import Patch
 from matplotlib.text import Text
+from mplfinance.original_flavor import candlestick_ohlc
+from matplotlib.ticker import FuncFormatter, MaxNLocator
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
-from tkinter import ttk
 
 from smc_engine import SMC_Engine, SMC_Params
 
@@ -100,25 +102,34 @@ class SMC_Tkinter_UI:
         ttk.Spinbox( frm_params, from_=0.1, to=0.95, increment=0.05,
             textvariable=self.var_disp, width=8).grid( row=_row, column=1, padx=5, pady=2 )
 
+        # Order Blocks lookahead impulse
+        _row += 1
+        ttk.Label( frm_params, text="OB Lookahead impulse :" ).grid( row=_row, column=0, sticky="w", padx=5, pady=2 )
+        self.var_lookahead_impulse = tk.IntVar( value=self.params.lookahead_impulse )
+        ttk.Spinbox( frm_params, from_=1, to=10,
+            textvariable=self.var_lookahead_impulse, width=8).grid( row=_row, column=1, padx=5, pady=2 )
+        
         # Frame : overlays
         frm_overlays = ttk.LabelFrame( left_frame, text="Overlays" )
         frm_overlays.grid( row=1, column=0, padx=5, pady=5, sticky="ew" )
 
         # Init_Check_Box
-        self.show_candles = tk.BooleanVar( value=False )
+        self.show_all = tk.BooleanVar( value=True )
+        self.show_candles = tk.BooleanVar( value=True )
         self.show_swings = tk.BooleanVar( value=False )
-        self.show_structure = tk.BooleanVar( value=False )
-        self.show_segments = tk.BooleanVar( value=False )
-        self.show_market_state = tk.BooleanVar( value=False )
+        self.show_structure = tk.BooleanVar( value=True )
+        self.show_segments = tk.BooleanVar( value=True )
+        self.show_market_state = tk.BooleanVar( value=True )
         self.show_displacement = tk.BooleanVar( value=False )
         self.show_bos = tk.BooleanVar( value=False )
         self.show_choch = tk.BooleanVar( value=False )
-        self.show_liquidity = tk.BooleanVar( value=True )
+        self.show_liquidity = tk.BooleanVar( value=False )
         self.show_order_blocks = tk.BooleanVar( value=False )
         self.show_fvg = tk.BooleanVar( value=False )
         self.show_ote = tk.BooleanVar( value=False )
 
-        chk = [
+        self.check_boxes = [
+            ("All", self.show_all, 'all'),
             ("Candles", self.show_candles, 'candles'),
             ("Swings", self.show_swings, 'swings'),
             ("Structure", self.show_structure, 'structure'),
@@ -133,7 +144,7 @@ class SMC_Tkinter_UI:
             ("OTE", self.show_ote, 'ote'),
         ]
 
-        for i, (txt, var, key) in enumerate( chk ):
+        for i, (txt, var, key) in enumerate( self.check_boxes ):
             cb = ttk.Checkbutton( frm_overlays, text=txt, variable=var,
                 command=lambda k=key: self.toggle_overlay(k) )
             cb.grid( row=i, column=0, sticky="w", padx=5, pady=2 )
@@ -177,10 +188,12 @@ class SMC_Tkinter_UI:
         self.params.liquidity_threshold = self.var_liquidity.get()
         self.params.atr_period = self.var_atr.get()
         self.params.displacement_body_ratio = self.var_disp.get()
+        self.params.lookahead_impulse = self.var_lookahead_impulse.get()
         print( f"swing_width: {self.params.swing_width}" )
         print( f"liquidity_threshold: {self.params.liquidity_threshold}" )
         print( f"atr_period: {self.params.atr_period}" )
         print( f"displacement_body_ratio: {self.params.displacement_body_ratio}" )
+        print( f"lookahead_impulse: {self.params.lookahead_impulse}" )
         print( f"random_seed: {self.random_seed}" )
 
     # -------------------------------------------------------------------------
@@ -211,10 +224,20 @@ class SMC_Tkinter_UI:
             
         visible = getattr( self, f'show_{overlay_key}' ).get()
         
-        # Modifier la visibilité de tous les artistes de cet overlay
-        for artist in self.artists[ overlay_key ]:
-            artist.set_visible( visible )
-        
+        if overlay_key != 'all':
+            # Modifier la visibilité de tous les artistes de cet overlay
+            for artist in self.artists[ overlay_key ]:
+                artist.set_visible( visible )
+        else:
+            for i, (txt, var, key) in enumerate( self.check_boxes ):
+                if key != 'all':
+                    for artist in self.artists[ key ]:
+                        artist.set_visible( visible )
+                        if self.show_all.get():
+                            var.set( True )
+                        else:
+                            var.set( False )
+            
         # Redessiner le canvas
         if self.canvas:
             self.canvas.draw_idle()
@@ -286,9 +309,49 @@ class SMC_Tkinter_UI:
     # -------------------------------------------------------------------------
     
     def plot_price( self, ax, df ):
-        mpf.plot( df, type='candle', ax=ax, style='charles', show_nontrading=False )
-        self.artists[ 'candles' ] = ax.collections + ax.patches
-        self.toggle_overlay( 'candles' ) # must be done because mpf.plot has no visible param
+        
+        df = df.copy()
+        #df.index = df.index.tz_convert("Europe/Paris")
+        
+        # Indices séquentiels
+        indices = numpy.arange( len( df ) )
+        
+        # Préparer OHLC
+        ohlc = numpy.column_stack([
+            indices,
+            df['Open'].values,
+            df['High'].values,
+            df['Low'].values,
+            df['Close'].values
+        ])
+        
+        width = 0.4
+        candlestick_ohlc(
+            ax, 
+            ohlc, 
+            width=width, 
+            colorup='#006340', 
+            colordown='#A02128'
+        )
+
+        self.artists[ 'candles' ] = ax.collections + ax.patches + ax.lines
+        self.toggle_overlay( 'candles' ) # must be done because candlestick_ohlc has no visible param
+                
+        # Formater l'axe X
+        ax.xaxis.set_major_locator( MaxNLocator( nbins=10, integer=True ) )
+        
+        # Fonction pour convertir index -> date
+        def format_date( x, pos=None ):
+            idx = int( x )
+            if 0 <= idx < len(df):
+                return df.index[idx].strftime('%Y-%m-%d %H:%M')
+            return ''
+        
+        ax.xaxis.set_major_formatter( FuncFormatter( format_date ) )
+        
+        plt.setp( ax.xaxis.get_majorticklabels(), rotation=45, ha='right' )
+        ax.set_xlim( -0.5, len(df) - 0.5 )
+        ax.grid(True, alpha=0.3)
     
     # -------------------------------------------------------------------------
         

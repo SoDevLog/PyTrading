@@ -26,6 +26,17 @@
         0.30 - 0.40 : marchés moins volatils (large caps, indices) ou TF daily/weekly — exige un break plus net.
         0.40 - 0.50 : usages très conservateurs — limite fortement les faux-positifs, peut rater certains BOS.
     
+    - lookahead_impulse :
+        1 - 2  : Réaction immédiate (scalp / LTF)
+        3 - 5  : Impulsion structurelle standard
+        8 - 15 : Déplacement macro / HTF
+        # M1 / M5
+        lookahead_impulse = 2
+        # M15 / M30
+        lookahead_impulse = 3 à 5
+        # H1 / H4
+        lookahead_impulse = 5 à 10
+        
 """
 import numpy
 import pandas as pd
@@ -68,6 +79,7 @@ def atr( df, period=14 ):
 class SMC_Params:
     swing_width: int = 3 # pivot detection ( 3 left + pivot + 3 right)
     liquidity_threshold: float = 0.005  # 0.5% for Equal Highs/Lows
+    lookahead_impulse: int = 3  # bars to confirm impulse after OB pivot
     bos_atr_confirm: float = 0.25
     swing_min_width: int = 3
     swing_max_width: int = 5
@@ -133,8 +145,8 @@ class SMC_Engine:
         # Assigner les résultats avec iloc au lieu de loc
         df['SwingHigh'] = False
         df['SwingLow'] = False
-        df.iloc[ valid_indices[is_swing_high], df.columns.get_loc('SwingHigh')] = True
-        df.iloc[ valid_indices[is_swing_low], df.columns.get_loc('SwingLow')] = True
+        df.iloc[ valid_indices[is_swing_high], df.columns.get_loc('SwingHigh') ] = True
+        df.iloc[ valid_indices[is_swing_low], df.columns.get_loc('SwingLow') ] = True
         
         return df
     
@@ -242,70 +254,75 @@ class SMC_Engine:
             structure = df.at[ idx, 'Structure' ]
             close = df.at[ idx, 'Close']
 
+            # Set Market States
             prev_state, new_state = state_market.update( structure, idx, close )
             df.at[ idx, 'MarketState'] = new_state.name # set market state for overlays_market_state
 
             # --- CHoCH --- #
-            if new_state == MarketState.POTENTIAL_REVERSAL and prev_state == MarketState.UPTREND:
-                if close < state_market.last_HL[1]:
-                    df.at[ idx, 'CHOCH_LEVEL'] = state_market.last_HL[1] # price
-                    df.at[ idx, 'CHOCH_IDX'] = state_market.last_HL[0] # save x position
-                    df.at[ idx, 'CHOCH_TYPE'] = 'OPEN'
-                    df.at[ idx, 'CHOCH_DOWN'] = True
-                    choch_level = state_market.last_HL[1]
-                    choch_direction = 'DOWN'
+            if state_market.last_HL and state_market.last_LH:
+                if new_state == MarketState.POTENTIAL_REVERSAL and prev_state == MarketState.UPTREND:
+                    if close < state_market.last_HL[1]:
+                        df.at[ idx, 'CHOCH_LEVEL'] = state_market.last_HL[1] # price
+                        df.at[ idx, 'CHOCH_IDX'] = state_market.last_HL[0] # save x position
+                        df.at[ idx, 'CHOCH_TYPE'] = 'OPEN'
+                        df.at[ idx, 'CHOCH_DOWN'] = True
+                        choch_level = state_market.last_HL[1]
+                        choch_direction = 'DOWN'
 
-            elif new_state == MarketState.POTENTIAL_REVERSAL and prev_state == MarketState.DOWNTREND:
-                if close > state_market.last_LH[1]:
-                    df.at[ idx, 'CHOCH_LEVEL'] = state_market.last_LH[1] # price
-                    df.at[ idx, 'CHOCH_IDX'] = state_market.last_LH[0] # save x position
-                    df.at[ idx, 'CHOCH_TYPE'] = 'OPEN'
-                    df.at[ idx, 'CHOCH_UP'] = True
-                    choch_level = state_market.last_LH[1]
-                    choch_direction = 'UP'
+                elif new_state == MarketState.POTENTIAL_REVERSAL and prev_state == MarketState.DOWNTREND:
+                    if close > state_market.last_LH[1]:
+                        df.at[ idx, 'CHOCH_LEVEL'] = state_market.last_LH[1] # price
+                        df.at[ idx, 'CHOCH_IDX'] = state_market.last_LH[0] # save x position
+                        df.at[ idx, 'CHOCH_TYPE'] = 'OPEN'
+                        df.at[ idx, 'CHOCH_UP'] = True
+                        choch_level = state_market.last_LH[1]
+                        choch_direction = 'UP'
 
             # --- BOS DOWN --- #
-            if ( 
-                 choch_direction == 'DOWN'
-                 and prev_state == MarketState.DOWNTREND
-                 and close < choch_level
-                 and df.at[ idx, 'DISPLACEMENT' ]
-            ):
-                df.at[ idx, 'BOS_DOWN' ] = True
-                df.at[ idx, 'BOS_LEVEL' ] = state_market.last_LL[1]
-                df.at[ idx, 'BOS_IDX' ] =  state_market.last_LL[0]
-                choch_direction = None
-                choch_level = None
+            if state_market.last_LL:
+                if ( 
+                    choch_direction == 'DOWN'
+                    and prev_state == MarketState.DOWNTREND
+                    and close < choch_level
+                    and df.at[ idx, 'DISPLACEMENT' ]
+                ):
+                    df.at[ idx, 'BOS_DOWN' ] = True
+                    df.at[ idx, 'BOS_LEVEL' ] = state_market.last_LL[1]
+                    df.at[ idx, 'BOS_IDX' ] =  state_market.last_LL[0]
+                    choch_direction = None
+                    choch_level = None
 
             # --- BOS UP --- #
-            if ( 
-                 choch_direction == 'UP'
-                 and prev_state == MarketState.UPTREND
-                 and close > choch_level
-                 and df.at[ idx, 'DISPLACEMENT' ]
-            ):
-                df.at[ idx, 'BOS_UP' ] = True
-                df.at[ idx, 'BOS_LEVEL' ] = state_market.last_HH[1]
-                df.at[ idx, 'BOS_IDX' ] = state_market.last_HH[0]
-                choch_direction = None
-                choch_level = None
+            if state_market.last_HH:
+                if ( 
+                    choch_direction == 'UP'
+                    and prev_state == MarketState.UPTREND
+                    and close > choch_level
+                    and df.at[ idx, 'DISPLACEMENT' ]
+                ):
+                    df.at[ idx, 'BOS_UP' ] = True
+                    df.at[ idx, 'BOS_LEVEL' ] = state_market.last_HH[1]
+                    df.at[ idx, 'BOS_IDX' ] = state_market.last_HH[0]
+                    choch_direction = None
+                    choch_level = None
             
             # --- CHoCH Closure --- #
-            if choch_direction == 'DOWN' and choch_level:
-                if close > state_market.last_HL[1]:
-                    df.at[ idx, 'CHOCH_LEVEL'] = choch_level
-                    df.at[ idx, 'CHOCH_IDX'] = idx
-                    df.at[ idx, 'CHOCH_TYPE'] = 'CLOSE'
-                    choch_direction = None
-                    choch_level = None
-                    
-            elif choch_direction == 'UP' and choch_level:
-                if close < state_market.last_LH[1]:
-                    df.at[ idx, 'CHOCH_LEVEL'] = choch_level
-                    df.at[ idx, 'CHOCH_IDX'] = idx
-                    df.at[ idx, 'CHOCH_TYPE'] = 'CLOSE'
-                    choch_direction = None
-                    choch_level = None
+            if state_market.last_HL and state_market.last_LH:
+                if choch_direction == 'DOWN' and choch_level:
+                    if close > state_market.last_HL[1]:
+                        df.at[ idx, 'CHOCH_LEVEL'] = choch_level
+                        df.at[ idx, 'CHOCH_IDX'] = idx
+                        df.at[ idx, 'CHOCH_TYPE'] = 'CLOSE'
+                        choch_direction = None
+                        choch_level = None
+                        
+                elif choch_direction == 'UP' and choch_level:
+                    if close < state_market.last_LH[1]:
+                        df.at[ idx, 'CHOCH_LEVEL'] = choch_level
+                        df.at[ idx, 'CHOCH_IDX'] = idx
+                        df.at[ idx, 'CHOCH_TYPE'] = 'CLOSE'
+                        choch_direction = None
+                        choch_level = None
                     
         return df
 
@@ -413,13 +430,15 @@ class SMC_Engine:
     # ---------------
     # 6) Order Blocks
     # ---------------
-    def detect_order_blocks( self, df, lookahead_impulse=3, violation_by='close' ):
+    def detect_order_blocks( self, df, violation_by='close' ):
         """
         df: DataFrame avec colonnes ['Open','High','Low','Close'], index ordonné.
         swing_lookback: pivot half-window (L).
         lookahead_impulse: nombre de barres après pivot pour confirmer impulsion.
         violation_by: 'close' or 'wick' (définit comment on détecte violation).
         """
+        lookahead_impulse = self.params.lookahead_impulse
+        
         df = df.copy()
         df['OB_type'] = None # 'bull' ou 'bear'
         df['OB_top'] = numpy.nan
@@ -429,35 +448,39 @@ class SMC_Engine:
         df['Retest_at'] = pd.Series([ pd.NA ] * len(df), dtype="object")
 
         n = len(df)
-        for i in range(n):
-            # detect pivot high -> potential bearish order block
-            if df['SwingHigh'].iat[i]:
+        
+        for idx in df.index:
+            
+            pos = self.idx_to_pos[ idx ]
+            
+            # Pivot high -> potential bearish order block
+            if df.at[ idx, 'SwingHigh' ]:
                 # check next lookahead for bearish impulse (ex: close lower than pivot)
-                end = min( n, i + 1 + lookahead_impulse )
-                impulse = df['Close'].iloc[ i+1:end ]
-                if len(impulse) > 0 and impulse.min() < df['Low'].iloc[i]:  # impulsion baissière
+                end = min( n, pos + 1 + lookahead_impulse )
+                impulse = df['Close'].iloc[ pos+1:end ]
+                if len( impulse ) > 0 and impulse.min() < df.at[ idx, 'Low']:  # impulsion baissière
                     # choose origin candle of OB: here la bougie juste avant l'impulsion (i)
-                    origin_idx = i
+                    origin_idx = idx # find_last_opposite_candle( idx )
                     # we define OB as the body/wick of origin candle (could be expanded)
-                    top = df['High'].iloc[origin_idx]
-                    bottom = df['Low'].iloc[origin_idx]
-                    df.at[ df.index[origin_idx], 'OB_type' ] = 'bear'
-                    df.at[ df.index[origin_idx], 'OB_top' ] = top
-                    df.at[ df.index[origin_idx], 'OB_bottom' ] = bottom
-                    df.at[ df.index[origin_idx], 'OB_origin_idx' ] = df.index[origin_idx]
+                    top = df.at[ origin_idx, 'High' ]
+                    bottom = df.at[ origin_idx, 'Low' ]
+                    df.at[ origin_idx, 'OB_type'] = 'bear'
+                    df.at[ origin_idx, 'OB_top'] = top
+                    df.at[ origin_idx, 'OB_bottom'] = bottom
+                    df.at[ origin_idx, 'OB_origin_idx'] = origin_idx
 
-            # detect pivot low -> potential bullish order block
-            if  df['SwingLow'].iat[i]:
-                end = min(n, i + 1 + lookahead_impulse)
-                impulse = df['Close'].iloc[i+1:end]
-                if len(impulse) > 0 and impulse.max() > df['High'].iloc[i]:  # impulsion haussière
-                    origin_idx = i
-                    top = df['High'].iloc[origin_idx]
-                    bottom = df['Low'].iloc[origin_idx]
-                    df.at[df.index[origin_idx], 'OB_type'] = 'bull'
-                    df.at[df.index[origin_idx], 'OB_top'] = top
-                    df.at[df.index[origin_idx], 'OB_bottom'] = bottom
-                    df.at[df.index[origin_idx], 'OB_origin_idx'] = df.index[origin_idx]
+            # Pivot low -> potential bullish OrderBlock
+            if  df.at[idx, 'SwingLow']:
+                end = min( n, pos + 1 + lookahead_impulse )
+                impulse = df['Close'].iloc[ pos+1:end ]
+                if len( impulse ) > 0 and impulse.max() > df.at[ idx, 'High']:  # impulsion haussière
+                    origin_idx  = idx # find_last_opposite_candle( idx )
+                    top = df.at[ origin_idx, 'High' ]
+                    bottom = df.at[ origin_idx, 'Low' ]
+                    df.at[ origin_idx, 'OB_type'] = 'bull'
+                    df.at[ origin_idx, 'OB_top'] = top
+                    df.at[ origin_idx, 'OB_bottom'] = bottom
+                    df.at[ origin_idx, 'OB_origin_idx'] = origin_idx
 
         # compile list of OBs
         #
@@ -469,7 +492,7 @@ class SMC_Engine:
             ob_type = row['OB_type']
             top = row['OB_top']
             bottom = row['OB_bottom']
-            origin_pos = df.index.get_loc(obs_idx)
+            origin_pos = df.index.get_loc( obs_idx )
             # start scanning after origin_pos + 1
             for j in range( origin_pos + 1, n ):
                 high_j = df['High'].iloc[j]
@@ -504,7 +527,7 @@ class SMC_Engine:
                                 retest = df.index[ k ]; break
                         else:
                             if df['High'].iloc[ k ] >= bottom and df['Low'].iloc[k] <= top:
-                                retest = df.index[k]; break
+                                retest = df.index[ k ]; break
                     df.at[ obs_idx, 'Retest_at' ] = retest
                     break  # stop scanning after first violation
 
@@ -516,17 +539,18 @@ class SMC_Engine:
     def detect_ote(
         self, 
         df, 
-        lookback=200, 
-        fib_levels=(0.618, 0.79),   # zone OTE ICT
-        min_move_pct=0.01
+        lookback=20, 
+        fib_levels=(0.618, 0.79), # zone OTE ICT
+        min_move_pct=0.005 # 0.5% move minimum A→B
     ):
         """
-        Détecte les zones OTE comme dans ICT :
+        Détecte les zones OTE / ICT :
         - OTE_buy : discount retracement dans un bull swing
         - OTE_sell : premium retracement dans un bear swing
         """
 
         df = df.copy()
+        width_zone = 6  # nb de bougies à marquer dans la zone OTE
 
         # Colonnes output
         for col in [
@@ -559,22 +583,22 @@ class SMC_Engine:
             df['SwingHigh'] = swing_high
             df['SwingLow'] = swing_low
 
-        all_idx = list(df.index)
-        n = len(all_idx)
+        all_idx = list( df.index )
+        n = len( all_idx )
 
-        swing_high_idx = [i for i in df.index[df['SwingHigh']]]
-        swing_low_idx  = [i for i in df.index[df['SwingLow']]]
+        swing_high_idx = [i for i in df.index[ df['SwingHigh'] ]]
+        swing_low_idx  = [i for i in df.index[ df['SwingLow'] ]]
 
         fib_low, fib_high = fib_levels
 
-        def price(i, col):
-            return float(df.loc[i, col])
+        def price( i, col ):
+            return float( df.loc[i, col] )
 
         # --- 2) Impulsion haussière A(low) → B(high) → retracement C(low)
         for b_idx in swing_high_idx:
 
-            pos_b = all_idx.index(b_idx)
-            start_pos = max(0, pos_b - lookback)
+            pos_b = all_idx.index( b_idx )
+            start_pos = max( 0, pos_b - lookback )
 
             # pivot A
             lows_before = [
@@ -585,12 +609,12 @@ class SMC_Engine:
                 continue
 
             a_idx = lows_before[-1]
-            A = price(a_idx, 'Low')
-            B = price(b_idx, 'High')
+            A = price( a_idx, 'Low' )
+            B = price( b_idx, 'High' )
 
             # amplitude min
-            if (B - A) / max(A, 1e-9) < min_move_pct:
-                continue
+            # if ( B - A ) / max(A, 1e-9) < min_move_pct:
+            #     continue
 
             # pivot C = premier swing_low après B
             lows_after = [
@@ -616,20 +640,20 @@ class SMC_Engine:
                 continue
 
             # marque C + quelques bougies
-            pos_c = all_idx.index(c_idx)
-            for k in range(pos_c, min(n, pos_c + 6)):
-                idxk = all_idx[k]
-                closek = price(idxk, 'Close')
+            pos_c = all_idx.index( c_idx )
+            for k in range( pos_c, min(n, pos_c + width_zone ) ):
+                idx_k = all_idx[k]
+                closek = price(idx_k, 'Close')
 
                 if ote_low <= closek <= ote_high:
-                    df.at[idxk, 'OTE_buy'] = True
-                    df.at[idxk, 'OTE_zone_low'] = ote_low
-                    df.at[idxk, 'OTE_zone_high'] = ote_high
-                    df.at[idxk, 'OTE_anchor_low'] = A
-                    df.at[idxk, 'OTE_anchor_high'] = B
-                    df.at[idxk, 'OTE_A_idx'] = a_idx
-                    df.at[idxk, 'OTE_B_idx'] = b_idx
-                    df.at[idxk, 'OTE_type'] = 'bull'
+                    df.at[idx_k, 'OTE_buy'] = True
+                    df.at[idx_k, 'OTE_zone_low'] = ote_low
+                    df.at[idx_k, 'OTE_zone_high'] = ote_high
+                    df.at[idx_k, 'OTE_anchor_low'] = A
+                    df.at[idx_k, 'OTE_anchor_high'] = B
+                    df.at[idx_k, 'OTE_A_idx'] = a_idx
+                    df.at[idx_k, 'OTE_B_idx'] = b_idx
+                    df.at[idx_k, 'OTE_type'] = 'bull'
                 else:
                     break
 
@@ -637,7 +661,7 @@ class SMC_Engine:
         for b_idx in swing_low_idx:
 
             pos_b = all_idx.index(b_idx)
-            start_pos = max(0, pos_b - lookback)
+            start_pos = max( 0, pos_b - lookback )
 
             highs_before = [
                 i for i in swing_high_idx
@@ -668,26 +692,26 @@ class SMC_Engine:
             ote_high = max(ote_top, ote_bot)
             ote_low  = min(ote_top, ote_bot)
 
-            c_low  = price(c_idx, 'Low')
-            c_high = price(c_idx, 'High')
+            c_low  = price( c_idx, 'Low' )
+            c_high = price( c_idx, 'High' )
 
             if not (c_low <= ote_high and c_high >= ote_low):
                 continue
 
-            pos_c = all_idx.index(c_idx)
-            for k in range(pos_c, min(n, pos_c + 6)):
-                idxk = all_idx[k]
-                closek = price(idxk, 'Close')
+            pos_c = all_idx.index( c_idx )
+            for k in range( pos_c, min(n, pos_c + width_zone ) ):
+                idx_k = all_idx[k]
+                closek = price(idx_k, 'Close')
 
                 if ote_low <= closek <= ote_high:
-                    df.at[idxk, 'OTE_sell'] = True
-                    df.at[idxk, 'OTE_zone_low'] = ote_low
-                    df.at[idxk, 'OTE_zone_high'] = ote_high
-                    df.at[idxk, 'OTE_anchor_low'] = B
-                    df.at[idxk, 'OTE_anchor_high'] = A
-                    df.at[idxk, 'OTE_A_idx'] = a_idx
-                    df.at[idxk, 'OTE_B_idx'] = b_idx
-                    df.at[idxk, 'OTE_type'] = 'bear'
+                    df.at[idx_k, 'OTE_sell'] = True
+                    df.at[idx_k, 'OTE_zone_low'] = ote_low
+                    df.at[idx_k, 'OTE_zone_high'] = ote_high
+                    df.at[idx_k, 'OTE_anchor_low'] = B
+                    df.at[idx_k, 'OTE_anchor_high'] = A
+                    df.at[idx_k, 'OTE_A_idx'] = a_idx
+                    df.at[idx_k, 'OTE_B_idx'] = b_idx
+                    df.at[idx_k, 'OTE_type'] = 'bear'
                 else:
                     break
 
@@ -732,19 +756,21 @@ class SMC_Engine:
     
     def overlays_structure( self, df, ax, artists, key, visible_start ):
         
-        if 'Structure' in df.columns:
-            for idx in df.index:
-                s = df.loc[idx, 'Structure']
-                if s in ('HH','HL','LH','LL'):
-                    pos = self.idx_to_pos[ idx ]
-                    y = df.loc[idx, 'High'] if s in ('HH','LH') else df.loc[idx, 'Low']
-                    _y = y+0.004*y if s in ('HH', 'LH') else y-0.004*y
-                    face = 'lightgreen' if s in ('HH','HL') else 'lightcoral'
-                    txt = ax.text( pos, _y, s, fontsize=8, ha='center', 
-                                va='bottom' if 'H' in s else 'top',
-                                bbox=dict(boxstyle='round,pad=0.3', facecolor=face, alpha=0.2),
-                                visible=visible_start )
-                    artists[ key ].append(txt)    
+        if not 'Structure' in df.columns:
+            return
+        
+        for idx in df.index:
+            s = df.loc[idx, 'Structure']
+            if s in ('HH','HL','LH','LL'):
+                pos = self.idx_to_pos[ idx ]
+                y = df.loc[idx, 'High'] if s in ('HH','LH') else df.loc[idx, 'Low']
+                _y = y+0.004*y if s in ('HH', 'LH') else y-0.004*y
+                face = 'lightgreen' if s in ('HH','HL') else 'lightcoral'
+                txt = ax.text( pos, _y, s, fontsize=8, ha='center', 
+                            va='bottom' if 'H' in s else 'top',
+                            bbox=dict(boxstyle='round,pad=0.3', facecolor=face, alpha=0.2),
+                            visible=visible_start )
+                artists[ key ].append(txt)    
 
     # -------------------------------------------------------------------------
 
@@ -832,74 +858,78 @@ class SMC_Engine:
     
     def overlays_displacement( self, df, ax, artists, key, visible_start ):
         
-        if 'DISPLACEMENT' in df.columns:
-            for idx in df.index:
-                if df.loc[idx, 'DISPLACEMENT']:
-                    pos = self.idx_to_pos[ idx ]
-                    y = df.loc[idx, 'High']
-                    v = "{:.2f}".format(df.loc[idx, 'DISPLACEMENT_VALUE'])
-                    txt = ax.text(pos, y+0.25, v, ha='center', fontsize=7, color='red',
+        if not 'DISPLACEMENT' in df.columns:
+            return
+        
+        for idx in df.index:
+            if df.loc[idx, 'DISPLACEMENT']:
+                pos = self.idx_to_pos[ idx ]
+                y = df.loc[idx, 'High']
+                v = "{:.2f}".format(df.loc[idx, 'DISPLACEMENT_VALUE'])
+                txt = ax.text(pos, y+0.25, v, ha='center', fontsize=7, color='red',
+                            visible=visible_start)
+                sct = ax.scatter(pos, y, color='red', s=35, marker='v',
                                 visible=visible_start)
-                    sct = ax.scatter(pos, y, color='red', s=35, marker='v',
-                                   visible=visible_start)
-                    artists[ key ].extend( [txt, sct] )
+                artists[ key ].extend( [txt, sct] )
 
     # -------------------------------------------------------------------------
     
     def overlays_market_state( self, df, ax, artists, key, visible_start ):
 
-        if 'MarketState' in df.columns:
-            timestamps = list( range( len( df ) ) )
-            prices = df['Close'].values
-            states = df['MarketState'].values
-            
-            # Tracer les bandes verticales pour chaque état
-            current_state = states[ 0 ]
-            start_idx = 0
-            
-            for i in range( 1, len( states ) + 1 ):
-                # Changement d'état ou fin des données
-                if i == len( states ) or states[i] != current_state:
-                    end_idx = i if i < len( states ) else i - 1
+        if not 'MarketState' in df.columns:
+            return
+        
+        timestamps = list( range( len( df ) ) )
+        prices = df['Close'].values
+        states = df['MarketState'].values
+        
+        # Tracer les bandes verticales pour chaque état
+        current_state = states[ 0 ]
+        start_idx = 0
+        
+        for i in range( 1, len( states ) + 1 ):
+            # Changement d'état ou fin des données
+            if i == len( states ) or states[i] != current_state:
+                end_idx = i if i < len( states ) else i - 1
+                
+                # Récupérer la couleur et l'alpha pour cet état
+                color, alpha = self.colors.get( current_state, ('gray', 0.15) )
+                
+                # Dessiner la bande verticale
+                vspan = ax.axvspan(
+                    timestamps[ start_idx ], 
+                    timestamps[ end_idx ], 
+                    facecolor=color, 
+                    alpha=alpha,
+                    visible=visible_start, 
+                    zorder=0
+                )
+                
+                # Ne pas affiche le texte pour l'état 'POTENTIAL_REVERSAL'
+                txt_visible = visible_start
+                if states[ start_idx ] == MarketState.POTENTIAL_REVERSAL.name:
+                    txt_visible = False
+                
+                # Ajouter le label de l'état au milieu de la bande    
+                mid_idx = ( start_idx + end_idx ) // 2
+                label = self.state_labels.get( current_state, 'none' )
+                y_pos = prices.min() * 1.02
+                txt = ax.text(
+                    timestamps[ mid_idx ], 
+                    y_pos, 
+                    label,
+                    ha='center', va='top', fontsize=6, 
+                    bbox=dict(boxstyle='square,pad=0.3', facecolor=color, alpha=0.2),
+                    visible=txt_visible,
+                    zorder=5
+                )
                     
-                    # Récupérer la couleur et l'alpha pour cet état
-                    color, alpha = self.colors.get( current_state, ('gray', 0.15) )
+                artists[key].extend([vspan, txt])
+                
+                if i < len( states ):
+                    current_state = states[i]
+                    start_idx = i
                     
-                    # Dessiner la bande verticale
-                    vspan = ax.axvspan(
-                        timestamps[ start_idx ], 
-                        timestamps[ end_idx ], 
-                        facecolor=color, 
-                        alpha=alpha,
-                        visible=visible_start, 
-                        zorder=0
-                    )
-                    
-                    # Ne pas affiche le texte pour l'état 'POTENTIAL_REVERSAL'
-                    txt_visible = visible_start
-                    if states[ start_idx ] == MarketState.POTENTIAL_REVERSAL.name:
-                        txt_visible = False
-                    
-                    # Ajouter le label de l'état au milieu de la bande    
-                    mid_idx = ( start_idx + end_idx ) // 2
-                    label = self.state_labels.get( current_state, 'none' )
-                    y_pos = prices.min() * 1.02
-                    txt = ax.text(
-                        timestamps[ mid_idx ], 
-                        y_pos, 
-                        label,
-                        ha='center', va='top', fontsize=6, 
-                        bbox=dict(boxstyle='square,pad=0.3', facecolor=color, alpha=0.2),
-                        visible=txt_visible,
-                        zorder=5
-                    )
-                        
-                    artists[key].extend([vspan, txt])
-                    
-                    if i < len( states ):
-                        current_state = states[i]
-                        start_idx = i
-                        
     # -------------------------------------------------------------------------
     
     def overlays_bos( self, df, ax, artists, key, visible_start ):
@@ -961,7 +991,7 @@ class SMC_Engine:
     
     def overlays_choch( self, df, ax, artists, key, visible_start ):
         
-        if not any( col in df.columns for col in ['CHOCH_UP', 'CHOCH_DOWN'] ):
+        if not any( col in df.columns for col in [ 'CHOCH_UP', 'CHOCH_DOWN', 'CHOCH_TYPE', 'CHOCH_IDX' ] ):
             return
         
         for idx in df.index:
@@ -1156,7 +1186,7 @@ class SMC_Engine:
     
     def overlays_fvg( self, df, ax, artists, key, visible_start ):
         
-        if 'FVG_UP' not in df.columns:
+        if not all( col in df.columns for col in [ 'FVG_UP', 'FVG_DOWN' ] ):
             return
             
         for i, idx in enumerate( df.index[2:], start=2 ):
@@ -1183,7 +1213,10 @@ class SMC_Engine:
     # -------------------------------------------------------------------------
     
     def overlays_order_blocs( self, df, ax, artists, key, visible_start ):
-        
+
+        if not all( col in df.columns for col in [ 'OB_type', 'OB_top', 'OB_bottom', 'Broken_at', 'Retest_at' ] ):
+            return
+                
         pos_start = None
         ob_type_reel = None
         
@@ -1210,7 +1243,7 @@ class SMC_Engine:
             # Broken at
             broken = df.loc[idx, 'Broken_at']
             if pd.notna( broken ):
-                pos_broken = self.idx_to_pos[ broken ]
+                pos_broken = self.idx_to_pos[broken]
                 price = df.loc[broken, 'Close']
                 # sct = ax.scatter( pos_broken, price, color='darkblue', s=40, marker='v',
                 #                visible=visible_start)
@@ -1225,30 +1258,39 @@ class SMC_Engine:
                 #                visible=visible_start)
                 # artists[ key ].append(sct)
 
-            if pos_broken != None or pos_retest != None:
-                color = 'green' if 'bull' in ob_type_reel else 'red'
-                if pos_broken != None:
-                    _with = pos_broken - pos_start
-                if pos_retest != None:
-                    _with = pos_retest - pos_start
-                                        
-                rect = patches.Rectangle( (pos_start-0.4, bottom), width=_with,
-                                        height=top - bottom, facecolor=color, edgecolor='darkblue',
-                                        alpha=0.3, visible=visible_start )
-                ax.add_patch(rect)
-                artists[ key ].append(rect)
-                
-                pos_broken = None
-                pos_retest = None
-                pos_start = None
-                ob_type_reel = None      
-				
+            # Détermination de la fin de l'order block
+            if pos_retest is not None:
+                pos_end = pos_retest
+            elif pos_broken is not None:
+                pos_end = pos_broken
+            else:
+                pos_end = len( self.idx_to_pos ) - 1 # sinon jusqu'à la fin du graphique
+
+            _width = pos_end - pos_start
+            color = 'green' if 'bull' in ob_type_reel else 'red'
+            rect = patches.Rectangle(
+                (pos_start - 0.4, bottom),
+                width=_width,
+                height=top - bottom,
+                facecolor=color,
+                edgecolor='darkblue',
+                alpha=0.3,
+                visible=visible_start
+            )
+            
+            ax.add_patch(rect)
+            artists[ key ].append(rect)
+            
+            pos_broken = None
+            pos_retest = None
+            pos_start = None
+            ob_type_reel = None      
 
     # -------------------------------------------------------------------------
     
     def overlays_ote( self, df, ax, artists, key, visible_start ):
 
-        if 'OTE_zone_low' not in df.columns:
+        if not all( col in df.columns for col in [ 'OTE_zone_low', 'OTE_zone_high', 'OTE_buy', 'OTE_sell' ] ):
             return
 
         color_line = "#1361ff80"
@@ -1263,9 +1305,11 @@ class SMC_Engine:
 
             if df.at[ idx, 'OTE_buy']:
                 color_zone = "#4cfc4640"
+                ote_type = 'bull'
             
             if df.at[ idx, 'OTE_sell']:
                 color_zone = "#fc464632"
+                ote_type = 'bear'
             
             # récupérer A, B (pivots)
             A_idx = df.at[ idx, 'OTE_A_idx' ]
@@ -1301,6 +1345,28 @@ class SMC_Engine:
             ax.add_patch(rect)
             artists[key].append(rect)
 
+            # ------------------------------------
+            # 2) LIGNE SWING A → B (structure ICT)
+            # ------------------------------------
+            if ote_type == 'bull':
+                A_price = df.at[A_idx, 'Low']
+                B_price = df.at[B_idx, 'High']
+            else:
+                A_price = df.at[A_idx, 'High']
+                B_price = df.at[B_idx, 'Low']
+
+            line_ab = ax.plot(
+                [pos_A, pos_B],
+                [A_price, B_price],
+                linestyle='-',
+                linewidth=1.2,
+                color=color_zone,
+                alpha=0.6,
+                visible=visible_start
+            )[0]
+
+            artists[key].append(line_ab)
+            
             # -----------------------------------
             # 2) LIGNES FIBS (0.618, 0.705, 0.79)
             # -----------------------------------
