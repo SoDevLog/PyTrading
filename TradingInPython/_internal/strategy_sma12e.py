@@ -140,9 +140,6 @@ class strategy_sma12e:
     #	
     def update_graph( self ):
 
-        # Bloquer l'autoscale pour que les graphes reste en place
-        self.ax_main.set_autoscale_on( False )
-
         # self.ax_main.clear() DO NOT clear() otherwise annotations won't work
         # remove alls lines because strategy by/sell has to be recalculate
         #
@@ -920,7 +917,8 @@ class strategy_sma12e:
             
         ax_main.set_xlim( -0.5, len( data ) - 0.5 ) # after manipulations reset xlim
         ax_main.grid( True )
-
+        ax_main.set_autoscale_on( False ) # bloquer l'autoscale pour les annotations
+        
         return axe_x
 
     # ----------------------------------------------------------------------------
