@@ -73,6 +73,8 @@ Take a deep dive into digital signal processing with Kalman filter trend predict
 
 - [Kalman filter alorithms](https://github.com/SoDevLog/PyTrading/blob/main/TradingInPython/_internal/strategies/kalman_filter_forcast.py)
 
+- [Kalman filter documentation](https://trading-in-python.sodevlog.com/strategies/kalman-filter/)
+
 Discover many others strategies while downloading and running the platform **TradingInPyhton**.
 
 # Documentation
