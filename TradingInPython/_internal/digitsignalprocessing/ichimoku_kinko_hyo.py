@@ -1,126 +1,127 @@
-""" Since there is a modern Ichimoku...
+""" Puisqu'il y a un Ichimoku moderne ...
 
-    The modernized Ichimoku Kinko Hyo indicator is based on a combination of several elements of the traditional Ichimoku indicator,
-    adjusted by the Average True Range (ATR) to account for volatility.
+	L'indicateur Ichimoku Kinko Hyo modernisé repose sur une combinaison de plusieurs éléments de l'indicateur Ichimoku traditionnel, 
+ 	ajustés par l'Average True Range (ATR) pour tenir compte de la volatilité.
 
-    1. Buy Signal
-    -------------
-    Condition :
-        The Tenkan-sen line (conversion line) crosses above the Kijun-sen (base line).
-        The closing price is above both boundaries of the Ichimoku cloud (Senkou Span A and Senkou Span B).
-    Interpretation :
-        This indicates bullish strength in the market. A bullish crossover between Tenkan-sen and Kijun-sen, accompanied by the price position above the cloud,
-        suggests that buyers are in control of the market.
-        Adding bands based on ATR helps estimate volatility and adjust the probability of a continued upward move.
-    Action :
-        Traders may consider entering a long position (buy) or maintaining existing positions if these conditions are met.    
-
-     2. Sell Signal
-    --------------------------------
-    Condition :
-        The Tenkan-sen line crosses below the Kijun-sen.
-        The closing price is below both boundaries of the Ichimoku cloud (Senkou Span A and Senkou Span B).
-    Interpretation :
-        This signal indicates market weakness and a possible downtrend. The bearish crossover between Tenkan-sen and Kijun-sen, in conjunction with price below the cloud,
-        suggests that sellers are dominant.
-        The fit with the ATR gives an idea of ​​volatility, which is useful in assessing the strength of the downtrend.
-    Action :
-        Traders may consider entering a short position (selling) or exiting existing long positions.
-        
-    The strength of the trend is greater if these signals occur when the price is well above (for an uptrend)
-    or well below (for a downtrend) the cloud.
-    
-    3. Neutral or Undecided Zones
-    -----------------------------
-    Condition :
-        The price is inside the Ichimoku cloud.
-        Crossbreeding between Tenkan-sen and Kijun-sen is unclear or repeated over a short period of time.
-    Interpretation :
-        When the price is in the cloud, it indicates an area of indecision where neither buyers nor sellers are taking control. The market
-        may be in a consolidation phase or transitioning to a new trend.
-    Action :
-        Traders may choose to stay out of the market until a clearer direction emerges.
-        Orders can be placed outside the cloud to capture a potential breakout.
-    
-    4. Confirmation Signal and Volatility (via ATR and Kijun_sen_upper and Kijun_sen_lower)
-    -----------------------------------------------------------------------------------------
-    Condition :
-        ATR based bands (Kijun_sen_upper and Kijun_sen_lower) can be used to confirm signals or to manage risks.
-    Interprétation :
-        If the price moves significantly away from the bands, it could indicate an over-volatility move. Traders could interpret this
-        as a signal of trend exhaustion or use the information to adjust their stop-loss.
-    Action :
-        Adjust positions or stop orders based on the widening or narrowing of these bands, taking into account current market volatility.
-
-        - Kijun_sen_upper : This upper band represents a dynamic resistance.
-        The higher the volatility (ATR), the further this band will be from the Kijun-sen.
-        When the price reaches this band, it can indicate an overbought zone or a resistance level
-        where the price could reverse or correct downward.
-        
-        - Kijun_sen_lower : This lower band represents a dynamic support.
-        If the price goes down to this band, it may indicate an oversold area or a support level
-        where the price could bounce upwards.
-
-    Market Volatility:
-        When the bands are wide (i.e. ATR is high), it indicates that the market is volatile. Such a situation suggests caution,
-        as larger price movements may occur.
-        When the bands are closer together, it indicates a decrease in volatility, which may suggest a more stable market.
-
-    Potential Reversal Points:
-        If the price breaks above the upper band (Kijun_sen_upper), it may signal an overbought condition, and a downward correction may follow.
-
-    If the price breaks below the lower band (Kijun_sen_lower), it may indicate an oversold condition, and an upward bounce may follow.
-
-    Trend Confirmation:
-        As long as the price moves between the bands, it confirms the current trend.
-        If the price breaks above the bands, it may be a signal of a trend change or a sharp acceleration in the move.
-    
-    5. Kumo (cloud)
-    ---------------
-    Interpretation:
-        The cloud is the central element of the Ichimoku indicator. It represents the support and resistance zone.
-        The thicker the cloud, the stronger the support or resistance.
-        When the price is above the cloud, the trend is considered bullish, and when it is below, the trend is bearish.
-        If the price is inside the cloud, it indicates an indecisive or neutral trend.
-
-        - Twist of the cloud: this is when Senkou Span A goes below or above Senkou Span B
-        When the Ichimoku cloud twists after a trend, it indicates a weakening of the trend and the price enters a range. It may then be time to
-        take profits.
-
-    6. Chikou Span line delayed line (Lagging Span)
-    --------------------------------------------------
-    Condition:
-        The Chikou Span is often used as confirmation. It shows the current price projected back 26 periods.
-    Interpretation:
-        If Chikou Span is above the current price, it confirms an uptrend. If it is below, it confirms a downtrend.
-    Action:
-        Use Chikou Span to confirm buy or sell signals, or to avoid taking positions against the prevailing trend.
-
-    7. Indicator Philosophy
+	1. Signal d'Achat (Buy Signal)
     ------------------------------
-    Ichimoku is based on visual analysis and trend theory.
-        The indicator assumes that prices already reflect all available market information,
-        including volumes, even if this is not explicitly taken into account.
+	Condition :
+		La ligne Tenkan-sen (ligne de conversion) traverse au-dessus de la Kijun-sen (ligne de base).
+		Le prix de clôture se situe au-dessus des deux limites du nuage Ichimoku (Senkou Span A et Senkou Span B).
+	Interprétation :
+		Cela indique une force haussière dans le marché. Un croisement haussier entre Tenkan-sen et Kijun-sen, accompagné de la position du prix au-dessus du nuage, 
+        suggère que les acheteurs contrôlent le marché. 
+        L'ajout de bandes basées sur l'ATR permet d'estimer la volatilité et d'ajuster la probabilité d'un mouvement continu à la hausse.
+	Action :
+		Les traders peuvent envisager d'entrer en position longue (achat) ou de maintenir des positions existantes si ces conditions sont remplies.
+	
+ 	2. Signal de Vente (Sell Signal)
+    --------------------------------
+	Condition :
+		La ligne Tenkan-sen traverse en dessous de la Kijun-sen.
+		Le prix de clôture se situe en dessous des deux limites du nuage Ichimoku (Senkou Span A et Senkou Span B).
+	Interprétation :
+		Ce signal indique une faiblesse du marché et une possible tendance baissière. Le croisement baissier entre Tenkan-sen et Kijun-sen, en conjonction avec un prix sous le nuage,
+        suggère que les vendeurs dominent. 
+        L'ajustement avec l'ATR donne une idée de la volatilité, ce qui est utile pour évaluer la solidité de la tendance baissière.
+	Action :
+		Les traders peuvent envisager d'entrer en position courte (vente) ou de sortir des positions longues existantes.
+  
+    La force de la tendance est plus importante si ces signaux se produisent lorsque le prix est bien au-dessus (pour une tendance haussière) 
+    ou bien en-dessous (pour une tendance baissière) du nuage.
+    
+	3. Zones Neutres ou Indécises
+    -----------------------------
+	Condition :
+		Le prix est à l'intérieur du nuage Ichimoku.
+		Les croisements entre Tenkan-sen et Kijun-sen sont peu clairs ou répétés sur une courte période.
+	Interprétation :
+		Lorsque le prix est dans le nuage, cela indique une zone d'indécision où ni les acheteurs ni les vendeurs ne prennent le contrôle. Le marché 
+  		peut être dans une phase de consolidation ou de transition vers une nouvelle tendance.
+	Action :
+		Les traders peuvent choisir de rester en dehors du marché jusqu'à ce qu'une direction plus claire émerge. 
+  		Les ordres peuvent être placés à l'extérieur du nuage pour capter un éventuel breakout.
+    
+	4. Signal de Confirmation et Volatilité (via l'ATR et Kijun_sen_upper et Kijun_sen_lower)
+    -----------------------------------------------------------------------------------------
+	Condition :
+		Les bandes basées sur l'ATR (Kijun_sen_upper et Kijun_sen_lower) peuvent être utilisées pour confirmer les signaux ou pour gérer les risques.
+	Interprétation :
+		Si le prix s'éloigne fortement des bandes, cela pourrait indiquer un mouvement survolatilité. Les traders pourraient interpréter cela
+  		comme un signal d'épuisement de tendance ou utiliser l'information pour ajuster leur stop-loss.
+	Action :
+		Ajuster les positions ou les ordres stop en fonction de l'élargissement ou du rétrécissement de ces bandes, en tenant compte de la volatilité actuelle du marché.
 
-    - Advantages and limitations without volumes
-        Advantages:
-            Simplicity: The absence of volume data makes Ichimoku easier to use. Traders do not have to analyze
-            additional data, which can make decision-making faster and less cluttered.
+        - Kijun_sen_upper : Cette bande supérieure représente une résistance dynamique. 
+        Plus la volatilité (ATR) est élevée, plus cette bande sera éloignée de la Kijun-sen. 
+        Lorsque le prix atteint cette bande, cela peut indiquer une zone de surachat ou un niveau de résistance 
+        où le prix pourrait se renverser ou corriger à la baisse.
 
-            Trend Identification: It is particularly effective in identifying trends, support and resistance levels,
-            and generating trading signals in a variety of market conditions.
+        - Kijun_sen_lower : Cette bande inférieure représente un support dynamique. 
+        Si le prix descend jusqu'à cette bande, cela peut indiquer une zone de survente ou un niveau de support
+        où le prix pourrait rebondir à la hausse.
 
-            Limitations:
-            Lack of Volume Confirmation: Volume can often provide important clues about the strength or weakness of a trend.
-            For example, high volume during an uptrend can confirm the strength of that trend,
-            while low volume could indicate weakness or lack of market commitment.
-            Difficulty in Spotting Reversals: Volume can help spot trend reversals by showing whether price
-            movements are supported by significant participation. Without this data, some reversals can be more difficult to spot.
+    Volatilité du Marché :
+        Lorsque les bandes sont larges (c'est-à-dire que l'ATR est élevé), cela indique que le marché est volatile. Une telle situation suggère de la prudence, 
+        car des mouvements de prix plus importants peuvent se produire.
+        Lorsque les bandes se rapprochent, cela indique une baisse de la volatilité, ce qui peut suggérer un marché plus stable.
 
-    8. Conclusion
+    Points de Renversement Potentiels :
+        Si le prix dépasse la bande supérieure (Kijun_sen_upper), cela peut signaler une condition de surachat, et une correction à la baisse pourrait suivre.
+        Si le prix descend en dessous de la bande inférieure (Kijun_sen_lower), cela peut indiquer une condition de survente, et un rebond à la hausse pourrait suivre.
+    
+    Confirmation de Tendance :
+        Tant que le prix évolue entre les bandes, cela confirme la tendance actuelle.
+        Si le prix casse les bandes, cela peut être un signal de changement de tendance ou d'une forte accélération du mouvement.        
+
+    5. Kumo (nuage)
+    ---------------
+    Interprétation : 
+        Le nuage est l'élément central de l'indicateur Ichimoku. Il représente la zone de support et de résistance. 
+        Plus le nuage est épais, plus le support ou la résistance est fort. 
+        Lorsque le prix est au-dessus du nuage, la tendance est considérée comme haussière, et lorsqu'il est en dessous, la tendance est baissière. 
+        Si le prix est à l'intérieur du nuage, cela indique une tendance indécise ou neutre.
+        
+        - Twist du nuage : c'est quand Senkou Span A passe en dessous ou au dessus de Senkou Span B
+        Lorsque le nuage Ichimoku twist après une tendance cela indique un affaiblisement de la tendance et que le prix entre en range. Il est alors peut-être temps 
+        de prendre ses bénéfices.
+        
+ 	6. Ligne Chikou Span ligne retardée (Lagging Span)
+    --------------------------------------------------
+	Condition :
+		La Chikou Span est souvent utilisée comme confirmation. Elle montre le prix actuel projeté en arrière de 26 périodes.
+	Interprétation :
+		Si Chikou Span est au-dessus du prix actuel, cela confirme une tendance haussière. Si elle est en dessous, cela confirme une tendance baissière.
+	Action :
+	    Utiliser Chikou Span pour confirmer les signaux d'achat ou de vente, ou pour éviter de prendre des positions contre la tendance dominante.
+
+	7. Philosophie de l'indicateur
+    ------------------------------
+    L'Ichimoku se base sur une analyse visuelle et la théorie de la tendance. 
+ 	L'indicateur suppose que les prix reflètent déjà toutes les informations disponibles sur le marché, 
+  	y compris les volumes, même si ce n’est pas explicitement pris en compte.
+
+	- Avantages et limitations sans les volumes
+		Avantages :
+			Simplicité : L'absence de données sur les volumes rend l'Ichimoku plus simple à utiliser. Les traders n'ont pas à analyser des 
+   			données supplémentaires, ce qui peut rendre la prise de décision plus rapide et moins encombrée.
+
+			Identification des tendances : Il est particulièrement efficace pour identifier les tendances, les niveaux de support et de résistance, 
+   			et pour générer des signaux de trading dans des conditions de marché variées.
+
+		Limitations :
+			Absence de confirmation par le volume : Le volume peut souvent fournir des indices importants sur la force ou la faiblesse d'une tendance. 
+   			Par exemple, un volume élevé pendant une tendance haussière peut confirmer la solidité de cette tendance, 
+      		tandis qu'un volume faible pourrait indiquer une faiblesse ou un manque d'engagement du marché.
+
+			Difficulté à détecter les retournements : Les volumes peuvent aider à repérer les retournements de tendance en montrant si les mouvements 
+   			de prix sont soutenus par une participation significative. Sans ces données, certains retournements peuvent être plus difficiles à identifier.		
+      	
+ 	8. Conclusion
     -------------
-        Interpreting signals in Modernized Ichimoku must consider several factors simultaneously, including line crossovers,
-        position relative to the cloud, and volatility adjustments via ATR. By combining these elements, traders can get a more complete overview of the market situation, which can help make more informed decisions about entries, exits and risk management.
+		L'interprétation des signaux dans l'Ichimoku modernisé doit tenir compte de plusieurs facteurs simultanément, notamment les croisements de lignes, 
+  		la position par rapport au nuage, et les ajustements de volatilité via l'ATR. En combinant ces éléments, les traders peuvent obtenir une vue d'ensemble 
+    	plus complète de la situation du marché, ce qui peut aider à prendre des décisions plus éclairées sur les entrées, sorties et la gestion des risques.
 """
 import warnings
 import numpy as np
@@ -135,65 +136,65 @@ from sklearn.preprocessing import StandardScaler
 
 from .indicators import atr
 
-# 1. Calculate the components of Ichimoku with ATR
+# 1. Calculer les composantes de l'Ichimoku avec l'ATR
 # ----------------------------------------------------
 # - True Range (TR)
-# TR = max( ∣High − Low∣, ∣High − Previous Close∣, ∣Low − Previous Close∣ )
+# TR = max( ∣High − Low∣, ∣High − Previous Close∣, ∣Low − Previous Close∣ )
 #
-# The idea is to capture the largest price gaps,
-# taking into account not only the intraday range (High - Low),
-# but also the opening gaps compared to the closing of the previous period.
+# L'idée est de capturer les écarts de prix les plus importants, 
+# en tenant compte non seulement de la plage intra-journalière (High - Low), 
+# mais aussi des gaps d'ouverture par rapport à la clôture de la période précédente.
 #
-# - ATR: Moving average over a number of periods
+# - ATR : Moyenne mobile sur un certain nombre de périodes
 #
 def ichimoku_modernise( data, period1=9, period2=26, period3=52, multiplier=1.5 ):
-    # Tenkan-sen (conversion line)
+    # Tenkan-sen (ligne de conversion)
     data['Tenkan_sen'] = (data['High'].rolling(window=period1).max() + data['Low'].rolling(window=period1).min()) / 2
 
-   # Kijun-sen (baseline)
+    # Kijun-sen (ligne de base)
     data['Kijun_sen'] = (data['High'].rolling(window=period2).max() + data['Low'].rolling(window=period2).min()) / 2
 
-    # Senkou Span A (first cloud boundary)
+    # Senkou Span A (première limite du nuage)
     data['Senkou_span_A'] = ((data['Tenkan_sen'] + data['Kijun_sen']) / 2).shift(period2)
 
-    # Senkou Span B (second cloud boundary)
+    # Senkou Span B (deuxième limite du nuage)
     data['Senkou_span_B'] = ((data['High'].rolling(window=period3).max() + data['Low'].rolling(window=period3).min()) / 2).shift(period2)
 
-    # Chikou Span (delayed line)
+    # Chikou Span (ligne retardée)
     data['Chikou_span'] = data['Close'].shift(-period2)
 
     # Average True Range (ATR)
     data['ATR'] = atr( data, period2 )
     
-    # Add ATR based bands
+    # Ajouter des bandes basées sur l'ATR
     data['Kijun_sen_upper'] = data['Kijun_sen'] + (data['ATR'] * multiplier)
     data['Kijun_sen_lower'] = data['Kijun_sen'] - (data['ATR'] * multiplier)
     
     return data
 
-# 2. Generate Ichimoku-based signals and train a logistic regression model
-# 
+# 2. Générer des signaux basés sur Ichimoku et entraîner un modèle de régression logistique
+#
 def generate_signals( data ):
     data['Signal'] = 0
 
-    # Conditions for buy signals
+    # Conditions pour les signaux d'achat
     data.loc[(data['Tenkan_sen'] > data['Kijun_sen']) & (data['Close'] > data['Senkou_span_A']) & (data['Close'] > data['Senkou_span_B']), 'Signal'] = 1
 
-    # Conditions for sell signals
+    # Conditions pour les signaux de vente
     data.loc[(data['Tenkan_sen'] < data['Kijun_sen']) & (data['Close'] < data['Senkou_span_A']) & (data['Close'] < data['Senkou_span_B']), 'Signal'] = -1
     
-    # To display this signal at the bottom of the graph
+    # Pour afficher ce signal en bas du graph
     mean = data['Close'].mean()
     data['Signal_display'] = data['Signal'] + mean
     
     return data
 
 def train_predictive_model_0000(data):
-    # We create features to train the model
+    # On crée des features pour entraîner le modèle
     X = data[['Tenkan_sen', 'Kijun_sen', 'Senkou_span_A', 'Senkou_span_B', 'ATR', 'Kijun_sen_upper', 'Kijun_sen_lower']]
     y = data['Signal']
     
-    # We eliminate lines where the signal is not defined
+    # On élimine les lignes où le signal n'est pas défini
     X = X.dropna()
     y = y[ X.index ]
 
@@ -203,14 +204,14 @@ def train_predictive_model_0000(data):
     if X.shape[0] < 10:
         raise ValueError("Pas assez de données pour diviser en ensembles d'entraînement et de test.")
     
-    # Split the data into training and testing sets
+    # Split les données en jeu d'entraînement et de test
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
     
-    # Create and train the model
+    # Créer et entraîner le modèle
     model = LogisticRegression()
     model.fit(X_train, y_train)
     
-    # Predictions and evaluation
+    # Prédictions et évaluation
     y_pred = model.predict( X_test )
     accuracy = accuracy_score(y_test, y_pred)
     
@@ -218,20 +219,20 @@ def train_predictive_model_0000(data):
     
     return model
 
-# The variable y = data['Signal'] is what the machine learning model is trying to predict.
-# The machine learning model, for example LogisticRegression, is a supervised model.
-# This means that it learns by observing the relationships between the input
-# variables (X - the features)
-# and the target variable (y - the buy/sell signals).
+# La variable y = data['Signal'] est ce que le modèle de machine learning essaie de prédire.
+# Le modèle de machine learning, par exemple LogisticRegression, est un modèle supervisé. 
+# Cela signifie qu'il apprend en observant les relations entre les variables 
+# d'entrée (X - les caractéristiques ou features) 
+# et la variable cible (y - les signaux d'achat/vente).
 #
 def train_predictive_model( data ):
     global y_test, y_pred
     
-    # We create features to train the model
+    # On crée des features pour entraîner le modèle
     X = data[['Tenkan_sen', 'Kijun_sen', 'Senkou_span_A', 'Senkou_span_B', 'ATR', 'Kijun_sen_upper', 'Kijun_sen_lower']]
     y = data['Signal']
     
-    # Checking NaNs
+    # Vérification des NaN
     X = X.dropna()
     y = y[ X.index ]
     
@@ -241,23 +242,23 @@ def train_predictive_model( data ):
     if X.shape[0] < 10:
         raise ValueError("Pas assez de données pour diviser en ensembles d'entraînement et de test.")
     
-    # Data normalization
+    # Normalisation des données
     scaler = StandardScaler()
     X_scaled = scaler.fit_transform(X)
     
-    # Convert back to DataFrame to preserve column names
+    # Reconvertir en DataFrame pour conserver les noms des colonnes
     X_scaled_df = pandas.DataFrame( X_scaled, columns=X.columns, index=X.index )
     
-    # Split the data into training and testing sets
+    # Split les données en jeu d'entraînement et de test
     X_train, X_test, y_train, y_test = train_test_split( X_scaled_df, y, test_size=0.3, random_state=42 )
     
-    # Build and train the model with higher iterations and catching warnings
+    # Créer et entraîner le modèle avec un nombre d'itérations plus élevé et en capturant les avertissements
     with warnings.catch_warnings():
         warnings.simplefilter( "ignore", category=ConvergenceWarning )
-        model = LogisticRegression( max_iter=1000, solver='lbfgs')  # Increase max_iter to 1000 other solvers 'liblinear', 'sag', 'saga'
+        model = LogisticRegression( max_iter=1000, solver='lbfgs')  # Augmentation de max_iter à 1000 autres solveurs 'liblinear', 'sag', 'saga'
         model.fit( X_train, y_train )
     
-    # Predictions and evaluation
+    # Prédictions et évaluation
     y_pred = model.predict( X_test )
     accuracy = accuracy_score(y_test, y_pred)
     
@@ -265,104 +266,104 @@ def train_predictive_model( data ):
     
     return model
 
-# Apply the model to new data to get predictive signals
-# honestly... I don't see what this function is for
+# Appliquer le modèle à de nouvelles données pour obtenir des signaux prédictifs
+# franchement ... je ne vois pas à quoi sert cette fontion
 def apply_model( model, data ):
     
     X_new = data[['Tenkan_sen', 'Kijun_sen', 'Senkou_span_A', 'Senkou_span_B', 'ATR', 'Kijun_sen_upper', 'Kijun_sen_lower']].dropna()
     data['Signal_Forcasted'] = np.nan
     data.loc[ X_new.index, 'Signal_Forcasted'] = model.predict( X_new )
 
-    # Can display on the graph
+    # Pourvoir afficher sur le graphique
     mean = data['Close'].mean()
     data['Signal_Forcasted'] = data['Signal_Forcasted'] + mean
         
     return data
 
 def plot_forcasts( df, y_test, y_pred ):
-    # Create a column in the DataFrame for predictions, initially with NaNs
+    # Créer une colonne dans le DataFrame pour les prédictions, initialement avec des NaN
     df['Forcasts'] = float('nan')
     
-    # Align predictions with indices in df
+    # Aligner les prédictions avec les indices dans df
     df.loc[ y_test.index, 'Forcasts'] = y_pred
 
-    # Trace the Kijun-sen
+    # Tracer le Kijun-sen
     #plt.plot( df['Kijun_sen'], label='Kijun-sen')
 
-    # Plot buying and selling predictions
+    # Tracer les prédictions d'achat et de vente
     plt.scatter( df.index, df['Forcasts'], label='Forcasts', marker='o', color='red')
 
 def plot_future_predictions(df, y_pred):
-    # Latest index of the historical series
+    # Dernier index de la série historique
     last_index = df.index[-1]
     
-    # Calculating the number of future predictions
+    # Calcul du nombre de prédictions futures
     future_indices = pandas.date_range( start=last_index, periods=len( y_pred ) + 1, freq='D')[1:]
     
-    # Create a series for future predictions
+    # Créer une série pour les prédictions futures
     future_predictions = pandas.Series( y_pred, index=future_indices )
     
-    # Tracer the Kijun-sen
+    # Tracer le Kijun-sen
     #plt.plot( df.index, df['Kijun_sen'], label='Kijun-sen' )
     
-    # Plot future predictions
+    # Tracer les prédictions futures
     plt.plot( future_predictions.index, future_predictions, label='Prédictions Futures', marker='o', linestyle='--', color='red')
 
 def predict_future_signals(df, model, days_in_future, days_in_past):
     """
-    Predict future signals using a model based on past data windows.
+    Prédire les signaux futurs en utilisant un modèle basé sur des fenêtres de données passées.
 
     Parameters:
-    df (pd.DataFrame): DataFrame containing historical data.
-    model: Trained machine learning model.
-    days_in_future (int): Number of days to predict future signals for.
-    days_in_past (int): Number of days of past data to use for each prediction.
+    df (pd.DataFrame): DataFrame contenant les données historiques.
+    model: Modèle de machine learning entraîné.
+    days_in_future (int): Nombre de jours pour lesquels prédire les signaux futurs.
+    days_in_past (int): Nombre de jours de données passées à utiliser pour chaque prédiction.
 
     Returns:
-    np.array: Signal predictions for future days.
+    np.array: Prédictions des signaux pour les jours futurs.
     """
     
-    # Assume df has a column 'Signal' which is the label to predict
+    # Assumer que df a une colonne 'Signal' qui est l'étiquette à prédire
     if 'Signal' not in df.columns:
         raise ValueError("Le DataFrame doit contenir une colonne 'Signal'.")
 
-    # Take only the 7 values ​​for creating the model
+    # Ne prendre que les 7 valeurs de création du model
     features = ['Tenkan_sen', 'Kijun_sen', 'Senkou_span_A', 'Senkou_span_B', 'ATR', 'Kijun_sen_upper', 'Kijun_sen_lower']
     _df = df[ features ].copy()
     _df.fillna( 0, inplace=True )
     
-    # Normalize historical data
+    # Normaliser les données historiques
     scaler = StandardScaler()
     data_scaled = scaler.fit_transform( _df )
     
-    # Prepare past data windows for predictions
+    # Préparer les fenêtres de données passées pour les prédictions
     X = np.array([data_scaled[i:i + days_in_past] for i in range(len(data_scaled) - days_in_past)])
     
-    # Ensure the model expects the data to be of good shape
+    # Assurer que le modèle s'attend à la bonne forme des données
     X = np.reshape(X, (X.shape[0], days_in_past, X.shape[2]))
     
-    # Use the last data window to start future predictions
+    # Utiliser la dernière fenêtre de données pour commencer les prédictions futures
     last_window = pandas.DataFrame(X[-1], columns=features)
 
     predictions = []
     
     for _ in range( days_in_future ):
                 
-        # Predict future signal
+        # Prédire le signal futur
         prediction = model.predict( last_window  )
         predictions.append( prediction[0] )
         
-        # Prepare input for next prediction
-        X_prime = np.roll( last_window, shift=-1, axis=0)  # Move window
+        # Préparer l'entrée pour la prochaine prédiction
+        X_prime = np.roll( last_window, shift=-1, axis=0)  # Déplacer la fenêtre
         last_window = pandas.DataFrame( X_prime, columns=features )
     
-    # Convert predictions to numpy array
+    # Convertir les prédictions en tableau numpy
     predictions = np.array( predictions )
     
-    # Scaling for display
+    # Mise à l'échelle pour l'affichage
     mean = df['Close'].mean()
     predictions = predictions + mean
 
-    # Invert the transformation to get the real signal values ​​if needed
-    # Here we don't use `scaler.inverse_transform` because we predicted the signals directly
+    # Inverser la transformation pour obtenir les valeurs réelles du signal si besoin
+    # Ici, nous n'utilisons pas de `scaler.inverse_transform` car nous avons prédit directement les signaux
     return predictions

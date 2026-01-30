@@ -1,0 +1,12 @@
+{
+    "swing_width": 3,
+    "liquidity_threshold": 0.005,
+    "lookahead_impulse": 3,
+    "bos_atr_confirm": 0.25,
+    "swing_min_width": 3,
+    "swing_max_width": 5,
+    "atr_period": 14,
+    "fvg_atr_multiplier": 0.33,
+    "displacement_body_ratio": 0.35,
+    "ob_mitigation_bars": 6
+}
