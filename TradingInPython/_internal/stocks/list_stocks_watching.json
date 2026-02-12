@@ -222,6 +222,11 @@
             "menu_list": "Aerospace-defense"
         },
         {
+            "name": "AXT, Inc. ",
+            "symbol": "AXTI",
+            "menu_list": "Semi-conducteurs"
+        },
+        {
             "name": "AXWAY SOFTWARE",
             "symbol": "AXW.PA",
             "menu_list": "A"
@@ -315,6 +320,10 @@
             "menu_list": "ETF"
         },
         {
+            "name": "BOLIDEN",
+            "symbol": "BWJ.F"
+        },
+        {
             "name": "BOUYGUES",
             "symbol": "EN.PA",
             "menu_list": "Construction-Ingé"
@@ -330,7 +339,8 @@
         },
         {
             "name": "BWXT",
-            "symbol": "BWXT"
+            "symbol": "BWXT",
+            "menu_list": "Aerospace-defense"
         },
         {
             "name": "BYD",
@@ -449,6 +459,11 @@
             "menu_list": "Electrical"
         },
         {
+            "name": "Delta Electronics Inc",
+            "symbol": "DLS.F",
+            "menu_list": "Semi-conducteurs"
+        },
+        {
             "name": "Dow Jones Futures",
             "symbol": "YM=F",
             "menu_list": "Futures"
@@ -489,6 +504,10 @@
             "menu_list": "Electrical"
         },
         {
+            "name": "ERAMET",
+            "symbol": "ERA.PA"
+        },
+        {
             "name": "ESSILORLUXOTTICA",
             "symbol": "EL.PA"
         },
@@ -505,7 +524,7 @@
             "trading_plan_high": "Toujours plus haut",
             "trading_plan_low": "Plus bas du jour",
             "volume_max": "10000",
-            "menu_list": "Pharma",
+            "menu_list": "Healthcare",
             "is_monitoring": false
         },
         {
@@ -602,6 +621,11 @@
             "name": "GLOBAL X URA",
             "symbol": "URA",
             "menu_list": "ETF"
+        },
+        {
+            "name": "HIMS",
+            "symbol": "HIMS",
+            "menu_list": "Healthcare"
         },
         {
             "name": "HYUNDIA",
@@ -719,6 +743,11 @@
             "menu_list": "Electrical"
         },
         {
+            "name": "LENOVO Group",
+            "symbol": "LHL1.F",
+            "menu_list": "Chinois"
+        },
+        {
             "name": "LEONARDO",
             "symbol": "LDO.MI",
             "menu_list": "Aerospace-defense"
@@ -822,6 +851,10 @@
         {
             "name": "NEURONES",
             "symbol": "NRO.PA"
+        },
+        {
+            "name": "NEXANS",
+            "symbol": "NEX.PA"
         },
         {
             "name": "NOVO NORDISK",
