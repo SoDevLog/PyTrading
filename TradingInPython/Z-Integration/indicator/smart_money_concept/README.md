@@ -19,7 +19,7 @@ Design and implementation of an SMC engine with a Tkinter interface
 - CHoCH : Change of Character
 - BOS : Break Of Structure
 - Swings : préstructure HH HL LH LL
-- OB : OderBlocks
+- OB : OrderBlocks
 - FVG : Faire Value Gap
 - OTE : Optimal Trade Entry / Premium-Discount
 - Liquidity (sweep)
