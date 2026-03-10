@@ -348,6 +348,11 @@
             "menu_list": "Automobile"
         },
         {
+            "name": "Brent",
+            "symbol": "BZ=F",
+            "menu_list": "Pétrol"
+        },
+        {
             "name": "CAPGEMINI",
             "symbol": "CAP.PA",
             "price_purchase": 191.67,
@@ -404,6 +409,10 @@
             "trading_plan_high": "Ascension irrésistible potentiel supérieur à 30%",
             "volume_max": 124617,
             "is_monitoring": false
+        },
+        {
+            "name": "Choice Hotels Int.",
+            "symbol": "CZH.F"
         },
         {
             "name": "D-Wave Quantum",
