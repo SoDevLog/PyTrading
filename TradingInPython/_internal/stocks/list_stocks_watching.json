@@ -1304,6 +1304,11 @@
             "symbol": "WPM"
         },
         {
+            "name": "WTI",
+            "symbol": "CL=F",
+            "menu_list": "Pétrol"
+        },
+        {
             "name": "X-FAB",
             "symbol": "XFB.MU",
             "menu_list": "Semi-conducteurs"
