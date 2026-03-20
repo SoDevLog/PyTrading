@@ -10,7 +10,7 @@ Free Open Software Plateform for traders who want to master technical trading.
 
 Here you can download the platform **TradingInPython** to make data analysis trading on stocks market.
 
-# Install
+## Install
 
 Just clic on **"<> Code"** then **"Download ZIP"** you will get the zip. Its a little long, about 400 Mo to download, but you'll get a stand alone executable. Nothing to install just run **TradingInPython.exe**
 
@@ -25,7 +25,7 @@ Clic on directory **TradingInPyhton**
 
 Then clic on executable **TradingInPython.exe** then Trading Platform in python will launched.
 
-## Installer for windows
+### Installer for windows
 
 - [Installer](https://github.com/SoDevLog/PyTrading/releases)
 
@@ -33,13 +33,13 @@ You need help for installation have a look to :
 
 - [Installation Guide](https://github.com/SoDevLog/PyTrading/wiki/Installation)
 
-## Clone
+### Clone
 
 To make it easier to enjoy upcoming releases and software improvements, if you know **GitHub** you can make a Clone from this Repo.
 
 To get new features you'll just had to make a Pull wich is lighter than downloading the whole zip.
 
-# Rapid Tour
+## Rapid Tour
 
 You can have a rapid presentation of what you'll be able to do with the Trading platform, it's in french but you can translate easily by choosing your language in GoogleTranslate :
 
@@ -51,7 +51,7 @@ You will be able to run the **Ichimoku Kinko Hyo's** strategie and prediction wi
 
 By running **TradingInPyhton** you will discover many others trading strategies.
 
-## Strategy Prediction with Keras
+### Strategy Prediction with Keras
 
 Perform technical analysis of stock market **deep learning** with [Keras](https://keras.io/)'s **neural networks** and [Jax](https://docs.jax.dev/en/latest/quickstart.html) :
 
@@ -63,7 +63,7 @@ Take a deep dive into digital signal processing with Keras prediction algorithms
 
 Discover many others strategies while downloading and running the platform **TradingInPyhton**.
 
-## Strategy Prediction with Kalman Filter
+### Strategy Prediction with Kalman Filter
 
 Perform trend and volatility analyses of stocks market with using Kalman Filter algorithm :
 
@@ -77,11 +77,15 @@ Take a deep dive into digital signal processing with Kalman filter trend predict
 
 Discover many others strategies while downloading and running the platform **TradingInPyhton**.
 
-# Documentation
+## Users' Guide
 
-You can easely translate this documentation in any langage you need, thanks to google translate.
+How to use software :
 
-- [Trading Platform's Documentation](https://www.trading-et-data-analyses.com/p/documentation-plateforme-de-trading.html)
+- [Trading Platform's Technical Documentation](https://trading-in-python.sodevlog.com/)
+
+This one can be translated in any language :
+
+- [Trading Platform's Marketing Documentation](https://www.trading-et-data-analyses.com/p/documentation-plateforme-de-trading.html)
 
 ## Open software
 
@@ -107,13 +111,13 @@ Read the documentation on the plateforme's API :
 
 - [Develop your strategy using TradingInPython's API](https://www.trading-et-data-analyses.com/p/strategies-dans-tradinginpython.html)
 
-## Release notes
+### Release notes
 
 Informations on the **next version**, by your feed back you can participate to the next version of the Trading Plateform.
 
-- [Trading Platform's Release notes](https://www.trading-et-data-analyses.com/p/notes-de-publication.html)
+- [Trading Platform's Release notes](https://github.com/SoDevLog/PyTrading/releases)
 
-# Get a free license
+## Get a free license
 
 We need customers or partners to develop the Community of python traders and continue to develop of this platform **TradingInPython** and add new features.
 
@@ -125,7 +129,7 @@ If you **do not receive** the automatic response with your license or if it's wr
 
 If you include **helpful feedback** in your email, you may be able to get a more days license.
 
-# Get your license
+## Get your license
 
 After the trial period, you will need to obtain a license to use paid strategies.
 
@@ -133,12 +137,12 @@ After the trial period, you will need to obtain a license to use paid strategies
 
 You will receive it by email to activate your Trading platform.
 
-# Requirements
+## Requirements
 
 - On Windows 7 you can try but most of the time you'll get error, so you need a Windows more than 7
 - On MacOS and Linux you **must wait** a while, but remember Python is all platforms compatible
 
-# Fundamental analysis
+## Fundamental analysis
 
 Algorithmic trading is great, but it's even better when it's confirmed by fundamental analysis.
 
@@ -146,7 +150,7 @@ Find algorithms that will enables you to perform accounting analysis of stocks m
 
 - [Fundamental analysis](./TradingInPython/Z-Integration/yfinance)
 
-# Disclaimer
+## Disclaimer
 
 This software is provided "as is", without any express or implied warranties. The user assumes full responsibility for its use and any consequences that may arise. Under no circumstances shall the author or contributors be held liable for any direct, indirect, incidental, or consequential damages resulting from the use of this software.
 
