@@ -889,36 +889,6 @@ class strategy_sma12e:
 
         self.lines = [line_price, line_price2, line_ma1, line_ma2, line_mae, line_ma3, line_ma4, line_ma5, line_ma6, fill1, fill2, line_stem1, line_stem2]
 
-        # Vertical colored strips
-        #
-        if intraday:
-            for i, (day, _data) in enumerate( data['DateSaved'].groupby( data['DateSaved'].dt.date ) ):
-                if i % 2 == 1:  # Alternate colors every other day
-                    a = _data.index[0]
-                    b = _data.index[-1]
-                    ax_main.axvspan( axe_x[a], axe_x[b], color='gainsboro', alpha=0.3 )
-
-        #
-        # Labels - Distinguish using Period then using Start End
-        #
-        if intraday:
-            _date_mask = '%d-%m %H:%M'
-        else:
-            _date_mask = '%d-%m-%y'
-
-        def _format_date( x, pos=None ):
-            idx = int( x )
-            if 0 <= idx < len( data ):
-                return data.index[ idx ].strftime( _date_mask )
-            return ''
-                    
-        ax_main.yaxis.set_major_formatter( StrMethodFormatter('{x:.2f}') )
-        ax_main.xaxis.set_major_formatter( FuncFormatter( _format_date ) ) # %Y on for digits %y year on two digits
-            
-        ax_main.set_xlim( -0.5, len( data ) - 0.5 ) # after manipulations reset xlim
-        ax_main.grid( True )
-        ax_main.set_autoscale_on( False ) # bloquer l'autoscale pour les annotations
-        
         return axe_x
 
     # ----------------------------------------------------------------------------
