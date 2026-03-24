@@ -2,7 +2,10 @@
 
     La formule magique de Greenblatt est une stratégie d'investissement qui combine deux indicateurs financiers:        
         - Le rendement des bénéfices (Earnings Yield)
-        - Le rendement du capital investi (Return on Capital)   
+        - Le rendement du capital investi (Return on Capital)
+    
+    La formule magique de Greenblatt classe les actions en fonction de ces deux indicateurs, en attribuant un rang à chaque action pour chaque indicateur.
+    Ensuite, les rangs sont additionnés pour obtenir un score global, et les actions avec les scores les plus bas sont considérées comme les meilleures opportunités d'investissement selon cette stratégie. 
         
 """
 import pandas as pd
@@ -10,10 +13,11 @@ import yfinance
 
 # List of actions to analyze
 #tickers = ['AAPL', 'MSFT', 'GOOGL', 'AMZN', 'META', 'TSLA', 'NVDA', 'JPM', 'V', 'PG' ]
+tickers = ['AAPL', 'MSFT', 'GOOGL', 'AMZN', 'NVDA', 'IT' ]
 #tickers = [ 'TRI.PA', 'CATG.PA', '9638.HK', 'ALFPC.PA', 'BELL.MI'] 
 
 # Sector: Industrials Industry key: aerospace-defense Aéronautique et défense
-tickers = ['HO.PA', 'SAF.PA', 'AIR.PA', 'AM.PA', 'GE'  ] # THALES - SAFRAN - AIR BUS - DASSAULT AVIATION - GE aerospace
+#tickers = ['HO.PA', 'SAF.PA', 'AIR.PA', 'AM.PA', 'GE'  ] # THALES - SAFRAN - AIR BUS - DASSAULT AVIATION - GE aerospace
 #tickers = ['DASTY', 'BA', 'LMT', 'RTX', 'GD', 'NOC', 'HII', 'LHX', 'TDG', 'HEI' ] # DASSAULT SYSTEMES - BOEING - LOCKHEED MARTIN - RAYTHEON - GENERAL DYNAMICS - NORTHROP GRUMMAN - HUNTINGTON INGALLS - L3HARRIS - TRANSDIGM - HEICO
 
 #tickers = ['IONQ', 'PLTR', 'RGTI', 'QUBT' ] # PALANTIR - RIGETTI COMP - Quantum Computing
