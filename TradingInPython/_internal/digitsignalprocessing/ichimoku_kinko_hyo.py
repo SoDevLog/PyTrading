@@ -134,7 +134,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
 from sklearn.preprocessing import StandardScaler
 
-from .indicators import atr
+from .indicators import atr_rolling
 
 # 1. Calculer les composantes de l'Ichimoku avec l'ATR
 # ----------------------------------------------------
@@ -149,22 +149,22 @@ from .indicators import atr
 #
 def ichimoku_modernise( data, period1=9, period2=26, period3=52, multiplier=1.5 ):
     # Tenkan-sen (ligne de conversion)
-    data['Tenkan_sen'] = (data['High'].rolling(window=period1).max() + data['Low'].rolling(window=period1).min()) / 2
+    data['Tenkan_sen'] = (data['High'].rolling(window=period1, min_periods=1).max() + data['Low'].rolling(window=period1, min_periods=1).min()) / 2
 
     # Kijun-sen (ligne de base)
-    data['Kijun_sen'] = (data['High'].rolling(window=period2).max() + data['Low'].rolling(window=period2).min()) / 2
+    data['Kijun_sen'] = (data['High'].rolling(window=period2, min_periods=1).max() + data['Low'].rolling(window=period2, min_periods=1).min()) / 2
 
     # Senkou Span A (première limite du nuage)
     data['Senkou_span_A'] = ((data['Tenkan_sen'] + data['Kijun_sen']) / 2).shift(period2)
 
     # Senkou Span B (deuxième limite du nuage)
-    data['Senkou_span_B'] = ((data['High'].rolling(window=period3).max() + data['Low'].rolling(window=period3).min()) / 2).shift(period2)
+    data['Senkou_span_B'] = ((data['High'].rolling(window=period3, min_periods=1).max() + data['Low'].rolling(window=period3, min_periods=1).min()) / 2).shift(period2)
 
     # Chikou Span (ligne retardée)
     data['Chikou_span'] = data['Close'].shift(-period2)
 
     # Average True Range (ATR)
-    data['ATR'] = atr( data, period2 )
+    data['ATR'] = atr_rolling( data, period2 )
     
     # Ajouter des bandes basées sur l'ATR
     data['Kijun_sen_upper'] = data['Kijun_sen'] + (data['ATR'] * multiplier)
