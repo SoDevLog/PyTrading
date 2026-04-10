@@ -1,6 +1,6 @@
 """ MACRO ISM (Institute for Supply Management) PRO — Indice synthétique de santé économique FRED (Federal Reserve Bank of St. Louis)
 
-    Pour créer une clef API FRED : 
+    Pour créer une clef API FRED :
     - https://fred.stlouisfed.org/docs/api/api_key.html
 
     Les fichiers :
@@ -129,12 +129,12 @@ df = df.dropna(subset=['MACRO_ISM_S'])
 
 # --- Export CSV --------------------------------------------------------------
 
-export_cols = (
-    ['MACRO_ISM', 'MACRO_ISM_S', 'MACRO_ISM_MO', 'MOMENTUM', 'RECESSION_PROB', 'REGIME']
-    + [f'Z_{t}' for t, *_ in SERIES_CONFIG]
-)
-df[ export_cols ].to_csv( 'macro_ism_pro.csv' )
-print( "Export CSV → macro_ism_pro.csv" )
+# export_cols = (
+#     ['MACRO_ISM', 'MACRO_ISM_S', 'MACRO_ISM_MO', 'MOMENTUM', 'RECESSION_PROB', 'REGIME']
+#     + [f'Z_{t}' for t, *_ in SERIES_CONFIG]
+# )
+# df[ export_cols ].to_csv( 'macro_ism_pro.csv' )
+# print( "Export CSV → macro_ism_pro.csv" )
 
 
 # --- Résumé terminal ----------------------------------------------------------
@@ -239,6 +239,6 @@ ax_comp.legend(loc='upper left', fontsize=7, ncol=4)
 fig.suptitle( f'Macro ISM Pro | Données FRED | Généré le {END}',
              fontsize=11, style='italic', color='#555')
 
-plt.savefig('macro_ism_pro.png', dpi=150, bbox_inches='tight')
-print("Export graphique → macro_ism_pro.png")
+# plt.savefig('macro_ism_pro.png', dpi=150, bbox_inches='tight')
+# print("Export graphique → macro_ism_pro.png")
 plt.show()
