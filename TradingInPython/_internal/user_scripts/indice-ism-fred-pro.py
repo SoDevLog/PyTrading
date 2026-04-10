@@ -1,4 +1,7 @@
-""" MACRO ISM PRO — Indice synthétique de santé économique (FRED)
+""" MACRO ISM (Institute for Supply Management) PRO — Indice synthétique de santé économique FRED (Federal Reserve Bank of St. Louis)
+
+    Pour créer une clef API FRED : 
+    - https://fred.stlouisfed.org/docs/api/api_key.html
 
     Les fichiers :
     - macro_ism_pro.csv : données tabulaires (score, momentum, proba de récession, régime, Z-scores par composante)
@@ -21,7 +24,7 @@ warnings.filterwarnings('ignore')
 
 # --- Configuration -----------------------------------------------------------
 
-API_KEY = 'YOUR_API_KEY_HERE'  # Remplace par ta clé API FRED
+API_KEY = 'YOUR_API_KEY_HERE'  # Remplacez par votre clé API FRED
 START = '1995-01-01'
 END = datetime.now().strftime('%Y-%m-%d')
 ROLL_ZSCORE = 36 # fenêtre rolling Z-score (mois)
@@ -133,6 +136,23 @@ export_cols = (
 df[ export_cols ].to_csv( 'macro_ism_pro.csv' )
 print( "Export CSV → macro_ism_pro.csv" )
 
+
+# --- Résumé terminal ----------------------------------------------------------
+
+last = df.iloc[-1]
+print(f"""
+╔══════════════════════════════════════════════╗
+║         MACRO ISM — DERNIER POINT            ║
+╠══════════════════════════════════════════════╣
+║  Date            : {df.index[-1].strftime('%Y-%m')}
+║  Score brut      : {last['MACRO_ISM']:+.3f}
+║  Score lissé     : {last['MACRO_ISM_S']:+.3f}
+║  Momentum        : {last['MOMENTUM']:+.3f}
+║  Proba récession : {last['RECESSION_PROB']:.1%}
+║  Régime          : {last['REGIME'].upper()}
+╚══════════════════════════════════════════════╝
+""")
+
 # --- Graphique multi-panneaux ------------------------------------------------
 
 plt.style.use('seaborn-v0_8-whitegrid')
@@ -222,19 +242,3 @@ fig.suptitle( f'Macro ISM Pro | Données FRED | Généré le {END}',
 plt.savefig('macro_ism_pro.png', dpi=150, bbox_inches='tight')
 print("Export graphique → macro_ism_pro.png")
 plt.show()
-
-# --- Résumé terminal ----------------------------------------------------------
-
-last = df.iloc[-1]
-print(f"""
-╔══════════════════════════════════════════════╗
-║         MACRO ISM — DERNIER POINT            ║
-╠══════════════════════════════════════════════╣
-║  Date            : {df.index[-1].strftime('%Y-%m')}
-║  Score brut      : {last['MACRO_ISM']:+.3f}
-║  Score lissé     : {last['MACRO_ISM_S']:+.3f}
-║  Momentum        : {last['MOMENTUM']:+.3f}
-║  Proba récession : {last['RECESSION_PROB']:.1%}
-║  Régime          : {last['REGIME'].upper()}
-╚══════════════════════════════════════════════╝
-""")
