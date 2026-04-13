@@ -136,7 +136,6 @@ df = df.dropna(subset=['MACRO_ISM_S'])
 # df[ export_cols ].to_csv( 'macro_ism_pro.csv' )
 # print( "Export CSV → macro_ism_pro.csv" )
 
-
 # --- Résumé terminal ----------------------------------------------------------
 
 last = df.iloc[-1]
@@ -156,7 +155,7 @@ print(f"""
 # --- Graphique multi-panneaux ------------------------------------------------
 
 plt.style.use('seaborn-v0_8-whitegrid')
-fig = plt.figure(figsize=(16, 12))
+fig = plt.figure(figsize=(14, 10))
 gs  = gridspec.GridSpec(4, 1, figure=fig, hspace=0.45, wspace=0.30)
 
 ax_main  = fig.add_subplot(gs[0, :])   # panneau principal (ligne pleine)
