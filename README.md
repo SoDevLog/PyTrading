@@ -1,5 +1,9 @@
 # TradingInPython - Trading Platform in Python
 
+[![Releases](https://img.shields.io/badge/releases-GitHub-green)](https://github.com/SoDevLog/PyTrading/releases)
+[![Website](https://img.shields.io/badge/website-online-blue)](https://trading-in-python.sodevlog.com/)
+[![Issues](https://img.shields.io/badge/issues-open-red)](https://github.com/SoDevLog/PyTrading/issues)
+
 Free Open Software Plateform for traders who want to master technical trading.
 
 <div align="center">
