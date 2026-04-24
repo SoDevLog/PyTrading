@@ -37,13 +37,15 @@ You need help for installation have a look to :
 
 - [Installation Guide](https://github.com/SoDevLog/PyTrading/wiki/Installation)
 
-### Clone
+## Clone
 
 To make it easier to enjoy upcoming releases and software improvements, if you know **GitHub** you can make a Clone from this Repo.
 
 To get new features you'll just had to make a Pull wich is lighter than downloading the whole zip.
 
 ## Rapid Tour
+
+<img src="images/demo.gif" alt="Demo">
 
 You can have a rapid presentation of what you'll be able to do with the Trading platform, it's in french but you can translate easily by choosing your language in GoogleTranslate :
 
