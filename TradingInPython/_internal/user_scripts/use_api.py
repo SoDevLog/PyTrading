@@ -19,10 +19,11 @@ def main():
     
     print( "=== Test de l'API pour les scripts utilisateur ===" )
     
-    print( f"Symbole : {api.symbol}" )
+    print( f"Nom : {api.name}" )
+    print( f"Ticker : {api.ticker}" )
     print( f"Période : {api.period}" )
     print( f"Intervalle : {api.interval}" )
-    print( f"Params : {api.params}" )
+    print( f"Tickers : {api.tickers}" )
     
     # Dataframe
     data = api.df.copy()
@@ -43,10 +44,11 @@ def main():
 if __name__ == "__main__":
 
     api_context = {
-            'symbol': 'MSFT',
+            'name': 'Microsoft',
+            'ticker': 'MSFT',
             'period': '1d',
             'interval': '1m',
-            'params': {'example_param': 42},
+            'tickers': ['AAPL', 'MSFT', 'GOOGL', 'AMZN', 'NVDA', 'IT' ],
             'df': None
         }
     

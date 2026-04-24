@@ -20,10 +20,11 @@ import pandas as pd
 
 class UserScriptAPI:
     def __init__( self ):
-        self.symbol: str = ''
+        self.name: str = ''
+        self.ticker: str = ''
         self.period: str = ''
         self.interval: str = ''
-        self.params: dict = {}
+        self.tickers: list = []
         self.df: pd.DataFrame = pd.DataFrame(columns=["Open","High","Low","Close","Volume"])
         self.bar_callbacks:   list[Callable] = []
         self.close_callbacks: list[Callable] = []
@@ -31,10 +32,11 @@ class UserScriptAPI:
     # -------------------------------------------------------------------------
     
     def update( self, **kwargs ) -> None:
-        self.symbol = kwargs.get( "symbol", self.symbol )
+        self.name = kwargs.get( "name", self.name )
+        self.ticker = kwargs.get( "ticker", self.ticker )
         self.period = kwargs.get( "period", self.period )
         self.interval = kwargs.get( "interval", self.interval )
-        self.params = { **self.params, **kwargs.get("params", {})}
+        self.tickers =  kwargs.get( "tickers", self.tickers )
         df = kwargs.get( "df" )
         if df is not None:
             self.df = df.copy()

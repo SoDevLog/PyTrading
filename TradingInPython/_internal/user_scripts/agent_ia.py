@@ -272,7 +272,7 @@ def main():
     print(f"  Seuil d'achat  : {BUY_THRESHOLD}")
     print(f"  Seuil de vente : {SELL_THRESHOLD}")
 
-    print(f"\n-- Signal de trading pour : {api.symbol} --")
+    print(f"\n-- Signal de trading pour : {api.name} --")
     print(f"  Score    : {result['score']}")
     print(f"  Signal   : {result['signal']}")
     print(f"  RSI      : {result['features'].get('RSI', 'N/A'):.2f}")
