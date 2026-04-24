@@ -1,4 +1,4 @@
-# User's script runnable by Script-runner
+# User's script runnable by plateforme's Script-runner
 
 Ces scripts sont exéctuables par le **Script-runner** de la plateforme **TradingInPython**.
 
@@ -7,9 +7,10 @@ Des données comme :
 - le symbol du stock
 - son nom
 - les data fetchées par le data provider
+- une liste de ticker de stocks
 - ...
 
-Sont transmisent au script par l'API (Application Porgramming Interface).
+Sont transmisent au script par l'API : api.py (Application Porgramming Interface).
 
 Pour accéder à la documentation du Script Runner de **TradingInPython** :
 
@@ -18,6 +19,10 @@ Pour accéder à la documentation du Script Runner de **TradingInPython** :
 Pour savoir comment utiliser ces données dans votre script régardez dans le fichier :
 
 - [use_api.py](use_api.py)
+
+## Filtre des actions à forte croissance
+
+- [strong-growth.py](strong-growth.py)
 
 ## Script sur la finance
 
