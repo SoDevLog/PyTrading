@@ -4,6 +4,7 @@ import yfinance
 import pandas as pd
 import numpy as np
 from datetime import datetime
+from user_scripts.api import api
 
 def calculate_dcf_valuation( ticker, forecast_years=5, terminal_growth_rate=0.02 ):
     """
@@ -146,8 +147,11 @@ def calculate_dcf_valuation( ticker, forecast_years=5, terminal_growth_rate=0.02
 # Exécution pour Safran (SAF.PA pour Euronext Paris)
 #
 def main():    
-    symbol = "HO.PA" # "SAF.PA"
-    result = calculate_dcf_valuation( symbol )
+    if not api.check_parameters( ['ticker'] ):
+        exit(1)
+        
+    ticker = api.ticker
+    result = calculate_dcf_valuation( ticker )
     
     # Affichage des résultats
     if "error" in result:

@@ -31,26 +31,15 @@ from pathlib import Path
 base = Path(__file__).resolve().parent.parent.parent
 sys.path.append( str(base) )
 import helper as h
+from user_scripts.api import api
 
 separator = f"-----------------------------------------------------------" 
 
-# Étape 1: Récupérer les données économiques de l'action
-#symbol = "AM.PA" # DASSAULT AVIATION
-#symbol = "ALO.PA" # ALSTOM
-#symbol = "CAP.PA" # CAPGEMINI
-#symbol= "AIR.PA" # AIRBUS
-symbol = "BEN.PA" # BENETEAU
-#symbol = "SOI.PA" # SOITEC
-#symbol= "VOW.DE" # VOLKSWAGEN
-#symbol= "TSLA" # TESLA
-# NO! symbol= "GAM" # General American Investors Company, Inc.
-# symbol= "IONQ" # IONQ
-# symbol= "SAF.PA" # SAFRAN
-symbol= "HO.PA" # THALES
-# symbol = "STLAP.PA" # STELLANTIS
-#symbol = "STMPA.PA" # STMICRO
+# Check parameters for the script
+if not api.check_parameters( ['ticker'] ):
+    exit(1)
 
-stock = yfinance.Ticker( symbol )
+stock = yfinance.Ticker( api.ticker )
 
 # Display main stock infos
 stock_info = stock.info.copy() # ne faire qu'une requête et sauver tous les résultats

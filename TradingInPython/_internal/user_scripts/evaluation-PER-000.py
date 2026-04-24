@@ -17,33 +17,33 @@
 """
 import yfinance
 import numpy as np
+from user_scripts.api import api
 
 print_separator1 = f"----------------------------------"
 print_separator2 = f"----------------------------------------------------------------------------"
 
 # --------------------------------------------------------------------------------------
-# Choix Utilisateur
+# Informations sur l'action à étudier dans son marché
 # --------------------------------------------------------------------------------------
 #
-# Informations sur l'action à étudier dans son marché
-#
-
-#
 # Estimation du PER pour l'industrie
-# Trouver des stock dans un marché identique
+# Difficulté : Trouver des stock dans un marché identique
 #
-#ticker = 'BEN.PA' # BENETEAU
-#industry_symbols = [ 'TRI.PA', 'CATG.PA', '9638.HK', 'ALFPC.PA', 'BELL.MI'] # BENETEAU
-
+# ticker = 'BEN.PA' # BENETEAU
+# industry_symbols = [ 'TRI.PA', 'CATG.PA', '9638.HK', 'ALFPC.PA', 'BELL.MI'] # BENETEAU
 # ticker = 'CAP.PA'  # CAPGEMINI
 # industry_symbols = [ 'ATE.PA', 'SOP.PA', 'ACN'  ] # CAPGEMINI Non évalué : 'AL2SI.PA' 'D6H.DE'
+# ticker = 'SAF.PA' # SAFRAN
+# industry_symbols = ['HO.PA', 'AM.PA', 'AIR.PA', 'GE'  ] # THALES - DASSAULT AVIATION - AIR BUS - GE aerospace
+# ticker = 'ASY.PA' # ASSYSTEM
+# industry_symbols = [ 'EN.PA', 'FGR.PA', 'TKTT.PA', 'ALPJT.PA'] # EN.PA Bouygues - FGR.PA Eiffage - TKTT.PA Tarkett - ALPJT.PA Poujoulat
 
-# Sector: Industrials Industry key: aerospace-defense Aéronautique et défense
-ticker = 'SAF.PA' # SAFRAN
-industry_symbols = ['HO.PA', 'AM.PA', 'AIR.PA', 'GE'  ] # THALES - DASSAULT AVIATION - AIR BUS - GE aerospace
+# Check parameters for the script
+if not api.check_parameters( ['ticker', 'tickers'] ):
+    exit(1)
 
-#ticker = 'ASY.PA' # ASSYSTEM
-#industry_symbols = [ 'EN.PA', 'FGR.PA', 'TKTT.PA', 'ALPJT.PA'] # EN.PA Bouygues - FGR.PA Eiffage - TKTT.PA Tarkett - ALPJT.PA Poujoulat
+ticker = api.ticker
+industry_symbols = api.tickers
 
 # --------------------------------------------------------------------------------------
 

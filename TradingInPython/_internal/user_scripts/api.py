@@ -42,6 +42,17 @@ class UserScriptAPI:
             self.df = df.copy()
 
     # -------------------------------------------------------------------------
+    
+    def check_parameters( self, required_params: list[str] ) -> bool:
+        missing = [p for p in required_params if not getattr(self, p)]
+        if missing:
+            print(f"ERROR: Missing required parameters: {', '.join(missing)}")
+            return False
+        for p in required_params:
+            print(f"{p}: {getattr( self, p )}")
+        return True
+    
+    # -------------------------------------------------------------------------
     # Callbacks / événements
     # -------------------------------------------------------------------------
 
@@ -95,7 +106,6 @@ class UserScriptAPI:
         """Vide les callbacks entre deux exécutions de scripts."""
         self.bar_callbacks.clear()
         self.close_callbacks.clear()
-
 
 # -----------------------------------------------------------------------------
 # Instance Singleton — peuplée par l'app avant l'exécution du script

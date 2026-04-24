@@ -10,11 +10,14 @@
 """
 import pandas as pd
 import yfinance
-from user_scripts.api import api, UserScriptAPI
+from user_scripts.api import api
+
+# Check parameters for the script
+if not api.check_parameters( ['tickers'] ):
+    exit(1)
 
 # Retreive data from API
 tickers = api.tickers
-print( f"Tickers from API context: {tickers}" )
 
 # Retrieve financial data from Yahoo Finance
 def get_financial_data( ticker ):
