@@ -45,7 +45,7 @@ To get new features you'll just had to make a Pull wich is lighter than download
 
 ## Rapid Tour
 
-<img src="images/demo.gif" alt="Demo">
+<img src="images/demo-2.gif" alt="Demo">
 
 You can have a rapid presentation of what you'll be able to do with the Trading platform, it's in french but you can translate easily by choosing your language in GoogleTranslate :
 
