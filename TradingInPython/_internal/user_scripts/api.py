@@ -25,6 +25,7 @@ class UserScriptAPI:
         self.period: str = ''
         self.interval: str = ''
         self.tickers: list = []
+        self.params: dict = {}
         self.df: pd.DataFrame = pd.DataFrame(columns=["Open","High","Low","Close","Volume"])
         self.bar_callbacks:   list[Callable] = []
         self.close_callbacks: list[Callable] = []
@@ -37,6 +38,7 @@ class UserScriptAPI:
         self.period = kwargs.get( "period", self.period )
         self.interval = kwargs.get( "interval", self.interval )
         self.tickers =  kwargs.get( "tickers", self.tickers )
+        self.params = { **self.params, **kwargs.get("params", {})}
         df = kwargs.get( "df" )
         if df is not None:
             self.df = df.copy()

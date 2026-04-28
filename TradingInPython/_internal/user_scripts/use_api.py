@@ -13,7 +13,7 @@ if __name__ == "__main__":
     from pathlib import Path
     sys.path.append(str(Path(__file__).resolve().parent.parent))
     
-from user_scripts.api import api, UserScriptAPI
+from user_scripts.api import api
 
 def main():
     
@@ -24,6 +24,7 @@ def main():
     print( f"Période : {api.period}" )
     print( f"Intervalle : {api.interval}" )
     print( f"Tickers : {api.tickers}" )
+    print( f"Params : {api.params}" )
     
     # Dataframe
     data = api.df.copy()
@@ -43,16 +44,19 @@ def main():
 
 if __name__ == "__main__":
 
+    from user_scripts.api import UserScriptAPI
+    
     api_context = {
             'name': 'Microsoft',
             'ticker': 'MSFT',
             'period': '1d',
             'interval': '1m',
-            'tickers': ['AAPL', 'MSFT', 'GOOGL', 'AMZN', 'NVDA', 'IT' ],
+            'tickers': ['AAPL', 'MSFT', 'GOOGL', 'AMZN', 'NVDA', 'IT'],
+            'params': {'user_param1': 42},
             'df': None
         }
     
     api = UserScriptAPI()
-    api.update( **api_context )            
+    api.update( **api_context )
     
     main()
