@@ -22,10 +22,10 @@ Once you get **PyTrading-main.zip** don't forget to **unlock** it before **extra
 
 Inside folder **PyTrading-main** you'll find:
 
-- TradingInPyhton
+- TradingInPython
 - README.md
 
-Clic on directory **TradingInPyhton**
+Clic on directory **TradingInPython**
 
 Then clic on executable **TradingInPython.exe** then Trading Platform in python will launched.
 
@@ -55,7 +55,7 @@ You will be able to run the **Ichimoku Kinko Hyo's** strategie and prediction wi
 
 <img src="images/IchimokuKinkoHyo.png" alt="Strategy Ichimoku Kinko Hyo">
 
-By running **TradingInPyhton** you will discover many others trading strategies.
+By running **TradingInPython** you will discover many others trading strategies.
 
 ### Strategy Prediction with Keras
 
@@ -67,7 +67,7 @@ Take a deep dive into digital signal processing with Keras prediction algorithms
 
 - [Ichimoku Kinko Hyo prediction alorithms](https://github.com/SoDevLog/PyTrading/blob/main/TradingInPython/_internal/digitsignalprocessing/ichimoku_kinko_hyo.py)
 
-Discover many others strategies while downloading and running the platform **TradingInPyhton**.
+Discover many others strategies while downloading and running the platform **TradingInPython**.
 
 ### Strategy Prediction with Kalman Filter
 
@@ -81,7 +81,7 @@ Take a deep dive into digital signal processing with Kalman filter trend predict
 
 - [Kalman filter documentation](https://trading-in-python.sodevlog.com/strategies/kalman-filter/)
 
-Discover many others strategies while downloading and running the platform **TradingInPyhton**.
+Discover many others strategies while downloading and running the platform **TradingInPython**.
 
 ## Users' Guide
 
@@ -107,7 +107,7 @@ So you can take a look at the **platform engine** and understand in depth the in
 
 ### Automatic trading strategies in python
 
-You can integrate your own trading strategies in the platform **TradingInPyhton**, by adding your own algorithms, this is how to do it.
+You can integrate your own trading strategies in the platform **TradingInPython**, by adding your own algorithms, this is how to do it.
 
 Have a look and take example to the **trading strategies** used in the platform:
 
