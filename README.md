@@ -1,8 +1,9 @@
 # TradingInPython - Trading Platform in Python
 
-[![Releases](https://img.shields.io/badge/releases-GitHub-green)](https://github.com/SoDevLog/PyTrading/releases)
-[![Website](https://img.shields.io/badge/website-online-blue)](https://trading-in-python.sodevlog.com/)
-[![Issues](https://img.shields.io/badge/issues-open-red)](https://github.com/SoDevLog/PyTrading/issues)
+[![Python](https://img.shields.io/badge/Python-3.9-blue.svg)](https://www.python.org/)
+[![Releases](https://img.shields.io/badge/Releases-GitHub-green)](https://github.com/SoDevLog/PyTrading/releases)
+[![Issues](https://img.shields.io/badge/Issues-Open-red)](https://github.com/SoDevLog/PyTrading/issues)
+[![Website](https://img.shields.io/badge/Documentation-Online-orange)](https://trading-in-python.sodevlog.com/)
 
 Free Open Software Plateform for traders who want to master technical trading.
 
@@ -13,6 +14,19 @@ Free Open Software Plateform for traders who want to master technical trading.
 </div>
 
 Here you can download the platform **TradingInPython** to make data analysis trading on stocks market.
+
+> 🇫🇷 Plateforme française — [Documentation en français](https://www.trading-et-data-analyses.com/p/plateforme-de-trading-technique.html)
+
+## Key Features
+
+- **Multi-timeframe analysis** - view price charts across multiple timeframes simultaneously
+- **Advanced technical indicators** - MACD, RSI, Bollinger Bands (FTMA), Ichimoku, Keltner, STOCH, VWAP, ATR, OBV, BOP, SAR, Alligator, and more
+- **Integrated backtesting** - test your strategies on real market data
+- **Smart Money Concept (SMC)** - automatic detection of institutional trading signals
+- **Artificial Intelligence** - price prediction using Keras/TensorFlow and Kalman filter
+- **Market surveillance** - performance heatmaps, price and volume alerts via email
+- **Portfolio manager** - real-time tracking of your positions
+- **Open Software** - algorithms are published and can be inspected or extended
 
 ## Install
 
@@ -45,7 +59,9 @@ To get new features you'll just had to make a Pull wich is lighter than download
 
 ## Rapid Tour
 
-<img src="images/demo-2.gif" alt="Demo">
+<div align="center">
+  <img src="images/demo-2.gif" alt="Demo">
+</div>
 
 You can have a rapid presentation of what you'll be able to do with the Trading platform, it's in french but you can translate easily by choosing your language in GoogleTranslate :
 
@@ -161,3 +177,5 @@ Find algorithms that will enables you to perform accounting analysis of stocks m
 This software is provided "as is", without any express or implied warranties. The user assumes full responsibility for its use and any consequences that may arise. Under no circumstances shall the author or contributors be held liable for any direct, indirect, incidental, or consequential damages resulting from the use of this software.
 
 The user is encouraged to verify the accuracy of the data and not to rely solely on the results provided by the software. Any commercial or financial use is at the user's own risk.
+
+*Built with ❤️ in Python - © 2026 Trading & Data Analyses*
