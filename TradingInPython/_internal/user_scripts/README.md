@@ -26,6 +26,10 @@ Pour savoir comment utiliser ces données dans votre script régardez dans le fi
 
 ## Script sur la finance
 
+Trailing EPS (Earnings Per Share) Calcul du PER (Price Earnings Ratio) en comparant au marché :
+
+- [evaluation-PER-000.py](evaluation-PER-000.py)
+
 Retrouver les actions tradées par Warren Buffett - Berkshire Hathaway sur le Site DATAROMA :
 
 - [dataroma-buffett-000.py](dataroma-buffett-000.py)
