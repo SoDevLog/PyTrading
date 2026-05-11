@@ -28,6 +28,10 @@ from sklearn.preprocessing import MinMaxScaler
 
 from user_scripts.api import api, UserScriptAPI
 
+# Check parameters for the script
+if not api.check_parameters( ['name'] ):
+    exit(1)
+    
 # ----------------------------------------------
 # 1. INDICATEURS TECHNIQUES
 # ----------------------------------------------
@@ -115,7 +119,7 @@ def prepare_data( df: pd.DataFrame ):
     scaler = MinMaxScaler()
     X = scaler.fit_transform(X)
 
-    # Découpage temporel — pas de shuffle pour respecter l'ordre chronologique
+    # Découpage temporel - pas de shuffle pour respecter l'ordre chronologique
     n        = len(X)
     n_train  = int(n * 0.70)
     n_val    = int(n * 0.15)
@@ -196,15 +200,15 @@ def train( df: pd.DataFrame, epochs: int = 100, batch_size: int = 64 ):
     return model, scaler, history
 
 # ----------------------------------------------
-# 5. INFÉRENCE — SIGNAL EN TEMPS RÉEL
+# 5. INFÉRENCE - SIGNAL EN TEMPS RÉEL
 # ----------------------------------------------
 
 BUY_THRESHOLD  = 0.60
 SELL_THRESHOLD = 0.40
 
-def predict_signal(model: keras.Model,
-                   scaler: MinMaxScaler,
-                   df: pd.DataFrame) -> dict:
+def predict_signal( model: keras.Model,
+                    scaler: MinMaxScaler,
+                    df: pd.DataFrame ) -> dict:
     """
     Prend le dernier état du DataFrame (1 bougie) et retourne :
       {
@@ -220,7 +224,7 @@ def predict_signal(model: keras.Model,
     last_row = feat_df[FEATURE_COLS].iloc[[-1]].values
     last_row_scaled = scaler.transform(last_row)
 
-    score = float(model.predict(last_row_scaled, verbose=0)[0][0])
+    score = float( model.predict(last_row_scaled, verbose=0)[0][0] )
 
     if score > BUY_THRESHOLD:
         signal = "BUY"
@@ -231,7 +235,7 @@ def predict_signal(model: keras.Model,
 
     features = feat_df[FEATURE_COLS].iloc[-1].to_dict()
 
-    return {"score": round(score, 4), "signal": signal, "features": features}
+    return {"score": round( score, 4 ), "signal": signal, "features": features}
 
 # -----------------------------------------------------------------------------
 
@@ -309,7 +313,7 @@ if __name__ == "__main__":
     # Remplacer par l'injection réelle par des data synthétiques
     np.random.seed(42)
     n = 800
-    dates  = pd.date_range("2022-01-01", periods=n, freq="1D")
+    dates  = pd.date_range( "2022-01-01", periods=n, freq="1D" )
     close  = 100 + np.cumsum(np.random.randn(n) * 0.8)
     high   = close + np.abs(np.random.randn(n) * 0.5)
     low    = close - np.abs(np.random.randn(n) * 0.5)

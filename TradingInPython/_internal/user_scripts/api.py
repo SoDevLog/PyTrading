@@ -44,7 +44,8 @@ class UserScriptAPI:
             self.df = df.copy()
 
     # -------------------------------------------------------------------------
-    
+    # Don't use this function for 'df'
+    #
     def check_parameters( self, required_params: list[str] ) -> bool:
         missing = [p for p in required_params if not getattr(self, p)]
         if missing:

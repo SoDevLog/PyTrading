@@ -3,7 +3,7 @@
     Pour intégrer l'API dans votre application, 
     insérez dans notre script uniquement le code :
     
-    from user_scripts.api import api, UserScriptAPI
+    from user_scripts.api import api
     
     Et utilisez l'API comme dans la fonction main()
         
@@ -16,6 +16,11 @@ if __name__ == "__main__":
 from user_scripts.api import api
 
 def main():
+    
+    print( "=== Vérifiez la liste des paramètres nécessaires à l'execution de votre script ===" )
+    
+    if not api.check_parameters( ['name', 'ticker', 'period', 'interval'] ):
+        exit(1)    
     
     print( "=== Test de l'API pour les scripts utilisateur ===" )
     
