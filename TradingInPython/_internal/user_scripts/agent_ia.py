@@ -19,9 +19,11 @@ if __name__ == "__main__":
     
 import numpy as np
 import pandas as pd
-import keras
+#import keras
 import matplotlib.pyplot as plt
-from keras import layers, callbacks
+#from keras import layers, callbacks
+import keras_core as keras
+from keras_core import layers, callbacks
 from sklearn.preprocessing import MinMaxScaler
 
 from user_scripts.api import api, UserScriptAPI
