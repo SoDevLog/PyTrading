@@ -1,0 +1,2 @@
+[console_scripts]
+ecal = exchange_calendars.ecal:main
