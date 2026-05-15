@@ -9,13 +9,13 @@ Free Open Software Plateform for traders who want to master technical trading.
 
 <div align="center">
   <a href="https://www.trading-et-data-analyses.com/p/plateforme-de-trading-technique.html">
-    <img src="images/TradingInPython.png" alt="Blog TradingInPython" />
+    <img src="images/TradingInPython.png" alt="Plateforme de trading technique TradingInPython" />
   </a>
 </div>
 
 Here you can download the platform **TradingInPython** to make data analysis trading on stocks market.
 
-> 🇫🇷 Plateforme française — [Documentation en français](https://www.trading-et-data-analyses.com/p/plateforme-de-trading-technique.html)
+> 🇫🇷 Plateforme française — [Documentation en français](https://trading-in-python.sodevlog.com/)
 
 ## Key Features
 
