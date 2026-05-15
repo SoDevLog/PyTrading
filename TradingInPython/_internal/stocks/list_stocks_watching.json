@@ -65,6 +65,10 @@
             "menu_list": "A-INDICES"
         },
         {
+            "name": "2CRSI",
+            "symbol": "AL2SI.PA"
+        },
+        {
             "name": "AB SCIENCE",
             "symbol": "AB.PA",
             "price_purchase": 10.15,
@@ -142,6 +146,10 @@
             "menu_list": "Semi-conducteurs"
         },
         {
+            "name": "AMERICAN AIRLINES",
+            "symbol": "AAL.BA"
+        },
+        {
             "name": "AMPHENOL",
             "symbol": "APH"
         },
@@ -194,6 +202,10 @@
             "name": "ASSYSTEM",
             "symbol": "ASY.PA",
             "menu_list": "Construction-Ingé"
+        },
+        {
+            "name": "ATEME SA",
+            "symbol": "ATEME.PA"
         },
         {
             "name": "ATOS",
@@ -301,8 +313,14 @@
             "menu_list": "Loisir bateaux"
         },
         {
+            "name": "BINANCE",
+            "symbol": "BNB-USD",
+            "menu_list": "Crypto"
+        },
+        {
             "name": "BITCOIN",
-            "symbol": "BTC-USD"
+            "symbol": "BTC-USD",
+            "menu_list": "Crypto"
         },
         {
             "name": "BMW",
@@ -521,6 +539,11 @@
             "symbol": "EL.PA"
         },
         {
+            "name": "ETHEREUM",
+            "symbol": "ETH-USD",
+            "menu_list": "Crypto"
+        },
+        {
             "name": "EURO=DOLLAR",
             "symbol": "EURUSD=X",
             "menu_list": "CHANGE"
@@ -569,6 +592,11 @@
             "symbol": "FDJU.PA"
         },
         {
+            "name": "FERRARI",
+            "symbol": "RACE",
+            "menu_list": "Automobile"
+        },
+        {
             "name": "FIGEAC AERO",
             "symbol": "FGA.PA",
             "menu_list": "F"
@@ -608,6 +636,10 @@
             "menu_list": "Broadcasting"
         },
         {
+            "name": "GARTNER",
+            "symbol": "IT"
+        },
+        {
             "name": "GAZTRANSPORT & Technigaz",
             "symbol": "GTT.PA",
             "menu_list": "Oil & Gas"
@@ -630,6 +662,10 @@
             "name": "GLOBAL X URA",
             "symbol": "URA",
             "menu_list": "ETF"
+        },
+        {
+            "name": "HAFFNER ENERGY",
+            "symbol": "ALHAF.PA"
         },
         {
             "name": "HIMS",
@@ -659,7 +695,7 @@
         {
             "name": "ID LOGISTICS",
             "symbol": "IDL.PA",
-            "menu_list": "I"
+            "menu_list": "Industrie"
         },
         {
             "name": "INDRA SISTEMAS",
@@ -684,7 +720,7 @@
         {
             "name": "IPSOS",
             "symbol": "IPS.PA",
-            "menu_list": "I"
+            "menu_list": "Industrie"
         },
         {
             "name": "ISHARES 20+ YTB",
@@ -728,7 +764,7 @@
         {
             "name": "KLEPIERRE",
             "symbol": "LI.PA",
-            "menu_list": "K"
+            "menu_list": "Retails"
         },
         {
             "name": "L'OREAL",
@@ -858,6 +894,10 @@
             "menu_list": "Surveiller"
         },
         {
+            "name": "NANOBIOTIX",
+            "symbol": "NANO.PA"
+        },
+        {
             "name": "NEURONES",
             "symbol": "NRO.PA"
         },
@@ -877,7 +917,7 @@
         {
             "name": "NVIDIA",
             "symbol": "NVDA",
-            "menu_list": "Portefeuille"
+            "menu_list": "Semi-conducteurs"
         },
         {
             "name": "NXP Semiconductors",
@@ -990,11 +1030,6 @@
             "is_monitoring": false
         },
         {
-            "name": "REWORLD MEDIA",
-            "symbol": "ALREW.PA",
-            "menu_list": "Divertissement"
-        },
-        {
             "name": "RHEINMETALL",
             "symbol": "RHM.HM"
         },
@@ -1003,6 +1038,11 @@
             "symbol": "RGTI",
             "exchange": "NCM",
             "menu_list": "NASDAQ"
+        },
+        {
+            "name": "RIPPLE",
+            "symbol": "XRP-USD",
+            "menu_list": "Crypto"
         },
         {
             "name": "RIVIAN AUTO",
@@ -1215,6 +1255,11 @@
             "name": "TSMC",
             "symbol": "TSM",
             "menu_list": "Semi-conducteurs"
+        },
+        {
+            "name": "Teleperformance",
+            "symbol": "TEP.PA",
+            "menu_list": "Logiciel"
         },
         {
             "name": "UBISOFT",
