@@ -35,6 +35,11 @@
             "menu_list": "A-INDICES"
         },
         {
+            "name": "NASDAQ Biotech",
+            "symbol": "^NBI",
+            "menu_list": "A-INDICES"
+        },
+        {
             "name": "NASDAQ100",
             "symbol": "^NDX",
             "menu_list": "A-INDICES"
@@ -47,6 +52,16 @@
         {
             "name": "Nikkei 225",
             "symbol": "^N225",
+            "menu_list": "A-INDICES"
+        },
+        {
+            "name": "PHLX Semicon",
+            "symbol": "^SOX",
+            "menu_list": "A-INDICES"
+        },
+        {
+            "name": "Philadelphia Gold & Silver",
+            "symbol": "^XAU",
             "menu_list": "A-INDICES"
         },
         {
@@ -66,7 +81,8 @@
         },
         {
             "name": "2CRSI",
-            "symbol": "AL2SI.PA"
+            "symbol": "AL2SI.PA",
+            "menu_list": "Computer-hardwawre"
         },
         {
             "name": "AB SCIENCE",
@@ -196,7 +212,7 @@
         {
             "name": "ASML",
             "symbol": "ASML",
-            "menu_list": "Techno"
+            "menu_list": "Semi-conducteurs"
         },
         {
             "name": "ASSYSTEM",
@@ -411,6 +427,10 @@
             "symbol": "CSCO"
         },
         {
+            "name": "COINBASE",
+            "symbol": "COIN"
+        },
+        {
             "name": "CORE SCIENTIFIC",
             "symbol": "CORZ"
         },
@@ -463,6 +483,11 @@
             "trading_plan_low": "En chute libre depuis le 31 janv 2024",
             "volume_max": 400000,
             "is_monitoring": false
+        },
+        {
+            "name": "DELL",
+            "symbol": "DELL",
+            "menu_list": "Computer-hardwawre"
         },
         {
             "name": "DEUTSCHE POST",
@@ -673,6 +698,11 @@
             "menu_list": "Healthcare"
         },
         {
+            "name": "HP",
+            "symbol": "HPQ",
+            "menu_list": "Computer-hardwawre"
+        },
+        {
             "name": "HYUNDIA",
             "symbol": "HYMTF",
             "menu_list": "Automobile"
@@ -681,6 +711,10 @@
             "name": "HYUNDIACorée",
             "symbol": "005380.KQ",
             "menu_list": "Automobile"
+        },
+        {
+            "name": "Hewlett Packard",
+            "symbol": "HPE"
         },
         {
             "name": "I2S",
@@ -798,6 +832,10 @@
             "menu_list": "Aerospace-defense"
         },
         {
+            "name": "LUMIBIRD",
+            "symbol": "LBIRD.PA"
+        },
+        {
             "name": "LVMH",
             "symbol": "MC.PA",
             "menu_list": "L"
@@ -886,7 +924,7 @@
         {
             "name": "MSCI World ETF",
             "symbol": "IWDA.AS",
-            "menu_list": "A-INDICES"
+            "menu_list": "ETF"
         },
         {
             "name": "Miller Industries",
@@ -900,6 +938,11 @@
         {
             "name": "NEURONES",
             "symbol": "NRO.PA"
+        },
+        {
+            "name": "NEWMONT",
+            "symbol": "NEM",
+            "menu_list": "Métaux précieux"
         },
         {
             "name": "NEXANS",
@@ -928,6 +971,10 @@
             "name": "Nasdaq 100 Futures",
             "symbol": "NQ=F",
             "menu_list": "Futures"
+        },
+        {
+            "name": "Nemetschek",
+            "symbol": "NEM.HA"
         },
         {
             "name": "OR (GF)",
@@ -987,6 +1034,10 @@
         {
             "name": "Pernod Ricard",
             "symbol": "RIP.XC"
+        },
+        {
+            "name": "Prosus N.V.",
+            "symbol": "1TY.F"
         },
         {
             "name": "Prysmian",
@@ -1090,6 +1141,10 @@
             "menu_list": "Construction-Ingé"
         },
         {
+            "name": "SANDISK",
+            "symbol": "SNDK"
+        },
+        {
             "name": "SANOFI",
             "symbol": "SAN.PA",
             "menu_list": "Pharma"
@@ -1117,12 +1172,16 @@
         {
             "name": "SNOWFLAKE RG-A",
             "symbol": "SNOW",
-            "menu_list": "S"
+            "menu_list": "Software-app"
         },
         {
             "name": "SOITEC",
             "symbol": "SOI.PA",
             "menu_list": "Semi-conducteurs"
+        },
+        {
+            "name": "SPACE X",
+            "symbol": "SPCX"
         },
         {
             "name": "SPDR S&P 500 ETF",
@@ -1352,6 +1411,10 @@
             "name": "WTI",
             "symbol": "CL=F",
             "menu_list": "Pétrol"
+        },
+        {
+            "name": "Weebit Nano",
+            "symbol": "WBT.AX"
         },
         {
             "name": "X-FAB",
