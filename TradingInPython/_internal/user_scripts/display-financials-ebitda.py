@@ -9,24 +9,8 @@
     
 """
 import yfinance
-
-# ----------------------------------------------------------------------------
-# Format big number to be readable by user
-# ----------------------------------------------------------------------------
-# The idea is to display big number in format like x xxx xxx xxx
-# when numer are small put decimals
-#
-def format_number( number, max_value=1e+12, deci=0 ):
-    """ If number > max_value format to scientifique number
-        else put space each 3 digits
-    """    
-    if abs( number ) > max_value:
-        return "{:.3e}".format(number)
-    
-    if abs( number ) < 1000:
-        return "{:.{decimals}f}".format(number, decimals=3)
-
-    return "{:,.{decimals}f}".format(number, decimals=deci).replace(",", " ")
+from user_scripts.api import api
+from helper import format_large_number
 
 # ---------------------------------------------------
 
@@ -43,34 +27,13 @@ def print_stock_financial( msg ):
         print( msg )
 
 separator = f"--------------------------------------"
-max_value = 1e+12 # show human's readable number
         
-# ---------------------------------------------------
-        
-# Récupérer les données financières de l'entreprise
-#
-# symbol = "AM.PA" # DASSAULT AVIATION
-# symbol = "AB.PA" # AB SCIENCE
-# symbol = "VOW.XETR" #Volkswagen NONE
-# symbol = "VOW.DE" # NONE
-# symbol = "TSLA"
-#ticker =  { "symbol": "MSFT" } # MICROSOFT
-#ticker =  { "symbol": "LR.PA" } # LEGRAND
-#ticker =  { "symbol": "TRI.PA" } # TRIGANO
-#ticker =  { "symbol": "GTLB" } # GITLAB RG-A
-#ticker =  { "PLTR" } # Palantir Technologies Inc.
-#ticker =  { "BRZE" } # BRAZE RG-A"
-#ticker =  { "ASY.PA" } # ASSYSTEM
-#ticker =  { "RTX" } # RXT aeronautic and defense
-ticker = 'WPM' # Wheaton Precious Metals (Gold)
-ticker = 'ETL.PA' # EUTELSAT
-
 # ----------------------------------------------------------------------------
 
-stock = yfinance.Ticker( ticker )
+stock = yfinance.Ticker( api.ticker )
 stock_info = stock.info.copy() # ne faire qu'une requête et sauver tous les résultats
 if len(stock_info) == 1: # astuce pour savoir que stock_info est vide ... l'objet est créé mais il n'y a rien dedans
-    print( f"Le symbol { ticker } n'existe pas")
+    print( f"Le symbol { api.ticker } n'existe pas")
     exit()
         
 # ----------------------------------------------------------------------------
@@ -85,7 +48,7 @@ print( f"Industry Key: {industry_key}" )
 print( f"Stock market : {stock_exchange}" )
 print( separator )
 print( f"Bêta - Indice de volatilité : {stock_info['beta']}" )
-print( f"Capitalisation boursière : {format_number(stock_info['marketCap'], max_value)}" )
+print( f"Capitalisation boursière : {format_large_number(stock_info['marketCap'])}" )
 print( separator )
 
 # Afficher les états financiers
@@ -109,9 +72,9 @@ print( ebit )
 print( separator )
 
 ebit_first_year = ebit.values[-1]  # Bénéfices avant intérêts et impôts première année
-print(f"Bénéfice avant intérêts et impôts la première années: {format_number(ebit_first_year, max_value)}")
+print(f"Bénéfice avant intérêts et impôts la première années: {format_large_number(ebit_first_year)}")
 ebit_last_year = ebit.values[0]
-print(f"Bénéfice avant intérêts et impôts la dernière années: {format_number(ebit_last_year, max_value)}")
+print(f"Bénéfice avant intérêts et impôts la dernière années: {format_large_number(ebit_last_year)}")
 
 print( separator )
 ebitda = stock_financials.loc['EBITDA']
@@ -121,7 +84,7 @@ print( ebitda )
 print( separator )
 
 ebitda_last_year = ebitda.values[0]
-print(f"Bénéfice avant intérêts et impôts et dépréciation : {format_number(ebitda_last_year, max_value)}")
+print(f"Bénéfice avant intérêts et impôts et dépréciation : {format_large_number(ebitda_last_year)}")
 print( separator )
 
 # NONE !
@@ -148,7 +111,7 @@ print( separator )
 
 # Free Cash Flow la dernière année
 fcf = stock_cash_flow.loc['Free Cash Flow'].values[0]
-print( f"Free Cash Flow last year : {format_number( fcf, max_value )}" )
+print( f"Free Cash Flow last year : {format_large_number( fcf )}" )
 print( separator )
 
 # Dépenses d'investissement
