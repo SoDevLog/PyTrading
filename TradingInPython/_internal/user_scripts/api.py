@@ -7,10 +7,12 @@
             print( api.symbol )
             df = api.get_ohlcv()
             api.on_bar( my_callback )
+            api.show_figure( fig )   # enqueue une figure matplotlib pour affichage
 """
 
 from __future__ import annotations
 from typing import Callable, Optional
+import queue
 import pandas as pd
 
 # -----------------------------------------------------------------------------
@@ -29,9 +31,13 @@ class UserScriptAPI:
         self.df: pd.DataFrame = pd.DataFrame(columns=["Open","High","Low","Close","Volume"])
         self.bar_callbacks:   list[Callable] = []
         self.close_callbacks: list[Callable] = []
-    
+
+        # File thread-safe — les scripts y poussent les figures,
+        # ScriptRunnerWindow les consomme dans le thread principal.
+        self.figure_queue: queue.Queue = queue.Queue()
+
     # -------------------------------------------------------------------------
-    
+
     def update( self, **kwargs ) -> None:
         self.name = kwargs.get( "name", self.name )
         self.ticker = kwargs.get( "ticker", self.ticker )
@@ -55,7 +61,41 @@ class UserScriptAPI:
         for p in required_params:
             print(f"{p}: {getattr( self, p )}")
         return True
-    
+
+    # -------------------------------------------------------------------------
+    # Affichage de figures matplotlib
+    # -------------------------------------------------------------------------
+
+    def show_figure( self, fig, title: str = "" ) -> None:
+        """
+        Met en queue une figure matplotlib pour affichage dans une Toplevel Tkinter.
+
+        L'appel est thread-safe : la figure est simplement poussée dans une
+        queue interne. C'est ScriptRunnerWindow qui la consomme et ouvre la
+        fenêtre dans le thread principal (via _check_process / after).
+
+        Usage dans un script utilisateur :
+            fig, axes = plt.subplots(...)
+            # ... tracé ...
+            api.show_figure(fig, title="Mon graphique")
+            plt.close(fig)   # libère la mémoire matplotlib côté script
+        """
+        label = title or self.name or self.ticker or "Figure"
+        self.figure_queue.put( (fig, label) )
+
+    def pop_figures( self ) -> list[tuple]:
+        """
+        Draine la queue et retourne toutes les figures en attente.
+        Appelé par ScriptRunnerWindow depuis le thread principal.
+        """
+        figures = []
+        while not self.figure_queue.empty():
+            try:
+                figures.append( self.figure_queue.get_nowait() )
+            except queue.Empty:
+                break
+        return figures
+
     # -------------------------------------------------------------------------
     # Callbacks / événements
     # -------------------------------------------------------------------------
@@ -63,7 +103,7 @@ class UserScriptAPI:
     def on_bar(self, callback: Callable[[pd.Series], None]) -> None:
         """
         Enregistre un callback appelé à chaque nouvelle barre.
-        
+
         Le callback reçoit une pd.Series avec les colonnes OHLCV
         et un index correspondant au timestamp de la barre.
 

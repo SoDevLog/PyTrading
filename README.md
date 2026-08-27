@@ -55,9 +55,11 @@ You need help for installation have a look to :
 
 To make it easier to enjoy upcoming releases and software improvements, if you know **GitHub** you can make a Clone from this Repo.
 
-To get new features you'll just had to make a Pull wich is lighter than downloading the whole zip.
+To get new features you'll just had to make a **Pull** wich is lighter than downloading the whole zip.
 
 ## Rapid Tour
+
+Clic on TradingInPython's short cut, the plateform openning, choose Four Time Frame Bolinger Bands strategy, play with Mobile Average to look bands moving, play with backtesting in real time to see if you should modify parameters :
 
 <div align="center">
   <img src="images/demo-2.gif" alt="Demo">
@@ -66,6 +68,16 @@ To get new features you'll just had to make a Pull wich is lighter than download
 You can have a rapid presentation of what you'll be able to do with the Trading platform, it's in french but you can translate easily by choosing your language in GoogleTranslate :
 
 - [Rapid Tour of the Trading Platform in Python](https://trading-in-python.sodevlog.com/tour-rapide/)
+
+Discover the MTZ-Z + DAS technical indicator shown in this animation :
+
+- [How to Trade with the MTF Z-Score + DAS Indicator](https://www.trading-et-data-analyses.com/2026/03/mtf-z-das-strategy-guide-complet-pour-trader.html)
+
+You need free training courses :
+
+- [Free training on technical trading](https://www.trading-et-data-analyses.com/p/formations.html)
+
+### Strategy Ichimoku Kinko Hyo
 
 You will be able to run the **Ichimoku Kinko Hyo's** strategie and prediction with [scikit-learn](https://scikit-learn.org/stable/index.html) :
 
@@ -133,7 +145,15 @@ Read the documentation on the plateforme's API :
 
 - [Develop your strategy using TradingInPython's API](https://www.trading-et-data-analyses.com/p/strategies-dans-tradinginpython.html)
 
-### Release notes
+### Develop your own technical trading ideas
+
+Script runner allows you to execute your own script :
+
+- [Documentation on script runner](https://trading-in-python.sodevlog.com/script-interpreter/interface/)
+
+- [Samples of scripts you can run or modify for your needs](./TradingInPython/_internal/user_scripts)
+
+## Release notes
 
 Informations on the **next version**, by your feed back you can participate to the next version of the Trading Plateform.
 
@@ -143,11 +163,7 @@ Informations on the **next version**, by your feed back you can participate to t
 
 We need customers or partners to develop the Community of python traders and continue to develop of this platform **TradingInPython** and add new features.
 
-By sending an email to : [plateforme@sodevlog.com](mailto:plateforme@sodevlog.com?subject=My%20license%20trading%20in%20python&body=Thanks%20to%20send%20me%20a%20license)
-
-You'll get a **free license for 10 days** more or less.
-
-If you **do not receive** the automatic response with your license or if it's wrong due to your emailer, please, wait a few time, we are processing your message and you will get a response.
+- [Get a free licence](https://www.trading-et-data-analyses.com/p/abonnement.html#Testez_gratuitement)
 
 If you include **helpful feedback** in your email, you may be able to get a more days license.
 
@@ -155,14 +171,14 @@ If you include **helpful feedback** in your email, you may be able to get a more
 
 After the trial period, you will need to obtain a license to use paid strategies.
 
-- [Pay your subscription license](https://www.trading-et-data-analyses.com/p/abonnement.html)
+- [Pay your subscription license](https://www.trading-et-data-analyses.com/p/abonnement.html#Abonnement)
 
 You will receive it by email to activate your Trading platform.
 
 ## Requirements
 
-- On Windows 7 you can try but most of the time you'll get error, so you need a Windows more than 7
-- On MacOS and Linux you **must wait** a while, but remember Python is all platforms compatible
+- On Windows 7 you can try but most of the time you'll get error, so you need a **Windows more than 7**.
+- On MacOS and Linux you **must wait** a while, but remember Python is all platforms compatible.
 
 ## Fundamental analysis
 
@@ -171,6 +187,12 @@ Algorithmic trading is great, but it's even better when it's confirmed by fundam
 Find algorithms that will enables you to perform accounting analysis of stocks market with **yfinance**.
 
 - [Fundamental analysis](./TradingInPython/Z-Integration/yfinance)
+
+## Home page
+
+The site you can translate esealy in any langage you need :
+
+[Understanding markets through data and technical analysis](https://www.trading-et-data-analyses.com/p/accueil.html)
 
 ## Disclaimer
 

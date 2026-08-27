@@ -20,6 +20,18 @@ Pour savoir comment utiliser ces données dans votre script régardez dans le fi
 
 - [use_api.py](use_api.py)
 
+## Bull/Bear Strength Index
+
+Un stratégie de trading complète qui utilise les indicateurs techniques :
+
+- Cloud BSI basé sur deux EMA,
+- Stop BSI basé sur un ATR Trailing Stop,
+- Synergie permettant de rechercher un alignement entre court et moyen terme
+- deux histogrammes BSI permettant de distinguer le momentum court terme CT et moyen terme MT.
+
+- [strategy-bull-bear-strengh-index.py](strategy-bull-bear-strengh-index.py)
+
+
 ## Filtre des actions à forte croissance
 
 - [strong-growth.py](strong-growth.py)
