@@ -11,6 +11,13 @@
     peut casser le dtype booléen en y insérant des NaN. Elle rend le pipeline robuste et 
     silencieux face à ce changement de comportement annoncé.
 
+    Axe X : positionnel (entier séquentiel), pas temporel.
+    Un DatetimeIndex réserve de l'espace proportionnel au temps réel écoulé, ce qui crée
+    des trous visuels les week-ends / jours fériés (pas de séance tradée). En traçant sur
+    un axe entier (une position par barre tradée), ces trous disparaissent. Les vraies
+    dates sont réinjectées a posteriori via un FuncFormatter (ticks) et format_xdata
+    (coordonnées affichées par la NavigationToolbar2Tk au survol de la souris).
+
     Dépendances : pandas, numpy, matplotlib, yfinance
 """
 import numpy as np
@@ -19,7 +26,7 @@ pd.set_option('future.no_silent_downcasting', True)  # supprime le FutureWarning
 import matplotlib
 import matplotlib.style
 matplotlib.style.use("seaborn-v0_8-darkgrid")
-import matplotlib.dates as mdates
+import matplotlib.ticker as mticker
 import yfinance
 
 # ------------------------------------------------------
@@ -254,10 +261,19 @@ def plot_bsi(ticker: str = "AAPL",
                     fast_ct=9,  slow_ct=26,
                     fast_mt=21, slow_mt=55 )
 
+    # --- Axe X positionnel --------------------------------
+    # idx : position entière (0, 1, 2...) utilisée pour tout le tracé —
+    #       une barre tradée = une position, donc pas de trou le week-end.
+    # dates : vraies dates conservées à part, uniquement pour l'affichage
+    #         (ticks de l'axe + coordonnées de la toolbar).
+    idx   = np.arange(len(df))
+    dates = df.index
+
     # --- Layout --------------------------------
     from matplotlib.figure import Figure
-
-    fig = Figure( figsize=(12, 8) )
+    
+    print( matplotlib.rcParams['axes.facecolor'], matplotlib.rcParams['axes.grid'] )
+    fig = Figure(figsize=(12, 8))
     axes = fig.subplots(
         3, 1,
         gridspec_kw={"height_ratios": [4, 1, 1]},
@@ -275,7 +291,6 @@ def plot_bsi(ticker: str = "AAPL",
     ax_price, ax_hist_mt, ax_hist_ct = axes
 
     # --- Fond Synergie --------------------------------
-    idx = df.index
     for i in range(len(syn)):
         if syn.iloc[i] == 1:
             ax_price.axvspan(idx[i], idx[min(i + 1, len(idx) - 1)],
@@ -288,8 +303,8 @@ def plot_bsi(ticker: str = "AAPL",
     for i, (ts, row) in enumerate(df.iterrows()):
         o, h_, l_, c = row["Open"], row["High"], row["Low"], row["Close"]
         color = T["bull"] if c >= o else T["bear"]
-        ax_price.plot([ts, ts], [l_, h_], color=color, lw=0.8, alpha=0.7)
-        ax_price.bar(ts, abs(c - o), bottom=min(o, c),
+        ax_price.plot([idx[i], idx[i]], [l_, h_], color=color, lw=0.8, alpha=0.7)
+        ax_price.bar(idx[i], abs(c - o), bottom=min(o, c),
                      color=color, width=0.6, align="center")
 
     # -- Cloud BSI ------------------------------------------------------
@@ -334,10 +349,34 @@ def plot_bsi(ticker: str = "AAPL",
     ax_hist_ct.bar(idx, hist_ct["hist"], color=colors_ct, width=0.6)
     ax_hist_ct.axhline(0, color=T["zero_line"], lw=0.5)
     ax_hist_ct.set_ylabel("BSI CT", fontsize=9, color=T["text_muted"])
-    
-    ax_hist_ct.xaxis.set_major_formatter(mdates.DateFormatter("%Y-%m-%d"))
-    #fig.autofmt_xdate() # incline les labels pour éviter le chevauchement
-    
+
+    # --- Ticks de l'axe X : ré-injecter les vraies dates -------------------
+    # x est une position entière ; on va chercher la date correspondante
+    # dans "dates" (le DatetimeIndex d'origine) pour l'affichage du tick.
+    def format_date(x, pos=None):
+        i = int(round(x))
+        if 0 <= i < len(dates):
+            return dates[i].strftime("%Y-%m-%d")
+        return ""
+
+    ax_hist_ct.xaxis.set_major_formatter(mticker.FuncFormatter(format_date))
+    ax_hist_ct.xaxis.set_major_locator(mticker.MaxNLocator(integer=True, nbins=8))
+    fig.autofmt_xdate()  # incline les labels pour éviter le chevauchement
+
+    # --- Coordonnées affichées par la NavigationToolbar2Tk au survol -------
+    # ax.format_xdata n'est PAS partagé entre axes même avec sharex=True :
+    # sans ceci, seul un survol sur ax_price afficherait une date lisible
+    # (via le tick formatter d'ax_hist_ct qui ne s'applique qu'à son propre
+    # axe) — les deux histogrammes du bas resteraient en position entière brute.
+    def format_xdata(x):
+        i = int(round(x))
+        if 0 <= i < len(dates):
+            return dates[i].strftime("%Y-%m-%d")
+        return ""
+
+    for ax in axes:
+        ax.format_xdata = format_xdata
+
     return fig
 
 # ---------------------------------------------
