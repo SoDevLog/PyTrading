@@ -41,6 +41,18 @@
             "STOCH_k": 28,
             "STOCH_d": 6,
             "SMOOTH_k": 6
+        },
+        {
+            "name": "DASSAULT AVIATION",
+            "STOCH_k": 29,
+            "STOCH_d": 7,
+            "SMOOTH_k": 8
+        },
+        {
+            "name": "LEGRAND",
+            "STOCH_k": 28,
+            "STOCH_d": 6,
+            "SMOOTH_k": 6
         }
     ]
 }
