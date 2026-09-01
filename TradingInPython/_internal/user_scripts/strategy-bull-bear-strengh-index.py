@@ -4,12 +4,22 @@
     1. Cloud BSI    : deux EMA formant un nuage coloré (style Ichimoku)
     2. Stop BSI     : ATR Trailing Stop (style SuperTrend)
     3. Synergie     : alignement multi-timeframe (fond coloré)
-    4. Histogramme  : oscillateur binaire MT / CT
+    4. Histogrammes : oscillateur binaire, sur 3 échelles empilées
+       - BSI LT (long terme)  : la boussole, biais de marché de fond
+       - BSI MT (moyen terme) : indicateur stratégique de prise de bénéfices
+       - BSI CT (court terme) : indicateur chirurgical de timing
 
     Pandas : infer_objects()
     C'est une précaution "anti-warning / anti-ambiguïté de dtype" liée au fait que reindex(..., method="ffill")
     peut casser le dtype booléen en y insérant des NaN. Elle rend le pipeline robuste et 
     silencieux face à ce changement de comportement annoncé.
+
+    Axe X : positionnel (entier séquentiel), pas temporel.
+    Un DatetimeIndex réserve de l'espace proportionnel au temps réel écoulé, ce qui crée
+    des trous visuels les week-ends / jours fériés (pas de séance tradée). En traçant sur
+    un axe entier (une position par barre tradée), ces trous disparaissent. Les vraies
+    dates sont réinjectées a posteriori via un FuncFormatter (ticks) et format_xdata
+    (coordonnées affichées par la NavigationToolbar2Tk au survol de la souris).
 
     Dépendances : pandas, numpy, matplotlib, yfinance
 """
@@ -19,7 +29,7 @@ pd.set_option('future.no_silent_downcasting', True)  # supprime le FutureWarning
 import matplotlib
 import matplotlib.style
 matplotlib.style.use("seaborn-v0_8-darkgrid")
-import matplotlib.dates as mdates
+import matplotlib.ticker as mticker
 import yfinance
 
 # ------------------------------------------------------
@@ -119,39 +129,40 @@ def stop_bsi(high: pd.Series,
 # 3. SYNERGIE  (alignement multi-timeframe)
 # -----------------------------------------
 
-def synergie(close_ct: pd.Series,
-             close_mt: pd.Series,
-             fast_ct: int = 9,
-             slow_ct: int = 26,
-             fast_mt: int = 9,
-             slow_mt: int = 26) -> pd.Series:
-    """
-    Retourne 1 (synergie haussière), -1 (baissière), 0 (neutre).
-    Court terme ET moyen terme doivent être alignés.
-
-    Dans la pratique avec un seul DataFrame, on simule le MT
-    en appliquant les mêmes EMA sur une close re-samplée ou lissée.
-    Ici on accepte deux séries séparées pour plus de clarté.
-    """
-    bull_ct = ema(close_ct, fast_ct) > ema(close_ct, slow_ct)
-    bull_mt = ema(close_mt, fast_mt) > ema(close_mt, slow_mt)
-
-    # Ré-indexer la MT sur l'index CT (forward-fill)
-    # fillna(False) élimine les NaN résiduels en début de série
-    # astype(bool) garantit un dtype booléen pour les opérateurs ~ & |
-    bull_mt_reindexed = (
-        bull_mt
-        .reindex(bull_ct.index)         # aligne l'index sans ffill implicite
-        .ffill()                        # forward-fill explicite (pas de FutureWarning)
-        .infer_objects(copy=False)      # stabilise le dtype avant fillna
-        .fillna(False)                  # NaN résiduels en début de série
+def _to_bool(series: pd.Series, ref_index) -> pd.Series:
+    """Ré-indexe sur ref_index et garantit un dtype booléen propre."""
+    return (
+        series
+        .reindex(ref_index)
+        .ffill()
+        .infer_objects(copy=False)
+        .fillna(False)
         .astype(bool)
     )
-    bull_ct = bull_ct.infer_objects(copy=False).fillna(False).astype(bool)
 
-    result = pd.Series(0, index=bull_ct.index)
-    result[bull_ct  &  bull_mt_reindexed] =  1
-    result[~bull_ct & ~bull_mt_reindexed] = -1
+def synergie(close: pd.Series,
+             fast_ct: int = 9,   slow_ct: int = 26,
+             fast_mt: int = 21,  slow_mt: int = 55,
+             fast_lt: int = 50,  slow_lt: int = 200) -> pd.Series:
+    """
+    Synergie 3 horizons CT / MT / LT — système d'autorisation / interdiction.
+
+    Règle d'unanimité (les 3 horizons doivent être dans le même sens) :
+      → +1  Synergie Verte  : LT + MT + CT tous haussiers → autorisation long
+      → -1  Synergie Rouge  : LT + MT + CT tous baissiers → autorisation short
+      →  0  Zone blanche    : discordance → situation incertaine, on ne trade pas
+
+    C'est un filtre strict : mieux vaut rater une entrée que d'entrer en désaccord.
+    """
+    bull_lt = _to_bool(ema(close, fast_lt) > ema(close, slow_lt), close.index)
+    bull_mt = _to_bool(ema(close, fast_mt) > ema(close, slow_mt), close.index)
+    bull_ct = _to_bool(ema(close, fast_ct) > ema(close, slow_ct), close.index)
+
+    votes_bull = bull_lt.astype(int) + bull_mt.astype(int) + bull_ct.astype(int)
+
+    result = pd.Series(0, index=close.index)   # 0 = zone blanche par défaut
+    result[votes_bull == 3] =  1               # unanimité haussière
+    result[votes_bull == 0] = -1               # unanimité baissière
     return result
 
 # ---------------------------------------------
@@ -244,23 +255,32 @@ def plot_bsi(ticker: str = "AAPL",
     # Calcul des indicateurs
     cloud   = cloud_bsi(close)
     stop    = stop_bsi(high, low, close)
-    hist_mt = histogramme_bsi(close, fast=21, slow=55, signal=9)  # moyen terme
-    hist_ct = histogramme_bsi(close, fast=9,  slow=26, signal=9)  # court terme
+    hist_ct = histogramme_bsi(close, fast=9,   slow=26,  signal=9)   # court terme
+    hist_mt = histogramme_bsi(close, fast=21,  slow=55,  signal=9)   # moyen terme
+    hist_lt = histogramme_bsi(close, fast=50,  slow=200, signal=9)   # long terme
 
-    # Synergie : MT simulé par des EMA longues sur le même index journalier.
-    # fast_mt / slow_mt : croisement de MAs classiques "tendance de fond"
-    # On passe close deux fois : synergie() calcule elle-même les deux paires d'EMA.
-    syn = synergie( close, close,
+    # Synergie 3 horizons CT/MT/LT — une seule série close, périodes différentes
+    syn = synergie( close,
                     fast_ct=9,  slow_ct=26,
-                    fast_mt=21, slow_mt=55 )
+                    fast_mt=21, slow_mt=55,
+                    fast_lt=50, slow_lt=200 )
+
+    # --- Axe X positionnel --------------------------------
+    # idx : position entière (0, 1, 2...) utilisée pour tout le tracé —
+    #       une barre tradée = une position, donc pas de trou le week-end.
+    # dates : vraies dates conservées à part, uniquement pour l'affichage
+    #         (ticks de l'axe + coordonnées de la toolbar).
+    idx   = np.arange(len(df))
+    dates = df.index
 
     # --- Layout --------------------------------
     from matplotlib.figure import Figure
-
-    fig = Figure( figsize=(12, 8) )
+    
+    print( matplotlib.rcParams['axes.facecolor'], matplotlib.rcParams['axes.grid'] )
+    fig = Figure(figsize=(12, 9))
     axes = fig.subplots(
-        3, 1,
-        gridspec_kw={"height_ratios": [4, 1, 1]},
+        4, 1,
+        gridspec_kw={"height_ratios": [6, 1, 1, 1]},
         sharex=True,
     )
     
@@ -272,24 +292,23 @@ def plot_bsi(ticker: str = "AAPL",
         for spine in ax.spines.values():
             spine.set_edgecolor(T["grid"])
 
-    ax_price, ax_hist_mt, ax_hist_ct = axes
+    ax_price, ax_hist_ct, ax_hist_mt, ax_hist_lt = axes
 
-    # --- Fond Synergie --------------------------------
-    idx = df.index
+    # --- Fond Synergie — unanimité 3/3 : vert / rouge / blanc (neutre) ---
     for i in range(len(syn)):
-        if syn.iloc[i] == 1:
-            ax_price.axvspan(idx[i], idx[min(i + 1, len(idx) - 1)],
-                             color=T["syn_bull"], alpha=0.4, lw=0)
-        elif syn.iloc[i] == -1:
-            ax_price.axvspan(idx[i], idx[min(i + 1, len(idx) - 1)],
-                             color=T["syn_bear"], alpha=0.4, lw=0)
+        val = syn.iloc[i]
+        if val == 0:
+            continue                                         # zone blanche : fond inchangé
+        color = T["syn_bull"] if val == 1 else T["syn_bear"]
+        ax_price.axvspan(idx[i], idx[min(i + 1, len(idx) - 1)],
+                         color=color, alpha=0.45, lw=0)
 
     # --- Bougies simplifiées ---------------------------------------------
     for i, (ts, row) in enumerate(df.iterrows()):
         o, h_, l_, c = row["Open"], row["High"], row["Low"], row["Close"]
         color = T["bull"] if c >= o else T["bear"]
-        ax_price.plot([ts, ts], [l_, h_], color=color, lw=0.8, alpha=0.7)
-        ax_price.bar(ts, abs(c - o), bottom=min(o, c),
+        ax_price.plot([idx[i], idx[i]], [l_, h_], color=color, lw=0.8, alpha=0.7)
+        ax_price.bar(idx[i], abs(c - o), bottom=min(o, c),
                      color=color, width=0.6, align="center")
 
     # -- Cloud BSI ------------------------------------------------------
@@ -323,21 +342,66 @@ def plot_bsi(ticker: str = "AAPL",
     ax_price.legend(loc="upper left", fontsize=8,
                     facecolor=T["bg_legend"], labelcolor=T["text"])
 
-    # -- Histogramme BSI MT — MACD 21/55/9 (moyen terme) --------------------------
-    colors_mt = [T["bull"] if v >= 0 else T["bear"] for v in hist_mt["hist"]]
-    ax_hist_mt.bar(idx, hist_mt["hist"], color=colors_mt, width=0.6)
-    ax_hist_mt.axhline(0, color=T["zero_line"], lw=0.5)
-    ax_hist_mt.set_ylabel("BSI MT", fontsize=9, color=T["text_muted"])
+    # -- Histogrammes BSI CT / MT / LT — force du mouvement ----------------
+    # Chaque axe combine :
+    #   • un fond de couleur pleine (vert/rouge) indiquant la direction de l'EMA
+    #   • des barres MACD dont la hauteur traduit la force / l'accélération
+    bull_ct_sig = (ema(close, 9)   > ema(close, 26)).values
+    bull_mt_sig = (ema(close, 21)  > ema(close, 55)).values
+    bull_lt_sig = (ema(close, 50)  > ema(close, 200)).values
 
-    # -- Histogramme BSI CT — MACD 9/26/9 (court terme) --------------------------
-    colors_ct = [T["bull"] if v >= 0 else T["bear"] for v in hist_ct["hist"]]
-    ax_hist_ct.bar(idx, hist_ct["hist"], color=colors_ct, width=0.6)
-    ax_hist_ct.axhline(0, color=T["zero_line"], lw=0.5)
-    ax_hist_ct.set_ylabel("BSI CT", fontsize=9, color=T["text_muted"])
-    
-    ax_hist_ct.xaxis.set_major_formatter(mdates.DateFormatter("%Y-%m-%d"))
-    #fig.autofmt_xdate() # incline les labels pour éviter le chevauchement
-    
+    def draw_hist(ax, hist_df, bull_sig, label):
+        """
+        Fond de direction (axvspan pâle) + barres MACD colorées selon le signe.
+        La couleur de la barre = signe de l'histogramme (pas forcément la direction EMA),
+        ce qui permet de voir les divergences et le ralentissement du momentum.
+        """
+        # Fond de direction : bande pâle indiquant la tendance EMA
+        for i in range(len(bull_sig)):
+            bg = T["syn_bull"] if bull_sig[i] else T["syn_bear"]
+            ax.axvspan(idx[i], idx[min(i + 1, len(idx) - 1)],
+                       color=bg, alpha=0.25, lw=0)
+
+        # Barres MACD : couleur selon signe de l'histogramme
+        colors = [T["bull"] if v >= 0 else T["bear"] for v in hist_df["hist"]]
+        ax.bar(idx, hist_df["hist"], color=colors, width=0.8, zorder=2)
+        ax.axhline(0, color=T["zero_line"], lw=0.6, zorder=3)
+
+        ax.set_ylabel( label, fontsize=9, color=T["text_muted"] )
+        for spine in ax.spines.values():
+            spine.set_edgecolor(T["grid"])
+
+    draw_hist(ax_hist_ct, hist_ct, bull_ct_sig, "BSI CT  9/26")
+    draw_hist(ax_hist_mt, hist_mt, bull_mt_sig, "BSI MT  21/55")
+    draw_hist(ax_hist_lt, hist_lt, bull_lt_sig, "BSI LT  50/200")
+
+    # --- Ticks de l'axe X : ré-injecter les vraies dates -------------------
+    # x est une position entière ; on va chercher la date correspondante
+    # dans "dates" (le DatetimeIndex d'origine) pour l'affichage du tick.
+    def format_date(x, pos=None):
+        i = int(round(x))
+        if 0 <= i < len(dates):
+            return dates[i].strftime("%Y-%m-%d")
+        return ""
+
+    ax_hist_ct.xaxis.set_major_formatter(mticker.FuncFormatter(format_date))
+    ax_hist_ct.xaxis.set_major_locator(mticker.MaxNLocator(integer=True, nbins=8))
+    fig.autofmt_xdate()  # incline les labels pour éviter le chevauchement
+
+    # --- Coordonnées affichées par la NavigationToolbar2Tk au survol -------
+    # ax.format_xdata n'est PAS partagé entre axes même avec sharex=True :
+    # sans ceci, seul un survol sur ax_price afficherait une date lisible
+    # (via le tick formatter d'ax_hist_ct qui ne s'applique qu'à son propre
+    # axe) — les trois histogrammes du bas resteraient en position entière brute.
+    def format_xdata(x):
+        i = int(round(x))
+        if 0 <= i < len(dates):
+            return dates[i].strftime("%Y-%m-%d")
+        return ""
+
+    for ax in axes:
+        ax.format_xdata = format_xdata
+
     return fig
 
 # ---------------------------------------------

@@ -115,6 +115,10 @@
             "menu_list": "Pharma"
         },
         {
+            "name": "ADTRAN",
+            "symbol": "ADTN"
+        },
+        {
             "name": "AIR LIQUIDE",
             "symbol": "AI.PA",
             "menu_list": "A"
@@ -397,18 +401,6 @@
             "menu_list": "ESN"
         },
         {
-            "name": "CARMAT",
-            "symbol": "ALCAR.PA",
-            "price_purchase": 2.995,
-            "price_high": 3.3,
-            "price_low": 3.2,
-            "trading_plan_high": "La monté se poursuit",
-            "trading_plan_low": "Dommage redescente",
-            "volume_max": 10000,
-            "menu_list": "Pharma",
-            "is_monitoring": false
-        },
-        {
             "name": "CARREFOUR",
             "symbol": "CA.PA",
             "is_monitoring": false
@@ -689,6 +681,11 @@
             "menu_list": "ETF"
         },
         {
+            "name": "Gaz Naturel",
+            "symbol": "NG=F",
+            "menu_list": "Futures"
+        },
+        {
             "name": "HAFFNER ENERGY",
             "symbol": "ALHAF.PA"
         },
@@ -936,6 +933,11 @@
             "symbol": "NANO.PA"
         },
         {
+            "name": "NETAPP",
+            "symbol": "NTAP",
+            "menu_list": "Software-infra"
+        },
+        {
             "name": "NEURONES",
             "symbol": "NRO.PA"
         },
@@ -1064,7 +1066,7 @@
             "name": "QUANTUM CORP",
             "symbol": "QMCO",
             "exchange": "NGM",
-            "menu_list": "Q"
+            "menu_list": "Computer-hardwawre"
         },
         {
             "name": "RAMSAY GENERALE",
@@ -1142,7 +1144,8 @@
         },
         {
             "name": "SANDISK",
-            "symbol": "SNDK"
+            "symbol": "SNDK",
+            "menu_list": "Computer-hardwawre"
         },
         {
             "name": "SANOFI",
