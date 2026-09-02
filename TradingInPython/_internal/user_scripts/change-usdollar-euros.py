@@ -3,15 +3,16 @@
 import pandas
 import yfinance as yf
 import datetime as dt
-import matplotlib.pyplot as plt
+from user_scripts.api import api
+from matplotlib.figure import Figure
 
 DISPLAY_GRAPH = True
 
-date_start = "2023-01-01"
+date_start = "2025-01-01"
 date_end = dt.datetime.now().strftime('%Y-%m-%d')
 
 # 1. Récupérer les données d'une action en dollars
-symbol = "PLTR" # PALANTIR # "AAPL"  # exemple avec Apple
+symbol = api.ticker
 data = yf.download( symbol, start=date_start, end=date_end ).droplevel( 1, axis=1 )
 
 # 2. Récupérer le taux de change EUR/USD
@@ -41,12 +42,16 @@ except KeyError:
     print( f"Valeurs pour la date du : {date_proche.strftime('%d/%m/%Y')}:" )
     print( valeurs_date )
     
-# Optionnel: visualiser les prix en USD et EUR
-if DISPLAY_GRAPH:
-    plt.figure(figsize=(12, 6))
-    plt.plot( data.index, data['Close'], label=f'{symbol} en USD')
-    plt.plot( data.index, data['Close_EUR'], label=f'{symbol} en EUR')
-    plt.title( f'Prix de {symbol} en USD et EUR')
-    plt.legend()
-    plt.grid(True)
-    plt.show()
+# ---------------------------------------------
+# main() appelé explicitement par script_runner
+#
+def main():
+    fig = Figure( figsize=( 12, 6 ) )
+    ax = fig.add_subplot( 111 )
+    ax.plot( data.index, data['Close'], label=f'{symbol} en USD')
+    ax.plot( data.index, data['Close_EUR'], label=f'{symbol} en EUR')
+    ax.set_title( f'Prix de {symbol} en USD et EUR')
+    ax.legend()
+    ax.grid( True )
+    fig.tight_layout()
+    api.show_figure( fig )
