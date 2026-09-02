@@ -19,6 +19,8 @@
     - fractales_williams
     - awesome_oscillator
     - accelerator_oscillator
+    - multiframes_bolls
+    - directional_action_strength
 
 """
 import pandas
@@ -696,7 +698,6 @@ def adx( high, low, close, period=14 ):
     DataFrame avec colonnes 'Fractal_Up' et 'Fractal_Down'
 """    
 def fractales_williams( data, period=2 ):
-
     
     high = data['High']
     low = data['Low']
@@ -760,3 +761,68 @@ def accelerator_oscillator( df, ao_column='AO', period=5 ):
     ac = ao - sma_ao
     
     return ac
+
+# -----------------------------------------------------------------------------
+# Multi-Timeframe Bollinger Bands oscillator
+# -----------------------------------------------------------------------------
+#
+def multiframes_bolls( df, period=20, smooth_spans=(5, 10, 20) ):
+    """
+    Indicateur Multi-Timeframe Bollinger Bands (z-score Bollinger + multi smoothing)
+
+    Parameters:
+    - df : DataFrame OHLC
+    - period : période Bollinger
+    - smooth_spans : tuple des périodes EMA (fast, mid, slow)
+
+    Returns:
+    - tuple de Series (fast, mid, slow)
+    """
+
+    close = df['Close']
+
+    # Bollinger (z-score)
+    ma = close.rolling( period, min_periods=1 ).mean()
+    std = close.rolling( period, min_periods=1 ).std()
+    std = numpy.maximum( std,  1e-9 )
+
+    boll_pos = (close - ma) / std
+
+    # Multi smoothing dynamique
+    smoothed = tuple(
+        boll_pos.ewm( span=span, adjust=False ).mean()
+        for span in smooth_spans
+    )
+
+    return smoothed
+
+# -----------------------------------------------------------------------------
+# Directional Action Strength
+# -----------------------------------------------------------------------------
+#
+def directional_action_strength( df, fast=5, slow=20, vol_period=20 ):
+
+    close = df['Close']
+    volume = df['Volume']
+
+    # Momentum (EMA spread)
+    ema_fast = close.ewm( span=fast ).mean()
+    ema_slow = close.ewm( span=slow ).mean()
+
+    momentum = ema_fast - ema_slow
+
+    # Volume normalisé
+    vol_mean = volume.rolling( vol_period, min_periods=1 ).mean()
+    vol_norm = volume / (vol_mean + 1e-9)
+
+    # Score hybride
+    score = momentum * vol_norm
+
+    # Lissage
+    line_fast = score.ewm( span=5 ).mean()
+    line_slow = score.ewm( span=15 ).mean()
+
+    # Histogramme
+    hist = line_fast - line_slow
+
+    return hist, line_fast, line_slow

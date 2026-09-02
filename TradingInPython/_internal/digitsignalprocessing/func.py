@@ -169,7 +169,19 @@ def linregress( x, y ):
         "LinregressResult",
         ["slope", "intercept", "stderr"]
     )
-            
+
+    # Exclut la dernière valeur si elle correspond à une période non clôturée
+    # (ex: mois en cours renvoyé par l'API avec une valeur NaN)
+    if len(y) > 0 and numpy.isnan(y[-1]):
+        x = x[:-1]
+        y = y[:-1]
+
+    # Filtre de sécurité : élimine toute paire (x, y) restante où l'une des deux valeurs est NaN
+    # (ex: jour férié mal géré ailleurs dans la série)
+    mask = ~(numpy.isnan(x) | numpy.isnan(y))
+    x = x[mask]
+    y = y[mask]
+                
     # Conversion en tableaux NumPy
     x = numpy.asarray(x, dtype=float)
     y = numpy.asarray(y, dtype=float)
