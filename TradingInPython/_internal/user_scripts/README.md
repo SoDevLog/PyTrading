@@ -28,8 +28,11 @@ Un stratégie de trading complète qui utilise les indicateurs techniques :
 - Stop BSI basé sur un ATR Trailing Stop,
 - Synergie permettant de rechercher un alignement entre court et moyen terme
 - deux histogrammes BSI permettant de distinguer le momentum court terme CT et moyen terme MT.
-
 - [strategy-bull-bear-strengh-index.py](strategy-bull-bear-strengh-index.py)
+
+### Documentation sur le BSI
+
+- [Bull/Bear Strength Index - Python Trading Strategy](https://www.trading-et-data-analyses.com/2026/09/bullbear-strength-index-python-trading.html)
 
 
 ## Filtre des actions à forte croissance
@@ -67,6 +70,8 @@ Agent IA de trading technique - MLP (Multi-Layer Perceptrons) Keras (backend JAX
 - [agent_ia.py](agent_ia.py)
 
 Vous trouverez d'autres scripts que vous pourrez exécuter, adapter pour vos besoins, vous en inspirez.
+
+**Pensez à "starer" le projet PyTrading**, mettez un étoile pour suivre les évolutions des Scripts et de leur utilisation dans **TradingInPython**.
 
 ## Mise en garde
 
