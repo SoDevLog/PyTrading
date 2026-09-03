@@ -257,13 +257,13 @@ def plot_bsi(ticker: str = "AAPL",
     stop    = stop_bsi(high, low, close)
     hist_ct = histogramme_bsi(close, fast=9,   slow=26,  signal=9)   # court terme
     hist_mt = histogramme_bsi(close, fast=21,  slow=55,  signal=9)   # moyen terme
-    hist_lt = histogramme_bsi(close, fast=50,  slow=200, signal=9)   # long terme
+    hist_lt = histogramme_bsi(close, fast=50,  slow=100, signal=9)   # long terme
 
     # Synergie 3 horizons CT/MT/LT — une seule série close, périodes différentes
     syn = synergie( close,
                     fast_ct=9,  slow_ct=26,
                     fast_mt=21, slow_mt=55,
-                    fast_lt=50, slow_lt=200 )
+                    fast_lt=50, slow_lt=100 )
 
     # --- Axe X positionnel --------------------------------
     # idx : position entière (0, 1, 2...) utilisée pour tout le tracé —
@@ -276,7 +276,9 @@ def plot_bsi(ticker: str = "AAPL",
     # --- Layout --------------------------------
     from matplotlib.figure import Figure
     
-    print( matplotlib.rcParams['axes.facecolor'], matplotlib.rcParams['axes.grid'] )
+    # Checking witch matplotlib style is used
+    #print( matplotlib.rcParams['axes.facecolor'], matplotlib.rcParams['axes.grid'] )
+    
     fig = Figure(figsize=(12, 9))
     axes = fig.subplots(
         4, 1,
@@ -301,13 +303,13 @@ def plot_bsi(ticker: str = "AAPL",
             continue                                         # zone blanche : fond inchangé
         color = T["syn_bull"] if val == 1 else T["syn_bear"]
         ax_price.axvspan(idx[i], idx[min(i + 1, len(idx) - 1)],
-                         color=color, alpha=0.45, lw=0)
+                         color=color, alpha=0.6, lw=0)
 
     # --- Bougies simplifiées ---------------------------------------------
     for i, (ts, row) in enumerate(df.iterrows()):
         o, h_, l_, c = row["Open"], row["High"], row["Low"], row["Close"]
         color = T["bull"] if c >= o else T["bear"]
-        ax_price.plot([idx[i], idx[i]], [l_, h_], color=color, lw=0.8, alpha=0.7)
+        ax_price.plot([idx[i], idx[i]], [l_, h_], color=color, lw=0.8, alpha=0.8)
         ax_price.bar(idx[i], abs(c - o), bottom=min(o, c),
                      color=color, width=0.6, align="center")
 
@@ -348,7 +350,7 @@ def plot_bsi(ticker: str = "AAPL",
     #   • des barres MACD dont la hauteur traduit la force / l'accélération
     bull_ct_sig = (ema(close, 9)   > ema(close, 26)).values
     bull_mt_sig = (ema(close, 21)  > ema(close, 55)).values
-    bull_lt_sig = (ema(close, 50)  > ema(close, 200)).values
+    bull_lt_sig = (ema(close, 50)  > ema(close, 100)).values
 
     def draw_hist(ax, hist_df, bull_sig, label):
         """
@@ -360,7 +362,7 @@ def plot_bsi(ticker: str = "AAPL",
         for i in range(len(bull_sig)):
             bg = T["syn_bull"] if bull_sig[i] else T["syn_bear"]
             ax.axvspan(idx[i], idx[min(i + 1, len(idx) - 1)],
-                       color=bg, alpha=0.25, lw=0)
+                       color=bg, alpha=0.55, lw=0)
 
         # Barres MACD : couleur selon signe de l'histogramme
         colors = [T["bull"] if v >= 0 else T["bear"] for v in hist_df["hist"]]
@@ -373,7 +375,7 @@ def plot_bsi(ticker: str = "AAPL",
 
     draw_hist(ax_hist_ct, hist_ct, bull_ct_sig, "BSI CT  9/26")
     draw_hist(ax_hist_mt, hist_mt, bull_mt_sig, "BSI MT  21/55")
-    draw_hist(ax_hist_lt, hist_lt, bull_lt_sig, "BSI LT  50/200")
+    draw_hist(ax_hist_lt, hist_lt, bull_lt_sig, "BSI LT  50/100")
 
     # --- Ticks de l'axe X : ré-injecter les vraies dates -------------------
     # x est une position entière ; on va chercher la date correspondante
