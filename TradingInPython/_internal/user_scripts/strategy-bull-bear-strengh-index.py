@@ -28,7 +28,8 @@ import pandas as pd
 pd.set_option('future.no_silent_downcasting', True)  # supprime le FutureWarning fillna/ffill/bfill
 import matplotlib
 import matplotlib.style
-matplotlib.style.use("seaborn-v0_8-darkgrid")
+#matplotlib.style.use("seaborn-v0_8-darkgrid")
+matplotlib.style.use("seaborn-v0_8-notebook")
 import matplotlib.ticker as mticker
 import yfinance
 
@@ -427,11 +428,11 @@ def main():
 if __name__ == "__main__":
     matplotlib.use("TkAgg") # standalone : thread principal, affichage direct OK
     
-    TICKER   = "AAPL"
+    TICKER   = "NVDA"
     PERIOD   = "1y"
     INTERVAL = "1d"
 
-    fig = plot_bsi(TICKER, period=PERIOD, interval=INTERVAL)
+    fig = plot_bsi( TICKER, period=PERIOD, interval=INTERVAL )
     fig.tight_layout()
 
     # Créer la fenêtre Tkinter    

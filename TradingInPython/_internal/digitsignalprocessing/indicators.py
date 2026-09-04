@@ -826,3 +826,83 @@ def directional_action_strength( df, fast=5, slow=20, vol_period=20 ):
     hist = line_fast - line_slow
 
     return hist, line_fast, line_slow
+
+# -----------------------------------------------------------------------------
+# Super Trend Indicator
+# -----------------------------------------------------------------------------
+#
+def super_trend( data, period=10, multiplier=3.0 ):
+    """
+    Indicateur SuperTrend.
+
+    Parametres :
+    - data       : DataFrame avec colonnes 'High', 'Low', 'Close' (index = dates)
+    - period     : periode de l'ATR utilise pour les bandes
+    - multiplier : multiplicateur applique a l'ATR
+
+    Returns :
+    - DataFrame indexe like 'data', colonnes :
+        - ATR
+        - Upper, Lower : bandes finales
+        - SuperTrend   : valeur de la ligne SuperTrend
+        - Direction    : 1 = tendance haussiere, -1 = tendance baissiere
+    """
+    high = numpy.asarray(data['High'], dtype=float).ravel()
+    low = numpy.asarray(data['Low'], dtype=float).ravel()
+    close = numpy.asarray(data['Close'], dtype=float).ravel()
+    n = len(close)
+
+    atr = atr_rolling( data, period=period )
+    hl2 = (high + low) / 2.0
+    basic_upper = hl2 + multiplier * atr
+    basic_lower = hl2 - multiplier * atr
+
+    final_upper = numpy.empty(n)
+    final_lower = numpy.empty(n)
+    st = numpy.empty(n)
+    direction = numpy.empty(n, dtype=int)
+
+    final_upper[0] = basic_upper[0]
+    final_lower[0] = basic_lower[0]
+    st[0] = basic_upper[0]
+    direction[0] = -1  # convention de depart, se corrige des les premieres bougies
+
+    for i in range(1, n):
+        # bandes finales (ne se resserrent jamais contre la tendance en cours)
+        if basic_upper[i] < final_upper[i - 1] or close[i - 1] > final_upper[i - 1]:
+            final_upper[i] = basic_upper[i]
+        else:
+            final_upper[i] = final_upper[i - 1]
+
+        if basic_lower[i] > final_lower[i - 1] or close[i - 1] < final_lower[i - 1]:
+            final_lower[i] = basic_lower[i]
+        else:
+            final_lower[i] = final_lower[i - 1]
+
+        # tendance, pilotee par un etat explicite plutot qu'une comparaison
+        # de flottants (plus robuste que "st[i-1] == final_upper[i-1]")
+        if direction[i - 1] == -1:
+            if close[i] <= final_upper[i]:
+                st[i] = final_upper[i]
+                direction[i] = -1
+            else:
+                st[i] = final_lower[i]
+                direction[i] = 1
+        else:
+            if close[i] >= final_lower[i]:
+                st[i] = final_lower[i]
+                direction[i] = 1
+            else:
+                st[i] = final_upper[i]
+                direction[i] = -1
+
+    return pandas.DataFrame(
+        {
+            'ATR': atr,
+            'Upper': final_upper,
+            'Lower': final_lower,
+            'SuperTrend': st,
+            'Direction': direction,
+        },
+        index=data.index,
+    )

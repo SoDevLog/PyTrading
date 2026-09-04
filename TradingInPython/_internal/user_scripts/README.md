@@ -20,6 +20,45 @@ Pour savoir comment utiliser ces données dans votre script régardez dans le fi
 
 - [use_api.py](use_api.py)
 
+## SuperTrend Indicator
+
+Un indicateur technique de tendance basé sur l'**ATR (Average True Range)** permettant d'identifier la direction de la tendance et les retournements haussiers ou baissiers.
+
+Le script utilise l'implémentation `super_trend()` de `digitsignalprocessing.indicators` et affiche simultanément le cours de clôture et le SuperTrend.
+
+### Fonctionnement
+
+Le SuperTrend est représenté différemment selon la direction de la tendance :
+
+- **SuperTrend haussier** : affiché lorsque la tendance est haussière.
+- **SuperTrend baissier** : affiché lorsque la tendance est baissière.
+- **Retournement haussier** : signalé par un marqueur `▲`.
+- **Retournement baissier** : signalé par un marqueur `▼`.
+
+Les paramètres utilisés dans cet exemple sont :
+
+- **ATR Period** : `10`
+- **Multiplier** : `2.0`
+
+### Utilisation
+
+Le script peut être exécuté directement depuis le **Script-runner de TradingInPython** et utilise les paramètres `ticker`, `period` et `interval` transmis par l'API de la plateforme.
+
+Il peut également être exécuté de manière autonome avec `yfinance`. L'exemple fourni utilise **NVDA** sur une période de six mois avec des données journalières.
+
+- [super-trend-indicator.py](super-trend-indicator.py)
+
+### Exemple
+
+Le script peut également servir de base pour développer ou adapter une stratégie de trading utilisant le SuperTrend comme :
+
+- filtre de tendance ;
+- détection de retournement ;
+- signal d'entrée ou de sortie ;
+- composant d'une stratégie combinant plusieurs indicateurs techniques.
+
+> Ce script est fourni comme exemple et peut être adapté à vos propres besoins.
+
 ## Bull/Bear Strength Index
 
 Un stratégie de trading complète qui utilise les indicateurs techniques :
