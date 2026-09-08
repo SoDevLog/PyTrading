@@ -26,6 +26,9 @@
     min_periods=1 : Cela signifie que la moyenne mobile sera calculée dès le premier point. La première valeur sera donc égale à elle-même, la deuxième valeur sera la moyenne des deux premiers points, et ainsi de suite, jusqu'à ce que la fenêtre soit entièrement remplie.
     min_periods=window_size : Dans ce cas, la moyenne mobile ne sera calculée qu'une fois que la fenêtre complète est disponible. 
     Avant cela, les premières valeurs seront NaN.
+    
+    Fonctions d'aide au plot pour les stratégies :
+    - plot_supertrend
 
 """
 import numpy
@@ -148,6 +151,7 @@ def reshape( signal1, signal2 ):
     Mais finalement scipy est utilisée par sklearn ... Grrr
 """
 
+# ----------------------------------------------------------------------------
 
 def linregress( x, y ):
     """
@@ -211,3 +215,42 @@ def linregress( x, y ):
     #pvalue = 2 * (1 - t.cdf(np.abs(t_stat), df=n - 2))
 
     return LinregressResult( slope, intercept, stderr )
+
+# ---------------------------------------------------------------------------
+
+def plot_supertrend( ax, data, axe_x, st_df, price_color='black', show_markers=True, dot_size=15 ):
+    """
+    Affiche le SuperTrend sur un axe matplotlib existant.
+
+    ax     : matplotlib.axes.Axes deja cree
+    data   : DataFrame OHLC d'origine (meme index que st_df)
+    axe_x  : Index des données pour le tracé
+    st_df  : DataFrame retourne par le calcul du supertrend()
+    """
+    
+    # Fixe le FutureWarning : indexation positionnelle sans ambiguite
+    axe_x = numpy.asarray(axe_x)
+
+    direction = st_df['Direction'].values
+    st = st_df['SuperTrend'].values
+
+    # Segmentation par tendance : les valeurs hors-tendance passent a NaN.
+    # ax.scatter ignore nativement les points NaN (rien n'est dessine pour
+    # ces indices), donc pas besoin de filtrer les tableaux au prealable.
+    up_line = numpy.where(direction == 1, st, numpy.nan)
+    down_line = numpy.where(direction == -1, st, numpy.nan)
+
+    elements = {}
+
+    elements['up_line'] = ax.scatter( axe_x, up_line, color='tab:green', s=dot_size )
+    elements['down_line'] = ax.scatter( axe_x, down_line, color='tab:red', s=dot_size )
+
+    if show_markers:
+        flips = numpy.where(numpy.diff(direction) != 0)[0] + 1
+        up_flips = flips[direction[flips] == 1]
+        down_flips = flips[direction[flips] == -1]
+
+        elements['up_marker'] = ax.scatter( axe_x[up_flips], st[up_flips], marker='^', color='tab:green', s=60, zorder=5 ) if len(up_flips) else None
+        elements['down_marker'] = ax.scatter( axe_x[down_flips], st[down_flips], marker='v', color='tab:red', s=60, zorder=5 ) if len(down_flips) else None
+    
+    return elements
