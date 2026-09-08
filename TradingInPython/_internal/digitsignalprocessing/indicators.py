@@ -21,6 +21,7 @@
     - accelerator_oscillator
     - multiframes_bolls
     - directional_action_strength
+    - super_trend
 
 """
 import pandas

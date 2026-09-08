@@ -249,8 +249,8 @@ def plot_supertrend( ax, data, axe_x, st_df, price_color='black', show_markers=T
         flips = numpy.where(numpy.diff(direction) != 0)[0] + 1
         up_flips = flips[direction[flips] == 1]
         down_flips = flips[direction[flips] == -1]
-
-        elements['up_marker'] = ax.scatter( axe_x[up_flips], st[up_flips], marker='^', color='tab:green', s=60, zorder=5 ) if len(up_flips) else None
-        elements['down_marker'] = ax.scatter( axe_x[down_flips], st[down_flips], marker='v', color='tab:red', s=60, zorder=5 ) if len(down_flips) else None
     
+        elements['up_marker'] = ax.scatter( axe_x[up_flips], st[up_flips], marker='^', color='tab:green', s=60, zorder=5 )
+        elements['down_marker'] = ax.scatter( axe_x[down_flips], st[down_flips], marker='v', color='tab:red', s=60, zorder=5 )
+            
     return elements
