@@ -5,7 +5,7 @@
 [![Issues](https://img.shields.io/badge/Issues-Open-red)](https://github.com/SoDevLog/PyTrading/issues)
 [![Website](https://img.shields.io/badge/Documentation-Online-orange)](https://trading-in-python.sodevlog.com/)
 
-Free Open Software Plateform for traders who want to master technical trading with Python.
+Free Open Software Platform for traders who want to master technical trading with Python.
 
 <div align="center">
   <a href="https://www.trading-et-data-analyses.com/p/plateforme-de-trading-technique.html">
@@ -23,7 +23,7 @@ Here you can download the platform **TradingInPython** to make data analysis tra
 - [Getting Started](#getting-started)
 - [Trading Strategies](#trading-strategies)
 - [Users' Guide](#users-guide)
-- [Development](#development)
+- [For devlopers](#for-developers)
 - [Releases notes](#releases-notes)
 - [Licensing](#licensing)
 - [Requirements](#requirements)
@@ -46,7 +46,7 @@ Here you can download the platform **TradingInPython** to make data analysis tra
 
 ### Clone this repo
 
-Just clic on **"<> Code"** then **"Download ZIP"** you will get the zip. Its a little long, about 400 Mo to download, but you'll get a stand alone executable.
+Just click on **"<> Code"** then **"Download ZIP"** you will get the zip. Its a little long, about 400 Mo to download, but you'll get a stand alone executable.
 
 Nothing to install just run **TradingInPython.exe**
 
@@ -57,9 +57,9 @@ Inside folder **PyTrading-main** you'll find:
 - TradingInPython
 - README.md
 
-Clic on directory **TradingInPython**
+click on directory **TradingInPython**
 
-Then clic on executable **TradingInPython.exe** then Trading Platform in python will launched.
+Then click on executable **TradingInPython.exe** then Trading Platform in python will launched.
 
 If you know git, to get new features you'll just had to make a **Pull** wich is lighter than downloading the whole zip.
 
@@ -71,7 +71,7 @@ If you know git, to get new features you'll just had to make a **Pull** wich is 
 
 3. Don't forget to **unlock** it before **extract all** where you want.
 
-4. Clic on **tradinginpython_setup.exe** to install **TradingInPython**.
+4. click on **tradinginpython_setup.exe** to install **TradingInPython**.
 
 #### Help on installer
 
@@ -81,7 +81,7 @@ If you need help for installation, have a look to this page :
 
 ### Have a Rapid Tour
 
-Once the software is installed, clic on TradingInPython's short cut, the plateform openning.
+Once the software is installed, click on TradingInPython's short cut, the platform openning.
 
 Choose **Four Time Frame Bolinger Bands strategy**, play with Mobile Average to look bands moving, play with backtesting in real time to see if you should modify parameters :
 
@@ -105,7 +105,7 @@ You need free training courses :
 
 ### Strategy Ichimoku Kinko Hyo
 
-You will be able to run the **Ichimoku Kinko Hyo's** strategie and prediction with [scikit-learn](https://scikit-learn.org/stable/index.html) :
+You will be able to run the **Ichimoku Kinko Hyo's** strategy and prediction with [scikit-learn](https://scikit-learn.org/stable/index.html) :
 
 <img src="images/IchimokuKinkoHyo.png" alt="Strategy Ichimoku Kinko Hyo">
 
@@ -147,7 +147,7 @@ This one can be translated in any language :
 
 - [Trading Platform's Marketing Documentation](https://www.trading-et-data-analyses.com/p/documentation-plateforme-de-trading.html)
 
-## Development
+## For developers
 
 ### Open software
 
@@ -169,7 +169,7 @@ Have a look and take example to the **trading strategies** used in the platform:
 
 - [Strategy single moving average and exponential.py](./TradingInPython/_internal/strategy_sma12e.py)
 
-Read the documentation on the plateforme's API :
+Read the documentation on the platform's API :
 
 - [Develop your strategy using TradingInPython's API](https://www.trading-et-data-analyses.com/p/strategies-dans-tradinginpython.html)
 
@@ -187,7 +187,7 @@ Samples on Technical Analysis, Trading Strategies, Fundamental Analysis, Market 
 
 ## Releases notes
 
-Informations on the **next version**, by your feed back you can participate to the next version of the Trading Plateform.
+Informations on the **next version**, by your feed back you can participate to the next version of the Trading Platform.
 
 - [Trading Platform's Release notes](https://github.com/SoDevLog/PyTrading/releases)
 
