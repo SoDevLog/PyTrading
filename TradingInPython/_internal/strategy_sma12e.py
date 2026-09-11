@@ -757,8 +757,8 @@ class strategy_sma12e:
             line_style = '-'
         price2 = data['Adj Close'].values
         price = data['Close'].values
-        line_price, = ax_main.plot( axe_x, price, line_style, color='black', linewidth=1, label='original data')
-        line_price2, = ax_main.plot( axe_x, price2, line_style, color='red', linewidth=1, label='original data')
+        line_price, = ax_main.plot( axe_x, price, line_style, color='black', linewidth=1, label='Prix' )
+        line_price2, = ax_main.plot( axe_x, price2, line_style, color='red', linewidth=1, label='Adj Close' )
 
   
         # Tendency Line Calculation
