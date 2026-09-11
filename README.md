@@ -42,6 +42,16 @@ Here you can download the platform **TradingInPython** to make data analysis tra
 - **Portfolio manager** - real-time tracking of your positions
 - **Open Software** - algorithms are published and can be inspected or extended
 
+### Why TradingInPython?
+
+TradingInPython is not intended to be a clone of TradingView. It takes a different approach: giving traders the power of Python, open software, custom strategies, advanced analysis and complete control over their trading environment.
+
+**How does it compare to TradingView?**
+
+- [TradingInPython vs TradingView](https://trading-in-python.sodevlog.com/tradinginpython-vs-tradingview/)
+
+See the detailed feature-by-feature comparison and discover where TradingInPython already has an advantage and where there is still room to improve.
+
 ## Getting Started
 
 ### Clone this repo
