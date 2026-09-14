@@ -1,5 +1,11 @@
+#
 # tradingplot.mplstyle
+#
 
+# --- Figure ---
+figure.dpi: 80.0
 figure.facecolor: whitesmoke
+
+# --- Grilles ---
 grid.color: gainsboro
 grid.linestyle: --

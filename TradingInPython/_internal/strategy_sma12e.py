@@ -24,10 +24,11 @@ import config.func as conf
 import digitsignalprocessing.func as dsp
 import helper as h
 import figure.helper as fighelper
+import styles.palette_colors as pc
 
 from tkinter import ttk
 from matplotlib.ticker import FuncFormatter, StrMethodFormatter
-from mplfinance.original_flavor import candlestick_ohlc
+from figure.candlestick_ohlc import candlestick_ohlc
 from figure.linedeltaselector import LineDeltaSelector
 from tkinterh.helper import Tooltip
 
@@ -745,20 +746,16 @@ class strategy_sma12e:
             ax_main, 
             ohlc, 
             width=width, 
-            colorup='#77d879', 
-            colordown='#db3f3f'
+            colorup=pc.CANDLE_BULL,
+            colordown=pc.CANDLE_BEAR
         )
         
         # Price
         #        
-        if length_data < 150:
-            line_style = '--'
-        else:
-            line_style = '-'
         price2 = data['Adj Close'].values
         price = data['Close'].values
-        line_price, = ax_main.plot( axe_x, price, line_style, color='black', linewidth=1, label='Prix' )
-        line_price2, = ax_main.plot( axe_x, price2, line_style, color='red', linewidth=1, label='Adj Close' )
+        line_price, = ax_main.plot( axe_x, price, linewidth=0.9, label='Prix' )
+        line_price2, = ax_main.plot( axe_x, price2, linewidth=0.9, label='Adj Close' )
 
   
         # Tendency Line Calculation
@@ -766,9 +763,9 @@ class strategy_sma12e:
         # slope, intercept, rvalue, pvalue, stderr, intercept_stderr
         # 
         result = dsp.linregress( axe_x, data['Adj Close'].values )
-        color='r'
+        color=pc.CANDLE_BEAR
         if result.slope >= 0:
-            color='g'
+            color=pc.CANDLE_BULL
         line_tendency = result.slope * axe_x + result.intercept # y = a * x + b
         ax_main.plot( axe_x, line_tendency, color=color, linewidth=1, label=f"Slope", linestyle='--' )
 
@@ -867,6 +864,8 @@ class strategy_sma12e:
             _str = f"Sell -> {h.format_number3f(y_data.iloc[len(y_data)-1])}"
             _str += f" Cum_price: {h.format_number3f(cum_price)}"
             print( _str )
+        
+        print( "---------------------------------" )
             
         if 'Buy_Signal' in data.columns:
 

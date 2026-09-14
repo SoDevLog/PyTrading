@@ -36,7 +36,7 @@ lines.markersize: 5
 lines.markeredgewidth: 0.5
 
 # Palette de couleurs pour les trading plots
-axes.prop_cycle: cycler('color', ["#2f81f7", "#da3633", "#3fb950", "#a371f7", "#f0883e", "#58a6ff", "#e6edf3", "#db61a2"])
+axes.prop_cycle: cycler('color', ["#85b5f8", "#ff62b8", "#3fb950", "#a371f7", "#f0883e", "#58a6ff", "#e6edf3", "#db61a2"])
 
 # Légende
 legend.frameon: True
