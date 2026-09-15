@@ -5,7 +5,9 @@
 [![Issues](https://img.shields.io/badge/Issues-Open-red)](https://github.com/SoDevLog/PyTrading/issues)
 [![Website](https://img.shields.io/badge/Documentation-Online-orange)](https://trading-in-python.sodevlog.com/)
 
-Free Open Software Platform for traders who want to master technical trading with Python.
+Free Open Software Platform for traders who want to master technical trading with Python. **TradingInPython** is a Python-based trading platform for financial market analysis and technical trading.
+
+⭐ **Star PyTrading** to follow the development of **TradingInPython**, its trading strategies, indicators, and trading examples in Python .
 
 <div align="center">
   <a href="https://www.trading-et-data-analyses.com/p/plateforme-de-trading-technique.html">
@@ -13,9 +15,7 @@ Free Open Software Platform for traders who want to master technical trading wit
   </a>
 </div>
 
-Here you can download the platform **TradingInPython** to make data analysis trading on stocks market.
-
-> 🇫🇷 Plateforme française — [Documentation en français](https://trading-in-python.sodevlog.com/)
+> 🇫🇷 [Documentation en français](https://trading-in-python.sodevlog.com/)
 
 ## 📚 Table of Contents
 
