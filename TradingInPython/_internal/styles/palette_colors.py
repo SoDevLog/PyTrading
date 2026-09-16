@@ -20,6 +20,7 @@ _DARK = {
     "LIGHT_RED": "#FFA190",
     "LIGHT_GREEN": "#BCF4BC",
     "LIGHT_BLUE":"#A9E4FF",
+    "WATERMARK": "#FFFF00",
     # ... ajoute ici toutes tes autres couleurs dark
 }
 
@@ -37,6 +38,7 @@ _LIGHT = {
     "LIGHT_RED": "#FFA190",
     "LIGHT_GREEN": "#BCF4BC",
     "LIGHT_BLUE":"#9CD3EC",
+    "WATERMARK": "#006EFF9F",
     # ... ajoute ici toutes tes autres couleurs light
 }
 
