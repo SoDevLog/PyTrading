@@ -32,6 +32,7 @@ import matplotlib.style
 matplotlib.style.use("seaborn-v0_8-notebook")
 import matplotlib.ticker as mticker
 import yfinance
+from styles.watermark import Watermark
 
 # ------------------------------------------------------
 # 1. CLOUD BSI  (deux EMA lissées = nuage Ichimoku-like)
@@ -281,6 +282,7 @@ def plot_bsi(ticker: str = "AAPL",
     #print( matplotlib.rcParams['axes.facecolor'], matplotlib.rcParams['axes.grid'] )
     
     fig = Figure(figsize=(12, 9))
+    Watermark.apply( fig )
     axes = fig.subplots(
         4, 1,
         gridspec_kw={"height_ratios": [6, 1, 1, 1]},
