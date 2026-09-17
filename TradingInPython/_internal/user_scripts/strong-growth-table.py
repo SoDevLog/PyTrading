@@ -4,6 +4,7 @@ import yfinance
 import pandas as pd
 from datetime import datetime, timedelta
 from matplotlib.figure import Figure
+from styles.watermark import Watermark
 
 if __name__ == "__main__":
     import sys
@@ -131,6 +132,7 @@ def show_scan_report(
     nb_rows = len( df_view ) + 1  # +1 pour la ligne d'en-tête
 
     fig = Figure( figsize=(9, 0.35 * nb_rows + 2.2) )
+    Watermark.apply( fig )
     ax  = fig.add_subplot( 111 )
     ax.axis( "off" )
 
