@@ -18,7 +18,7 @@ from user_scripts.api import api
 # ------------------------------------------------------------------------------
 
 NB_DAYS = 10
-PRICE_THRESHOLD = 0.05
+PRICE_THRESHOLD = 0.05 # +5%
 VOLUME_MULTIPLIER = 1.2
 
 def filter_strong_growth(
@@ -76,7 +76,7 @@ def filter_strong_growth(
             avg_vol_lt     = df_lt["Volume"].mean()  # référence long terme
             vol_ratio      = avg_vol_recent / avg_vol_lt if avg_vol_lt > 0 else 0
 
-            _result += f" : {perf:+.2%} | {vol_ratio:.2f}"
+            _result += f" : {perf:+.2%} | Vol: {vol_ratio:.2f}"
 
             # --- Filtre combiné --- #
             if perf >= price_threshold and vol_ratio >= volume_multiplier:
