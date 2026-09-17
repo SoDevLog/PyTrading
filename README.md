@@ -23,7 +23,7 @@ Free Open Software Platform for traders who want to master technical trading wit
 - [Getting Started](#getting-started)
 - [Trading Strategies](#trading-strategies)
 - [Users' Guide](#users-guide)
-- [For devlopers](#for-developers)
+- [For devlopers](#for-developers-in-python)
 - [Releases notes](#releases-notes)
 - [Licensing](#licensing)
 - [Requirements](#requirements)
@@ -73,7 +73,7 @@ Then click on executable **TradingInPython.exe** then Trading Platform in python
 
 If you know git, to get new features you'll just had to make a **Pull** wich is lighter than downloading the whole zip.
 
-### Or get the installer for windows
+### Or download installer for windows
 
 1. Go to the last release page : [Installer](https://github.com/SoDevLog/PyTrading/releases)
 
@@ -81,7 +81,7 @@ If you know git, to get new features you'll just had to make a **Pull** wich is 
 
 3. Don't forget to **unlock** it before **extract all** where you want.
 
-4. click on **tradinginpython_setup.exe** to install **TradingInPython**.
+4. Click on **tradinginpython_setup.exe** to install **TradingInPython**.
 
 #### Help on installer
 
@@ -157,7 +157,7 @@ This one can be translated in any language :
 
 - [Trading Platform's Marketing Documentation](https://www.trading-et-data-analyses.com/p/documentation-plateforme-de-trading.html)
 
-## For developers
+## For developers in Python
 
 ### Open software
 
@@ -179,9 +179,9 @@ Have a look and take example to the **trading strategies** used in the platform:
 
 - [Strategy single moving average and exponential.py](./TradingInPython/_internal/strategy_sma12e.py)
 
-Read the documentation on the platform's API :
+Read the documentation on the platform strategy's API :
 
-- [Develop your strategy using TradingInPython's API](https://www.trading-et-data-analyses.com/p/strategies-dans-tradinginpython.html)
+- [Develop your own strategy using TradingInPython's API](https://www.trading-et-data-analyses.com/p/strategies-dans-tradinginpython.html)
 
 ### Script runner develop your own technical trading ideas
 
