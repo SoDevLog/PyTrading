@@ -14,6 +14,8 @@ _DARK = {
     "TENKAN": "#80E581",
     "KIJUN": "#FFA585",
     "BLACK": "#DDDDDD",
+    "royalblue": "#6495ED",
+    "darkblue": "#4169E1",
     "RED": "#FF0000",
     "GREEN": "#4EDB4E",
     "BLUE":"#80D7FF",
@@ -21,6 +23,11 @@ _DARK = {
     "LIGHT_GREEN": "#BCF4BC",
     "LIGHT_BLUE":"#A9E4FF",
     "WATERMARK": "#FFFF00",
+    "RANGE": "#d4d4d4",              # Gris transparent
+    "UPTREND": "#acffac",            # Vert très clair transparent
+    "DOWNTREND": "#ffa9a9",          # Rouge très clair transparent
+    "POTENTIAL_REVERSAL": "#aaaaff", # Bleu très clair transparent
+    "ALPHA": 0.35,                     # Transparence pour les zones
     # ... ajoute ici toutes tes autres couleurs dark
 }
 
@@ -31,6 +38,8 @@ _LIGHT = {
     "DOWN": "#DB3F3F",
     "TENKAN": "darkgreen",
     "KIJUN": "orangered",
+    "royalblue": "royalblue",
+    "darkblue": "darkblue",
     "BLACK": "#000000",
     "RED": "#FF0000", 
     "GREEN": "#008000", 
@@ -39,6 +48,11 @@ _LIGHT = {
     "LIGHT_GREEN": "#BCF4BC",
     "LIGHT_BLUE":"#9CD3EC",
     "WATERMARK": "#006EFF9F",
+    "RANGE": "#adadad",              # Gris transparent
+    "UPTREND": "#7cff7c",            # Vert très clair transparent
+    "DOWNTREND": "#ff8686",          # Rouge très clair transparent
+    "POTENTIAL_REVERSAL": "#7c7cff", # Bleu très clair transparent
+    "ALPHA": 0.15,                     # Transparence pour les zones
     # ... ajoute ici toutes tes autres couleurs light
 }
 
