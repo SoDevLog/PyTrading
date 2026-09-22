@@ -21,19 +21,35 @@ Séries utilisées :
   MABMM301EZM657S  M3 masse monétaire ZE (mensuelle)
 """
 
-from fredapi import Fred
+import os
+import sys
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
+import matplotlib
+import matplotlib.style
 import matplotlib.gridspec as gridspec
+
+from matplotlib.figure import Figure
 from matplotlib.patches import Patch
-from datetime import datetime
+from matplotlib.ticker import FuncFormatter
+from matplotlib import cm
 import warnings
 warnings.filterwarnings('ignore')
 
+from datetime import datetime
+from fredapi import Fred
+from pathlib import Path
+base = Path(__file__).resolve().parent.parent
+sys.path.append( str(base) )
+
+from styles.watermark import Watermark
+from config.path import BASE_CONFIG_DIR
+from dotenv import load_dotenv
+load_dotenv( BASE_CONFIG_DIR / '.env' )
+
 # ── Configuration ─────────────────────────────────────────────────────────────
 
-API_KEY      = 'YOUR_API_KEY_HERE'
+API_KEY      = os.getenv("FRED_API_KEY")
 START        = '2000-01-01'
 END          = datetime.now().strftime('%Y-%m-%d')
 ROLL_ZSCORE  = 36   # fenêtre rolling Z-score (mois) — anti look-ahead
@@ -162,87 +178,115 @@ print(f"""
 
 # ── Graphique multi-panneaux ──────────────────────────────────────────────────
 
-plt.style.use('seaborn-v0_8-whitegrid')
-fig = plt.figure(figsize=(14, 10))
-gs  = gridspec.GridSpec(4, 1, figure=fig, hspace=0.45, wspace=0.30)
+def plot_graphs():
+    matplotlib.style.use('seaborn-v0_8-whitegrid')
+    
+    fig = Figure(figsize=(14, 10))
+    Watermark.apply( fig )
+    
+    gs  = gridspec.GridSpec(4, 1, figure=fig, hspace=0.45, wspace=0.30)
 
-ax_main = fig.add_subplot(gs[0, :])
-ax_mom  = fig.add_subplot(gs[1, :])
-ax_rec  = fig.add_subplot(gs[2, :])
-ax_comp = fig.add_subplot(gs[3, :])
+    ax_main = fig.add_subplot(gs[0, :])
+    ax_mom  = fig.add_subplot(gs[1, :])
+    ax_rec  = fig.add_subplot(gs[2, :])
+    ax_comp = fig.add_subplot(gs[3, :])
 
-# Panneau 1 — Score principal ─────────────────────────────────────────────────
+    # Panneau 1 — Score principal ─────────────────────────────────────────────────
 
-for i in range(1, len(df)):
-    regime = df['REGIME'].iloc[i]
-    _, bg = REGIME_COLORS[regime]
-    ax_main.axvspan(df.index[i-1], df.index[i], color=bg, alpha=0.9, linewidth=0)
+    for i in range(1, len(df)):
+        regime = df['REGIME'].iloc[i]
+        _, bg = REGIME_COLORS[regime]
+        ax_main.axvspan(df.index[i-1], df.index[i], color=bg, alpha=0.9, linewidth=0)
 
-ax_main.plot(df.index, df['MACRO_ISM'],   color='#9e9e9e', lw=0.8, alpha=0.6, label='Brut')
-ax_main.plot(df.index, df['MACRO_ISM_S'], color='#003399', lw=2.2, label=f'Lissé ({SMOOTH_LONG}m)')
-ax_main.axhline( 1.0, ls=':', color='#2e7d32', lw=1)
-ax_main.axhline( 0.4, ls='--', color='#4caf50', lw=0.8)
-ax_main.axhline( 0,   ls='-',  color='black',   lw=1)
-ax_main.axhline(-0.4, ls='--', color='#ef9a9a', lw=0.8)
-ax_main.axhline(-1.0, ls=':', color='#c62828', lw=1)
+    ax_main.plot(df.index, df['MACRO_ISM'],   color='#9e9e9e', lw=0.8, alpha=0.6, label='Brut')
+    ax_main.plot(df.index, df['MACRO_ISM_S'], color='#003399', lw=2.2, label=f'Lissé ({SMOOTH_LONG}m)')
+    ax_main.axhline( 1.0, ls=':', color='#2e7d32', lw=1)
+    ax_main.axhline( 0.4, ls='--', color='#4caf50', lw=0.8)
+    ax_main.axhline( 0,   ls='-',  color='black',   lw=1)
+    ax_main.axhline(-0.4, ls='--', color='#ef9a9a', lw=0.8)
+    ax_main.axhline(-1.0, ls=':', color='#c62828', lw=1)
 
-legend_patches = [Patch(facecolor=bg, label=r.replace('_', ' ').title())
-                  for r, (_, bg) in REGIME_COLORS.items()]
-ax_main.legend(handles=legend_patches + ax_main.get_lines()[:2],
-               loc='lower left', fontsize=8, ncol=4)
-ax_main.set_title('Macro ISM Zone Euro — Indice composite pondéré (FRED/OCDE/Eurostat)',
-                  fontsize=13, fontweight='bold')
-ax_main.set_ylabel('Z-score pondéré')
+    legend_patches = [Patch(facecolor=bg, label=r.replace('_', ' ').title())
+                    for r, (_, bg) in REGIME_COLORS.items()]
+    ax_main.legend(handles=legend_patches + ax_main.get_lines()[:2],
+                loc='lower left', fontsize=8, ncol=4)
+    ax_main.set_title('Macro ISM Zone Euro — Indice composite pondéré (FRED/OCDE/Eurostat)',
+                    fontsize=13, fontweight='bold')
+    ax_main.set_ylabel('Z-score pondéré')
 
-# Panneau 2 — Momentum ────────────────────────────────────────────────────────
+    # Panneau 2 — Momentum ────────────────────────────────────────────────────────
 
-colors_mom = ['#c62828' if v < 0 else '#2e7d32' for v in df['MOMENTUM']]
-ax_mom.bar(df.index, df['MOMENTUM'], color=colors_mom, width=20, alpha=0.8)
-ax_mom.axhline(0, color='black', lw=0.8)
-ax_mom.set_title('Momentum (Δ score lissé 1m)', fontsize=10)
-ax_mom.set_ylabel('Δ score')
+    colors_mom = ['#c62828' if v < 0 else '#2e7d32' for v in df['MOMENTUM']]
+    ax_mom.bar(df.index, df['MOMENTUM'], color=colors_mom, width=20, alpha=0.8)
+    ax_mom.axhline(0, color='black', lw=0.8)
+    ax_mom.set_title('Momentum (Δ score lissé 1m)', fontsize=10)
+    ax_mom.set_ylabel('Δ score')
 
-# Panneau 3 — Probabilité de récession ───────────────────────────────────────
+    # Panneau 3 — Probabilité de récession ───────────────────────────────────────
 
-ax_rec.fill_between(df.index, df['RECESSION_PROB'], alpha=0.6, color='#003399')
-ax_rec.axhline(0.5, ls='--', color='black', lw=1)
-ax_rec.set_ylim(0, 1)
-ax_rec.set_title('Probabilité de récession ZE (sigmoïde)', fontsize=10)
-ax_rec.set_ylabel('Probabilité')
-ax_rec.yaxis.set_major_formatter(plt.FuncFormatter(lambda x, _: f'{x:.0%}'))
+    ax_rec.fill_between(df.index, df['RECESSION_PROB'], alpha=0.6, color='#003399')
+    ax_rec.axhline(0.5, ls='--', color='black', lw=1)
+    ax_rec.set_ylim(0, 1)
+    ax_rec.set_title('Probabilité de récession ZE (sigmoïde)', fontsize=10)
+    ax_rec.set_ylabel('Probabilité')
+    ax_rec.yaxis.set_major_formatter(FuncFormatter(lambda x, _: f'{x:.0%}'))
 
-# Panneau 4 — Contributions par composante ────────────────────────────────────
+    # Panneau 4 — Contributions par composante ────────────────────────────────────
 
-comp_cols  = [f'Z_{t}' for t, *_ in SERIES_CONFIG]
-labels     = [l for _, l, *_ in SERIES_CONFIG]
-weights    = [w for *_, w in SERIES_CONFIG]
+    comp_cols  = [f'Z_{t}' for t, *_ in SERIES_CONFIG]
+    labels     = [l for _, l, *_ in SERIES_CONFIG]
+    weights    = [w for *_, w in SERIES_CONFIG]
 
-recent   = df[comp_cols].tail(36)
-weighted = recent.multiply(weights)
+    recent   = df[comp_cols].tail(36)
+    weighted = recent.multiply(weights)
 
-bottom_pos = pd.Series(0.0, index=recent.index)
-bottom_neg = pd.Series(0.0, index=recent.index)
-colors_comp = plt.cm.tab10(np.linspace(0, 1, len(comp_cols)))
+    bottom_pos = pd.Series(0.0, index=recent.index)
+    bottom_neg = pd.Series(0.0, index=recent.index)
+    colors_comp = cm.tab10(np.linspace(0, 1, len(comp_cols)))
 
-for col, label, color in zip(weighted.columns, labels, colors_comp):
-    vals = weighted[col]
-    pos  = vals.clip(lower=0)
-    neg  = vals.clip(upper=0)
-    ax_comp.bar(recent.index, pos, bottom=bottom_pos, width=20,
-                label=label, color=color, alpha=0.85)
-    ax_comp.bar(recent.index, neg, bottom=bottom_neg, width=20,
-                color=color, alpha=0.85)
-    bottom_pos = bottom_pos + pos
-    bottom_neg = bottom_neg + neg
+    for col, label, color in zip(weighted.columns, labels, colors_comp):
+        vals = weighted[col]
+        pos  = vals.clip(lower=0)
+        neg  = vals.clip(upper=0)
+        ax_comp.bar(recent.index, pos, bottom=bottom_pos, width=20,
+                    label=label, color=color, alpha=0.85)
+        ax_comp.bar(recent.index, neg, bottom=bottom_neg, width=20,
+                    color=color, alpha=0.85)
+        bottom_pos = bottom_pos + pos
+        bottom_neg = bottom_neg + neg
 
-ax_comp.axhline(0, color='black', lw=0.8)
-ax_comp.set_title('Contributions pondérées par composante (36 derniers mois)', fontsize=10)
-ax_comp.set_ylabel('Contribution au score')
-ax_comp.legend(loc='upper left', fontsize=7, ncol=3)
+    ax_comp.axhline(0, color='black', lw=0.8)
+    ax_comp.set_title('Contributions pondérées par composante (36 derniers mois)', fontsize=10)
+    ax_comp.set_ylabel('Contribution au score')
+    ax_comp.legend(loc='upper left', fontsize=7, ncol=3)
 
-fig.suptitle(f'Macro ISM Zone Euro | Données FRED | Généré le {END}',
-             fontsize=11, style='italic', color='#555')
+    fig.suptitle(f'Macro ISM Zone Euro | Données FRED | Généré le {END}',
+                fontsize=11, style='italic', color='#555')
+    return fig
 
-# plt.savefig('macro_ism_eurozone.png', dpi=150, bbox_inches='tight')
-# print("Export graphique → macro_ism_eurozone.png")
-plt.show()
+def main():
+    matplotlib.use("Agg")
+    from user_scripts.api import api
+    
+    fig = plot_graphs()
+    api.show_figure( fig, title=f"{api.ticker} - Bull/Bear Strength Index" )
+
+if __name__ == "__main__":
+    matplotlib.use("TkAgg")
+
+    fig = plot_graphs()
+    fig.tight_layout()
+
+    # Créer la fenêtre Tkinter
+    import tkinter as tk
+    from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
+
+    root = tk.Tk()
+    root.title(f"Bull/Bear Strength Index")
+    canvas = FigureCanvasTkAgg(fig, master=root)
+    toolbar = NavigationToolbar2Tk(canvas, root)
+    toolbar.update()
+    
+    canvas.draw()
+    canvas.get_tk_widget().pack(fill="both", expand=True)
+    root.mainloop()

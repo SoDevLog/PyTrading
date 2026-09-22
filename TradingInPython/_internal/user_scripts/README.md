@@ -73,12 +73,43 @@ Un stratégie de trading complète qui utilise les indicateurs techniques :
 
 - [Bull/Bear Strength Index - Python Trading Strategy](https://www.trading-et-data-analyses.com/2026/09/bullbear-strength-index-python-trading.html)
 
-
 ## Filtre des actions à forte croissance
+
+Ou comment trouver des actions à trader
 
 - [strong-growth.py](strong-growth.py)
 
+### Documentation Filter Strong Growth
+
+- [Filtre Strong Growth : comment détecter une hausse soutenue par les volumes avec Python ?](https://www.trading-et-data-analyses.com/2026/09/filtre-strong-growth-python.html)
+
 ## Script sur la finance
+
+### Fabriquer des indices économiques grâce à le FRED (Federal Reserve Bank of St. Louis)
+
+Pour fonctionner ces scripts on besoin d'une **clef d'API**.
+
+Pour créer une clef API au près de la FRED, rendez-vous sur le site :
+
+> https://fred.stlouisfed.org/docs/api/api_key.html
+
+Cette clef est à placer dans le fichier :
+
+C:\Users\\**{Nom d'utilisateur}**\AppData\Local\TradingInPython\config\.env
+
+Sous la forme :
+
+**FRED_API_KEY = xxx**
+
+#### Indice économique de la zone Euro
+
+- [indice-fred-eurozone.py](indice-fred-eurozone.py)
+
+#### Indice économique de la France
+
+- [indice-fred-france.py](indice-fred-france.py)
+
+### Utilisation des données financières des entreprises côtées en bourse
 
 Trailing EPS (Earnings Per Share) Calcul du PER (Price Earnings Ratio) en comparant au marché :
 

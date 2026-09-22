@@ -8,7 +8,7 @@ from matplotlib import style
 
 # make it independant from user's name
 from pathlib import Path
-base = Path(__file__).resolve().parent.parent.parent
+base = Path(__file__).resolve().parent.parent
 sys.path.append( str(base) )
 
 import helper as h
@@ -38,13 +38,15 @@ historical_aex = euronext.history( start=date_start, end=date_end )
 #print(historical_data.head())
 
 # Tracer les valeurs de clôture
-historical_sp500['Close'].plot( figsize=(10, 6), title="Évolution du S&P 500" )
-historical_cac_40['Close'].plot( figsize=(10, 6), title="S&P 500 et CAC 40" )
-#historical_aex['Close'].plot( figsize=(10, 6), title="S&P 500 - CAC 40 - EuronextA" )
+historical_sp500['Close'].plot( figsize=(10, 6), label="S&P 500" )
+historical_cac_40['Close'].plot( figsize=(10, 6), label="CAC 40" )
+historical_aex['Close'].plot( figsize=(10, 6), label="Euronext A" )
 
+plt.title( "Évolution des indices boursiers" )
 plt.xlabel( "Date" )
 plt.ylabel( "Valeur de clôture" )
 plt.gca().xaxis.set_major_formatter( mdates.DateFormatter('%Y-%m') )
 plt.grid(True)
 plt.subplots_adjust( left=0.12, right=0.9, bottom=0.13, top=0.9, wspace=0.2 )
+plt.legend()
 plt.show()
