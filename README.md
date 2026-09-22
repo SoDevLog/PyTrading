@@ -24,6 +24,7 @@ Free Open Software Platform for traders who want to master technical trading wit
 - [Trading Strategies](#trading-strategies)
 - [Users' Guide](#users-guide)
 - [For devlopers](#for-developers-in-python)
+- [Script runner](#script-runner)
 - [Releases notes](#releases-notes)
 - [Licensing](#licensing)
 - [Requirements](#requirements)
@@ -183,17 +184,23 @@ Read the documentation on the platform strategy's API :
 
 - [Develop your own strategy using TradingInPython's API](https://www.trading-et-data-analyses.com/p/strategies-dans-tradinginpython.html)
 
-### Script runner develop your own technical trading ideas
+## Script runner
+
+Thank's to Python the platform can execute scripts in a Python environnement.
 
 **Script runner** allows you to execute your own script :
 
 - [Documentation on script runner](https://trading-in-python.sodevlog.com/script-interpreter/interface/)
+
+So you can develop your **own technical trading ideas**.
 
 ### User's scripts
 
 Samples on Technical Analysis, Trading Strategies, Fundamental Analysis, Market Data, AI & Machine Learning, Finance & Research :
 
 - [Samples of user's scripts you can run or modify for your needs](./TradingInPython/_internal/user_scripts)
+
+So **you don't need to program in Python**, you just have to execute the script.
 
 ## Releases notes
 
