@@ -91,7 +91,7 @@ Pour fonctionner ces scripts on besoin d'une **clef d'API**.
 
 Pour créer une clef API au près de la FRED, rendez-vous sur le site :
 
-> https://fred.stlouisfed.org/docs/api/api_key.html
+- https://fred.stlouisfed.org/docs/api/api_key.html
 
 Cette clef est à placer dans le fichier :
 
@@ -108,6 +108,10 @@ Sous la forme :
 #### Indice économique de la France
 
 - [indice-fred-france.py](indice-fred-france.py)
+
+### Documentation
+
+- [Comment construire un indice écomique](https://www.trading-et-data-analyses.com/2026/04/construire-un-indicateur-macro-econimque-fred.html)
 
 ### Utilisation des données financières des entreprises côtées en bourse
 
