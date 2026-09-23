@@ -1,0 +1,494 @@
+[
+  {
+    "name": "BP",
+    "symbol": "BP",
+    "menu_list": "Oil & Gas",
+    "price_purchase": 0.0,
+    "purchase_date": "",
+    "price_current": 0.0,
+    "price_high": "",
+    "price_high_current": 0.0,
+    "price_pourcent": 0.0,
+    "price_low": "",
+    "price_low_current": 0.0,
+    "trading_plan_high": "",
+    "trading_plan_low": "",
+    "message_date": "",
+    "message_date_content": "",
+    "message_date_to_sent": false,
+    "volume_alert": "",
+    "volume": 0,
+    "vol_tot": 0,
+    "vol_max": 0,
+    "cooldown_minutes": "",
+    "is_monitoring": false,
+    "price_low_alert_last_triggered": "",
+    "channel_alert": {
+      "enabled": false,
+      "tolerance_abs": 0.0,
+      "upper_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      },
+      "lower_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      }
+    }
+  },
+  {
+    "name": "CMBTECH",
+    "symbol": "CMBT",
+    "menu_list": "Oil & Gas",
+    "price_purchase": 0.0,
+    "purchase_date": "",
+    "price_current": 0.0,
+    "price_high": "",
+    "price_high_current": 0.0,
+    "price_pourcent": 0.0,
+    "price_low": "",
+    "price_low_current": 0.0,
+    "trading_plan_high": "",
+    "trading_plan_low": "",
+    "message_date": "",
+    "message_date_content": "",
+    "message_date_to_sent": false,
+    "volume_alert": "",
+    "volume": 0,
+    "vol_tot": 0,
+    "vol_max": 0,
+    "cooldown_minutes": "",
+    "is_monitoring": false,
+    "price_low_alert_last_triggered": "",
+    "channel_alert": {
+      "enabled": false,
+      "tolerance_abs": 0.0,
+      "upper_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      },
+      "lower_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      }
+    }
+  },
+  {
+    "name": "Crude Oil",
+    "symbol": "CL=F",
+    "menu_list": "Futures",
+    "price_purchase": 0.0,
+    "purchase_date": "",
+    "price_current": 0.0,
+    "price_high": "",
+    "price_high_current": 0.0,
+    "price_pourcent": 0.0,
+    "price_low": "",
+    "price_low_current": 0.0,
+    "trading_plan_high": "",
+    "trading_plan_low": "",
+    "message_date": "",
+    "message_date_content": "",
+    "message_date_to_sent": false,
+    "volume_alert": "",
+    "volume": 0,
+    "vol_tot": 0,
+    "vol_max": 0,
+    "cooldown_minutes": "",
+    "is_monitoring": false,
+    "price_low_alert_last_triggered": "",
+    "channel_alert": {
+      "enabled": false,
+      "tolerance_abs": 0.0,
+      "upper_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      },
+      "lower_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      }
+    }
+  },
+  {
+    "name": "ENI",
+    "symbol": "E",
+    "menu_list": "Oil & Gas",
+    "price_purchase": 0.0,
+    "purchase_date": "",
+    "price_current": 0.0,
+    "price_high": "",
+    "price_high_current": 0.0,
+    "price_pourcent": 0.0,
+    "price_low": "",
+    "price_low_current": 0.0,
+    "trading_plan_high": "",
+    "trading_plan_low": "",
+    "message_date": "",
+    "message_date_content": "",
+    "message_date_to_sent": false,
+    "volume_alert": "",
+    "volume": 0,
+    "vol_tot": 0,
+    "vol_max": 0,
+    "cooldown_minutes": "",
+    "is_monitoring": false,
+    "price_low_alert_last_triggered": "",
+    "channel_alert": {
+      "enabled": false,
+      "tolerance_abs": 0.0,
+      "upper_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      },
+      "lower_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      }
+    }
+  },
+  {
+    "name": "EQUINOR",
+    "symbol": "EQNR",
+    "menu_list": "Oil & Gas",
+    "price_purchase": 0.0,
+    "purchase_date": "",
+    "price_current": 0.0,
+    "price_high": "",
+    "price_high_current": 0.0,
+    "price_pourcent": 0.0,
+    "price_low": "",
+    "price_low_current": 0.0,
+    "trading_plan_high": "",
+    "trading_plan_low": "",
+    "message_date": "",
+    "message_date_content": "",
+    "message_date_to_sent": false,
+    "volume_alert": "",
+    "volume": 0,
+    "vol_tot": 0,
+    "vol_max": 0,
+    "cooldown_minutes": "",
+    "is_monitoring": false,
+    "price_low_alert_last_triggered": "",
+    "channel_alert": {
+      "enabled": false,
+      "tolerance_abs": 0.0,
+      "upper_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      },
+      "lower_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      }
+    }
+  },
+  {
+    "name": "GAZTRANSPORT & Technigaz",
+    "symbol": "GTT.PA",
+    "menu_list": "Oil & Gas",
+    "price_purchase": 0.0,
+    "purchase_date": "",
+    "price_current": 0.0,
+    "price_high": "",
+    "price_high_current": 0.0,
+    "price_pourcent": 0.0,
+    "price_low": "",
+    "price_low_current": 0.0,
+    "trading_plan_high": "",
+    "trading_plan_low": "",
+    "message_date": "",
+    "message_date_content": "",
+    "message_date_to_sent": false,
+    "volume_alert": "",
+    "volume": 0,
+    "vol_tot": 0,
+    "vol_max": 0,
+    "cooldown_minutes": "",
+    "is_monitoring": false,
+    "price_low_alert_last_triggered": "",
+    "channel_alert": {
+      "enabled": false,
+      "tolerance_abs": 0.0,
+      "upper_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      },
+      "lower_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      }
+    }
+  },
+  {
+    "name": "IMPP",
+    "symbol": "IMPP",
+    "menu_list": "Oil & Gas",
+    "price_purchase": 0.0,
+    "purchase_date": "",
+    "price_current": 0.0,
+    "price_high": "",
+    "price_high_current": 0.0,
+    "price_pourcent": 0.0,
+    "price_low": "",
+    "price_low_current": 0.0,
+    "trading_plan_high": "",
+    "trading_plan_low": "",
+    "message_date": "",
+    "message_date_content": "",
+    "message_date_to_sent": false,
+    "volume_alert": "",
+    "volume": 0,
+    "vol_tot": 0,
+    "vol_max": 0,
+    "cooldown_minutes": "",
+    "is_monitoring": false,
+    "price_low_alert_last_triggered": "",
+    "channel_alert": {
+      "enabled": false,
+      "tolerance_abs": 0.0,
+      "upper_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      },
+      "lower_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      }
+    }
+  },
+  {
+    "name": "RUBIS",
+    "symbol": "RUI.PA",
+    "menu_list": "Oil & Gas",
+    "price_purchase": 0.0,
+    "purchase_date": "",
+    "price_current": 0.0,
+    "price_high": "",
+    "price_high_current": 0.0,
+    "price_pourcent": 0.0,
+    "price_low": "",
+    "price_low_current": 0.0,
+    "trading_plan_high": "",
+    "trading_plan_low": "",
+    "message_date": "",
+    "message_date_content": "",
+    "message_date_to_sent": false,
+    "volume_alert": "",
+    "volume": 0,
+    "vol_tot": 0,
+    "vol_max": 0,
+    "cooldown_minutes": "",
+    "is_monitoring": false,
+    "price_low_alert_last_triggered": "",
+    "channel_alert": {
+      "enabled": false,
+      "tolerance_abs": 0.0,
+      "upper_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      },
+      "lower_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      }
+    }
+  },
+  {
+    "name": "SHELL",
+    "symbol": "SHEL",
+    "menu_list": "Oil & Gas",
+    "price_purchase": 0.0,
+    "purchase_date": "",
+    "price_current": 0.0,
+    "price_high": "",
+    "price_high_current": 0.0,
+    "price_pourcent": 0.0,
+    "price_low": "",
+    "price_low_current": 0.0,
+    "trading_plan_high": "",
+    "trading_plan_low": "",
+    "message_date": "",
+    "message_date_content": "",
+    "message_date_to_sent": false,
+    "volume_alert": "",
+    "volume": 0,
+    "vol_tot": 0,
+    "vol_max": 0,
+    "cooldown_minutes": "",
+    "is_monitoring": false,
+    "price_low_alert_last_triggered": "",
+    "channel_alert": {
+      "enabled": false,
+      "tolerance_abs": 0.0,
+      "upper_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      },
+      "lower_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      }
+    }
+  },
+  {
+    "name": "TOTALENERGIES",
+    "symbol": "TTE.PA",
+    "menu_list": "Oil & Gas",
+    "price_purchase": 0.0,
+    "purchase_date": "",
+    "price_current": 0.0,
+    "price_high": "",
+    "price_high_current": 0.0,
+    "price_pourcent": 0.0,
+    "price_low": "",
+    "price_low_current": 0.0,
+    "trading_plan_high": "",
+    "trading_plan_low": "",
+    "message_date": "",
+    "message_date_content": "",
+    "message_date_to_sent": false,
+    "volume_alert": "",
+    "volume": 0,
+    "vol_tot": 0,
+    "vol_max": 0,
+    "cooldown_minutes": "",
+    "is_monitoring": false,
+    "price_low_alert_last_triggered": "",
+    "channel_alert": {
+      "enabled": false,
+      "tolerance_abs": 0.0,
+      "upper_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      },
+      "lower_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      }
+    }
+  },
+  {
+    "name": "TRANSOCEAN",
+    "symbol": "RIG",
+    "menu_list": "Oil & Gas",
+    "price_purchase": 0.0,
+    "purchase_date": "",
+    "price_current": 0.0,
+    "price_high": "",
+    "price_high_current": 0.0,
+    "price_pourcent": 0.0,
+    "price_low": "",
+    "price_low_current": 0.0,
+    "trading_plan_high": "",
+    "trading_plan_low": "",
+    "message_date": "",
+    "message_date_content": "",
+    "message_date_to_sent": false,
+    "volume_alert": "",
+    "volume": 0,
+    "vol_tot": 0,
+    "vol_max": 0,
+    "cooldown_minutes": "",
+    "is_monitoring": false,
+    "price_low_alert_last_triggered": "",
+    "channel_alert": {
+      "enabled": false,
+      "tolerance_abs": 0.0,
+      "upper_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      },
+      "lower_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      }
+    }
+  },
+  {
+    "name": "TSAKOS",
+    "symbol": "TEN",
+    "menu_list": "Oil & Gas",
+    "price_purchase": 0.0,
+    "purchase_date": "",
+    "price_current": 0.0,
+    "price_high": "",
+    "price_high_current": 0.0,
+    "price_pourcent": 0.0,
+    "price_low": "",
+    "price_low_current": 0.0,
+    "trading_plan_high": "",
+    "trading_plan_low": "",
+    "message_date": "",
+    "message_date_content": "",
+    "message_date_to_sent": false,
+    "volume_alert": "",
+    "volume": 0,
+    "vol_tot": 0,
+    "vol_max": 0,
+    "cooldown_minutes": "",
+    "is_monitoring": false,
+    "price_low_alert_last_triggered": "",
+    "channel_alert": {
+      "enabled": false,
+      "tolerance_abs": 0.0,
+      "upper_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      },
+      "lower_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      }
+    }
+  }
+]

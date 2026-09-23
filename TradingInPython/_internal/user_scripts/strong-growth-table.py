@@ -1,6 +1,7 @@
 """ Filtre les actions en forte croissance sur n jours.
 """
 import yfinance
+import numpy
 import pandas as pd
 from datetime import datetime, timedelta
 from matplotlib.figure import Figure
@@ -69,8 +70,14 @@ def filter_strong_growth(
 
             # --- Critère 1 : performance prix --- #
             price_start = df_recent["Close"].iloc[0]
-            price_end   = df_recent["Close"].iloc[-1]
-            perf        = (price_end - price_start) / price_start
+            
+            # Exclut la dernière valeur si elle correspond à une période non clôturée
+            y = df_recent["Close"]
+            if numpy.isnan( y[-1] ):
+                y = y[:-1]
+
+            price_end = y.iloc[-1]
+            perf      = (price_end - price_start) / price_start
 
             # --- Critère 2 : volume anormal --- #
             avg_vol_recent = df_recent["Volume"].mean()
@@ -157,7 +164,7 @@ def show_scan_report(
     # Style de l'en-tête du tableau
     for col in range( len( df_view.columns ) ):
         cell = table[0, col]
-        cell.set_facecolor( "#11579c" )
+        cell.set_facecolor( "#14599e" )
         cell.set_text_props( color="white", fontweight="bold" )
 
     # Lignes : vert clair si performance positive (croissant), rouge clair si négative (décroissant)
