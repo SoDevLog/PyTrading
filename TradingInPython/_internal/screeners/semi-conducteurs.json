@@ -1,138 +1,831 @@
 [
   {
-    "name": "AMD",
-    "symbol": "AMD",
-    "menu_list": "TECH",
+    "name": "AIXTRON",
+    "symbol": "AIX2.F",
+    "menu_list": "Semi-conducteurs",
     "price_purchase": 0.0,
+    "purchase_date": "",
     "price_current": 0.0,
-    "price_high": 0.0,
-    "price_low": 0.0,
+    "price_high": "",
+    "price_high_current": 0.0,
+    "price_pourcent": 0.0,
+    "price_low": "",
+    "price_low_current": 0.0,
     "trading_plan_high": "",
     "trading_plan_low": "",
     "message_date": "",
     "message_date_content": "",
     "message_date_to_sent": false,
-    "volume_max": 0,
+    "volume_alert": "",
     "volume": 0,
-    "is_monitoring": false
+    "vol_tot": 0,
+    "vol_max": 0,
+    "cooldown_minutes": "",
+    "is_monitoring": false,
+    "price_low_alert_last_triggered": "",
+    "channel_alert": {
+      "enabled": false,
+      "tolerance_abs": 0.0,
+      "upper_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      },
+      "lower_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      }
+    }
+  },
+  {
+    "name": "AMD",
+    "symbol": "AMD",
+    "menu_list": "TECH",
+    "price_purchase": 0.0,
+    "purchase_date": "",
+    "price_current": 0.0,
+    "price_high": 0.0,
+    "price_high_current": 0.0,
+    "price_pourcent": 0.0,
+    "price_low": 0.0,
+    "price_low_current": 0.0,
+    "trading_plan_high": "",
+    "trading_plan_low": "",
+    "message_date": "",
+    "message_date_content": "",
+    "message_date_to_sent": false,
+    "volume_alert": "",
+    "volume": 0,
+    "vol_tot": 0,
+    "vol_max": 0,
+    "cooldown_minutes": "",
+    "is_monitoring": false,
+    "price_low_alert_last_triggered": "",
+    "channel_alert": {
+      "enabled": false,
+      "tolerance_abs": 0.0,
+      "upper_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      },
+      "lower_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      }
+    },
+    "volume_max": 0
+  },
+  {
+    "name": "ASM Internat. NV",
+    "symbol": "ASMIY",
+    "menu_list": "Semi-conducteurs",
+    "price_purchase": 0.0,
+    "purchase_date": "",
+    "price_current": 0.0,
+    "price_high": "",
+    "price_high_current": 0.0,
+    "price_pourcent": 0.0,
+    "price_low": "",
+    "price_low_current": 0.0,
+    "trading_plan_high": "",
+    "trading_plan_low": "",
+    "message_date": "",
+    "message_date_content": "",
+    "message_date_to_sent": false,
+    "volume_alert": "",
+    "volume": 0,
+    "vol_tot": 0,
+    "vol_max": 0,
+    "cooldown_minutes": "",
+    "is_monitoring": false,
+    "price_low_alert_last_triggered": "",
+    "channel_alert": {
+      "enabled": false,
+      "tolerance_abs": 0.0,
+      "upper_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      },
+      "lower_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      }
+    }
+  },
+  {
+    "name": "AXT, Inc. ",
+    "symbol": "AXTI",
+    "menu_list": "Semi-conducteurs",
+    "price_purchase": 0.0,
+    "purchase_date": "",
+    "price_current": 0.0,
+    "price_high": "",
+    "price_high_current": 0.0,
+    "price_pourcent": 0.0,
+    "price_low": "",
+    "price_low_current": 0.0,
+    "trading_plan_high": "",
+    "trading_plan_low": "",
+    "message_date": "",
+    "message_date_content": "",
+    "message_date_to_sent": false,
+    "volume_alert": "",
+    "volume": 0,
+    "vol_tot": 0,
+    "vol_max": 0,
+    "cooldown_minutes": "",
+    "is_monitoring": false,
+    "price_low_alert_last_triggered": "",
+    "channel_alert": {
+      "enabled": false,
+      "tolerance_abs": 0.0,
+      "upper_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      },
+      "lower_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      }
+    }
+  },
+  {
+    "name": "BE Semiconductor",
+    "symbol": "BESI.AS",
+    "menu_list": "Semi-conducteurs",
+    "price_purchase": 0.0,
+    "purchase_date": "",
+    "price_current": 0.0,
+    "price_high": "",
+    "price_high_current": 0.0,
+    "price_pourcent": 0.0,
+    "price_low": "",
+    "price_low_current": 0.0,
+    "trading_plan_high": "",
+    "trading_plan_low": "",
+    "message_date": "",
+    "message_date_content": "",
+    "message_date_to_sent": false,
+    "volume_alert": "",
+    "volume": 0,
+    "vol_tot": 0,
+    "vol_max": 0,
+    "cooldown_minutes": "",
+    "is_monitoring": false,
+    "price_low_alert_last_triggered": "",
+    "channel_alert": {
+      "enabled": false,
+      "tolerance_abs": 0.0,
+      "upper_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      },
+      "lower_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      }
+    }
   },
   {
     "name": "BROADCOM",
     "symbol": "AVGO",
     "menu_list": "Semi-conducteurs",
     "price_purchase": 0.0,
+    "purchase_date": "",
     "price_current": 0.0,
     "price_high": 0.0,
+    "price_high_current": 0.0,
+    "price_pourcent": 0.0,
     "price_low": 0.0,
+    "price_low_current": 0.0,
     "trading_plan_high": "",
     "trading_plan_low": "",
     "message_date": "",
     "message_date_content": "",
     "message_date_to_sent": false,
-    "volume_max": 0,
+    "volume_alert": "",
     "volume": 0,
-    "is_monitoring": false
+    "vol_tot": 0,
+    "vol_max": 0,
+    "cooldown_minutes": "",
+    "is_monitoring": false,
+    "price_low_alert_last_triggered": "",
+    "channel_alert": {
+      "enabled": false,
+      "tolerance_abs": 0.0,
+      "upper_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      },
+      "lower_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      }
+    },
+    "volume_max": 0
+  },
+  {
+    "name": "Delta Electronics Inc",
+    "symbol": "DLS.F",
+    "menu_list": "Semi-conducteurs",
+    "price_purchase": 0.0,
+    "purchase_date": "",
+    "price_current": 0.0,
+    "price_high": "",
+    "price_high_current": 0.0,
+    "price_pourcent": 0.0,
+    "price_low": "",
+    "price_low_current": 0.0,
+    "trading_plan_high": "",
+    "trading_plan_low": "",
+    "message_date": "",
+    "message_date_content": "",
+    "message_date_to_sent": false,
+    "volume_alert": "",
+    "volume": 0,
+    "vol_tot": 0,
+    "vol_max": 0,
+    "cooldown_minutes": "",
+    "is_monitoring": false,
+    "price_low_alert_last_triggered": "",
+    "channel_alert": {
+      "enabled": false,
+      "tolerance_abs": 0.0,
+      "upper_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      },
+      "lower_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      }
+    }
+  },
+  {
+    "name": "INFINEON",
+    "symbol": "IFX.F",
+    "menu_list": "Semi-conducteurs",
+    "price_purchase": 0.0,
+    "purchase_date": "",
+    "price_current": 0.0,
+    "price_high": "",
+    "price_high_current": 0.0,
+    "price_pourcent": 0.0,
+    "price_low": "",
+    "price_low_current": 0.0,
+    "trading_plan_high": "",
+    "trading_plan_low": "",
+    "message_date": "",
+    "message_date_content": "",
+    "message_date_to_sent": false,
+    "volume_alert": "",
+    "volume": 0,
+    "vol_tot": 0,
+    "vol_max": 0,
+    "cooldown_minutes": "",
+    "is_monitoring": false,
+    "price_low_alert_last_triggered": "",
+    "channel_alert": {
+      "enabled": false,
+      "tolerance_abs": 0.0,
+      "upper_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      },
+      "lower_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      }
+    }
   },
   {
     "name": "INTEL",
     "symbol": "INTC",
     "menu_list": "Semi-conducteurs",
     "price_purchase": 0.0,
+    "purchase_date": "",
     "price_current": 0.0,
     "price_high": 0.0,
+    "price_high_current": 0.0,
+    "price_pourcent": 0.0,
     "price_low": 0.0,
+    "price_low_current": 0.0,
     "trading_plan_high": "",
     "trading_plan_low": "",
     "message_date": "",
     "message_date_content": "",
     "message_date_to_sent": false,
-    "volume_max": 0,
+    "volume_alert": "",
     "volume": 0,
-    "is_monitoring": false
+    "vol_tot": 0,
+    "vol_max": 0,
+    "cooldown_minutes": "",
+    "is_monitoring": false,
+    "price_low_alert_last_triggered": "",
+    "channel_alert": {
+      "enabled": false,
+      "tolerance_abs": 0.0,
+      "upper_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      },
+      "lower_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      }
+    },
+    "volume_max": 0
   },
   {
     "name": "MARVELL TECH",
     "symbol": "MRVL",
     "menu_list": "Semi-conducteurs",
     "price_purchase": 0.0,
+    "purchase_date": "",
     "price_current": 0.0,
     "price_high": 0.0,
+    "price_high_current": 0.0,
+    "price_pourcent": 0.0,
     "price_low": 0.0,
+    "price_low_current": 0.0,
     "trading_plan_high": "",
     "trading_plan_low": "",
     "message_date": "",
     "message_date_content": "",
     "message_date_to_sent": false,
-    "volume_max": 0,
+    "volume_alert": "",
     "volume": 0,
-    "is_monitoring": false
+    "vol_tot": 0,
+    "vol_max": 0,
+    "cooldown_minutes": "",
+    "is_monitoring": false,
+    "price_low_alert_last_triggered": "",
+    "channel_alert": {
+      "enabled": false,
+      "tolerance_abs": 0.0,
+      "upper_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      },
+      "lower_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      }
+    },
+    "volume_max": 0
   },
   {
     "name": "MEDIATEK",
     "symbol": "2454.TW",
     "menu_list": "Semi-conducteurs",
     "price_purchase": 0.0,
+    "purchase_date": "",
     "price_current": 0.0,
     "price_high": 0.0,
+    "price_high_current": 0.0,
+    "price_pourcent": 0.0,
     "price_low": 0.0,
+    "price_low_current": 0.0,
     "trading_plan_high": "",
     "trading_plan_low": "",
     "message_date": "",
     "message_date_content": "",
     "message_date_to_sent": false,
-    "volume_max": 0,
+    "volume_alert": "",
     "volume": 0,
-    "is_monitoring": false
+    "vol_tot": 0,
+    "vol_max": 0,
+    "cooldown_minutes": "",
+    "is_monitoring": false,
+    "price_low_alert_last_triggered": "",
+    "channel_alert": {
+      "enabled": false,
+      "tolerance_abs": 0.0,
+      "upper_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      },
+      "lower_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      }
+    },
+    "volume_max": 0
+  },
+  {
+    "name": "MELEXIS",
+    "symbol": "MEX.BE",
+    "menu_list": "Semi-conducteurs",
+    "price_purchase": 0.0,
+    "purchase_date": "",
+    "price_current": 0.0,
+    "price_high": "",
+    "price_high_current": 0.0,
+    "price_pourcent": 0.0,
+    "price_low": "",
+    "price_low_current": 0.0,
+    "trading_plan_high": "",
+    "trading_plan_low": "",
+    "message_date": "",
+    "message_date_content": "",
+    "message_date_to_sent": false,
+    "volume_alert": "",
+    "volume": 0,
+    "vol_tot": 0,
+    "vol_max": 0,
+    "cooldown_minutes": "",
+    "is_monitoring": false,
+    "price_low_alert_last_triggered": "",
+    "channel_alert": {
+      "enabled": false,
+      "tolerance_abs": 0.0,
+      "upper_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      },
+      "lower_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      }
+    }
   },
   {
     "name": "NVIDIA",
     "symbol": "NVDA",
     "menu_list": "Portefeuille",
     "price_purchase": 0.0,
+    "purchase_date": "",
     "price_current": 0.0,
     "price_high": 0.0,
+    "price_high_current": 0.0,
+    "price_pourcent": 0.0,
     "price_low": 0.0,
+    "price_low_current": 0.0,
     "trading_plan_high": "",
     "trading_plan_low": "",
     "message_date": "",
     "message_date_content": "",
     "message_date_to_sent": false,
-    "volume_max": 0,
+    "volume_alert": "",
     "volume": 0,
-    "is_monitoring": false
+    "vol_tot": 0,
+    "vol_max": 0,
+    "cooldown_minutes": "",
+    "is_monitoring": false,
+    "price_low_alert_last_triggered": "",
+    "channel_alert": {
+      "enabled": false,
+      "tolerance_abs": 0.0,
+      "upper_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      },
+      "lower_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      }
+    },
+    "volume_max": 0
+  },
+  {
+    "name": "NXP Semiconductors",
+    "symbol": "NXPI",
+    "menu_list": "Semi-conducteurs",
+    "price_purchase": 0.0,
+    "purchase_date": "",
+    "price_current": 0.0,
+    "price_high": "",
+    "price_high_current": 0.0,
+    "price_pourcent": 0.0,
+    "price_low": "",
+    "price_low_current": 0.0,
+    "trading_plan_high": "",
+    "trading_plan_low": "",
+    "message_date": "",
+    "message_date_content": "",
+    "message_date_to_sent": false,
+    "volume_alert": "",
+    "volume": 0,
+    "vol_tot": 0,
+    "vol_max": 0,
+    "cooldown_minutes": "",
+    "is_monitoring": false,
+    "price_low_alert_last_triggered": "",
+    "channel_alert": {
+      "enabled": false,
+      "tolerance_abs": 0.0,
+      "upper_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      },
+      "lower_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      }
+    }
   },
   {
     "name": "QUALCOM",
     "symbol": "QCOM",
     "menu_list": "Semi-conducteurs",
     "price_purchase": 0.0,
+    "purchase_date": "",
     "price_current": 0.0,
     "price_high": 0.0,
+    "price_high_current": 0.0,
+    "price_pourcent": 0.0,
     "price_low": 0.0,
+    "price_low_current": 0.0,
     "trading_plan_high": "",
     "trading_plan_low": "",
     "message_date": "",
     "message_date_content": "",
     "message_date_to_sent": false,
-    "volume_max": 0,
+    "volume_alert": "",
     "volume": 0,
-    "is_monitoring": false
+    "vol_tot": 0,
+    "vol_max": 0,
+    "cooldown_minutes": "",
+    "is_monitoring": false,
+    "price_low_alert_last_triggered": "",
+    "channel_alert": {
+      "enabled": false,
+      "tolerance_abs": 0.0,
+      "upper_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      },
+      "lower_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      }
+    },
+    "volume_max": 0
+  },
+  {
+    "name": "SOITEC",
+    "symbol": "SOI.PA",
+    "menu_list": "Portefeuille",
+    "price_purchase": 0.0,
+    "purchase_date": "",
+    "price_current": 0.0,
+    "price_high": "",
+    "price_high_current": 0.0,
+    "price_pourcent": 0.0,
+    "price_low": "",
+    "price_low_current": 0.0,
+    "trading_plan_high": "",
+    "trading_plan_low": "",
+    "message_date": "",
+    "message_date_content": "",
+    "message_date_to_sent": false,
+    "volume_alert": "",
+    "volume": 0,
+    "vol_tot": 0,
+    "vol_max": 0,
+    "cooldown_minutes": "",
+    "is_monitoring": false,
+    "price_low_alert_last_triggered": "",
+    "channel_alert": {
+      "enabled": false,
+      "tolerance_abs": 0.0,
+      "upper_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      },
+      "lower_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      }
+    }
+  },
+  {
+    "name": "STMICROELECTRONICS",
+    "symbol": "STMPA.PA",
+    "menu_list": "Semi-conducteurs",
+    "price_purchase": 0.0,
+    "purchase_date": "",
+    "price_current": 0.0,
+    "price_high": 37.62,
+    "price_high_current": 0.0,
+    "price_pourcent": 0.0,
+    "price_low": 34.5,
+    "price_low_current": 0.0,
+    "trading_plan_high": "Hausse",
+    "trading_plan_low": "Baisse",
+    "message_date": "",
+    "message_date_content": "",
+    "message_date_to_sent": false,
+    "volume_alert": "",
+    "volume": 0,
+    "vol_tot": 0,
+    "vol_max": 0,
+    "cooldown_minutes": "",
+    "is_monitoring": false,
+    "price_low_alert_last_triggered": "",
+    "channel_alert": {
+      "enabled": false,
+      "tolerance_abs": 0.0,
+      "upper_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      },
+      "lower_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      }
+    },
+    "volume_max": 100000
+  },
+  {
+    "name": "TEXAS INSTRUMENTS",
+    "symbol": "TXN",
+    "menu_list": "Semi-conducteurs",
+    "price_purchase": 0.0,
+    "purchase_date": "",
+    "price_current": 0.0,
+    "price_high": "",
+    "price_high_current": 0.0,
+    "price_pourcent": 0.0,
+    "price_low": "",
+    "price_low_current": 0.0,
+    "trading_plan_high": "",
+    "trading_plan_low": "",
+    "message_date": "",
+    "message_date_content": "",
+    "message_date_to_sent": false,
+    "volume_alert": "",
+    "volume": 0,
+    "vol_tot": 0,
+    "vol_max": 0,
+    "cooldown_minutes": "",
+    "is_monitoring": false,
+    "price_low_alert_last_triggered": "",
+    "channel_alert": {
+      "enabled": false,
+      "tolerance_abs": 0.0,
+      "upper_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      },
+      "lower_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      }
+    }
   },
   {
     "name": "TSMC",
     "symbol": "TSM",
     "menu_list": "Semi-conducteurs",
     "price_purchase": 0.0,
+    "purchase_date": "",
     "price_current": 0.0,
     "price_high": 0.0,
+    "price_high_current": 0.0,
+    "price_pourcent": 0.0,
     "price_low": 0.0,
+    "price_low_current": 0.0,
     "trading_plan_high": "",
     "trading_plan_low": "",
     "message_date": "",
     "message_date_content": "",
     "message_date_to_sent": false,
-    "volume_max": 0,
+    "volume_alert": "",
     "volume": 0,
-    "is_monitoring": false
+    "vol_tot": 0,
+    "vol_max": 0,
+    "cooldown_minutes": "",
+    "is_monitoring": false,
+    "price_low_alert_last_triggered": "",
+    "channel_alert": {
+      "enabled": false,
+      "tolerance_abs": 0.0,
+      "upper_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      },
+      "lower_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      }
+    },
+    "volume_max": 0
+  },
+  {
+    "name": "X-FAB",
+    "symbol": "XFB.MU",
+    "menu_list": "Semi-conducteurs",
+    "price_purchase": 0.0,
+    "purchase_date": "",
+    "price_current": 0.0,
+    "price_high": "",
+    "price_high_current": 0.0,
+    "price_pourcent": 0.0,
+    "price_low": "",
+    "price_low_current": 0.0,
+    "trading_plan_high": "",
+    "trading_plan_low": "",
+    "message_date": "",
+    "message_date_content": "",
+    "message_date_to_sent": false,
+    "volume_alert": "",
+    "volume": 0,
+    "vol_tot": 0,
+    "vol_max": 0,
+    "cooldown_minutes": "",
+    "is_monitoring": false,
+    "price_low_alert_last_triggered": "",
+    "channel_alert": {
+      "enabled": false,
+      "tolerance_abs": 0.0,
+      "upper_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      },
+      "lower_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      }
+    }
   }
 ]

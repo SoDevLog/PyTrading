@@ -4,6 +4,7 @@
     "symbol": "BMW.DE",
     "menu_list": "Automobile",
     "price_purchase": 0.0,
+    "purchase_date": "",
     "price_current": 0.0,
     "price_high": "",
     "price_high_current": 0.0,
@@ -19,13 +20,32 @@
     "volume": 0,
     "vol_tot": 0,
     "vol_max": 0,
-    "is_monitoring": false
+    "cooldown_minutes": "",
+    "is_monitoring": false,
+    "price_low_alert_last_triggered": "",
+    "channel_alert": {
+      "enabled": false,
+      "tolerance_abs": 0.0,
+      "upper_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      },
+      "lower_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      }
+    }
   },
   {
     "name": "BYD",
     "symbol": "BYDDF",
     "menu_list": "Automobile",
     "price_purchase": 0.0,
+    "purchase_date": "",
     "price_current": 0.0,
     "price_high": "",
     "price_high_current": 0.0,
@@ -41,13 +61,156 @@
     "volume": 0,
     "vol_tot": 0,
     "vol_max": 0,
-    "is_monitoring": false
+    "cooldown_minutes": "",
+    "is_monitoring": false,
+    "price_low_alert_last_triggered": "",
+    "channel_alert": {
+      "enabled": false,
+      "tolerance_abs": 0.0,
+      "upper_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      },
+      "lower_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      }
+    }
+  },
+  {
+    "name": "FERRARI",
+    "symbol": "RACE",
+    "menu_list": "Automobile",
+    "price_purchase": 0.0,
+    "purchase_date": "",
+    "price_current": 0.0,
+    "price_high": "",
+    "price_high_current": 0.0,
+    "price_pourcent": 0.0,
+    "price_low": "",
+    "price_low_current": 0.0,
+    "trading_plan_high": "",
+    "trading_plan_low": "",
+    "message_date": "",
+    "message_date_content": "",
+    "message_date_to_sent": false,
+    "volume_alert": "",
+    "volume": 0,
+    "vol_tot": 0,
+    "vol_max": 0,
+    "cooldown_minutes": "",
+    "is_monitoring": false,
+    "price_low_alert_last_triggered": "",
+    "channel_alert": {
+      "enabled": false,
+      "tolerance_abs": 0.0,
+      "upper_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      },
+      "lower_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      }
+    }
+  },
+  {
+    "name": "FORD",
+    "symbol": "F",
+    "menu_list": "Automobile",
+    "price_purchase": 0.0,
+    "purchase_date": "",
+    "price_current": 0.0,
+    "price_high": "",
+    "price_high_current": 0.0,
+    "price_pourcent": 0.0,
+    "price_low": "",
+    "price_low_current": 0.0,
+    "trading_plan_high": "",
+    "trading_plan_low": "",
+    "message_date": "",
+    "message_date_content": "",
+    "message_date_to_sent": false,
+    "volume_alert": "",
+    "volume": 0,
+    "vol_tot": 0,
+    "vol_max": 0,
+    "cooldown_minutes": "",
+    "is_monitoring": false,
+    "price_low_alert_last_triggered": "",
+    "channel_alert": {
+      "enabled": false,
+      "tolerance_abs": 0.0,
+      "upper_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      },
+      "lower_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      }
+    }
+  },
+  {
+    "name": "GENERAL MOTORS",
+    "symbol": "GM",
+    "menu_list": "Automobile",
+    "price_purchase": 0.0,
+    "purchase_date": "",
+    "price_current": 0.0,
+    "price_high": "",
+    "price_high_current": 0.0,
+    "price_pourcent": 0.0,
+    "price_low": "",
+    "price_low_current": 0.0,
+    "trading_plan_high": "",
+    "trading_plan_low": "",
+    "message_date": "",
+    "message_date_content": "",
+    "message_date_to_sent": false,
+    "volume_alert": "",
+    "volume": 0,
+    "vol_tot": 0,
+    "vol_max": 0,
+    "cooldown_minutes": "",
+    "is_monitoring": false,
+    "price_low_alert_last_triggered": "",
+    "channel_alert": {
+      "enabled": false,
+      "tolerance_abs": 0.0,
+      "upper_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      },
+      "lower_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      }
+    },
+    "exchange": "NYQ"
   },
   {
     "name": "HYUNDIA",
-    "symbol": "005380.KQ",
+    "symbol": "HYMTF",
     "menu_list": "Automobile",
     "price_purchase": 0.0,
+    "purchase_date": "",
     "price_current": 0.0,
     "price_high": "",
     "price_high_current": 0.0,
@@ -63,13 +226,73 @@
     "volume": 0,
     "vol_tot": 0,
     "vol_max": 0,
-    "is_monitoring": false
+    "cooldown_minutes": "",
+    "is_monitoring": false,
+    "price_low_alert_last_triggered": "",
+    "channel_alert": {
+      "enabled": false,
+      "tolerance_abs": 0.0,
+      "upper_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      },
+      "lower_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      }
+    }
+  },
+  {
+    "name": "HYUNDIACorée",
+    "symbol": "005380.KQ",
+    "menu_list": "Automobile",
+    "price_purchase": 0.0,
+    "purchase_date": "",
+    "price_current": 0.0,
+    "price_high": "",
+    "price_high_current": 0.0,
+    "price_pourcent": 0.0,
+    "price_low": "",
+    "price_low_current": 0.0,
+    "trading_plan_high": "",
+    "trading_plan_low": "",
+    "message_date": "",
+    "message_date_content": "",
+    "message_date_to_sent": false,
+    "volume_alert": "",
+    "volume": 0,
+    "vol_tot": 0,
+    "vol_max": 0,
+    "cooldown_minutes": "",
+    "is_monitoring": false,
+    "price_low_alert_last_triggered": "",
+    "channel_alert": {
+      "enabled": false,
+      "tolerance_abs": 0.0,
+      "upper_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      },
+      "lower_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      }
+    }
   },
   {
     "name": "RIVIAN AUTO",
     "symbol": "RIVN",
     "menu_list": "Automobile",
     "price_purchase": 0.0,
+    "purchase_date": "",
     "price_current": 0.0,
     "price_high": "",
     "price_high_current": 0.0,
@@ -85,13 +308,32 @@
     "volume": 0,
     "vol_tot": 0,
     "vol_max": 0,
-    "is_monitoring": false
+    "cooldown_minutes": "",
+    "is_monitoring": false,
+    "price_low_alert_last_triggered": "",
+    "channel_alert": {
+      "enabled": false,
+      "tolerance_abs": 0.0,
+      "upper_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      },
+      "lower_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      }
+    }
   },
   {
     "name": "STELLANTIS",
     "symbol": "STLAP.PA",
     "menu_list": "Portefeuille",
     "price_purchase": 18.881,
+    "purchase_date": "",
     "price_current": 0.0,
     "price_high": 15.2,
     "price_high_current": 0.0,
@@ -107,7 +349,25 @@
     "volume": 0,
     "vol_tot": 0,
     "vol_max": 0,
+    "cooldown_minutes": "",
     "is_monitoring": true,
+    "price_low_alert_last_triggered": "",
+    "channel_alert": {
+      "enabled": false,
+      "tolerance_abs": 0.0,
+      "upper_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      },
+      "lower_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      }
+    },
     "volume_max": 20000
   },
   {
@@ -115,6 +375,7 @@
     "symbol": "TSLA",
     "menu_list": "NASDAQ",
     "price_purchase": 0.0,
+    "purchase_date": "",
     "price_current": 0.0,
     "price_high": 145.0,
     "price_high_current": 0.0,
@@ -130,7 +391,25 @@
     "volume": 0,
     "vol_tot": 0,
     "vol_max": 0,
+    "cooldown_minutes": "",
     "is_monitoring": false,
+    "price_low_alert_last_triggered": "",
+    "channel_alert": {
+      "enabled": false,
+      "tolerance_abs": 0.0,
+      "upper_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      },
+      "lower_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      }
+    },
     "volume_max": 1000000
   },
   {
@@ -138,6 +417,7 @@
     "symbol": "7203.T",
     "menu_list": "Automobile",
     "price_purchase": 0.0,
+    "purchase_date": "",
     "price_current": 0.0,
     "price_high": "",
     "price_high_current": 0.0,
@@ -153,13 +433,32 @@
     "volume": 0,
     "vol_tot": 0,
     "vol_max": 0,
-    "is_monitoring": false
+    "cooldown_minutes": "",
+    "is_monitoring": false,
+    "price_low_alert_last_triggered": "",
+    "channel_alert": {
+      "enabled": false,
+      "tolerance_abs": 0.0,
+      "upper_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      },
+      "lower_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      }
+    }
   },
   {
     "name": "VALEO",
     "symbol": "FR.PA",
     "menu_list": "V",
     "price_purchase": 11.965,
+    "purchase_date": "",
     "price_current": 0.0,
     "price_high": 11.6,
     "price_high_current": 0.0,
@@ -175,7 +474,25 @@
     "volume": 0,
     "vol_tot": 0,
     "vol_max": 0,
+    "cooldown_minutes": "",
     "is_monitoring": false,
+    "price_low_alert_last_triggered": "",
+    "channel_alert": {
+      "enabled": false,
+      "tolerance_abs": 0.0,
+      "upper_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      },
+      "lower_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      }
+    },
     "volume_max": 5000
   },
   {
@@ -183,6 +500,7 @@
     "symbol": "VOW.DE",
     "menu_list": "V",
     "price_purchase": 0.0,
+    "purchase_date": "",
     "price_current": 0.0,
     "price_high": "",
     "price_high_current": 0.0,
@@ -198,6 +516,65 @@
     "volume": 0,
     "vol_tot": 0,
     "vol_max": 0,
-    "is_monitoring": false
+    "cooldown_minutes": "",
+    "is_monitoring": false,
+    "price_low_alert_last_triggered": "",
+    "channel_alert": {
+      "enabled": false,
+      "tolerance_abs": 0.0,
+      "upper_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      },
+      "lower_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      }
+    }
+  },
+  {
+    "name": "XPENG",
+    "symbol": "XPEV",
+    "menu_list": "Automobile",
+    "price_purchase": 0.0,
+    "purchase_date": "",
+    "price_current": 0.0,
+    "price_high": "",
+    "price_high_current": 0.0,
+    "price_pourcent": 0.0,
+    "price_low": "",
+    "price_low_current": 0.0,
+    "trading_plan_high": "",
+    "trading_plan_low": "",
+    "message_date": "",
+    "message_date_content": "",
+    "message_date_to_sent": false,
+    "volume_alert": "",
+    "volume": 0,
+    "vol_tot": 0,
+    "vol_max": 0,
+    "cooldown_minutes": "",
+    "is_monitoring": false,
+    "price_low_alert_last_triggered": "",
+    "channel_alert": {
+      "enabled": false,
+      "tolerance_abs": 0.0,
+      "upper_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      },
+      "lower_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      }
+    }
   }
 ]
