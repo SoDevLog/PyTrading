@@ -109,7 +109,17 @@ Sous la forme :
 
 - [indice-fred-france.py](indice-fred-france.py)
 
-### Documentation
+#### Généralisation de l'indice économique ISM
+
+Utiliser les capacité de Python pour créer un indice de la santé économique :
+
+Il suffit de modifier la ligne de code :
+
+> from macro_indices.france import INDEX_CONFIG
+
+- [macro_indice_engine.py](macro_indice_engine.py)
+
+#### Documentation
 
 - [Comment construire un indice écomique](https://www.trading-et-data-analyses.com/2026/04/construire-un-indicateur-macro-econimque-fred.html)
 
