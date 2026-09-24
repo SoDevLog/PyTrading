@@ -367,6 +367,11 @@
             "menu_list": "Construction-Ingé"
         },
         {
+            "name": "BP",
+            "symbol": "BP",
+            "menu_list": "Oil & Gas"
+        },
+        {
             "name": "BRAZE RG-A",
             "symbol": "BRZE"
         },
@@ -419,6 +424,11 @@
             "symbol": "CSCO"
         },
         {
+            "name": "CMBTECH",
+            "symbol": "CMBT",
+            "menu_list": "Oil & Gas"
+        },
+        {
             "name": "COINBASE",
             "symbol": "COIN"
         },
@@ -443,6 +453,11 @@
         {
             "name": "Choice Hotels Int.",
             "symbol": "CZH.F"
+        },
+        {
+            "name": "Crude Oil",
+            "symbol": "CL=F",
+            "menu_list": "Futures"
         },
         {
             "name": "D-Wave Quantum",
@@ -548,8 +563,18 @@
             "menu_list": "Electrical"
         },
         {
+            "name": "ENI",
+            "symbol": "E",
+            "menu_list": "Oil & Gas"
+        },
+        {
             "name": "ENTECH",
             "symbol": "ALESE.PA"
+        },
+        {
+            "name": "EQUINOR",
+            "symbol": "EQNR",
+            "menu_list": "Oil & Gas"
         },
         {
             "name": "ERAMET",
@@ -640,6 +665,11 @@
             "symbol": "ALFPC.PA"
         },
         {
+            "name": "FORD",
+            "symbol": "F",
+            "menu_list": "Automobile"
+        },
+        {
             "name": "FORTINET",
             "symbol": "FTNT",
             "menu_list": "Software-infra"
@@ -677,7 +707,7 @@
             "name": "GENERAL MOTORS",
             "symbol": "GM",
             "exchange": "NYQ",
-            "menu_list": "NASDAQ"
+            "menu_list": "Automobile"
         },
         {
             "name": "GITLAB RG-A",
@@ -695,12 +725,18 @@
         },
         {
             "name": "HAFFNER ENERGY",
-            "symbol": "ALHAF.PA"
+            "symbol": "ALHAF.PA",
+            "menu_list": "Services publics"
         },
         {
             "name": "HIMS",
             "symbol": "HIMS",
             "menu_list": "Healthcare"
+        },
+        {
+            "name": "HONDA",
+            "symbol": "HMC",
+            "menu_list": "Automobile"
         },
         {
             "name": "HP",
@@ -735,6 +771,11 @@
             "name": "ID LOGISTICS",
             "symbol": "IDL.PA",
             "menu_list": "Industrie"
+        },
+        {
+            "name": "IMPP",
+            "symbol": "IMPP",
+            "menu_list": "Oil & Gas"
         },
         {
             "name": "INDRA SISTEMAS",
@@ -1041,6 +1082,10 @@
             "menu_list": "P"
         },
         {
+            "name": "POET TECH",
+            "symbol": "POET"
+        },
+        {
             "name": "POUJOULAT",
             "symbol": "ALPJT.PA",
             "menu_list": "Construction"
@@ -1190,6 +1235,11 @@
             "menu_list": "S"
         },
         {
+            "name": "SHELL",
+            "symbol": "SHEL",
+            "menu_list": "Oil & Gas"
+        },
+        {
             "name": "SNOWFLAKE RG-A",
             "symbol": "SNOW",
             "menu_list": "Software-app"
@@ -1327,9 +1377,24 @@
             "menu_list": "Automobile"
         },
         {
+            "name": "TOYOTA",
+            "symbol": "TM",
+            "menu_list": "Automobile"
+        },
+        {
+            "name": "TRANSOCEAN",
+            "symbol": "RIG",
+            "menu_list": "Oil & Gas"
+        },
+        {
             "name": "TRIGANO",
             "symbol": "TRI.PA",
             "menu_list": "Loisir bateaux"
+        },
+        {
+            "name": "TSAKOS",
+            "symbol": "TEN",
+            "menu_list": "Oil & Gas"
         },
         {
             "name": "TSMC",
@@ -1429,11 +1494,6 @@
             "symbol": "WPM"
         },
         {
-            "name": "WTI",
-            "symbol": "CL=F",
-            "menu_list": "Pétrol"
-        },
-        {
             "name": "Weebit Nano",
             "symbol": "WBT.AX"
         },
@@ -1441,6 +1501,11 @@
             "name": "X-FAB",
             "symbol": "XFB.MU",
             "menu_list": "Semi-conducteurs"
+        },
+        {
+            "name": "XPENG",
+            "symbol": "XPEV",
+            "menu_list": "Automobile"
         },
         {
             "name": "YUM",
