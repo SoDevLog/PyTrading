@@ -21,7 +21,65 @@
     "vol_tot": 0,
     "vol_max": 0,
     "cooldown_minutes": "",
-    "is_monitoring": false
+    "is_monitoring": false,
+    "price_low_alert_last_triggered": "",
+    "channel_alert": {
+      "enabled": false,
+      "tolerance_abs": 0.0,
+      "upper_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      },
+      "lower_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      }
+    }
+  },
+  {
+    "name": "DAX Allemand",
+    "symbol": "^GDAXI",
+    "menu_list": "A-INDICES",
+    "price_purchase": 0.0,
+    "purchase_date": "",
+    "price_current": 0.0,
+    "price_high": "",
+    "price_high_current": 0.0,
+    "price_pourcent": 0.0,
+    "price_low": "",
+    "price_low_current": 0.0,
+    "trading_plan_high": "",
+    "trading_plan_low": "",
+    "message_date": "",
+    "message_date_content": "",
+    "message_date_to_sent": false,
+    "volume_alert": "",
+    "volume": 0,
+    "vol_tot": 0,
+    "vol_max": 0,
+    "cooldown_minutes": "",
+    "is_monitoring": false,
+    "price_low_alert_last_triggered": "",
+    "channel_alert": {
+      "enabled": false,
+      "tolerance_abs": 0.0,
+      "upper_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      },
+      "lower_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      }
+    }
   },
   {
     "name": "Dow Jones",
@@ -45,7 +103,106 @@
     "vol_tot": 0,
     "vol_max": 0,
     "cooldown_minutes": "",
-    "is_monitoring": false
+    "is_monitoring": false,
+    "price_low_alert_last_triggered": "",
+    "channel_alert": {
+      "enabled": false,
+      "tolerance_abs": 0.0,
+      "upper_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      },
+      "lower_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      }
+    }
+  },
+  {
+    "name": "Dow Jones Transportation Average",
+    "symbol": "^DJT",
+    "menu_list": "A-INDICES",
+    "price_purchase": 0.0,
+    "purchase_date": "",
+    "price_current": 0.0,
+    "price_high": "",
+    "price_high_current": 0.0,
+    "price_pourcent": 0.0,
+    "price_low": "",
+    "price_low_current": 0.0,
+    "trading_plan_high": "",
+    "trading_plan_low": "",
+    "message_date": "",
+    "message_date_content": "",
+    "message_date_to_sent": false,
+    "volume_alert": "",
+    "volume": 0,
+    "vol_tot": 0,
+    "vol_max": 0,
+    "cooldown_minutes": "",
+    "is_monitoring": false,
+    "price_low_alert_last_triggered": "",
+    "channel_alert": {
+      "enabled": false,
+      "tolerance_abs": 0.0,
+      "upper_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      },
+      "lower_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      }
+    }
+  },
+  {
+    "name": "EURO STOXX 50",
+    "symbol": "^STOXX50E",
+    "menu_list": "A-INDICES",
+    "price_purchase": 0.0,
+    "purchase_date": "",
+    "price_current": 0.0,
+    "price_high": "",
+    "price_high_current": 0.0,
+    "price_pourcent": 0.0,
+    "price_low": "",
+    "price_low_current": 0.0,
+    "trading_plan_high": "",
+    "trading_plan_low": "",
+    "message_date": "",
+    "message_date_content": "",
+    "message_date_to_sent": false,
+    "volume_alert": "",
+    "volume": 0,
+    "vol_tot": 0,
+    "vol_max": 0,
+    "cooldown_minutes": "",
+    "is_monitoring": false,
+    "price_low_alert_last_triggered": "",
+    "channel_alert": {
+      "enabled": false,
+      "tolerance_abs": 0.0,
+      "upper_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      },
+      "lower_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      }
+    }
   },
   {
     "name": "Euronext 100",
@@ -69,7 +226,24 @@
     "vol_tot": 0,
     "vol_max": 0,
     "cooldown_minutes": "",
-    "is_monitoring": false
+    "is_monitoring": false,
+    "price_low_alert_last_triggered": "",
+    "channel_alert": {
+      "enabled": false,
+      "tolerance_abs": 0.0,
+      "upper_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      },
+      "lower_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      }
+    }
   },
   {
     "name": "Euronext Amsterdam",
@@ -93,7 +267,229 @@
     "vol_tot": 0,
     "vol_max": 0,
     "cooldown_minutes": "",
-    "is_monitoring": false
+    "is_monitoring": false,
+    "price_low_alert_last_triggered": "",
+    "channel_alert": {
+      "enabled": false,
+      "tolerance_abs": 0.0,
+      "upper_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      },
+      "lower_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      }
+    }
+  },
+  {
+    "name": "FTSE 100 Italie",
+    "symbol": "^FTSE",
+    "menu_list": "A-INDICES",
+    "price_purchase": 0.0,
+    "purchase_date": "",
+    "price_current": 0.0,
+    "price_high": "",
+    "price_high_current": 0.0,
+    "price_pourcent": 0.0,
+    "price_low": "",
+    "price_low_current": 0.0,
+    "trading_plan_high": "",
+    "trading_plan_low": "",
+    "message_date": "",
+    "message_date_content": "",
+    "message_date_to_sent": false,
+    "volume_alert": "",
+    "volume": 0,
+    "vol_tot": 0,
+    "vol_max": 0,
+    "cooldown_minutes": "",
+    "is_monitoring": false,
+    "price_low_alert_last_triggered": "",
+    "channel_alert": {
+      "enabled": false,
+      "tolerance_abs": 0.0,
+      "upper_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      },
+      "lower_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      }
+    }
+  },
+  {
+    "name": "FTSE MIB",
+    "symbol": "FTSEMIB.MI",
+    "menu_list": "A-INDICES",
+    "price_purchase": 0.0,
+    "purchase_date": "",
+    "price_current": 0.0,
+    "price_high": "",
+    "price_high_current": 0.0,
+    "price_pourcent": 0.0,
+    "price_low": "",
+    "price_low_current": 0.0,
+    "trading_plan_high": "",
+    "trading_plan_low": "",
+    "message_date": "",
+    "message_date_content": "",
+    "message_date_to_sent": false,
+    "volume_alert": "",
+    "volume": 0,
+    "vol_tot": 0,
+    "vol_max": 0,
+    "cooldown_minutes": "",
+    "is_monitoring": false,
+    "price_low_alert_last_triggered": "",
+    "channel_alert": {
+      "enabled": false,
+      "tolerance_abs": 0.0,
+      "upper_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      },
+      "lower_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      }
+    }
+  },
+  {
+    "name": "Hang Seng Hong Kong",
+    "symbol": "^HSI",
+    "menu_list": "A-INDICES",
+    "price_purchase": 0.0,
+    "purchase_date": "",
+    "price_current": 0.0,
+    "price_high": "",
+    "price_high_current": 0.0,
+    "price_pourcent": 0.0,
+    "price_low": "",
+    "price_low_current": 0.0,
+    "trading_plan_high": "",
+    "trading_plan_low": "",
+    "message_date": "",
+    "message_date_content": "",
+    "message_date_to_sent": false,
+    "volume_alert": "",
+    "volume": 0,
+    "vol_tot": 0,
+    "vol_max": 0,
+    "cooldown_minutes": "",
+    "is_monitoring": false,
+    "price_low_alert_last_triggered": "",
+    "channel_alert": {
+      "enabled": false,
+      "tolerance_abs": 0.0,
+      "upper_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      },
+      "lower_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      }
+    }
+  },
+  {
+    "name": "IBEX 35 Espagne",
+    "symbol": "^IBEX",
+    "menu_list": "A-INDICES",
+    "price_purchase": 0.0,
+    "purchase_date": "",
+    "price_current": 0.0,
+    "price_high": "",
+    "price_high_current": 0.0,
+    "price_pourcent": 0.0,
+    "price_low": "",
+    "price_low_current": 0.0,
+    "trading_plan_high": "",
+    "trading_plan_low": "",
+    "message_date": "",
+    "message_date_content": "",
+    "message_date_to_sent": false,
+    "volume_alert": "",
+    "volume": 0,
+    "vol_tot": 0,
+    "vol_max": 0,
+    "cooldown_minutes": "",
+    "is_monitoring": false,
+    "price_low_alert_last_triggered": "",
+    "channel_alert": {
+      "enabled": false,
+      "tolerance_abs": 0.0,
+      "upper_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      },
+      "lower_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      }
+    }
+  },
+  {
+    "name": "KOSPI Corée du Sud",
+    "symbol": "^KS11",
+    "menu_list": "A-INDICES",
+    "price_purchase": 0.0,
+    "purchase_date": "",
+    "price_current": 0.0,
+    "price_high": "",
+    "price_high_current": 0.0,
+    "price_pourcent": 0.0,
+    "price_low": "",
+    "price_low_current": 0.0,
+    "trading_plan_high": "",
+    "trading_plan_low": "",
+    "message_date": "",
+    "message_date_content": "",
+    "message_date_to_sent": false,
+    "volume_alert": "",
+    "volume": 0,
+    "vol_tot": 0,
+    "vol_max": 0,
+    "cooldown_minutes": "",
+    "is_monitoring": false,
+    "price_low_alert_last_triggered": "",
+    "channel_alert": {
+      "enabled": false,
+      "tolerance_abs": 0.0,
+      "upper_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      },
+      "lower_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      }
+    }
   },
   {
     "name": "NASDAQ",
@@ -117,7 +513,147 @@
     "vol_tot": 0,
     "vol_max": 0,
     "cooldown_minutes": "",
-    "is_monitoring": false
+    "is_monitoring": false,
+    "price_low_alert_last_triggered": "",
+    "channel_alert": {
+      "enabled": false,
+      "tolerance_abs": 0.0,
+      "upper_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      },
+      "lower_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      }
+    }
+  },
+  {
+    "name": "NASDAQ Biotech",
+    "symbol": "^NBI",
+    "menu_list": "A-INDICES",
+    "price_purchase": 0.0,
+    "purchase_date": "",
+    "price_current": 0.0,
+    "price_high": "",
+    "price_high_current": 0.0,
+    "price_pourcent": 0.0,
+    "price_low": "",
+    "price_low_current": 0.0,
+    "trading_plan_high": "",
+    "trading_plan_low": "",
+    "message_date": "",
+    "message_date_content": "",
+    "message_date_to_sent": false,
+    "volume_alert": "",
+    "volume": 0,
+    "vol_tot": 0,
+    "vol_max": 0,
+    "cooldown_minutes": "",
+    "is_monitoring": false,
+    "price_low_alert_last_triggered": "",
+    "channel_alert": {
+      "enabled": false,
+      "tolerance_abs": 0.0,
+      "upper_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      },
+      "lower_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      }
+    }
+  },
+  {
+    "name": "NASDAQ100",
+    "symbol": "^NDX",
+    "menu_list": "A-INDICES",
+    "price_purchase": 0.0,
+    "purchase_date": "",
+    "price_current": 0.0,
+    "price_high": "",
+    "price_high_current": 0.0,
+    "price_pourcent": 0.0,
+    "price_low": "",
+    "price_low_current": 0.0,
+    "trading_plan_high": "",
+    "trading_plan_low": "",
+    "message_date": "",
+    "message_date_content": "",
+    "message_date_to_sent": false,
+    "volume_alert": "",
+    "volume": 0,
+    "vol_tot": 0,
+    "vol_max": 0,
+    "cooldown_minutes": "",
+    "is_monitoring": false,
+    "price_low_alert_last_triggered": "",
+    "channel_alert": {
+      "enabled": false,
+      "tolerance_abs": 0.0,
+      "upper_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      },
+      "lower_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      }
+    }
+  },
+  {
+    "name": "NIFTY 50 Inde",
+    "symbol": "^NSEI",
+    "menu_list": "A-INDICES",
+    "price_purchase": 0.0,
+    "purchase_date": "",
+    "price_current": 0.0,
+    "price_high": "",
+    "price_high_current": 0.0,
+    "price_pourcent": 0.0,
+    "price_low": "",
+    "price_low_current": 0.0,
+    "trading_plan_high": "",
+    "trading_plan_low": "",
+    "message_date": "",
+    "message_date_content": "",
+    "message_date_to_sent": false,
+    "volume_alert": "",
+    "volume": 0,
+    "vol_tot": 0,
+    "vol_max": 0,
+    "cooldown_minutes": "",
+    "is_monitoring": false,
+    "price_low_alert_last_triggered": "",
+    "channel_alert": {
+      "enabled": false,
+      "tolerance_abs": 0.0,
+      "upper_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      },
+      "lower_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      }
+    }
   },
   {
     "name": "NYSE Composite",
@@ -141,7 +677,24 @@
     "vol_tot": 0,
     "vol_max": 0,
     "cooldown_minutes": "",
-    "is_monitoring": false
+    "is_monitoring": false,
+    "price_low_alert_last_triggered": "",
+    "channel_alert": {
+      "enabled": false,
+      "tolerance_abs": 0.0,
+      "upper_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      },
+      "lower_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      }
+    }
   },
   {
     "name": "Nikkei 225",
@@ -165,7 +718,147 @@
     "vol_tot": 0,
     "vol_max": 0,
     "cooldown_minutes": "",
-    "is_monitoring": false
+    "is_monitoring": false,
+    "price_low_alert_last_triggered": "",
+    "channel_alert": {
+      "enabled": false,
+      "tolerance_abs": 0.0,
+      "upper_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      },
+      "lower_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      }
+    }
+  },
+  {
+    "name": "PHLX Semicon",
+    "symbol": "^SOX",
+    "menu_list": "A-INDICES",
+    "price_purchase": 0.0,
+    "purchase_date": "",
+    "price_current": 0.0,
+    "price_high": "",
+    "price_high_current": 0.0,
+    "price_pourcent": 0.0,
+    "price_low": "",
+    "price_low_current": 0.0,
+    "trading_plan_high": "",
+    "trading_plan_low": "",
+    "message_date": "",
+    "message_date_content": "",
+    "message_date_to_sent": false,
+    "volume_alert": "",
+    "volume": 0,
+    "vol_tot": 0,
+    "vol_max": 0,
+    "cooldown_minutes": "",
+    "is_monitoring": false,
+    "price_low_alert_last_triggered": "",
+    "channel_alert": {
+      "enabled": false,
+      "tolerance_abs": 0.0,
+      "upper_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      },
+      "lower_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      }
+    }
+  },
+  {
+    "name": "Philadelphia Gold & Silver",
+    "symbol": "^XAU",
+    "menu_list": "A-INDICES",
+    "price_purchase": 0.0,
+    "purchase_date": "",
+    "price_current": 0.0,
+    "price_high": "",
+    "price_high_current": 0.0,
+    "price_pourcent": 0.0,
+    "price_low": "",
+    "price_low_current": 0.0,
+    "trading_plan_high": "",
+    "trading_plan_low": "",
+    "message_date": "",
+    "message_date_content": "",
+    "message_date_to_sent": false,
+    "volume_alert": "",
+    "volume": 0,
+    "vol_tot": 0,
+    "vol_max": 0,
+    "cooldown_minutes": "",
+    "is_monitoring": false,
+    "price_low_alert_last_triggered": "",
+    "channel_alert": {
+      "enabled": false,
+      "tolerance_abs": 0.0,
+      "upper_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      },
+      "lower_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      }
+    }
+  },
+  {
+    "name": "Russell 2000",
+    "symbol": "^RUT",
+    "menu_list": "A-INDICES",
+    "price_purchase": 0.0,
+    "purchase_date": "",
+    "price_current": 0.0,
+    "price_high": "",
+    "price_high_current": 0.0,
+    "price_pourcent": 0.0,
+    "price_low": "",
+    "price_low_current": 0.0,
+    "trading_plan_high": "",
+    "trading_plan_low": "",
+    "message_date": "",
+    "message_date_content": "",
+    "message_date_to_sent": false,
+    "volume_alert": "",
+    "volume": 0,
+    "vol_tot": 0,
+    "vol_max": 0,
+    "cooldown_minutes": "",
+    "is_monitoring": false,
+    "price_low_alert_last_triggered": "",
+    "channel_alert": {
+      "enabled": false,
+      "tolerance_abs": 0.0,
+      "upper_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      },
+      "lower_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      }
+    }
   },
   {
     "name": "S&P 500",
@@ -189,6 +882,228 @@
     "vol_tot": 0,
     "vol_max": 0,
     "cooldown_minutes": "",
-    "is_monitoring": false
+    "is_monitoring": false,
+    "price_low_alert_last_triggered": "",
+    "channel_alert": {
+      "enabled": false,
+      "tolerance_abs": 0.0,
+      "upper_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      },
+      "lower_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      }
+    }
+  },
+  {
+    "name": "S&P 500 (TR)",
+    "symbol": "^SP500TR",
+    "menu_list": "A-INDICES",
+    "price_purchase": 0.0,
+    "purchase_date": "",
+    "price_current": 0.0,
+    "price_high": "",
+    "price_high_current": 0.0,
+    "price_pourcent": 0.0,
+    "price_low": "",
+    "price_low_current": 0.0,
+    "trading_plan_high": "",
+    "trading_plan_low": "",
+    "message_date": "",
+    "message_date_content": "",
+    "message_date_to_sent": false,
+    "volume_alert": "",
+    "volume": 0,
+    "vol_tot": 0,
+    "vol_max": 0,
+    "cooldown_minutes": "",
+    "is_monitoring": false,
+    "price_low_alert_last_triggered": "",
+    "channel_alert": {
+      "enabled": false,
+      "tolerance_abs": 0.0,
+      "upper_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      },
+      "lower_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      }
+    }
+  },
+  {
+    "name": "SBF 120",
+    "symbol": "^SBF120",
+    "menu_list": "A-INDICES",
+    "price_purchase": 0.0,
+    "purchase_date": "",
+    "price_current": 0.0,
+    "price_high": "",
+    "price_high_current": 0.0,
+    "price_pourcent": 0.0,
+    "price_low": "",
+    "price_low_current": 0.0,
+    "trading_plan_high": "",
+    "trading_plan_low": "",
+    "message_date": "",
+    "message_date_content": "",
+    "message_date_to_sent": false,
+    "volume_alert": "",
+    "volume": 0,
+    "vol_tot": 0,
+    "vol_max": 0,
+    "cooldown_minutes": "",
+    "is_monitoring": false,
+    "price_low_alert_last_triggered": "",
+    "channel_alert": {
+      "enabled": false,
+      "tolerance_abs": 0.0,
+      "upper_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      },
+      "lower_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      }
+    }
+  },
+  {
+    "name": "SMI Suisse",
+    "symbol": "^SSMI",
+    "menu_list": "A-INDICES",
+    "price_purchase": 0.0,
+    "purchase_date": "",
+    "price_current": 0.0,
+    "price_high": "",
+    "price_high_current": 0.0,
+    "price_pourcent": 0.0,
+    "price_low": "",
+    "price_low_current": 0.0,
+    "trading_plan_high": "",
+    "trading_plan_low": "",
+    "message_date": "",
+    "message_date_content": "",
+    "message_date_to_sent": false,
+    "volume_alert": "",
+    "volume": 0,
+    "vol_tot": 0,
+    "vol_max": 0,
+    "cooldown_minutes": "",
+    "is_monitoring": false,
+    "price_low_alert_last_triggered": "",
+    "channel_alert": {
+      "enabled": false,
+      "tolerance_abs": 0.0,
+      "upper_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      },
+      "lower_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      }
+    }
+  },
+  {
+    "name": "Shanghai Composite - Chine",
+    "symbol": "000001.SS",
+    "menu_list": "A-INDICES",
+    "price_purchase": 0.0,
+    "purchase_date": "",
+    "price_current": 0.0,
+    "price_high": "",
+    "price_high_current": 0.0,
+    "price_pourcent": 0.0,
+    "price_low": "",
+    "price_low_current": 0.0,
+    "trading_plan_high": "",
+    "trading_plan_low": "",
+    "message_date": "",
+    "message_date_content": "",
+    "message_date_to_sent": false,
+    "volume_alert": "",
+    "volume": 0,
+    "vol_tot": 0,
+    "vol_max": 0,
+    "cooldown_minutes": "",
+    "is_monitoring": false,
+    "price_low_alert_last_triggered": "",
+    "channel_alert": {
+      "enabled": false,
+      "tolerance_abs": 0.0,
+      "upper_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      },
+      "lower_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      }
+    }
+  },
+  {
+    "name": "VIX Volatilité",
+    "symbol": "^VIX",
+    "menu_list": "A-INDICES",
+    "price_purchase": 0.0,
+    "purchase_date": "",
+    "price_current": 0.0,
+    "price_high": "",
+    "price_high_current": 0.0,
+    "price_pourcent": 0.0,
+    "price_low": "",
+    "price_low_current": 0.0,
+    "trading_plan_high": "",
+    "trading_plan_low": "",
+    "message_date": "",
+    "message_date_content": "",
+    "message_date_to_sent": false,
+    "volume_alert": "",
+    "volume": 0,
+    "vol_tot": 0,
+    "vol_max": 0,
+    "cooldown_minutes": "",
+    "is_monitoring": false,
+    "price_low_alert_last_triggered": "",
+    "channel_alert": {
+      "enabled": false,
+      "tolerance_abs": 0.0,
+      "upper_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      },
+      "lower_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      }
+    }
   }
 ]

@@ -82,6 +82,47 @@
     }
   },
   {
+    "name": "SOITEC",
+    "symbol": "SOI.PA",
+    "menu_list": "Portefeuille",
+    "price_purchase": 0.0,
+    "purchase_date": "",
+    "price_current": 0.0,
+    "price_high": "",
+    "price_high_current": 0.0,
+    "price_pourcent": 0.0,
+    "price_low": "",
+    "price_low_current": 0.0,
+    "trading_plan_high": "",
+    "trading_plan_low": "",
+    "message_date": "",
+    "message_date_content": "",
+    "message_date_to_sent": false,
+    "volume_alert": "",
+    "volume": 0,
+    "vol_tot": 0,
+    "vol_max": 0,
+    "cooldown_minutes": "",
+    "is_monitoring": false,
+    "price_low_alert_last_triggered": "",
+    "channel_alert": {
+      "enabled": false,
+      "tolerance_abs": 0.0,
+      "upper_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      },
+      "lower_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      }
+    }
+  },
+  {
     "name": "STMICROELECTRONICS",
     "symbol": "STMPA.PA",
     "menu_list": "Semi-conducteurs",

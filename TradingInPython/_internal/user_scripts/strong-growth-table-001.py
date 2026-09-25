@@ -212,24 +212,49 @@ def main():
     if __name__ != "__main__":
         api.show_figure( fig )  # rendu thread-safe dans le thread Tkinter principal
     else:
-        # Créer la fenêtre Tkinter    
+        # Créer la fenêtre Tkinter, avec un ascenseur vertical si la table dépasse l'écran
         import tkinter as tk
         from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
 
         root = tk.Tk()
         root.title(f"Filtre à Croissance Forte - {len(tickers)} tickers analysés")
-        canvas = FigureCanvasTkAgg(fig, master=root)
+
+        # La fenêtre ne dépasse pas la hauteur de l'écran ; au-delà, le contenu devient scrollable
+        fig_w_px = int( fig.get_figwidth() * fig.dpi )
+        fig_h_px = int( fig.get_figheight() * fig.dpi )
+        win_h = min( fig_h_px + 20, root.winfo_screenheight() - 100 )
+        root.geometry( f"{fig_w_px}x{win_h}" )
+
+        outer = tk.Frame( root )
+        outer.pack( fill="both", expand=True )
+
+        v_scroll = tk.Scrollbar( outer, orient="vertical" )
+        v_scroll.pack( side="right", fill="y" )
+
+        scroll_area = tk.Canvas( outer, yscrollcommand=v_scroll.set, highlightthickness=0 )
+        scroll_area.pack( side="left", fill="both", expand=True )
+        v_scroll.config( command=scroll_area.yview )
+
+        # NB : toolbar/scrollbar doivent cibler root, pas inner, si réactivés (zone fixe hors défilement)
+        inner = tk.Frame( scroll_area )
+        scroll_area.create_window( (0, 0), window=inner, anchor="nw" )
+
+        canvas = FigureCanvasTkAgg(fig, master=inner)
         # toolbar = NavigationToolbar2Tk(canvas, root)
         # toolbar.update()
-        
+
         canvas.draw()
-        canvas.get_tk_widget().pack( fill="both", expand=True )
-        root.mainloop()       
+        canvas.get_tk_widget().pack()
+
+        inner.bind( "<Configure>", lambda e: scroll_area.configure( scrollregion=scroll_area.bbox("all") ) )
+        scroll_area.bind_all( "<MouseWheel>", lambda e: scroll_area.yview_scroll( int(-1 * (e.delta / 120)), "units" ) )
+
+        root.mainloop()  
 
 if __name__ == "__main__":
 
     api_context = {
-        'tickers': [ 'HO.PA', 'AM.PA', 'AIR.PA', 'GE', 'AAPL', 'MSFT', 'GOOGL', 'AMZN', 'NVDA', 'IT' ],
+        'tickers': [ 'HO.PA', 'AM.PA', 'AIR.PA', 'GE', 'AAPL', 'MSFT', 'GOOGL', 'AMZN', 'NVDA', 'IT', 'BABA', 'AMD', 'BA', 'BIDU', 'BP', 'RACE', 'FTNT', 'F', 'GE', 'GM', 'INTC', 'JD', 'BMW', 'CROX' ],
     }
         
     api = UserScriptAPI()

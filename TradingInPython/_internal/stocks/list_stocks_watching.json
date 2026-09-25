@@ -15,8 +15,23 @@
             "menu_list": "A-INDICES"
         },
         {
+            "name": "DAX Allemand",
+            "symbol": "^GDAXI",
+            "menu_list": "A-INDICES"
+        },
+        {
             "name": "Dow Jones",
             "symbol": "^DJI",
+            "menu_list": "A-INDICES"
+        },
+        {
+            "name": "Dow Jones Transportation Average",
+            "symbol": "^DJT",
+            "menu_list": "A-INDICES"
+        },
+        {
+            "name": "EURO STOXX 50",
+            "symbol": "^STOXX50E",
             "menu_list": "A-INDICES"
         },
         {
@@ -27,6 +42,26 @@
         {
             "name": "Euronext Amsterdam",
             "symbol": "^AEX",
+            "menu_list": "A-INDICES"
+        },
+        {
+            "name": "FTSE 100 Italie",
+            "symbol": "^FTSE",
+            "menu_list": "A-INDICES"
+        },
+        {
+            "name": "Hang Seng Hong Kong",
+            "symbol": "^HSI",
+            "menu_list": "A-INDICES"
+        },
+        {
+            "name": "IBEX 35 Espagne",
+            "symbol": "^IBEX",
+            "menu_list": "A-INDICES"
+        },
+        {
+            "name": "KOSPI Corée du Sud",
+            "symbol": "^KS11",
             "menu_list": "A-INDICES"
         },
         {
@@ -42,6 +77,11 @@
         {
             "name": "NASDAQ100",
             "symbol": "^NDX",
+            "menu_list": "A-INDICES"
+        },
+        {
+            "name": "NIFTY 50 Inde",
+            "symbol": "^NSEI",
             "menu_list": "A-INDICES"
         },
         {
@@ -65,6 +105,11 @@
             "menu_list": "A-INDICES"
         },
         {
+            "name": "Russell 2000",
+            "symbol": "^RUT",
+            "menu_list": "A-INDICES"
+        },
+        {
             "name": "S&P 500",
             "symbol": "^GSPC",
             "menu_list": "A-INDICES"
@@ -72,6 +117,16 @@
         {
             "name": "S&P 500 (TR)",
             "symbol": "^SP500TR",
+            "menu_list": "A-INDICES"
+        },
+        {
+            "name": "SBF 120",
+            "symbol": "^SBF120",
+            "menu_list": "A-INDICES"
+        },
+        {
+            "name": "SMI Suisse",
+            "symbol": "^SSMI",
             "menu_list": "A-INDICES"
         },
         {
@@ -684,6 +739,11 @@
             "volume_max": 677851,
             "is_monitoring": false,
             "menu_list": "F"
+        },
+        {
+            "name": "FTSE MIB",
+            "symbol": "FTSEMIB.MI",
+            "menu_list": "A-INDICES"
         },
         {
             "name": "FUBOTV",
@@ -1308,6 +1368,11 @@
             "name": "SUPER MICRO COMP.",
             "symbol": "SMCI",
             "menu_list": "Techno"
+        },
+        {
+            "name": "Shanghai Composite - Chine",
+            "symbol": "000001.SS",
+            "menu_list": "A-INDICES"
         },
         {
             "name": "Sprott Uranium",
