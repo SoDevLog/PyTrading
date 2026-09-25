@@ -68,8 +68,14 @@ def main():
         exit(1)
 
     if api.df is None or api.df.empty:
+        import yfinance
         df = yfinance.download( api.ticker, period=api.period, interval=api.interval,
             auto_adjust=True, progress=False )
+        
+        # Aplatir les colonnes si MultiIndex (yfinance ≥ 0.2)
+        if isinstance(df.columns, pandas.MultiIndex):
+            df.columns = df.columns.get_level_values(0)
+                   
     else:
         df = api.df
 
