@@ -6,7 +6,7 @@
     - https://fred.stlouisfed.org/docs/api/api_key.html
 
     Cette clef est à placer dans le fichier :
-    - C:\Users\{Nom d'utilisateur}\AppData\Local\TradingInPython\config.env
+    - C:\\Users\\{Nom d'utilisateur}\\AppData\\Local\\TradingInPython\\config.env
 
     sous la forme :
         FRED_API_KEY = xxx
@@ -16,6 +16,7 @@
         d'interpoler trimestriel : mensuel pour tous les indicateurs)
     - Couverture : production, emploi, inflation, commerce de détail,
         confiance consommateur, immatriculations automobiles (proxy demande)
+        
 """
 
 import os
