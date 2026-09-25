@@ -206,6 +206,47 @@
     "exchange": "NYQ"
   },
   {
+    "name": "HONDA",
+    "symbol": "HMC",
+    "menu_list": "Automobile",
+    "price_purchase": 0.0,
+    "purchase_date": "",
+    "price_current": 0.0,
+    "price_high": "",
+    "price_high_current": 0.0,
+    "price_pourcent": 0.0,
+    "price_low": "",
+    "price_low_current": 0.0,
+    "trading_plan_high": "",
+    "trading_plan_low": "",
+    "message_date": "",
+    "message_date_content": "",
+    "message_date_to_sent": false,
+    "volume_alert": "",
+    "volume": 0,
+    "vol_tot": 0,
+    "vol_max": 0,
+    "cooldown_minutes": "",
+    "is_monitoring": false,
+    "price_low_alert_last_triggered": "",
+    "channel_alert": {
+      "enabled": false,
+      "tolerance_abs": 0.0,
+      "upper_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      },
+      "lower_line": {
+        "x1": "",
+        "y1": 0.0,
+        "x2": "",
+        "y2": 0.0
+      }
+    }
+  },
+  {
     "name": "HYUNDIA",
     "symbol": "HYMTF",
     "menu_list": "Automobile",
@@ -331,7 +372,7 @@
   {
     "name": "STELLANTIS",
     "symbol": "STLAP.PA",
-    "menu_list": "Portefeuille",
+    "menu_list": "Automobile",
     "price_purchase": 18.881,
     "purchase_date": "",
     "price_current": 0.0,
@@ -373,7 +414,7 @@
   {
     "name": "TESLA",
     "symbol": "TSLA",
-    "menu_list": "NASDAQ",
+    "menu_list": "Automobile",
     "price_purchase": 0.0,
     "purchase_date": "",
     "price_current": 0.0,
@@ -454,19 +495,19 @@
     }
   },
   {
-    "name": "VALEO",
-    "symbol": "FR.PA",
-    "menu_list": "V",
-    "price_purchase": 11.965,
+    "name": "TOYOTA",
+    "symbol": "7203.T",
+    "menu_list": "Automobile",
+    "price_purchase": 0.0,
     "purchase_date": "",
     "price_current": 0.0,
-    "price_high": 11.6,
+    "price_high": "",
     "price_high_current": 0.0,
     "price_pourcent": 0.0,
-    "price_low": 11.1,
+    "price_low": "",
     "price_low_current": 0.0,
-    "trading_plan_high": "Remontée vers le prix de revient ?",
-    "trading_plan_low": "Stop LOSS",
+    "trading_plan_high": "",
+    "trading_plan_low": "",
     "message_date": "",
     "message_date_content": "",
     "message_date_to_sent": false,
@@ -492,13 +533,12 @@
         "x2": "",
         "y2": 0.0
       }
-    },
-    "volume_max": 5000
+    }
   },
   {
     "name": "VOLKSWAGEN",
     "symbol": "VOW.DE",
-    "menu_list": "V",
+    "menu_list": "Automobile",
     "price_purchase": 0.0,
     "purchase_date": "",
     "price_current": 0.0,
