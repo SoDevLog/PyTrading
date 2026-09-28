@@ -1,0 +1,27 @@
+SecurityCode,SecurityDescription,Market,SecuritySubType
+AIR,AIRBUS,PAR,Ordinary Shares
+AI,AIR LIQUIDE,PAR,Ordinary Shares
+CS,AXA,PAR,Ordinary Shares
+BNP,BNP PARIBAS ACT.A,PAR,Ordinary Shares
+CAP,CAPGEMINI,PAR,Ordinary Shares
+CA,CARREFOUR,PAR,Ordinary Shares
+BN,DANONE,PAR,Ordinary Shares
+ENGI,ENGIE,PAR,Ordinary Shares
+EL,ESSILORLUXOTTICA,PAR,Ordinary Shares
+RMS,HERMES INTL,PAR,Ordinary Shares
+KER,KERING,PAR,Ordinary Shares
+OR,L'OREAL,PAR,Ordinary Shares
+MC,LVMH,PAR,Ordinary Shares
+ML,MICHELIN,PAR,Ordinary Shares
+ORA,ORANGE,PAR,Ordinary Shares
+RI,PERNOD RICARD,PAR,Ordinary Shares
+SAF,SAFRAN,PAR,Ordinary Shares
+SGO,SAINT GOBAIN,PAR,Ordinary Shares
+SAN,SANOFI,PAR,Ordinary Shares
+SU,SCHNEIDER ELECTRIC,PAR,Ordinary Shares
+GLE,SOCIETE GENERALE,PAR,Ordinary Shares
+STM,STMICROELECTRONICS,PAR,Ordinary Shares
+HO,THALES,PAR,Ordinary Shares
+TTE,TOTALENERGIES,PAR,Ordinary Shares
+VIE,VEOLIA ENVIRON.,PAR,Ordinary Shares
+DG,VINCI,PAR,Ordinary Shares
