@@ -704,7 +704,7 @@
         {
             "name": "FIGEAC AERO",
             "symbol": "FGA.PA",
-            "menu_list": "F"
+            "menu_list": "Aerospace-defense"
         },
         {
             "name": "FNAC DARTY",
@@ -738,7 +738,7 @@
             "trading_plan_low": "Regarder le RSI mais c'est la chute encore",
             "volume_max": 677851,
             "is_monitoring": false,
-            "menu_list": "F"
+            "menu_list": "Automobile"
         },
         {
             "name": "FTSE MIB",
