@@ -1,0 +1,66 @@
+# trading_dark.mplstyle
+# Style Matplotlib "terminal de trading" — fond sombre, grille discrète,
+# typo lisible en petite taille (utile dans un panneau Tkinter).
+# Usage : plt.style.use("trading_dark.mplstyle")
+
+# --- Figure ---
+figure.facecolor: "#1b2646"
+figure.edgecolor: "#1b2646"
+figure.dpi: 80.0
+figure.autolayout: False
+savefig.facecolor: "#1b2646"
+savefig.edgecolor: "#1b2646"
+savefig.dpi: 80.0
+
+# --- Axes ---
+axes.facecolor: "#131722"
+axes.edgecolor: "#2A2E39"
+axes.linewidth: 0.8
+axes.grid: True
+axes.axisbelow: True
+axes.spines.top: False
+axes.spines.right: False
+axes.labelcolor: "#d1d5e0"
+axes.labelsize: 9
+axes.titlesize: 14
+axes.titlecolor: "#d1d5e0"
+axes.titleweight: semibold
+axes.titlelocation: center
+axes.prop_cycle: cycler("color", ["#2962FF", "#FF6D00", "#AB47BC", "#00BCD4", "#FFC107", "#26A69A"])
+
+# --- Grille ---
+grid.color: "#2A2E39"
+grid.linewidth: 0.6
+grid.alpha: 0.6
+grid.linestyle: -
+
+# --- Ticks ---
+xtick.color: "#787B86"
+ytick.color: "#787B86"
+xtick.labelsize: 8
+ytick.labelsize: 8
+xtick.major.size: 3
+ytick.major.size: 3
+xtick.major.width: 0.6
+ytick.major.width: 0.6
+
+# --- Texte / police ---
+text.color: D1D4DC
+font.family: sans-serif
+font.sans-serif: Segoe UI, Arial, DejaVu Sans
+font.size: 9
+
+# --- Lignes ---
+lines.linewidth: 1.2
+lines.antialiased: True
+lines.solid_capstyle: round
+
+# --- Légende ---
+legend.frameon: False
+legend.fontsize: 8
+legend.labelcolor: D1D4DC
+legend.loc: upper left
+
+# --- Barres (volume, histos) ---
+patch.linewidth: 0
+patch.antialiased: True
