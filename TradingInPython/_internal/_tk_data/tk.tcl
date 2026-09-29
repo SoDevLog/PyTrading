@@ -11,7 +11,7 @@
 # this file, and for a DISCLAIMER OF ALL WARRANTIES.
 
 # Verify that we have Tk binary and script components from the same release
-package require -exact Tk  8.6.9
+package require -exact Tk  8.6.15
 
 # Create a ::tk namespace
 namespace eval ::tk {
@@ -178,16 +178,21 @@ proc ::tk::RestoreFocusGrab {grab focus {destroy destroy}} {
 
     catch {focus $oldFocus}
     grab release $grab
-    if {$destroy eq "withdraw"} {
-	wm withdraw $grab
-    } else {
-	destroy $grab
+    if {[winfo exists $grab]} {
+	if {$destroy eq "withdraw"} {
+	    wm withdraw $grab
+	} else {
+	    destroy $grab
+	}
     }
     if {[winfo exists $oldGrab] && [winfo ismapped $oldGrab]} {
+	# The "grab" command will fail if another application
+	# already holds the grab on a window with the same name.
+	# So catch it. See [7447ed20ec] for an example.
 	if {$oldStatus eq "global"} {
-	    grab -global $oldGrab
+	    catch {grab -global $oldGrab}
 	} else {
-	    grab $oldGrab
+	    catch {grab $oldGrab}
 	}
     }
 }
@@ -400,7 +405,7 @@ switch -exact -- [tk windowingsystem] {
 	event add <<NextPara>>		<Control-Down>
 	event add <<SelectPrevPara>>	<Control-Shift-Up>
 	event add <<SelectNextPara>>	<Control-Shift-Down>
-	event add <<ToggleSelection>>	<Control-ButtonPress-1>
+	event add <<ToggleSelection>>	<Control-Button-1>
 
 	# Some OS's define a goofy (as in, not <Shift-Tab>) keysym that is
 	# returned when the user presses <Shift-Tab>. In order for tab
@@ -449,7 +454,7 @@ switch -exact -- [tk windowingsystem] {
 	event add <<NextPara>>		<Control-Down>
 	event add <<SelectPrevPara>>	<Control-Shift-Up>
 	event add <<SelectNextPara>>	<Control-Shift-Down>
-	event add <<ToggleSelection>>	<Control-ButtonPress-1>
+	event add <<ToggleSelection>>	<Control-Button-1>
     }
     "aqua" {
 	event add <<Cut>>		<Command-Key-x> <Key-F2> <Command-Lock-Key-X>
@@ -460,9 +465,8 @@ switch -exact -- [tk windowingsystem] {
 	event add <<ContextMenu>>	<Button-2>
 
 	# Official bindings
-	# See http://support.apple.com/kb/HT1343
+	# See https://support.apple.com/en-us/HT201236
 	event add <<SelectAll>>		<Command-Key-a>
-	event add <<SelectNone>>	<Option-Command-Key-a>
 	event add <<Undo>>		<Command-Key-z> <Command-Lock-Key-Z>
 	event add <<Redo>>		<Shift-Command-Key-z> <Shift-Command-Lock-Key-z>
 	event add <<NextChar>>		<Right> <Control-Key-f> <Control-Lock-Key-F>
@@ -487,7 +491,7 @@ switch -exact -- [tk windowingsystem] {
 	event add <<NextPara>>		<Option-Down>
 	event add <<SelectPrevPara>>	<Shift-Option-Up>
 	event add <<SelectNextPara>>	<Shift-Option-Down>
-	event add <<ToggleSelection>>	<Command-ButtonPress-1>
+	event add <<ToggleSelection>>	<Command-Button-1>
     }
 }
 
@@ -497,7 +501,7 @@ switch -exact -- [tk windowingsystem] {
 
 if {$::tk_library ne ""} {
     proc ::tk::SourceLibFile {file} {
-        namespace eval :: [list source [file join $::tk_library $file.tcl]]
+        namespace eval :: [list source -encoding utf-8 [file join $::tk_library $file.tcl]]
     }
     namespace eval ::tk {
 	SourceLibFile icons
@@ -676,17 +680,26 @@ proc ::tk::mcmaxamp {args} {
     return $maxlen
 }
 
-# For now, turn off the custom mdef proc for the mac:
-
 if {[tk windowingsystem] eq "aqua"} {
-    namespace eval ::tk::mac {
-	set useCustomMDEF 0
+    #stub procedures to respond to "do script" Apple Events
+    proc ::tk::mac::DoScriptFile {file} {
+	uplevel #0 $file
+    	source -encoding utf-8 $file
+    }
+    proc ::tk::mac::DoScriptText {script} {
+	uplevel #0 $script
+    	eval $script
     }
 }
 
+# Create a dictionary to store the starting index of the IME marked
+# text in an Entry or Text widget.
+
+set ::tk::Priv(IMETextMark) [dict create]
+
 # Run the Ttk themed widget set initialization
 if {$::ttk::library ne ""} {
-    uplevel \#0 [list source $::ttk::library/ttk.tcl]
+    uplevel \#0 [list source -encoding utf-8 $::ttk::library/ttk.tcl]
 }
 
 # Local Variables:
