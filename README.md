@@ -1,6 +1,6 @@
 # TradingInPython - Trading Platform in Python
 
-[![Python](https://img.shields.io/badge/Python-3.9-blue.svg)](https://www.python.org/)
+[![Python](https://img.shields.io/badge/Python-3.13-blue.svg)](https://www.python.org/)
 [![Releases](https://img.shields.io/badge/Releases-GitHub-green)](https://github.com/SoDevLog/PyTrading/releases)
 [![Issues](https://img.shields.io/badge/Issues-Open-red)](https://github.com/SoDevLog/PyTrading/issues)
 [![Website](https://img.shields.io/badge/Documentation-Online-orange)](https://trading-in-python.sodevlog.com/)
