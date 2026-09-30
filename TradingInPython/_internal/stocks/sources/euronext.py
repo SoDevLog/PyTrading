@@ -1,11 +1,19 @@
 """ Euronext Source 
     Used by : StocksImportApp
+    Stocks All Market :
+    > https://live.euronext.com/fr/products/equities/list
+    
 """
 
 import csv
 from pathlib import Path
 
+# -----------------------------------------------------------------------------
+
 class EuronextSource:
+    
+    HAS_SECTOR = True # for columns 'sector' and 'industry'
+    
     # -----------------------------------------------------------------------------
 
     def __init__( self ):
@@ -42,11 +50,6 @@ class EuronextSource:
     # -----------------------------------------------------------------------------
 
     def list_stocks( self ):
-        if not self.file_name:
-            raise RuntimeError(
-                "La source Euronext nécessite un fichier de référence Euronext "
-                "configuré localement."
-            )
 
         return self._read_file()
 
@@ -81,6 +84,8 @@ class EuronextSource:
                     "name": name,
                     "exchange": row.get( "Market", "" ).strip(),
                     "type": row.get( "SecuritySubType", "" ).strip(),
+                    "sector": row.get( "Sector", "" ).strip(),
+                    "industry": row.get( "Industry", "" ).strip(),
                     "source": "Euronext"
                 } )
 

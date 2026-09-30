@@ -6,11 +6,14 @@ import csv
 import io
 import urllib.request
 
+# -----------------------------------------------------------------------------
 
 class NasdaqSource:
     NASDAQ_LISTED_URL = "https://www.nasdaqtrader.com/dynamic/SymDir/nasdaqlisted.txt"
     OTHER_LISTED_URL = "https://www.nasdaqtrader.com/dynamic/SymDir/otherlisted.txt"
 
+    HAS_SECTOR = True # for columns 'sector' and 'industry'
+    
     # -----------------------------------------------------------------------------
 
     def search( self, query, max_results=20 ):
@@ -76,6 +79,8 @@ class NasdaqSource:
                 "name": name,
                 "exchange": "NASDAQ",
                 "type": "ETF" if row.get( "ETF", "" ).strip() == "Y" else "EQUITY",
+                "sector": "",
+                "industry": "",
                 "source": "Nasdaq"
             } )
 
@@ -104,6 +109,8 @@ class NasdaqSource:
                 "name": name,
                 "exchange": row.get( "Exchange", "US" ).strip(),
                 "type": "ETF" if row.get( "ETF", "" ).strip() == "Y" else "EQUITY",
+                "sector": "",
+                "industry": "",
                 "source": "Nasdaq"
             } )
 
