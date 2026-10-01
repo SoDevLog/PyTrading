@@ -12,132 +12,184 @@
         {
             "name": "CAC 40",
             "symbol": "^FCHI",
-            "menu_list": "A-INDICES"
+            "menu_list": "A-INDICES",
+            "sector": "",
+            "industry": ""
         },
         {
             "name": "DAX Allemand",
             "symbol": "^GDAXI",
-            "menu_list": "A-INDICES"
+            "menu_list": "A-INDICES",
+            "sector": "",
+            "industry": ""
         },
         {
             "name": "Dow Jones",
             "symbol": "^DJI",
-            "menu_list": "A-INDICES"
+            "menu_list": "A-INDICES",
+            "sector": "",
+            "industry": ""
         },
         {
             "name": "Dow Jones Transportation Average",
             "symbol": "^DJT",
-            "menu_list": "A-INDICES"
+            "menu_list": "A-INDICES",
+            "sector": "",
+            "industry": ""
         },
         {
             "name": "EURO STOXX 50",
             "symbol": "^STOXX50E",
-            "menu_list": "A-INDICES"
+            "menu_list": "A-INDICES",
+            "sector": "",
+            "industry": ""
         },
         {
             "name": "Euronext 100",
             "symbol": "^N100",
-            "menu_list": "A-INDICES"
+            "menu_list": "A-INDICES",
+            "sector": "",
+            "industry": ""
         },
         {
             "name": "Euronext Amsterdam",
             "symbol": "^AEX",
-            "menu_list": "A-INDICES"
+            "menu_list": "A-INDICES",
+            "sector": "",
+            "industry": ""
         },
         {
             "name": "FTSE 100 Italie",
             "symbol": "^FTSE",
-            "menu_list": "A-INDICES"
+            "menu_list": "A-INDICES",
+            "sector": "",
+            "industry": ""
         },
         {
             "name": "Hang Seng Hong Kong",
             "symbol": "^HSI",
-            "menu_list": "A-INDICES"
+            "menu_list": "A-INDICES",
+            "sector": "",
+            "industry": ""
         },
         {
             "name": "IBEX 35 Espagne",
             "symbol": "^IBEX",
-            "menu_list": "A-INDICES"
+            "menu_list": "A-INDICES",
+            "sector": "",
+            "industry": ""
         },
         {
             "name": "KOSPI Corée du Sud",
             "symbol": "^KS11",
-            "menu_list": "A-INDICES"
+            "menu_list": "A-INDICES",
+            "sector": "",
+            "industry": ""
         },
         {
             "name": "NASDAQ",
             "symbol": "^IXIC",
-            "menu_list": "A-INDICES"
+            "menu_list": "A-INDICES",
+            "sector": "",
+            "industry": ""
         },
         {
             "name": "NASDAQ Biotech",
             "symbol": "^NBI",
-            "menu_list": "A-INDICES"
+            "menu_list": "A-INDICES",
+            "sector": "",
+            "industry": ""
         },
         {
             "name": "NASDAQ100",
             "symbol": "^NDX",
-            "menu_list": "A-INDICES"
+            "menu_list": "A-INDICES",
+            "sector": "",
+            "industry": ""
         },
         {
             "name": "NIFTY 50 Inde",
             "symbol": "^NSEI",
-            "menu_list": "A-INDICES"
+            "menu_list": "A-INDICES",
+            "sector": "",
+            "industry": ""
         },
         {
             "name": "NYSE Composite",
             "symbol": "^NYA",
-            "menu_list": "A-INDICES"
+            "menu_list": "A-INDICES",
+            "sector": "",
+            "industry": ""
         },
         {
             "name": "Nikkei 225",
             "symbol": "^N225",
-            "menu_list": "A-INDICES"
+            "menu_list": "A-INDICES",
+            "sector": "",
+            "industry": ""
         },
         {
             "name": "PHLX Semicon",
             "symbol": "^SOX",
-            "menu_list": "A-INDICES"
+            "menu_list": "A-INDICES",
+            "sector": "",
+            "industry": ""
         },
         {
             "name": "Philadelphia Gold & Silver",
             "symbol": "^XAU",
-            "menu_list": "A-INDICES"
+            "menu_list": "A-INDICES",
+            "sector": "",
+            "industry": ""
         },
         {
             "name": "Russell 2000",
             "symbol": "^RUT",
-            "menu_list": "A-INDICES"
+            "menu_list": "A-INDICES",
+            "sector": "",
+            "industry": ""
         },
         {
             "name": "S&P 500",
             "symbol": "^GSPC",
-            "menu_list": "A-INDICES"
+            "menu_list": "A-INDICES",
+            "sector": "",
+            "industry": ""
         },
         {
             "name": "S&P 500 (TR)",
             "symbol": "^SP500TR",
-            "menu_list": "A-INDICES"
+            "menu_list": "A-INDICES",
+            "sector": "",
+            "industry": ""
         },
         {
             "name": "SBF 120",
             "symbol": "^SBF120",
-            "menu_list": "A-INDICES"
+            "menu_list": "A-INDICES",
+            "sector": "",
+            "industry": ""
         },
         {
             "name": "SMI Suisse",
             "symbol": "^SSMI",
-            "menu_list": "A-INDICES"
+            "menu_list": "A-INDICES",
+            "sector": "",
+            "industry": ""
         },
         {
             "name": "VIX Volatilité",
             "symbol": "^VIX",
-            "menu_list": "A-INDICES"
+            "menu_list": "A-INDICES",
+            "sector": "",
+            "industry": ""
         },
         {
             "name": "2CRSI",
             "symbol": "AL2SI.PA",
-            "menu_list": "Computer-hardwawre"
+            "menu_list": "Computer-hardwawre",
+            "sector": "Technology",
+            "industry": "Computer Hardware"
         },
         {
             "name": "AB SCIENCE",
@@ -152,51 +204,71 @@
             "message_date_content": "Message d'exemple",
             "volume_max": 400000,
             "menu_list": "Pharma",
-            "is_monitoring": false
+            "is_monitoring": false,
+            "sector": "Healthcare",
+            "industry": "Drug Manufacturers - Specialty & Generic"
         },
         {
             "name": "ABIVAX",
             "symbol": "ABVX.PA",
-            "menu_list": "Pharma"
+            "menu_list": "Pharma",
+            "sector": "Healthcare",
+            "industry": "Biotechnology"
         },
         {
             "name": "ACCOR",
             "symbol": "AC.PA",
-            "menu_list": "A"
+            "menu_list": "A",
+            "sector": "Consumer Cyclical",
+            "industry": "Lodging"
         },
         {
             "name": "ADOCIA",
             "symbol": "ADOC.PA",
-            "menu_list": "Pharma"
+            "menu_list": "Pharma",
+            "sector": "Healthcare",
+            "industry": "Biotechnology"
         },
         {
             "name": "ADTRAN",
-            "symbol": "ADTN"
+            "symbol": "ADTN",
+            "sector": "Technology",
+            "industry": "Communication Equipment"
         },
         {
             "name": "AIR LIQUIDE",
             "symbol": "AI.PA",
-            "menu_list": "A"
+            "menu_list": "A",
+            "sector": "Basic Materials",
+            "industry": "Specialty Chemicals"
         },
         {
             "name": "AIRBUS",
             "symbol": "AIR.PA",
-            "menu_list": "Industrie"
+            "menu_list": "Industrie",
+            "sector": "Industrials",
+            "industry": "Aerospace & Defense"
         },
         {
             "name": "AIXTRON",
             "symbol": "AIX2.F",
-            "menu_list": "Semi-conducteurs"
+            "menu_list": "Semi-conducteurs",
+            "sector": "Technology",
+            "industry": "Semiconductor Equipment & Materials"
         },
         {
             "name": "ALIBABA",
             "symbol": "BABA",
-            "menu_list": "Chinois"
+            "menu_list": "Chinois",
+            "sector": "Consumer Cyclical",
+            "industry": "Internet Retail"
         },
         {
             "name": "ALPHA",
             "symbol": "GOOG",
-            "menu_list": "Techno"
+            "menu_list": "Techno",
+            "sector": "Communication Services",
+            "industry": "Internet Content & Information"
         },
         {
             "name": "ALSTOM",
@@ -208,79 +280,111 @@
             "trading_plan_low": "Retour au plus bas",
             "volume_max": 5000,
             "menu_list": "Industrie",
-            "is_monitoring": true
+            "is_monitoring": true,
+            "sector": "Industrials",
+            "industry": "Railroads"
         },
         {
             "name": "AMAZON",
             "symbol": "AMZN",
-            "menu_list": "Retails"
+            "menu_list": "Retails",
+            "sector": "Consumer Cyclical",
+            "industry": "Internet Retail"
         },
         {
             "name": "AMD",
             "symbol": "AMD",
-            "menu_list": "Semi-conducteurs"
+            "menu_list": "Semi-conducteurs",
+            "sector": "Technology",
+            "industry": "Semiconductors"
         },
         {
             "name": "AMERICAN AIRLINES",
-            "symbol": "AAL.BA"
+            "symbol": "AAL.BA",
+            "sector": "Industrials",
+            "industry": "Airlines"
         },
         {
             "name": "AMPHENOL",
-            "symbol": "APH"
+            "symbol": "APH",
+            "sector": "Technology",
+            "industry": "Electronic Components"
         },
         {
             "name": "AMUNDI PEA MSCI EUROPE",
             "symbol": "PCEU.PA",
-            "menu_list": "ETF"
+            "menu_list": "ETF",
+            "sector": "",
+            "industry": ""
         },
         {
             "name": "AMUNDI S&P 500 UCITS",
             "symbol": "500.PA",
-            "menu_list": "ETF"
+            "menu_list": "ETF",
+            "sector": "",
+            "industry": ""
         },
         {
             "name": "APPLE",
             "symbol": "AAPL",
-            "menu_list": "Techno"
+            "menu_list": "Techno",
+            "sector": "Technology",
+            "industry": "Consumer Electronics"
         },
         {
             "name": "ARAMIS",
             "symbol": "ARAMI.PA",
-            "menu_list": "A"
+            "menu_list": "A",
+            "sector": "Consumer Cyclical",
+            "industry": "Auto & Truck Dealerships"
         },
         {
             "name": "ARGENT (SF)",
             "symbol": "SI=F",
-            "menu_list": "Métaux précieux"
+            "menu_list": "Métaux précieux",
+            "sector": "",
+            "industry": ""
         },
         {
             "name": "ARKEMA",
             "symbol": "AKE.PA",
-            "menu_list": "A"
+            "menu_list": "A",
+            "sector": "Basic Materials",
+            "industry": "Specialty Chemicals"
         },
         {
             "name": "ARQIT QUANTUM",
             "symbol": "ARQQ",
-            "menu_list": "Software-infra"
+            "menu_list": "Software-infra",
+            "sector": "Technology",
+            "industry": "Software - Infrastructure"
         },
         {
             "name": "ASM Internat. NV",
             "symbol": "ASMIY",
-            "menu_list": "Semi-conducteurs"
+            "menu_list": "Semi-conducteurs",
+            "sector": "Technology",
+            "industry": "Semiconductor Equipment & Materials"
         },
         {
             "name": "ASML",
             "symbol": "ASML",
-            "menu_list": "Semi-conducteurs"
+            "menu_list": "Semi-conducteurs",
+            "sector": "Technology",
+            "industry": "Semiconductor Equipment & Materials"
         },
         {
             "name": "ASSYSTEM",
             "symbol": "ASY.PA",
-            "menu_list": "Construction-Ingé"
+            "menu_list": "Construction-Ingé",
+            "sector": "Industrials",
+            "industry": "Engineering & Construction"
         },
         {
             "name": "ATEME SA",
-            "symbol": "ATEME.PA"
+            "symbol": "ATEME.PA",
+            "sector": "Technology",
+            "industry": "Communication Equipment"
         },
         {
             "name": "ATOS",
@@ -291,37 +395,51 @@
             "trading_plan_low": "Redescend",
             "volume_max": 500000,
             "menu_list": "ESN",
-            "is_monitoring": false
+            "is_monitoring": false,
+            "sector": "Technology",
+            "industry": "Information Technology Services"
         },
         {
             "name": "AUBAY",
             "symbol": "AUB.PA",
-            "menu_list": "A"
+            "menu_list": "A",
+            "sector": "Technology",
+            "industry": "Information Technology Services"
         },
         {
             "name": "AXA",
             "symbol": "CS.PA",
-            "menu_list": "A"
+            "menu_list": "A",
+            "sector": "Financial Services",
+            "industry": "Insurance - Diversified"
         },
         {
             "name": "AXON",
             "symbol": "AXON",
-            "menu_list": "Aerospace-defense"
+            "menu_list": "Aerospace-defense",
+            "sector": "Industrials",
+            "industry": "Aerospace & Defense"
         },
         {
             "name": "AXT, Inc. ",
             "symbol": "AXTI",
-            "menu_list": "Semi-conducteurs"
+            "menu_list": "Semi-conducteurs",
+            "sector": "Technology",
+            "industry": "Semiconductor Equipment & Materials"
         },
         {
             "name": "AXWAY SOFTWARE",
             "symbol": "AXW.PA",
-            "menu_list": "A"
+            "menu_list": "A",
+            "sector": "",
+            "industry": ""
         },
         {
             "name": "AYVENS",
             "symbol": "AYV.PA",
-            "menu_list": "A"
+            "menu_list": "A",
+            "sector": "Industrials",
+            "industry": "Rental & Leasing Services"
         },
         {
             "name": "AirFrance KML",
@@ -332,46 +450,64 @@
             "trading_plan_low": "Descente à racheter ?",
             "volume_max": 25000,
             "is_monitoring": false,
-            "menu_list": "A"
+            "menu_list": "A",
+            "sector": "Industrials",
+            "industry": "Airlines"
         },
         {
             "name": "Amundi PEA Nasdaq-100",
             "symbol": "PUST.PA",
-            "menu_list": "ETF"
+            "menu_list": "ETF",
+            "sector": "",
+            "industry": ""
         },
         {
             "name": "Amundi PEA SCI China",
             "symbol": "PASI.PA",
-            "menu_list": "ETF"
+            "menu_list": "ETF",
+            "sector": "",
+            "industry": ""
         },
         {
             "name": "Aéroport de Paris SA",
             "symbol": "ADP.PA",
-            "menu_list": "A"
+            "menu_list": "A",
+            "sector": "Industrials",
+            "industry": "Airports & Air Services"
         },
         {
             "name": "BADGER METER",
             "symbol": "BMI",
-            "menu_list": "Scientific-tech-instruments"
+            "menu_list": "Scientific-tech-instruments",
+            "sector": "Technology",
+            "industry": "Scientific & Technical Instruments"
         },
         {
             "name": "BAE SYSTEMS",
             "symbol": "BA",
-            "menu_list": "Aerospace-defense"
+            "menu_list": "Aerospace-defense",
+            "sector": "Industrials",
+            "industry": "Aerospace & Defense"
         },
         {
             "name": "BAIDU Inc",
             "symbol": "BIDU",
-            "menu_list": "Chinois"
+            "menu_list": "Chinois",
+            "sector": "Communication Services",
+            "industry": "Internet Content & Information"
         },
         {
             "name": "BASTIDE LE CONFORT",
-            "symbol": "BLC.PA"
+            "symbol": "BLC.PA",
+            "sector": "Healthcare",
+            "industry": "Medical Distribution"
         },
         {
             "name": "BE Semiconductor",
             "symbol": "BESI.AS",
-            "menu_list": "Semi-conducteurs"
+            "menu_list": "Semi-conducteurs",
+            "sector": "Technology",
+            "industry": "Semiconductor Equipment & Materials"
         },
         {
             "name": "BELIEVE",
@@ -385,70 +521,98 @@
             "price_low": 7.9,
             "volume_max": 5500,
             "is_monitoring": true,
-            "menu_list": "Loisir bateaux"
+            "menu_list": "Loisir bateaux",
+            "sector": "Consumer Cyclical",
+            "industry": "Recreational Vehicles"
         },
         {
             "name": "BINANCE",
             "symbol": "BNB-USD",
-            "menu_list": "Crypto"
+            "menu_list": "Crypto",
+            "sector": "",
+            "industry": ""
         },
         {
             "name": "BITCOIN",
             "symbol": "BTC-USD",
-            "menu_list": "Crypto"
+            "menu_list": "Crypto",
+            "sector": "",
+            "industry": ""
         },
         {
             "name": "BMW",
             "symbol": "BMW.DE",
-            "menu_list": "Automobile"
+            "menu_list": "Automobile",
+            "sector": "Consumer Cyclical",
+            "industry": "Auto Manufacturers"
         },
         {
             "name": "BNP PARIBAS",
             "symbol": "BNP.PA",
-            "menu_list": "Finance"
+            "menu_list": "Finance",
+            "sector": "Financial Services",
+            "industry": "Banks - Regional"
         },
         {
             "name": "BNP Paribas Easy MSCI",
             "symbol": "ESAF.DE",
-            "menu_list": "ETF"
+            "menu_list": "ETF",
+            "sector": "",
+            "industry": ""
         },
         {
             "name": "BOLIDEN",
-            "symbol": "BWJ.F"
+            "symbol": "BWJ.F",
+            "sector": "Basic Materials",
+            "industry": "Other Industrial Metals & Mining"
         },
         {
             "name": "BOUYGUES",
             "symbol": "EN.PA",
-            "menu_list": "Construction-Ingé"
+            "menu_list": "Construction-Ingé",
+            "sector": "Industrials",
+            "industry": "Engineering & Construction"
         },
         {
             "name": "BP",
             "symbol": "BP",
-            "menu_list": "Oil & Gas"
+            "menu_list": "Oil & Gas",
+            "sector": "Energy",
+            "industry": "Oil & Gas Integrated"
         },
         {
             "name": "BRAZE RG-A",
-            "symbol": "BRZE"
+            "symbol": "BRZE",
+            "sector": "Technology",
+            "industry": "Software - Application"
         },
         {
             "name": "BROADCOM",
             "symbol": "AVGO",
-            "menu_list": "Semi-conducteurs"
+            "menu_list": "Semi-conducteurs",
+            "sector": "Technology",
+            "industry": "Semiconductors"
         },
         {
             "name": "BWXT",
             "symbol": "BWXT",
-            "menu_list": "Aerospace-defense"
+            "menu_list": "Aerospace-defense",
+            "sector": "Industrials",
+            "industry": "Aerospace & Defense"
         },
         {
             "name": "BYD",
             "symbol": "BYDDF",
-            "menu_list": "Automobile"
+            "menu_list": "Automobile",
+            "sector": "Consumer Cyclical",
+            "industry": "Auto Manufacturers"
         },
         {
             "name": "Brent",
             "symbol": "BZ=F",
-            "menu_list": "Pétrol"
+            "menu_list": "Pétrol",
+            "sector": "",
+            "industry": ""
         },
         {
             "name": "CAPGEMINI",
@@ -458,43 +622,61 @@
             "price_low": 193.28,
             "trading_plan_high": "Début de journéé",
             "trading_plan_low": "Stop Loss",
-            "menu_list": "ESN"
+            "menu_list": "ESN",
+            "sector": "Technology",
+            "industry": "Information Technology Services"
         },
         {
             "name": "CARREFOUR",
             "symbol": "CA.PA",
-            "is_monitoring": false
+            "is_monitoring": false,
+            "sector": "Consumer Defensive",
+            "industry": "Grocery Stores"
         },
         {
             "name": "CATANA",
             "symbol": "ALCAT.PA",
-            "menu_list": "Loisir bateaux"
+            "menu_list": "Loisir bateaux",
+            "sector": "Consumer Cyclical",
+            "industry": "Recreational Vehicles"
         },
         {
             "name": "CIE DES ALPES",
-            "symbol": "CDA.PA"
+            "symbol": "CDA.PA",
+            "sector": "Consumer Cyclical",
+            "industry": "Leisure"
         },
         {
             "name": "CISCO SYSTEM",
-            "symbol": "CSCO"
+            "symbol": "CSCO",
+            "sector": "Technology",
+            "industry": "Communication Equipment"
         },
         {
             "name": "CMBTECH",
             "symbol": "CMBT",
-            "menu_list": "Oil & Gas"
+            "menu_list": "Oil & Gas",
+            "sector": "Energy",
+            "industry": "Oil & Gas Midstream"
         },
         {
             "name": "COINBASE",
-            "symbol": "COIN"
+            "symbol": "COIN",
+            "sector": "Financial Services",
+            "industry": "Financial Data & Stock Exchanges"
         },
         {
             "name": "CORE SCIENTIFIC",
-            "symbol": "CORZ"
+            "symbol": "CORZ",
+            "sector": "Technology",
+            "industry": "Software - Infrastructure"
         },
         {
             "name": "CREDIT AGRICOLE SA",
             "symbol": "ACA.PA",
-            "menu_list": "Finance"
+            "menu_list": "Finance",
+            "sector": "Financial Services",
+            "industry": "Banks - Regional"
         },
         {
             "name": "CROCS",
@@ -503,26 +685,36 @@
             "price_low": 118.2,
             "trading_plan_high": "Ascension irrésistible potentiel supérieur à 30%",
             "volume_max": 124617,
-            "is_monitoring": false
+            "is_monitoring": false,
+            "sector": "Consumer Cyclical",
+            "industry": "Footwear & Accessories"
         },
         {
             "name": "Choice Hotels Int.",
-            "symbol": "CZH.F"
+            "symbol": "CZH.F",
+            "sector": "Consumer Cyclical",
+            "industry": "Lodging"
         },
         {
             "name": "Crude Oil",
             "symbol": "CL=F",
-            "menu_list": "Futures"
+            "menu_list": "Futures",
+            "sector": "",
+            "industry": ""
         },
         {
             "name": "D-Wave Quantum",
             "symbol": "QBTS",
             "exchange": "NYQ",
-            "menu_list": "NASDAQ"
+            "menu_list": "NASDAQ",
+            "sector": "Technology",
+            "industry": "Computer Hardware"
         },
         {
             "name": "DANONE",
-            "symbol": "BN.PA"
+            "symbol": "BN.PA",
+            "sector": "Consumer Defensive",
+            "industry": "Packaged Foods"
         },
         {
             "name": "DASSAULT AVIATION",
@@ -534,7 +726,9 @@
             "trading_plan_low": "Support",
             "volume_max": 550,
             "menu_list": "Aerospace-defense",
-            "is_monitoring": true
+            "is_monitoring": true,
+            "sector": "Industrials",
+            "industry": "Aerospace & Defense"
         },
         {
             "name": "DASSAULT SYSTEMES",
@@ -544,12 +738,16 @@
             "trading_plan_high": "La monté se poursuit",
             "trading_plan_low": "En chute libre depuis le 31 janv 2024",
             "volume_max": 400000,
-            "is_monitoring": false
+            "is_monitoring": false,
+            "sector": "Technology",
+            "industry": "Software - Application"
         },
         {
             "name": "DELL",
             "symbol": "DELL",
-            "menu_list": "Computer-hardwawre"
+            "menu_list": "Computer-hardwawre",
+            "sector": "Technology",
+            "industry": "Computer Hardware"
         },
         {
             "name": "DEUTSCHE POST",
@@ -557,54 +755,76 @@
             "price_high": 40.0,
             "price_low": 39.0,
             "volume_max": 1000000,
-            "is_monitoring": false
+            "is_monitoring": false,
+            "sector": "Industrials",
+            "industry": "Integrated Freight & Logistics"
         },
         {
             "name": "DOMINOS'S PIZZA",
-            "symbol": "DPZ"
+            "symbol": "DPZ",
+            "sector": "Consumer Cyclical",
+            "industry": "Restaurants"
         },
         {
             "name": "DRONE VOLT",
-            "symbol": "ALDRV.PA"
+            "symbol": "ALDRV.PA",
+            "sector": "Technology",
+            "industry": "Computer Hardware"
         },
         {
             "name": "DUKE ENERGY",
             "symbol": "DUK",
-            "menu_list": "Electrical"
+            "menu_list": "Electrical",
+            "sector": "Utilities",
+            "industry": "Utilities - Regulated Electric"
         },
         {
             "name": "Delta Electronics Inc",
             "symbol": "DLS.F",
-            "menu_list": "Semi-conducteurs"
+            "menu_list": "Semi-conducteurs",
+            "sector": "Industrials",
+            "industry": "Electrical Equipment & Parts"
         },
         {
             "name": "Dow Jones Futures",
             "symbol": "YM=F",
-            "menu_list": "Futures"
+            "menu_list": "Futures",
+            "sector": "",
+            "industry": ""
         },
         {
             "name": "EATON",
-            "symbol": "ETN"
+            "symbol": "ETN",
+            "sector": "Industrials",
+            "industry": "Specialty Industrial Machinery"
         },
         {
             "name": "EBAY",
             "symbol": "EBAY",
-            "menu_list": "Retails"
+            "menu_list": "Retails",
+            "sector": "Consumer Cyclical",
+            "industry": "Internet Retail"
         },
         {
             "name": "EDENRED",
             "symbol": "EDEN.PA",
-            "menu_list": "E"
+            "menu_list": "E",
+            "sector": "Financial Services",
+            "industry": "Credit Services"
         },
         {
             "name": "EIFFAGE",
             "symbol": "FGR.PA",
-            "menu_list": "Construction-Ingé"
+            "menu_list": "Construction-Ingé",
+            "sector": "Industrials",
+            "industry": "Engineering & Construction"
         },
         {
             "name": "EMEIS",
             "symbol": "EMEIS.PA",
-            "menu_list": "E"
+            "menu_list": "E",
+            "sector": "Healthcare",
+            "industry": "Medical Care Facilities"
         },
         {
             "name": "ENGIE",
@@ -615,39 +835,55 @@
             "trading_plan_low": "Poursuit la descente bientôt acheter ?",
             "volume_max": 50000,
             "is_monitoring": false,
-            "menu_list": "Electrical"
+            "menu_list": "Electrical",
+            "sector": "Utilities",
+            "industry": "Utilities - Diversified"
         },
         {
             "name": "ENI",
             "symbol": "E",
-            "menu_list": "Oil & Gas"
+            "menu_list": "Oil & Gas",
+            "sector": "Energy",
+            "industry": "Oil & Gas Integrated"
         },
         {
             "name": "ENTECH",
-            "symbol": "ALESE.PA"
+            "symbol": "ALESE.PA",
+            "sector": "Utilities",
+            "industry": "Utilities - Renewable"
         },
         {
             "name": "EQUINOR",
             "symbol": "EQNR",
-            "menu_list": "Oil & Gas"
+            "menu_list": "Oil & Gas",
+            "sector": "Energy",
+            "industry": "Oil & Gas Integrated"
         },
         {
             "name": "ERAMET",
-            "symbol": "ERA.PA"
+            "symbol": "ERA.PA",
+            "sector": "Basic Materials",
+            "industry": "Other Industrial Metals & Mining"
         },
         {
             "name": "ESSILORLUXOTTICA",
-            "symbol": "EL.PA"
+            "symbol": "EL.PA",
+            "sector": "Healthcare",
+            "industry": "Medical Instruments & Supplies"
         },
         {
             "name": "ETHEREUM",
             "symbol": "ETH-USD",
-            "menu_list": "Crypto"
+            "menu_list": "Crypto",
+            "sector": "",
+            "industry": ""
         },
         {
             "name": "EURO=DOLLAR",
             "symbol": "EURUSD=X",
-            "menu_list": "CHANGE"
+            "menu_list": "CHANGE",
+            "sector": "",
+            "industry": ""
         },
         {
             "name": "EUROAPI",
@@ -658,76 +894,108 @@
             "trading_plan_low": "Plus bas du jour",
             "volume_max": "10000",
             "menu_list": "Healthcare",
-            "is_monitoring": false
+            "is_monitoring": false,
+            "sector": "Healthcare",
+            "industry": "Drug Manufacturers - Specialty & Generic"
         },
         {
             "name": "EUROFINS SCIENT.",
             "symbol": "ERF.PA",
-            "menu_list": "E"
+            "menu_list": "E",
+            "sector": "Healthcare",
+            "industry": "Diagnostics & Research"
         },
         {
             "name": "EURONEXT",
             "symbol": "ENX.PA",
-            "menu_list": "E"
+            "menu_list": "E",
+            "sector": "Financial Services",
+            "industry": "Financial Data & Stock Exchanges"
         },
         {
             "name": "EUTELSAT",
             "symbol": "ETL.PA",
-            "menu_list": "E"
+            "menu_list": "E",
+            "sector": "Communication Services",
+            "industry": "Telecom Services"
         },
         {
             "name": "EXAIL TECHNO",
             "symbol": "EXA.PA",
-            "menu_list": "Aerospace-defense"
+            "menu_list": "Aerospace-defense",
+            "sector": "Industrials",
+            "industry": "Aerospace & Defense"
         },
         {
             "name": "EXOSENS",
-            "symbol": "EXENS.PA"
+            "symbol": "EXENS.PA",
+            "sector": "Industrials",
+            "industry": "Aerospace & Defense"
         },
         {
             "name": "Econocom Group SE",
-            "symbol": "ECONB.BR"
+            "symbol": "ECONB.BR",
+            "sector": "Technology",
+            "industry": "Information Technology Services"
         },
         {
             "name": "Euronet Worldwide",
-            "symbol": "EEFT"
+            "symbol": "EEFT",
+            "sector": "Technology",
+            "industry": "Software - Infrastructure"
         },
         {
             "name": "FDJU",
-            "symbol": "FDJU.PA"
+            "symbol": "FDJU.PA",
+            "sector": "Consumer Cyclical",
+            "industry": "Gambling"
         },
         {
             "name": "FERRARI",
             "symbol": "RACE",
-            "menu_list": "Automobile"
+            "menu_list": "Automobile",
+            "sector": "Consumer Cyclical",
+            "industry": "Auto Manufacturers"
         },
         {
             "name": "FIGEAC AERO",
             "symbol": "FGA.PA",
-            "menu_list": "Aerospace-defense"
+            "menu_list": "Aerospace-defense",
+            "sector": "Industrials",
+            "industry": "Aerospace & Defense"
         },
         {
             "name": "FNAC DARTY",
             "symbol": "FNAC.PA",
-            "menu_list": "Retails"
+            "menu_list": "Retails",
+            "sector": "Consumer Cyclical",
+            "industry": "Specialty Retail"
         },
         {
             "name": "FONCIERE INEA",
-            "symbol": "INEA.PA"
+            "symbol": "INEA.PA",
+            "sector": "Real Estate",
+            "industry": "Real Estate Services"
         },
         {
             "name": "FONTAINE PAJOT",
-            "symbol": "ALFPC.PA"
+            "symbol": "ALFPC.PA",
+            "sector": "Consumer Cyclical",
+            "industry": "Recreational Vehicles"
         },
         {
             "name": "FORD",
             "symbol": "F",
-            "menu_list": "Automobile"
+            "menu_list": "Automobile",
+            "sector": "Consumer Cyclical",
+            "industry": "Auto Manufacturers"
         },
         {
             "name": "FORTINET",
             "symbol": "FTNT",
-            "menu_list": "Software-infra"
+            "menu_list": "Software-infra",
+            "sector": "Technology",
+            "industry": "Software - Infrastructure"
         },
         {
             "name": "FORVIA",
@@ -738,70 +1006,98 @@
             "trading_plan_low": "Regarder le RSI mais c'est la chute encore",
             "volume_max": 677851,
             "is_monitoring": false,
-            "menu_list": "Automobile"
+            "menu_list": "Automobile",
+            "sector": "Consumer Cyclical",
+            "industry": "Auto Parts"
         },
         {
             "name": "FTSE MIB",
             "symbol": "FTSEMIB.MI",
-            "menu_list": "A-INDICES"
+            "menu_list": "A-INDICES",
+            "sector": "",
+            "industry": ""
         },
         {
             "name": "FUBOTV",
             "symbol": "FUBO",
-            "menu_list": "Broadcasting"
+            "menu_list": "Broadcasting",
+            "sector": "Communication Services",
+            "industry": "Broadcasting"
         },
         {
             "name": "GARTNER",
-            "symbol": "IT"
+            "symbol": "IT",
+            "sector": "Technology",
+            "industry": "Information Technology Services"
         },
         {
             "name": "GAZTRANSPORT & Technigaz",
             "symbol": "GTT.PA",
-            "menu_list": "Oil & Gas"
+            "menu_list": "Oil & Gas",
+            "sector": "Energy",
+            "industry": "Oil & Gas Equipment & Services"
         },
         {
             "name": "GE AEROSPACE",
-            "symbol": "GE"
+            "symbol": "GE",
+            "sector": "Industrials",
+            "industry": "Aerospace & Defense"
         },
         {
             "name": "GENERAL MOTORS",
             "symbol": "GM",
             "exchange": "NYQ",
-            "menu_list": "Automobile"
+            "menu_list": "Automobile",
+            "sector": "Consumer Cyclical",
+            "industry": "Auto Manufacturers"
         },
         {
             "name": "GITLAB RG-A",
-            "symbol": "GTLB"
+            "symbol": "GTLB",
+            "sector": "Technology",
+            "industry": "Software - Infrastructure"
         },
         {
             "name": "GLOBAL X URA",
             "symbol": "URA",
-            "menu_list": "ETF"
+            "menu_list": "ETF",
+            "sector": "",
+            "industry": ""
         },
         {
             "name": "Gaz Naturel",
             "symbol": "NG=F",
-            "menu_list": "Futures"
+            "menu_list": "Futures",
+            "sector": "",
+            "industry": ""
         },
         {
             "name": "HAFFNER ENERGY",
             "symbol": "ALHAF.PA",
-            "menu_list": "Services publics"
+            "menu_list": "Services publics",
+            "sector": "Utilities",
+            "industry": "Utilities - Renewable"
         },
         {
             "name": "HIMS",
             "symbol": "HIMS",
-            "menu_list": "Healthcare"
+            "menu_list": "Healthcare",
+            "sector": "Healthcare",
+            "industry": "Drug Manufacturers - Specialty & Generic"
         },
         {
             "name": "HONDA",
             "symbol": "HMC",
-            "menu_list": "Automobile"
+            "menu_list": "Automobile",
+            "sector": "Consumer Cyclical",
+            "industry": "Auto Manufacturers"
         },
         {
             "name": "HP",
             "symbol": "HPQ",
-            "menu_list": "Computer-hardwawre"
+            "menu_list": "Computer-hardwawre",
+            "sector": "Technology",
+            "industry": "Computer Hardware"
         },
         {
             "name": "HYUNDIA",
@@ -811,105 +1107,147 @@
         {
             "name": "HYUNDIACorée",
             "symbol": "005380.KQ",
-            "menu_list": "Automobile"
+            "menu_list": "Automobile",
+            "sector": "",
+            "industry": ""
         },
         {
             "name": "Hewlett Packard",
-            "symbol": "HPE"
+            "symbol": "HPE",
+            "sector": "Technology",
+            "industry": "Communication Equipment"
         },
         {
             "name": "I2S",
             "symbol": "ALI2S.PA",
-            "menu_list": "Electrical"
+            "menu_list": "Electrical",
+            "sector": "Industrials",
+            "industry": "Electrical Equipment & Parts"
         },
         {
             "name": "ICADE",
             "symbol": "ICAD.PA",
-            "menu_list": "Immobilier"
+            "menu_list": "Immobilier",
+            "sector": "Real Estate",
+            "industry": "REIT - Diversified"
         },
         {
             "name": "ID LOGISTICS",
             "symbol": "IDL.PA",
-            "menu_list": "Industrie"
+            "menu_list": "Industrie",
+            "sector": "Industrials",
+            "industry": "Integrated Freight & Logistics"
         },
         {
             "name": "IMPP",
             "symbol": "IMPP",
-            "menu_list": "Oil & Gas"
+            "menu_list": "Oil & Gas",
+            "sector": "Energy",
+            "industry": "Oil & Gas Midstream"
         },
         {
             "name": "INDRA SISTEMAS",
             "symbol": "IDR.MC",
-            "menu_list": "Aerospace-defense"
+            "menu_list": "Aerospace-defense",
+            "sector": "Technology",
+            "industry": "Information Technology Services"
         },
         {
             "name": "INFINEON",
             "symbol": "IFX.F",
-            "menu_list": "Semi-conducteurs"
+            "menu_list": "Semi-conducteurs",
+            "sector": "Technology",
+            "industry": "Semiconductors"
         },
         {
             "name": "INTEL",
             "symbol": "INTC",
-            "menu_list": "Semi-conducteurs"
+            "menu_list": "Semi-conducteurs",
+            "sector": "Technology",
+            "industry": "Semiconductors"
         },
         {
             "name": "IONQ",
             "symbol": "IONQ",
-            "menu_list": "NASDAQ"
+            "menu_list": "NASDAQ",
+            "sector": "Technology",
+            "industry": "Computer Hardware"
         },
         {
             "name": "IPSOS",
             "symbol": "IPS.PA",
-            "menu_list": "Industrie"
+            "menu_list": "Industrie",
+            "sector": "Industrials",
+            "industry": "Consulting Services"
         },
         {
             "name": "ISHARES 20+ YTB",
             "symbol": "TLT",
-            "menu_list": "ETF"
+            "menu_list": "ETF",
+            "sector": "",
+            "industry": ""
         },
         {
             "name": "ISHARES S&P 500 Swap PEA UCITS",
             "symbol": "SPEA.PA",
-            "menu_list": "ETF"
+            "menu_list": "ETF",
+            "sector": "",
+            "industry": ""
         },
         {
             "name": "Iberdrola",
-            "symbol": "IBE5.F"
+            "symbol": "IBE5.F",
+            "sector": "Utilities",
+            "industry": "Utilities - Diversified"
         },
         {
             "name": "Invesco QQQ (Nasdaq 100)",
             "symbol": "QQQ",
-            "menu_list": "ETF"
+            "menu_list": "ETF",
+            "sector": "",
+            "industry": ""
         },
         {
             "name": "JD.com",
             "symbol": "JD",
-            "menu_list": "Chinois"
+            "menu_list": "Chinois",
+            "sector": "Consumer Cyclical",
+            "industry": "Internet Retail"
         },
         {
             "name": "JPMorgan Eq (S&P500)",
             "symbol": "JEPI",
-            "menu_list": "ETF"
+            "menu_list": "ETF",
+            "sector": "",
+            "industry": ""
         },
         {
             "name": "JPMorgan Eq Prem (NASDAQ)",
             "symbol": "JEPQ",
-            "menu_list": "ETF"
+            "menu_list": "ETF",
+            "sector": "",
+            "industry": ""
         },
         {
             "name": "KERING",
             "symbol": "KER.PA",
-            "menu_list": "Luxe"
+            "menu_list": "Luxe",
+            "sector": "Consumer Cyclical",
+            "industry": "Luxury Goods"
         },
         {
             "name": "KLEPIERRE",
             "symbol": "LI.PA",
-            "menu_list": "Retails"
+            "menu_list": "Retails",
+            "sector": "Real Estate",
+            "industry": "REIT - Retail"
         },
         {
             "name": "L'OREAL",
             "symbol": "OR.PA",
-            "menu_list": "L"
+            "menu_list": "L",
+            "sector": "Consumer Defensive",
+            "industry": "Household & Personal Products"
         },
         {
             "name": "LEBON",
@@ -920,49 +1258,69 @@
             "trading_plan_low": "Rechute",
             "volume_max": 100,
             "menu_list": "Finance",
-            "is_monitoring": false
+            "is_monitoring": false,
+            "sector": "Financial Services",
+            "industry": "Asset Management"
         },
         {
             "name": "LEGRAND",
             "symbol": "LR.PA",
-            "menu_list": "Electrical"
+            "menu_list": "Electrical",
+            "sector": "Industrials",
+            "industry": "Electrical Equipment & Parts"
         },
         {
             "name": "LENOVO Group",
             "symbol": "LHL1.F",
-            "menu_list": "Chinois"
+            "menu_list": "Chinois",
+            "sector": "Technology",
+            "industry": "Computer Hardware"
         },
         {
             "name": "LEONARDO",
             "symbol": "LDO.MI",
-            "menu_list": "Aerospace-defense"
+            "menu_list": "Aerospace-defense",
+            "sector": "Industrials",
+            "industry": "Aerospace & Defense"
         },
         {
             "name": "LUMIBIRD",
-            "symbol": "LBIRD.PA"
+            "symbol": "LBIRD.PA",
+            "sector": "Healthcare",
+            "industry": "Diagnostics & Research"
         },
         {
             "name": "LVMH",
             "symbol": "MC.PA",
-            "menu_list": "L"
+            "menu_list": "L",
+            "sector": "Consumer Cyclical",
+            "industry": "Luxury Goods"
         },
         {
             "name": "Latécoère",
             "symbol": "LAT.PA",
-            "menu_list": "L"
+            "menu_list": "L",
+            "sector": "Industrials",
+            "industry": "Aerospace & Defense"
         },
         {
             "name": "LightOn",
-            "symbol": "ALTAI.PA"
+            "symbol": "ALTAI.PA",
+            "sector": "Technology",
+            "industry": "Software - Infrastructure"
         },
         {
             "name": "MARK & SPENCER",
-            "symbol": "MKS.L"
+            "symbol": "MKS.L",
+            "sector": "Consumer Cyclical",
+            "industry": "Department Stores"
         },
         {
             "name": "MARVELL TECH",
             "symbol": "MRVL",
-            "menu_list": "Semi-conducteurs"
+            "menu_list": "Semi-conducteurs",
+            "sector": "Technology",
+            "industry": "Semiconductors"
         },
         {
             "name": "MAT PHARMA",
@@ -973,21 +1331,29 @@
             "trading_plan_low": "C'est la descente",
             "volume_max": 1000000,
             "menu_list": "Pharma",
-            "is_monitoring": false
+            "is_monitoring": false,
+            "sector": "Healthcare",
+            "industry": "Biotechnology"
         },
         {
             "name": "MAUREL & PROM",
-            "symbol": "MAU.PA"
+            "symbol": "MAU.PA",
+            "sector": "Energy",
+            "industry": "Oil & Gas E&P"
         },
         {
             "name": "MEDIATEK",
             "symbol": "2454.TW",
-            "menu_list": "Semi-conducteurs"
+            "menu_list": "Semi-conducteurs",
+            "sector": "Technology",
+            "industry": "Semiconductors"
         },
         {
             "name": "MEDINCELL",
             "symbol": "MEDCL.PA",
-            "menu_list": "Pharma"
+            "menu_list": "Pharma",
+            "sector": "Healthcare",
+            "industry": "Biotechnology"
         },
         {
             "name": "MELEXIS",
@@ -997,105 +1363,149 @@
         {
             "name": "MICHELIN",
             "symbol": "ML.PA",
-            "menu_list": "Pneu"
+            "menu_list": "Pneu",
+            "sector": "",
+            "industry": ""
         },
         {
             "name": "MICHELIN",
-            "symbol": "ML.PA"
+            "symbol": "ML.PA",
+            "sector": "",
+            "industry": ""
         },
         {
             "name": "MICRON TECHNOLOGY",
             "symbol": "MU",
-            "menu_list": "NASDAQ"
+            "menu_list": "NASDAQ",
+            "sector": "Technology",
+            "industry": "Semiconductors"
         },
         {
             "name": "MICROSOFT",
             "symbol": "MSFT",
             "menu_list": "TECH",
-            "exchange": "NMS"
+            "exchange": "NMS",
+            "sector": "Technology",
+            "industry": "Software - Infrastructure"
         },
         {
             "name": "MONGODB-A",
-            "symbol": "MDB"
+            "symbol": "MDB",
+            "sector": "Technology",
+            "industry": "Software - Infrastructure"
         },
         {
             "name": "MONGODB-A LSE",
-            "symbol": "0KKZ.L"
+            "symbol": "0KKZ.L",
+            "sector": "",
+            "industry": ""
         },
         {
             "name": "MP MATERIALS",
             "symbol": "MP",
-            "menu_list": "Exploitation minière"
+            "menu_list": "Exploitation minière",
+            "sector": "Basic Materials",
+            "industry": "Other Industrial Metals & Mining"
         },
         {
             "name": "MSCI World ETF",
             "symbol": "IWDA.AS",
-            "menu_list": "ETF"
+            "menu_list": "ETF",
+            "sector": "",
+            "industry": ""
         },
         {
             "name": "Micro E-mini Nasdaq-100",
             "symbol": "MNQ=F",
-            "menu_list": "Futures"
+            "menu_list": "Futures",
+            "sector": "",
+            "industry": ""
         },
         {
             "name": "Miller Industries",
             "symbol": "5OJ.F",
-            "menu_list": "Surveiller"
+            "menu_list": "Surveiller",
+            "sector": "",
+            "industry": ""
         },
         {
             "name": "NANOBIOTIX",
-            "symbol": "NANO.PA"
+            "symbol": "NANO.PA",
+            "sector": "Healthcare",
+            "industry": "Biotechnology"
         },
         {
             "name": "NETAPP",
             "symbol": "NTAP",
-            "menu_list": "Software-infra"
+            "menu_list": "Software-infra",
+            "sector": "Technology",
+            "industry": "Software - Infrastructure"
         },
         {
             "name": "NEURONES",
-            "symbol": "NRO.PA"
+            "symbol": "NRO.PA",
+            "sector": "Technology",
+            "industry": "Information Technology Services"
         },
         {
             "name": "NEWMONT",
             "symbol": "NEM",
-            "menu_list": "Métaux précieux"
+            "menu_list": "Métaux précieux",
+            "sector": "Basic Materials",
+            "industry": "Gold"
         },
         {
             "name": "NEXANS",
-            "symbol": "NEX.PA"
+            "symbol": "NEX.PA",
+            "sector": "Industrials",
+            "industry": "Electrical Equipment & Parts"
         },
         {
             "name": "NOVO NORDISK",
             "symbol": "NVO",
-            "menu_list": "Pharma"
+            "menu_list": "Pharma",
+            "sector": "Healthcare",
+            "industry": "Drug Manufacturers - General"
         },
         {
             "name": "NSE S.A.",
-            "symbol": "ALNSE.PA"
+            "symbol": "ALNSE.PA",
+            "sector": "Technology",
+            "industry": "Scientific & Technical Instruments"
         },
         {
             "name": "NVIDIA",
             "symbol": "NVDA",
-            "menu_list": "Semi-conducteurs"
+            "menu_list": "Semi-conducteurs",
+            "sector": "Technology",
+            "industry": "Semiconductors"
         },
         {
             "name": "NXP Semiconductors",
             "symbol": "NXPI",
-            "menu_list": "Semi-conducteurs"
+            "menu_list": "Semi-conducteurs",
+            "sector": "Technology",
+            "industry": "Semiconductors"
         },
         {
             "name": "Nasdaq 100 Futures",
             "symbol": "NQ=F",
-            "menu_list": "Futures"
+            "menu_list": "Futures",
+            "sector": "",
+            "industry": ""
         },
         {
             "name": "Nemetschek",
-            "symbol": "NEM.HA"
+            "symbol": "NEM.HA",
+            "sector": "",
+            "industry": ""
         },
         {
             "name": "OR (GF)",
             "symbol": "GC=F",
-            "menu_list": "Métaux précieux"
+            "menu_list": "Métaux précieux",
+            "sector": "",
+            "industry": ""
         },
         {
             "name": "ORANGE",
@@ -1105,7 +1515,9 @@
             "trading_plan_high": "Casse la résistance",
             "trading_plan_low": "Retour début de séance",
             "volume_max": 30000,
-            "is_monitoring": false
+            "is_monitoring": false,
+            "sector": "Communication Services",
+            "industry": "Telecom Services"
         },
         {
             "name": "OVHCloud",
@@ -1115,85 +1527,119 @@
             "trading_plan_high": "Résistance",
             "trading_plan_low": "Support",
             "volume_max": 3900,
-            "is_monitoring": true
+            "is_monitoring": true,
+            "sector": "Technology",
+            "industry": "Software - Infrastructure"
         },
         {
             "name": "OVS",
             "symbol": "OVS.MI",
-            "menu_list": "Frabrication vêtements"
+            "menu_list": "Frabrication vêtements",
+            "sector": "Consumer Cyclical",
+            "industry": "Apparel Manufacturing"
         },
         {
             "name": "Oklo Inc.",
-            "symbol": "OKLO"
+            "symbol": "OKLO",
+            "sector": "Utilities",
+            "industry": "Utilities - Independent Power Producers"
         },
         {
             "name": "PALANTIR",
             "symbol": "PLTR",
             "exchange": "NMS",
-            "menu_list": "Software-infra"
+            "menu_list": "Software-infra",
+            "sector": "Technology",
+            "industry": "Software - Infrastructure"
         },
         {
             "name": "PALO ALTO NET.",
-            "symbol": "PANW"
+            "symbol": "PANW",
+            "sector": "Technology",
+            "industry": "Software - Infrastructure"
         },
         {
             "name": "PARROT",
             "symbol": "PARRO.PA",
-            "menu_list": "P"
+            "menu_list": "P",
+            "sector": "Technology",
+            "industry": "Communication Equipment"
         },
         {
             "name": "POET TECH",
-            "symbol": "POET"
+            "symbol": "POET",
+            "sector": "Technology",
+            "industry": "Semiconductors"
         },
         {
             "name": "POUJOULAT",
             "symbol": "ALPJT.PA",
-            "menu_list": "Construction"
+            "menu_list": "Construction",
+            "sector": "Industrials",
+            "industry": "Building Products & Equipment"
         },
         {
             "name": "PUBLICIS",
             "symbol": "PUB.PA",
-            "menu_list": "COMM"
+            "menu_list": "COMM",
+            "sector": "Communication Services",
+            "industry": "Advertising Agencies"
         },
         {
             "name": "Pernod Ricard",
-            "symbol": "RIP.XC"
+            "symbol": "RIP.XC",
+            "sector": "Consumer Defensive",
+            "industry": "Beverages - Wineries & Distilleries"
         },
         {
             "name": "Prosus N.V.",
-            "symbol": "1TY.F"
+            "symbol": "1TY.F",
+            "sector": "Consumer Cyclical",
+            "industry": "Internet Retail"
         },
         {
             "name": "Prysmian",
             "symbol": "AEU.F",
-            "menu_list": "P"
+            "menu_list": "P",
+            "sector": "Industrials",
+            "industry": "Electrical Equipment & Parts"
         },
         {
             "name": "Pétrole brut",
             "symbol": "BZ=F",
-            "menu_list": "Futures"
+            "menu_list": "Futures",
+            "sector": "",
+            "industry": ""
         },
         {
             "name": "QUALCOM",
             "symbol": "QCOM",
-            "menu_list": "Semi-conducteurs"
+            "menu_list": "Semi-conducteurs",
+            "sector": "Technology",
+            "industry": "Semiconductors"
         },
         {
             "name": "QUANTUM COMP",
             "symbol": "QUBT",
             "exchange": "NCM",
-            "menu_list": "NASDAQ"
+            "menu_list": "NASDAQ",
+            "sector": "Technology",
+            "industry": "Computer Hardware"
         },
         {
             "name": "QUANTUM CORP",
             "symbol": "QMCO",
             "exchange": "NGM",
-            "menu_list": "Computer-hardwawre"
+            "menu_list": "Computer-hardwawre",
+            "sector": "Technology",
+            "industry": "Computer Hardware"
         },
         {
             "name": "RAMSAY GENERALE",
             "symbol": "GDS.PA",
-            "is_monitoring": false
+            "is_monitoring": false,
+            "sector": "Healthcare",
+            "industry": "Medical Care Facilities"
         },
         {
             "name": "RENAULT",
@@ -1202,122 +1648,170 @@
             "price_low": 36.5,
             "trading_plan_high": "Était encore à  36,50 il y a un mois",
             "volume_max": 100000,
-            "is_monitoring": false
+            "is_monitoring": false,
+            "sector": "Consumer Cyclical",
+            "industry": "Auto Manufacturers"
         },
         {
             "name": "RHEINMETALL",
-            "symbol": "RHM.HM"
+            "symbol": "RHM.HM",
+            "sector": "",
+            "industry": ""
         },
         {
             "name": "RIGETTI COMP",
             "symbol": "RGTI",
             "exchange": "NCM",
-            "menu_list": "NASDAQ"
+            "menu_list": "NASDAQ",
+            "sector": "Technology",
+            "industry": "Computer Hardware"
         },
         {
             "name": "RIPPLE",
             "symbol": "XRP-USD",
-            "menu_list": "Crypto"
+            "menu_list": "Crypto",
+            "sector": "",
+            "industry": ""
         },
         {
             "name": "RIVIAN AUTO",
             "symbol": "RIVN",
-            "menu_list": "Automobile"
+            "menu_list": "Automobile",
+            "sector": "Consumer Cyclical",
+            "industry": "Auto Manufacturers"
         },
         {
             "name": "ROBERTET",
             "symbol": "RBT.PA",
-            "menu_list": "Chimie"
+            "menu_list": "Chimie",
+            "sector": "Basic Materials",
+            "industry": "Chemicals"
         },
         {
             "name": "ROCKET LAB",
             "symbol": "RKLB",
-            "menu_list": "Aerospace-defense"
+            "menu_list": "Aerospace-defense",
+            "sector": "Industrials",
+            "industry": "Aerospace & Defense"
         },
         {
             "name": "RTX",
             "symbol": "RTX",
-            "menu_list": "Aerospace-defense"
+            "menu_list": "Aerospace-defense",
+            "sector": "Industrials",
+            "industry": "Aerospace & Defense"
         },
         {
             "name": "RUBIS",
             "symbol": "RUI.PA",
-            "menu_list": "Oil & Gas"
+            "menu_list": "Oil & Gas",
+            "sector": "Energy",
+            "industry": "Oil & Gas Refining & Marketing"
         },
         {
             "name": "Russell 2000 Futures",
             "symbol": "RTY=F",
-            "menu_list": "Futures"
+            "menu_list": "Futures",
+            "sector": "",
+            "industry": ""
         },
         {
             "name": "S&P 500 Futures",
             "symbol": "ES=F",
-            "menu_list": "Futures"
+            "menu_list": "Futures",
+            "sector": "",
+            "industry": ""
         },
         {
             "name": "SAFRAN",
             "symbol": "SAF.PA",
-            "menu_list": "Aerospace-defense"
+            "menu_list": "Aerospace-defense",
+            "sector": "Industrials",
+            "industry": "Aerospace & Defense"
         },
         {
             "name": "SAINT-GOBAIN",
             "symbol": "SGO.PA",
-            "menu_list": "Construction-Ingé"
+            "menu_list": "Construction-Ingé",
+            "sector": "Industrials",
+            "industry": "Building Products & Equipment"
         },
         {
             "name": "SANDISK",
             "symbol": "SNDK",
-            "menu_list": "Computer-hardwawre"
+            "menu_list": "Computer-hardwawre",
+            "sector": "Technology",
+            "industry": "Computer Hardware"
         },
         {
             "name": "SANOFI",
             "symbol": "SAN.PA",
-            "menu_list": "Pharma"
+            "menu_list": "Pharma",
+            "sector": "Healthcare",
+            "industry": "Drug Manufacturers - General"
         },
         {
             "name": "SCHNEIDER ELECTRIC",
             "symbol": "SU.PA",
-            "menu_list": "Electrical"
+            "menu_list": "Electrical",
+            "sector": "Industrials",
+            "industry": "Specialty Industrial Machinery"
         },
         {
             "name": "SEB",
             "symbol": "SK.PA",
-            "menu_list": "S"
+            "menu_list": "S",
+            "sector": "Consumer Cyclical",
+            "industry": "Furnishings, Fixtures & Appliances"
         },
         {
             "name": "SECHE ENV",
             "symbol": "SECVY",
-            "menu_list": "S"
+            "menu_list": "S",
+            "sector": "Industrials",
+            "industry": "Waste Management"
         },
         {
             "name": "SENTINELONE RG-A",
             "symbol": "S",
-            "menu_list": "S"
+            "menu_list": "S",
+            "sector": "Technology",
+            "industry": "Software - Infrastructure"
         },
         {
             "name": "SHELL",
             "symbol": "SHEL",
-            "menu_list": "Oil & Gas"
+            "menu_list": "Oil & Gas",
+            "sector": "Energy",
+            "industry": "Oil & Gas Integrated"
         },
         {
             "name": "SNOWFLAKE RG-A",
             "symbol": "SNOW",
-            "menu_list": "Software-app"
+            "menu_list": "Software-app",
+            "sector": "Technology",
+            "industry": "Software - Application"
         },
         {
             "name": "SOITEC",
             "symbol": "SOI.PA",
-            "menu_list": "Semi-conducteurs"
+            "menu_list": "Semi-conducteurs",
+            "sector": "Technology",
+            "industry": "Semiconductor Equipment & Materials"
         },
         {
             "name": "SPACE X",
             "symbol": "SPCX",
-            "menu_list": "Aerospace-defense"
+            "menu_list": "Aerospace-defense",
+            "sector": "Industrials",
+            "industry": "Aerospace & Defense"
         },
         {
             "name": "SPDR S&P 500 ETF",
             "symbol": "SPY",
-            "menu_list": "ETF"
+            "menu_list": "ETF",
+            "sector": "",
+            "industry": ""
         },
         {
             "name": "SPIE",
@@ -1329,12 +1823,16 @@
             "trading_plan_low": "Encore perdant",
             "volume_max": 100000,
             "menu_list": "Construction-Ingé",
-            "is_monitoring": false
+            "is_monitoring": false,
+            "sector": "Industrials",
+            "industry": "Engineering & Construction"
         },
         {
             "name": "SPOTIFY",
             "symbol": "SPOT",
-            "menu_list": "S"
+            "menu_list": "S",
+            "sector": "Communication Services",
+            "industry": "Internet Content & Information"
         },
         {
             "name": "STELLANTIS",
@@ -1346,12 +1844,16 @@
             "trading_plan_low": "Support",
             "volume_max": 20000,
             "is_monitoring": true,
-            "menu_list": "Automobile"
+            "menu_list": "Automobile",
+            "sector": "Consumer Cyclical",
+            "industry": "Auto Manufacturers"
         },
         {
             "name": "STIF",
             "symbol": "ALSTI.PA",
-            "menu_list": "S"
+            "menu_list": "S",
+            "sector": "Industrials",
+            "industry": "Specialty Industrial Machinery"
         },
         {
             "name": "STMICROELECTRONICS",
@@ -1362,27 +1864,37 @@
             "trading_plan_low": "Baisse",
             "volume_max": 100000,
             "is_monitoring": false,
-            "menu_list": "Semi-conducteurs"
+            "menu_list": "Semi-conducteurs",
+            "sector": "Technology",
+            "industry": "Semiconductors"
         },
         {
             "name": "SUPER MICRO COMP.",
             "symbol": "SMCI",
-            "menu_list": "Techno"
+            "menu_list": "Techno",
+            "sector": "Technology",
+            "industry": "Computer Hardware"
         },
         {
             "name": "Shanghai Composite - Chine",
             "symbol": "000001.SS",
-            "menu_list": "A-INDICES"
+            "menu_list": "A-INDICES",
+            "sector": "",
+            "industry": ""
         },
         {
             "name": "Sprott Uranium",
             "symbol": "URNM",
-            "menu_list": "ETF"
+            "menu_list": "ETF",
+            "sector": "",
+            "industry": ""
         },
         {
             "name": "Sucre",
             "symbol": "SB=F",
-            "menu_list": "CAT"
+            "menu_list": "CAT",
+            "sector": "",
+            "industry": ""
         },
         {
             "name": "TARKETT",
@@ -1391,17 +1903,23 @@
         },
         {
             "name": "TECHNIP ENERGIES",
-            "symbol": "TE.PA"
+            "symbol": "TE.PA",
+            "sector": "Energy",
+            "industry": "Oil & Gas Equipment & Services"
         },
         {
             "name": "TENCENT",
             "symbol": "TCEHY",
-            "menu_list": "Chinois"
+            "menu_list": "Chinois",
+            "sector": "Communication Services",
+            "industry": "Internet Content & Information"
         },
         {
             "name": "TERNA",
             "symbol": "TRN.MI",
-            "menu_list": "Electrical"
+            "menu_list": "Electrical",
+            "sector": "Utilities",
+            "industry": "Utilities - Regulated Electric"
         },
         {
             "name": "TESLA",
@@ -1410,12 +1928,16 @@
             "price_low": 125.0,
             "volume_max": 1000000,
             "is_monitoring": false,
-            "menu_list": "Automobile"
+            "menu_list": "Automobile",
+            "sector": "Consumer Cyclical",
+            "industry": "Auto Manufacturers"
         },
         {
             "name": "TEXAS INSTRUMENTS",
             "symbol": "TXN",
-            "menu_list": "Semi-conducteurs"
+            "menu_list": "Semi-conducteurs",
+            "sector": "Technology",
+            "industry": "Semiconductors"
         },
         {
             "name": "THALES",
@@ -1424,57 +1946,79 @@
             "price_low": 125.0,
             "volume_max": 1000000,
             "is_monitoring": false,
-            "menu_list": "Aerospace-defense"
+            "menu_list": "Aerospace-defense",
+            "sector": "Industrials",
+            "industry": "Aerospace & Defense"
         },
         {
             "name": "THERMO FISHER",
             "symbol": "TMO",
-            "menu_list": "Pharma"
+            "menu_list": "Pharma",
+            "sector": "Healthcare",
+            "industry": "Diagnostics & Research"
         },
         {
             "name": "TOTALENERGIES",
             "symbol": "TTE.PA",
-            "menu_list": "Oil & Gas"
+            "menu_list": "Oil & Gas",
+            "sector": "Energy",
+            "industry": "Oil & Gas Integrated"
         },
         {
             "name": "TOYOTA",
             "symbol": "7203.T",
-            "menu_list": "Automobile"
+            "menu_list": "Automobile",
+            "sector": "Consumer Cyclical",
+            "industry": "Auto Manufacturers"
         },
         {
             "name": "TOYOTA",
             "symbol": "TM",
-            "menu_list": "Automobile"
+            "menu_list": "Automobile",
+            "sector": "Consumer Cyclical",
+            "industry": "Auto Manufacturers"
         },
         {
             "name": "TRANSOCEAN",
             "symbol": "RIG",
-            "menu_list": "Oil & Gas"
+            "menu_list": "Oil & Gas",
+            "sector": "Energy",
+            "industry": "Oil & Gas Drilling"
         },
         {
             "name": "TRIGANO",
             "symbol": "TRI.PA",
-            "menu_list": "Loisir bateaux"
+            "menu_list": "Loisir bateaux",
+            "sector": "Consumer Cyclical",
+            "industry": "Recreational Vehicles"
         },
         {
             "name": "TSAKOS",
             "symbol": "TEN",
-            "menu_list": "Oil & Gas"
+            "menu_list": "Oil & Gas",
+            "sector": "Energy",
+            "industry": "Oil & Gas Midstream"
         },
         {
             "name": "TSMC",
             "symbol": "TSM",
-            "menu_list": "Semi-conducteurs"
+            "menu_list": "Semi-conducteurs",
+            "sector": "Technology",
+            "industry": "Semiconductors"
         },
         {
             "name": "Teleperformance",
             "symbol": "TEP.PA",
-            "menu_list": "Logiciel"
+            "menu_list": "Logiciel",
+            "sector": "Industrials",
+            "industry": "Specialty Business Services"
         },
         {
             "name": "UBISOFT",
             "symbol": "UBI.PA",
-            "menu_list": "Gaming-multimedia"
+            "menu_list": "Gaming-multimedia",
+            "sector": "Communication Services",
+            "industry": "Electronic Gaming & Multimedia"
         },
         {
             "name": "VALEO",
@@ -1486,7 +2030,9 @@
             "trading_plan_low": "Stop LOSS",
             "volume_max": 5000,
             "menu_list": "V",
-            "is_monitoring": false
+            "is_monitoring": false,
+            "sector": "Consumer Cyclical",
+            "industry": "Auto Parts"
         },
         {
             "name": "VALNEVA",
@@ -1497,95 +2043,133 @@
             "trading_plan_low": "Ecroulement général",
             "volume_max": 70000,
             "menu_list": "Pharma",
-            "is_monitoring": false
+            "is_monitoring": false,
+            "sector": "Healthcare",
+            "industry": "Biotechnology"
         },
         {
             "name": "VAT Group AG",
-            "symbol": "VTTGF"
+            "symbol": "VTTGF",
+            "sector": "Industrials",
+            "industry": "Specialty Industrial Machinery"
         },
         {
             "name": "VENTE PRIVEE",
             "symbol": "SRP.PA",
-            "menu_list": "Retails"
+            "menu_list": "Retails",
+            "sector": "Consumer Cyclical",
+            "industry": "Internet Retail"
         },
         {
             "name": "VEOLIA",
             "symbol": "VIE.PA",
             "menu_list": "V",
-            "is_monitoring": false
+            "is_monitoring": false,
+            "sector": "Industrials",
+            "industry": "Waste Management"
         },
         {
             "name": "VICAT",
             "symbol": "VCT.PA",
             "menu_list": "V",
-            "is_monitoring": false
+            "is_monitoring": false,
+            "sector": "Basic Materials",
+            "industry": "Building Materials"
         },
         {
             "name": "VINCI",
             "symbol": "DG.PA",
-            "menu_list": "Construction-Ingé"
+            "menu_list": "Construction-Ingé",
+            "sector": "Industrials",
+            "industry": "Engineering & Construction"
         },
         {
             "name": "VISA RG-A",
             "symbol": "V",
-            "menu_list": "V"
+            "menu_list": "V",
+            "sector": "Financial Services",
+            "industry": "Credit Services"
         },
         {
             "name": "VIVENDI",
             "symbol": "VIV.PA",
-            "menu_list": "V"
+            "menu_list": "V",
+            "sector": "Communication Services",
+            "industry": "Electronic Gaming & Multimedia"
         },
         {
             "name": "VOLKSWAGEN",
             "symbol": "VOW.DE",
-            "menu_list": "Automobile"
+            "menu_list": "Automobile",
+            "sector": "Consumer Cyclical",
+            "industry": "Auto Manufacturers"
         },
         {
             "name": "VUSIONGROUP",
             "symbol": "VU.PA",
-            "menu_list": "Software-app"
+            "menu_list": "Software-app",
+            "sector": "Technology",
+            "industry": "Software - Application"
         },
         {
             "name": "VanEck Uranium + Nuclear",
             "symbol": "NLR",
-            "menu_list": "ETF"
+            "menu_list": "ETF",
+            "sector": "",
+            "industry": ""
         },
         {
             "name": "WALMART",
-            "symbol": "WMT"
+            "symbol": "WMT",
+            "sector": "Consumer Defensive",
+            "industry": "Discount Stores"
         },
         {
             "name": "WHEATON PRECIOUS",
-            "symbol": "WPM"
+            "symbol": "WPM",
+            "sector": "Basic Materials",
+            "industry": "Gold"
         },
         {
             "name": "Weebit Nano",
-            "symbol": "WBT.AX"
+            "symbol": "WBT.AX",
+            "sector": "Technology",
+            "industry": "Semiconductors"
         },
         {
             "name": "X-FAB",
             "symbol": "XFB.MU",
-            "menu_list": "Semi-conducteurs"
+            "menu_list": "Semi-conducteurs",
+            "sector": "",
+            "industry": ""
         },
         {
             "name": "XPENG",
             "symbol": "XPEV",
-            "menu_list": "Automobile"
+            "menu_list": "Automobile",
+            "sector": "Consumer Cyclical",
+            "industry": "Auto Manufacturers"
         },
         {
             "name": "YUM",
             "symbol": "YUM",
-            "menu_list": "Chinois"
+            "menu_list": "Chinois",
+            "sector": "Consumer Cyclical",
+            "industry": "Restaurants"
         },
         {
             "name": "ZALANDO",
             "symbol": "ZAL.DE",
-            "menu_list": "Retails"
+            "menu_list": "Retails",
+            "sector": "Consumer Cyclical",
+            "industry": "Internet Retail"
         },
         {
             "name": "ams-OSRAM",
             "symbol": "AMSSY",
-            "menu_list": "Semi-conducteurs"
+            "menu_list": "Semi-conducteurs",
+            "sector": "Technology",
+            "industry": "Semiconductors"
         }
     ]
 }

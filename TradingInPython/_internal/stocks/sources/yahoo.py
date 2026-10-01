@@ -82,6 +82,10 @@ class YahooSource:
         except Exception:
             return symbol, None
 
+        # Réponse vide (limitation, symbole inconnu) : pas de réponse, pour ne pas enregistrer un secteur vide
+        if not ( information.get( "quoteType" ) or information.get( "sector" ) ):
+            return symbol, None
+
         return symbol, {
             "sector": information.get( "sector", "" ),
             "industry": information.get( "industry", "" )
@@ -112,6 +116,8 @@ class YahooSource:
             "name": information.get( "longName", information.get( "shortName", symbol ) ),
             "exchange": information.get( "exchange", "" ),
             "type": information.get( "quoteType", "" ),
+            "sector": information.get( "sector", "" ),
+            "industry": information.get( "industry", "" ),
             "source": self.NAME
         }
 
