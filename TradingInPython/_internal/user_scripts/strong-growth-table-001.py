@@ -19,9 +19,13 @@ from styles.watermark import Watermark
 
 # ------------------------------------------------------------------------------
 
-NB_DAYS = 10
+NB_DAYS = 5
 PRICE_THRESHOLD = 0.05 # +5%
 VOLUME_MULTIPLIER = 1.2
+
+COLOR_HEADER   = "#14599e"  # bleu foncé
+COLOR_POSITIVE = "#9ee9b1"  # vert clair
+COLOR_NEGATIVE = "#e5a0a6"  # rouge clair
 
 def filter_strong_growth(
         tickers: list[str], 
@@ -164,13 +168,13 @@ def show_scan_report(
     # Style de l'en-tête du tableau
     for col in range( len( df_view.columns ) ):
         cell = table[0, col]
-        cell.set_facecolor( "#14599e" )
+        cell.set_facecolor( COLOR_HEADER )
         cell.set_text_props( color="white", fontweight="bold" )
 
     # Lignes : vert clair si performance positive (croissant), rouge clair si négative (décroissant)
     for row in range( 1, nb_rows ):
         perf = df_all.iloc[ row - 1 ]["Perf (float)"]
-        bg_color = "#ebfff0" if perf >= 0 else "#ffe9eb"
+        bg_color = COLOR_POSITIVE if perf >= 0 else COLOR_NEGATIVE
         for col in range( len( df_view.columns ) ):
             table[row, col].set_facecolor( bg_color )
 
