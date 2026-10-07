@@ -7,7 +7,7 @@
 
 Free Open Software Platform for traders who want to master technical trading with Python. **TradingInPython** is a Python-based trading platform for financial market analysis and technical trading.
 
-⭐ **Star PyTrading** to follow the development of **TradingInPython**, its trading strategies, indicators, and trading examples in Python, don't forget to click on **star** to the top right.
+⭐ **Star PyTrading** to follow the development of **TradingInPython**, its trading strategies, indicators, and trading examples in Python, don't forget to **click on star** to the top right.
 
 <div align="center">
   <a href="https://www.trading-et-data-analyses.com/p/plateforme-de-trading-technique.html">
@@ -183,6 +183,14 @@ Have a look and take example to the **trading strategies** used in the platform:
 Read the documentation on the platform strategy's API :
 
 - [Develop your own strategy using TradingInPython's API](https://www.trading-et-data-analyses.com/p/strategies-dans-tradinginpython.html)
+
+### You'd like to contribute
+
+You should be intrested by devloping the project, learn about Python, about trading strategy, about technical analysies, ...
+
+Then have a look here :
+
+- [TradingInPython's software devlopement Kit](https://www.trading-et-data-analyses.com/p/trading-en-python.html)
 
 ## Script runner
 
