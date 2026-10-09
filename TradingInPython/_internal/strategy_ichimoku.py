@@ -19,7 +19,7 @@ import styles.palette_colors as pc
 from tkinter import ttk
 from tkinterh.helper import Tooltip
 from matplotlib.ticker import FuncFormatter, StrMethodFormatter
-from figure.candlestick_ohlc import candlestick_ohlc
+from figure.candlestick_ohlc import candlestick_ohlc, set_visibility_ohlc
 from digitsignalprocessing import ichimoku_kinko_hyo
 from figure.linedeltaselector import LineDeltaSelector
 
@@ -397,11 +397,6 @@ class strategy_ichimoku:
         lines = self.lines
         candles = self.candles
 
-        def set_candles_visibility( v, candles ):
-            for candlestick in candles:
-                for c in candlestick:
-                    c.set_visible( v )
-
         # lines = [line_price, line_tenkan_sen, line_kijun_sen, line_kijun_sen_upper, line_kijun_sen_lower, fill_Kijun_bands, line_kijun_chikou_span, fill1, fill2, line_s1, line_s2, line_s3 ]
 
         # Simple line's checkbox
@@ -426,9 +421,9 @@ class strategy_ichimoku:
 
         # Special way to set visible for candles
         if self.var_candles.get():
-            set_candles_visibility(True, candles)
+            set_visibility_ohlc(candles, True)
         else:
-            set_candles_visibility(False, candles)
+            set_visibility_ohlc(candles, False)
 
         # Kumo cloud
         _idx = 7 # fill1, fill2 must count index in table 'lines'

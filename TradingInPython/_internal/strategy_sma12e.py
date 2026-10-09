@@ -28,7 +28,7 @@ import styles.palette_colors as pc
 
 from tkinter import ttk
 from matplotlib.ticker import FuncFormatter, StrMethodFormatter
-from figure.candlestick_ohlc import candlestick_ohlc
+from figure.candlestick_ohlc import candlestick_ohlc, set_visibility_ohlc
 from figure.linedeltaselector import LineDeltaSelector
 from tkinterh.helper import Tooltip
 
@@ -571,11 +571,6 @@ class strategy_sma12e:
     def toggle_visibility( self ):
         lines = self.lines
         candles = self.candles		
-  
-        def set_candles_visibility( v, candles ):
-            for candlestick in candles:
-                for c in candlestick:
-                    c.set_visible( v )
 
         # lines = [line_price, line_price2, line_ma1, line_ma2, line_mae, line_ma3, line_ma4, line_ma5, line_ma6, fill1, fill2, line_stem1, line_stem2]
         
@@ -594,9 +589,9 @@ class strategy_sma12e:
         idx += 1
 
         if self.var22.get():
-            set_candles_visibility(True, candles)
+            set_visibility_ohlc( candles, True )
         else:
-            set_candles_visibility(False, candles)
+            set_visibility_ohlc( candles, False )
 
         if self.var31.get():
             lines[idx].set_visible(True)
