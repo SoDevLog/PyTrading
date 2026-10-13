@@ -1,162 +1,148 @@
-# User's script runnable by plateforme's Script-runner
+# 🐍 TradingInPython - Bibliothèque de scripts Python
 
-Ces scripts sont exéctuables par le **Script-runner** de la plateforme **TradingInPython**.
+Des exemples de scripts pour **analyser les marchés, tester des indicateurs et explorer les données financières** avec [TradingInPython](https://trading-in-python.sodevlog.com/).
 
-Des données comme :
+Cette bibliothèque rassemble des scripts que vous pouvez exécuter depuis le **Script Runner** de la plateforme, étudier et adapter à vos propres besoins.
 
-- le symbol du stock
-- son nom
-- les data fetchées par le data provider
-- une liste de ticker de stocks
-- ...
+> **Vous découvrez les scripts personnalisés ?** Commencez par [`use_api.py`](use_api.py) pour comprendre comment un script peut exploiter les données transmises par TradingInPython.
 
-Sont transmisent au script par l'API : api.py (Application Porgramming Interface).
+---
 
-Pour accéder à la documentation du Script Runner de **TradingInPython** :
+## 🚀 Démarrer avec le Script Runner
 
-- [Interpréteur de script python](https://trading-in-python.sodevlog.com/script-interpreter/)
+Le Script Runner peut transmettre à un script des informations telles que :
 
-Pour savoir comment utiliser ces données dans votre script régardez dans le fichier :
+- le symbole et le nom de l'action sélectionnée ;
+- les données de marché récupérées par le fournisseur de données ;
+- une liste de tickers.
 
-- [use_api.py](use_api.py)
+Ces informations sont accessibles via l'API de la plateforme (`api.py`). Les paramètres disponibles et leur utilisation sont illustrés dans le script [`use_api.py`](use_api.py).
 
-## SuperTrend Indicator
+**Pour aller plus loin :** [Documentation - Interpréteur de scripts Python](https://trading-in-python.sodevlog.com/script-interpreter/)
 
-Un indicateur technique de tendance basé sur l'**ATR (Average True Range)** permettant d'identifier la direction de la tendance et les retournements haussiers ou baissiers.
+---
 
-Le script utilise l'implémentation `super_trend()` de `digitsignalprocessing.indicators` et affiche simultanément le cours de clôture et le SuperTrend.
+## 📈 Analyse technique et stratégies de trading
 
-### Fonctionnement
+### SuperTrend Indicator
 
-Le SuperTrend est représenté différemment selon la direction de la tendance :
+Un indicateur de tendance fondé sur l'**ATR (Average True Range)**. Il aide à visualiser la direction de la tendance et ses retournements potentiels.
 
-- **SuperTrend haussier** : affiché lorsque la tendance est haussière.
-- **SuperTrend baissier** : affiché lorsque la tendance est baissière.
-- **Retournement haussier** : signalé par un marqueur `▲`.
-- **Retournement baissier** : signalé par un marqueur `▼`.
+Le script utilise `super_trend()` de `digitsignalprocessing.indicators` et affiche le cours de clôture avec le SuperTrend :
 
-Les paramètres utilisés dans cet exemple sont :
+- **Tendance haussière ou baissière** : le tracé s'adapte à la direction détectée,
+- **Retournement haussier** : marqueur `▲`,
+- **Retournement baissier** : marqueur `▼`.
 
-- **ATR Period** : `10`
-- **Multiplier** : `2.0`
+Paramètres de l'exemple : `ATR Period = 10` et `Multiplier = 2.0`.
 
-### Utilisation
+Le script peut être lancé depuis le Script Runner avec les paramètres `ticker`, `period` et `interval`. Il propose également un exemple autonome utilisant `yfinance` sur le titre NVDA, avec six mois de données journalières.
 
-Le script peut être exécuté directement depuis le **Script-runner de TradingInPython** et utilise les paramètres `ticker`, `period` et `interval` transmis par l'API de la plateforme.
+➡️ [`super-trend-indicator.py`](super-trend-indicator.py)
 
-Il peut également être exécuté de manière autonome avec `yfinance`. L'exemple fourni utilise **NVDA** sur une période de six mois avec des données journalières.
+Ce script peut servir de point de départ pour étudier un filtre de tendance, des retournements ou des signaux d'entrée et de sortie.
 
-- [super-trend-indicator.py](super-trend-indicator.py)
+### Bull/Bear Strength Index (BSI)
 
-### Exemple
+Une stratégie qui combine plusieurs éléments d'analyse technique :
 
-Le script peut également servir de base pour développer ou adapter une stratégie de trading utilisant le SuperTrend comme :
+- un **Cloud BSI**, construit à partir de deux EMA ;
+- un **Stop BSI**, fondé sur un ATR Trailing Stop ;
+- une synergie destinée à rechercher un alignement entre le court et le moyen terme ;
+- deux histogrammes pour distinguer les dynamiques de momentum court terme (CT) et moyen terme (MT).
 
-- filtre de tendance ;
-- détection de retournement ;
-- signal d'entrée ou de sortie ;
-- composant d'une stratégie combinant plusieurs indicateurs techniques.
+➡️ [`strategy-bull-bear-strengh-index.py`](strategy-bull-bear-strengh-index.py)  
+📘 [Lire l'article : Bull/Bear Strength Index - Python Trading Strategy](https://www.trading-et-data-analyses.com/2026/09/bullbear-strength-index-python-trading.html)
 
-> Ce script est fourni comme exemple et peut être adapté à vos propres besoins.
+### Filtre des actions à forte croissance - Strong Growth
 
-## Bull/Bear Strength Index
+Un exemple de filtre pour rechercher des actions dont la hausse s'accompagne d'une dynamique de volume intéressante.
 
-Un stratégie de trading complète qui utilise les indicateurs techniques :
+➡️ [`strong-growth.py`](strong-growth.py)  
+📘 [Lire l'article : Filtre Strong Growth - détecter une hausse soutenue par les volumes avec Python](https://www.trading-et-data-analyses.com/2026/09/filtre-strong-growth-python.html)
 
-- Cloud BSI basé sur deux EMA,
-- Stop BSI basé sur un ATR Trailing Stop,
-- Synergie permettant de rechercher un alignement entre court et moyen terme
-- deux histogrammes BSI permettant de distinguer le momentum court terme CT et moyen terme MT.
-- [strategy-bull-bear-strengh-index.py](strategy-bull-bear-strengh-index.py)
+---
 
-### Documentation sur le BSI
+## 🌍 Macroéconomie et données FRED
 
-- [Bull/Bear Strength Index - Python Trading Strategy](https://www.trading-et-data-analyses.com/2026/09/bullbear-strength-index-python-trading.html)
+Ces scripts montrent comment exploiter des séries de la **Federal Reserve Bank of St. Louis (FRED)** pour construire des indices économiques.
 
-## Filtre des actions à forte croissance
+### Avant de commencer : configurer la clé API
 
-Ou comment trouver des actions à trader
+Une clé API FRED est nécessaire pour faire fonctionner les scripts de cette section. [Créer ou récupérer une clé API FRED](https://fred.stlouisfed.org/docs/api/api_key.html).
 
-- [strong-growth.py](strong-growth.py)
+Ajoutez ensuite votre clé dans le fichier de configuration :
 
-### Documentation Filter Strong Growth
+`C:\Users\<Nom d'utilisateur>\AppData\Local\TradingInPython\config\.env`
 
-- [Filtre Strong Growth : comment détecter une hausse soutenue par les volumes avec Python ?](https://www.trading-et-data-analyses.com/2026/09/filtre-strong-growth-python.html)
+avec la ligne suivante :
 
-## Script sur la finance
+```dotenv
+FRED_API_KEY=xxx
+```
 
-### Fabriquer des indices économiques grâce à le FRED (Federal Reserve Bank of St. Louis)
+Remplacez `xxx` par votre propre clé.
 
-Pour fonctionner ces scripts on besoin d'une **clef d'API**.
+### Scripts disponibles
 
-Pour créer une clef API au près de la FRED, rendez-vous sur le site :
+| Script | Objectif |
+| --- | --- |
+| [`indice-fred-eurozone.py`](indice-fred-eurozone.py) | Construire un indice économique pour la zone euro. |
+| [`indice-fred-france.py`](indice-fred-france.py) | Construire un indice économique pour la France. |
+| [`macro_indice_engine.py`](macro_indice_engine.py) | Généraliser la construction d'indices économiques à partir d'une configuration. |
 
-- https://fred.stlouisfed.org/docs/api/api_key.html
+Dans `macro_indice_engine.py`, la configuration utilisée dans l'exemple est importée ici :
 
-Cette clef est à placer dans le fichier :
+```python
+from macro_indices.france import INDEX_CONFIG
+```
 
-C:\Users\\**{Nom d'utilisateur}**\AppData\Local\TradingInPython\config\.env
+Vous pouvez adapter cette configuration pour explorer un autre ensemble de données.
 
-Sous la forme :
+📘 [Lire l'article : Comment construire un indice économique](https://www.trading-et-data-analyses.com/2026/04/construire-un-indicateur-macro-econimque-fred.html)
 
-**FRED_API_KEY = xxx**
+---
 
-#### Indice économique de la zone Euro
+## 🏢 Analyse financière et données d'entreprises
 
-- [indice-fred-eurozone.py](indice-fred-eurozone.py)
+Ces exemples explorent différentes approches d'analyse financière et de recherche sur les marchés.
 
-#### Indice économique de la France
+| Script | Description |
+| --- | --- |
+| [`evaluation-PER-000.py`](evaluation-PER-000.py) | Étudier le bénéfice par action (EPS) et calculer un PER (*Price/Earnings Ratio*) en le comparant au marché. |
+| [`dataroma-buffett-000.py`](dataroma-buffett-000.py) | Explorer les positions attribuées à Berkshire Hathaway sur le site Dataroma. |
+| [`juste-valeur-FCF.py`](juste-valeur-FCF.py) | Estimer une juste valeur à partir de projections de *Free Cash Flow* (FCF). |
+| [`indice-market-000.py`](indice-market-000.py) | Comparer des indices boursiers, avec un exemple autour du S&P 500. |
+| [`greenblatt-000.py`](greenblatt-000.py) | Explorer la *Magic Formula* de Joel Greenblatt. |
+| [`market-calendar-000.py`](market-calendar-000.py) | Consulter un calendrier des jours d'ouverture des marchés boursiers. |
 
-- [indice-fred-france.py](indice-fred-france.py)
+---
 
-#### Généralisation de l'indice économique ISM
+## 🤖 Intelligence artificielle et trading
 
-Utiliser les capacité de Python pour créer un indice de la santé économique :
+### Agent IA de trading technique
 
-Il suffit de modifier la ligne de code :
+Un exemple d'agent reposant sur un **MLP (Multi-Layer Perceptron)** avec Keras et le backend JAX, appliqué au trading technique.
 
-> from macro_indices.france import INDEX_CONFIG
+➡️ [`agent_ia.py`](agent_ia.py)
 
-- [macro_indice_engine.py](macro_indice_engine.py)
+---
 
-#### Documentation
+## 🧩 Créez et adaptez vos propres scripts
 
-- [Comment construire un indice écomique](https://www.trading-et-data-analyses.com/2026/04/construire-un-indicateur-macro-econimque-fred.html)
+Les exemples de cette bibliothèque peuvent vous aider à découvrir les possibilités offertes par Python dans TradingInPython, puis à développer vos propres analyses.
 
-### Utilisation des données financières des entreprises côtées en bourse
+1. Consultez [`use_api.py`](use_api.py) pour comprendre comment accéder aux données transmises par la plateforme.
+2. Choisissez un script proche de votre besoin et étudiez son fonctionnement.
+3. Adaptez-le progressivement à votre approche et aux bibliothèques disponibles dans votre environnement.
+4. Consultez la [documentation du Script Runner](https://trading-in-python.sodevlog.com/script-interpreter/) pour les modalités d'exécution.
 
-Trailing EPS (Earnings Per Share) Calcul du PER (Price Earnings Ratio) en comparant au marché :
+⭐ **Vous trouvez ces scripts utiles ?** Pensez à ajouter une étoile au [projet PyTrading sur GitHub](https://github.com/SoDevLog/PyTrading) pour suivre ses évolutions.
 
-- [evaluation-PER-000.py](evaluation-PER-000.py)
+---
 
-Retrouver les actions tradées par Warren Buffett - Berkshire Hathaway sur le Site DATAROMA :
+## ⚠️ Important
 
-- [dataroma-buffett-000.py](dataroma-buffett-000.py)
+Ces scripts sont fournis **à titre d'exemple, en l'état**. Les sources de données, les API ou les bibliothèques utilisées peuvent évoluer ; certains scripts peuvent donc nécessiter des adaptations ou cesser de fonctionner.
 
-Juste Valeur à partir de la projection du Free Cash Flow FCF :
-
-- [juste-valeur-FCF.py](juste-valeur-FCF.py)
-
-Comparaison des Indices entre eux - S&P Standard & Poor's SP 500 :
-
-- [indice-market-000.py](indice-market-000.py)
-
-La fameuse formule magique de Greenblatt Magic Formula :
-
-- [greenblatt-000.py](greenblatt-000.py)
-
-Calendrier des jours d'ouverture des bourses mondiales :
-
-- [market-calendar-000.py](market-calendar-000.py)
-
-Agent IA de trading technique - MLP (Multi-Layer Perceptrons) Keras (backend JAX) :
-
-- [agent_ia.py](agent_ia.py)
-
-Vous trouverez d'autres scripts que vous pourrez exécuter, adapter pour vos besoins, vous en inspirez.
-
-**Pensez à "starer" le projet PyTrading**, mettez un étoile pour suivre les évolutions des Scripts et de leur utilisation dans **TradingInPython**.
-
-## Mise en garde
-
-_Ces scripts ne sont que des exemples, ils sont délivrés tels quels. Ils peuvent ne plus fonctionner à cause de certains changements et doivent parfois être adaptés pour fonctionner à nouveau._
+Ils sont proposés à des fins d'exploration et de développement. Ils ne constituent pas des recommandations d'achat ou de vente.
