@@ -6,13 +6,13 @@ import numpy
 import pandas
 import matplotlib.style
 matplotlib.style.use("seaborn-v0_8-notebook")
-import matplotlib.pyplot as plt
+
+from matplotlib.figure import Figure
 
 from pathlib import Path
 base = Path(__file__).resolve().parent.parent
 sys.path.append( str(base) )
 
-from matplotlib.figure import Figure
 import digitsignalprocessing.indicators as dsp
 
 # -----------------------------------------------------------------------------
