@@ -24,6 +24,13 @@ Ces informations sont accessibles via l'API de la plateforme (`api.py`). Les par
 
 ## 📈 Analyse technique et stratégies de trading
 
+### Détection des Supports et des Résistances
+
+Algorithme de détection des niveaux de Supports et de Résistances dynamiques guidée par le profil de volume. Les supports et les résistances occupent une place importante dans l'analyse technique des marchés financiers.
+
+➡️ [`support-resistance-levels.py`](support-resistance-levels.py)  
+📚 [Documentation : Comment détecter les supports et les résistances dynamiques avec Python ?](https://www.trading-et-data-analyses.com/2026/10/detecter-les-supports-et-les-resistances-en-python.html)
+
 ### SuperTrend Indicator
 
 Un indicateur de tendance fondé sur l'**ATR (Average True Range)**. Il aide à visualiser la direction de la tendance et ses retournements potentiels.
@@ -52,14 +59,14 @@ Une stratégie qui combine plusieurs éléments d'analyse technique :
 - deux histogrammes pour distinguer les dynamiques de momentum court terme (CT) et moyen terme (MT).
 
 ➡️ [`strategy-bull-bear-strengh-index.py`](strategy-bull-bear-strengh-index.py)  
-📘 [Lire l'article : Bull/Bear Strength Index - Python Trading Strategy](https://www.trading-et-data-analyses.com/2026/09/bullbear-strength-index-python-trading.html)
+📚 [Lire l'article : Bull/Bear Strength Index - Python Trading Strategy](https://www.trading-et-data-analyses.com/2026/09/bullbear-strength-index-python-trading.html)
 
 ### Filtre des actions à forte croissance - Strong Growth
 
 Un exemple de filtre pour rechercher des actions dont la hausse s'accompagne d'une dynamique de volume intéressante.
 
 ➡️ [`strong-growth.py`](strong-growth.py)  
-📘 [Lire l'article : Filtre Strong Growth - détecter une hausse soutenue par les volumes avec Python](https://www.trading-et-data-analyses.com/2026/09/filtre-strong-growth-python.html)
+📚 [Lire l'article : Filtre Strong Growth - détecter une hausse soutenue par les volumes avec Python](https://www.trading-et-data-analyses.com/2026/09/filtre-strong-growth-python.html)
 
 ---
 
@@ -99,7 +106,7 @@ from macro_indices.france import INDEX_CONFIG
 
 Vous pouvez adapter cette configuration pour explorer un autre ensemble de données.
 
-📘 [Lire l'article : Comment construire un indice économique](https://www.trading-et-data-analyses.com/2026/04/construire-un-indicateur-macro-econimque-fred.html)
+📚 [Lire l'article : Comment construire un indice économique](https://www.trading-et-data-analyses.com/2026/04/construire-un-indicateur-macro-econimque-fred.html)
 
 ---
 
@@ -143,6 +150,6 @@ Les exemples de cette bibliothèque peuvent vous aider à découvrir les possibi
 
 ## ⚠️ Important
 
-Ces scripts sont fournis **à titre d'exemple, en l'état**. Les sources de données, les API ou les bibliothèques utilisées peuvent évoluer ; certains scripts peuvent donc nécessiter des adaptations ou cesser de fonctionner.
+Ces scripts sont fournis **à titre d'exemple, en l'état**. Les sources de données, les API ou les bibliothèques utilisées peuvent évoluer, certains scripts peuvent donc nécessiter des adaptations pour continuer à fonctionner.
 
-Ils sont proposés à des fins d'exploration et de développement. Ils ne constituent pas des recommandations d'achat ou de vente.
+_Ils sont proposés à des fins d'exploration et de développement. Ils ne constituent pas des recommandations d'achat ou de vente._
