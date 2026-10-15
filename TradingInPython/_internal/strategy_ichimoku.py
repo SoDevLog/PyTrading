@@ -456,19 +456,6 @@ class strategy_ichimoku:
     # ----------------------------------------------------------------------------
     
     def on_mobile_average_params_change( self ):
-        try:
-            ma1 = self.mobile_average_1.get()
-            ma2 = self.mobile_average_2.get()
-            ma3 = self.mobile_average_3.get()
-
-            self.message_entry.config( text=f"MA changed: {ma1} {ma2} {ma3}", foreground="green" )
-            
-        except (tk.TclError, ValueError):
-            # Saisie en cours / valeur temporairement invalide
-            return
-        
-        # Bloquer l'autoscale pour que le graphe reste en place
-        self.ax_main.set_autoscale_on( False )
 
         # Supprimer les anciens éléments graphiques
         for e in self.artists_ichimoku:
@@ -476,32 +463,13 @@ class strategy_ichimoku:
                 self.artists_ichimoku[ e ].remove()
             except ( NotImplementedError, ValueError ):
                 pass
-
-        WIDTH_MA1 = self.mobile_average_1.get()
-        WIDTH_MA2 = self.mobile_average_2.get()
-        WIDTH_MA3 = self.mobile_average_3.get()
-
-        # Recalculer uniquement les objets impacté par la modif
-        data = self.data.copy()
-        data.set_index( 'Date2num', inplace=True )
-        axe_x = numpy.arange( len( data ) )
-
-        data = ichimoku_kinko_hyo.ichimoku_modernise( data, period1=WIDTH_MA1, period2=WIDTH_MA2, period3=WIDTH_MA3  )
-
-        self.artists_ichimoku['line_tenkan_sen'], = self.ax_main.plot( axe_x, data['Tenkan_sen'], label='Tenkan-sen', color=pc.TENKAN, linewidth=1.5 )
-        self.artists_ichimoku['line_kijun_sen'], = self.ax_main.plot( axe_x, data['Kijun_sen'], label='Kijun-sen', color=pc.KIJUN, linewidth=1.5 )
-        self.artists_ichimoku['line_kijun_sen_upper'], = self.ax_main.plot( axe_x, data['Kijun_sen_upper'], label='Kijun-sen Upper', linestyle='-', linewidth=0.5, color='blue' )
-        self.artists_ichimoku['line_kijun_sen_lower'], = self.ax_main.plot( axe_x, data['Kijun_sen_lower'], label='Kijun-sen Lower', linestyle='-', linewidth=0.5, color='blue' )
-        self.artists_ichimoku['line_kijun_chikou_span'], = self.ax_main.plot( axe_x, data['Chikou_span'], label='Chikou-span', linestyle='--', linewidth=1, color=pc.royalblue )
-        self.artists_ichimoku['fill_Kijun_bands'] = self.ax_main.fill_between( axe_x, data['Kijun_sen_upper'], data['Kijun_sen_lower'], where=data['Kijun_sen_upper'] >= data['Kijun_sen_lower'], facecolor='lightskyblue', edgecolor='none', alpha=0.3, interpolate=True )
-
-        self.artists_ichimoku['fill_senkou_bands_A'] = self.ax_main.fill_between( axe_x, data['Senkou_span_A'], data['Senkou_span_B'], where=data['Senkou_span_A'] >= data['Senkou_span_B'], facecolor='lightgreen', edgecolor='none', alpha=0.7, interpolate=True )
-        self.artists_ichimoku['fill_senkou_bands_B'] = self.ax_main.fill_between( axe_x, data['Senkou_span_A'], data['Senkou_span_B'], where=data['Senkou_span_A'] < data['Senkou_span_B'], facecolor='lightcoral', edgecolor='none', alpha=0.7, interpolate=True )
+                
+        self.draw_main_graph( self.ax_main, self.intraday, 0.48 )
         
         self.toggle_visibility()
         
         self.canvas.draw_idle()
-        
+            
     # ----------------------------------------------------------------------------
     # Because I found it impossible to just redraw an ax or another
     # I must redraw all things
@@ -511,7 +479,7 @@ class strategy_ichimoku:
 
         PROJECTION = self.ichimoku_futuriste.get()
 
-        data = self.data #.copy()
+        data = self.data.copy()
 
         WIDTH_MA1 = self.mobile_average_1.get()
         WIDTH_MA2 = self.mobile_average_2.get()
@@ -602,11 +570,6 @@ class strategy_ichimoku:
         # ichimoku_kinko_hyo
         # -------------------
         data = ichimoku_kinko_hyo.ichimoku_modernise( data, period1=WIDTH_MA1, period2=WIDTH_MA2, period3=WIDTH_MA3  )
-
-        if PROJECTION:
-            # Effacer les projection futures des signaux Tenkan, Kijun et Chikou span
-            data.loc[future_mask, 'Tenkan_sen'] = numpy.nan
-            data.loc[future_mask, 'Kijun_sen'] = numpy.nan
 
         if self.MAKE_FORCASTING:
             # Generer le signal d'achat/vente
