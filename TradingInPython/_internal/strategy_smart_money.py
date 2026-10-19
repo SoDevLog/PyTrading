@@ -404,6 +404,20 @@ class strategy_smart_money:
         self.toggle_overlay( 'candles' ) # must be done because candlestick_ohlc has no visible param
 
     # ----------------------------------------------------------------------------
+
+    def _reset_artists( self ):
+        # Remettre les listes à zéro ne suffit pas : les artistes resteraient
+        # dessinés et s'empileraient à chaque redessin.
+        for artists in self.artists.values():
+            for artist in artists:
+                try:
+                    artist.remove()
+                except ( NotImplementedError, ValueError, AttributeError ):
+                    pass
+
+        self.artists = { key: [] for key in self.artists }
+
+    # ----------------------------------------------------------------------------
     # Because I found it impossible to just redraw an ax or another
     # I must redraw all things
     #
@@ -441,8 +455,7 @@ class strategy_smart_money:
             return
 
         # Réinitialiser les artistes
-        for key in self.artists:
-            self.artists[ key ] = []
+        self._reset_artists()
 
         # Connecter le clic souris
         self.fig.canvas.mpl_connect( "button_press_event", self.on_click )
