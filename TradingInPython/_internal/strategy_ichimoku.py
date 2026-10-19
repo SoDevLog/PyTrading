@@ -46,7 +46,6 @@ class strategy_ichimoku:
         self.nb_days_past = 9 # by default
         self.slope = None
         self.data = None
-        self.MAKE_FORCASTING = False
         self.artists_ichimoku = {}
 
         # Read Configuration to configure Tkinter UI
@@ -335,7 +334,7 @@ class strategy_ichimoku:
         self.var_kumo = tk.IntVar( value=1 )
 
         self.var_make_forcasting = tk.BooleanVar( value=False )
-        self.ichimoku_futuriste = tk.BooleanVar( value=False )
+        self.var_ichimoku_futuriste = tk.BooleanVar( value=False )
 
         chk20 = ttk.Checkbutton( check_frame, text="Price", variable=self.var_price, command=command_update_lines)
         chk_candles = ttk.Checkbutton( check_frame, text="Candle", variable=self.var_candles, command=command_update_lines)
@@ -358,18 +357,17 @@ class strategy_ichimoku:
         chk40 = ttk.Checkbutton( check_frame, text="Kumo", variable=self.var_kumo, command=command_update_lines)
         Tooltip( chk40, "Nuage des équilibres du marché.")
 
-        # CONTINUS, MAKE_FORCASTING
-        #chk60 = ttk.Checkbutton( check_frame, text="CONTINUS", variable=self.var60, command=command_update_graphs)
-        chk70 = ttk.Checkbutton( check_frame, text="Forcasting", variable=self.var_make_forcasting, command=command_update_graphs)
-        Tooltip( chk70, "Prévisions modèle de machine learning entraîné sur les données historiques.")
+        # MAKE_FORCASTING
+        self.chk_forcasting = ttk.Checkbutton( check_frame, text="Forcasting", variable=self.var_make_forcasting, command=command_update_graphs)
+        Tooltip( self.chk_forcasting, "Prévisions modèle de machine learning entraîné sur les données historiques.")
         
-        chk80 = ttk.Checkbutton( check_frame, text="Futuriste", variable=self.ichimoku_futuriste, command=command_update_graphs)
-        Tooltip( chk80, "Projecter le nuage Kumo pour visualiser les zones de support et résistance futures.")
+        # PROJECTION
+        self.chk_futuriste = ttk.Checkbutton( check_frame, text="Futuriste", variable=self.var_ichimoku_futuriste, command=command_update_graphs)
+        Tooltip( self.chk_futuriste, "Projecter le nuage Kumo pour visualiser les zones de support et résistance futures.")
         
         # PACK ALL THINGS
-        #chk60.pack( side=tk.LEFT, padx=5, pady=5 )
-        chk70.pack( side=tk.LEFT, padx=5, pady=5 )
-        chk80.pack( side=tk.LEFT, padx=5, pady=5 )
+        self.chk_forcasting.pack( side=tk.LEFT, padx=5, pady=5 )
+        self.chk_futuriste.pack( side=tk.LEFT, padx=5, pady=5 )
         chk20.pack( side=tk.LEFT, padx=5, pady=5 )
         chk_candles.pack( side=tk.LEFT, padx=5, pady=5 )
 
@@ -443,7 +441,7 @@ class strategy_ichimoku:
         else:
             set_visibility_ohlc( candles, False )
             
-        if self.MAKE_FORCASTING:
+        if self.var_make_forcasting.get():
             if self.var_make_forcasting.get():
                 self.artists_ichimoku['line_signal'].set_visible( True )
                 self.artists_ichimoku['line_forcasted_signal'].set_visible( True )
@@ -477,8 +475,6 @@ class strategy_ichimoku:
     def draw_main_graph( self, ax_main, intraday, width ):
         global selector # for event to be called by main program
 
-        PROJECTION = self.ichimoku_futuriste.get()
-
         data = self.data.copy()
 
         WIDTH_MA1 = self.mobile_average_1.get()
@@ -489,7 +485,30 @@ class strategy_ichimoku:
         axe_x = data['Date2num']
         self.ax_main = ax_main
 
-        if PROJECTION:
+        # Check for forcasting enabled
+        if intraday:
+            self.message_entry.config( text="Prévisions désactivées en intraday.", foreground="red" )
+            self.var_make_forcasting.set( False )
+            self.chk_forcasting.state( ["disabled"] )
+
+        # Manage exclusive states between PROJECTION and FORCATING
+        if self.var_ichimoku_futuriste.get():
+            self.var_make_forcasting.set( False )
+            self.chk_forcasting.state( ["disabled"] )
+
+        if self.var_make_forcasting.get():
+            self.var_ichimoku_futuriste.set( False )
+            self.chk_futuriste.state( ["disabled"] )
+        
+        # User must put the twoo to False to enable or disable chkbutt
+        if self.var_make_forcasting.get() == False and self.var_ichimoku_futuriste.get() == False:
+            self.var_make_forcasting.set( False )
+            self.chk_forcasting.state( ["!disabled"] )
+            self.var_ichimoku_futuriste.set( False )
+            self.chk_futuriste.state( ["!disabled"] )
+            
+        # Make dates in the futur
+        if self.var_ichimoku_futuriste.get():
             last_date = data.index[-1]
 
             future_dates = pandas.date_range(
@@ -511,23 +530,14 @@ class strategy_ichimoku:
             data['Date2num'] = numpy.arange(len(data))
             axe_x = data['Date2num']
 
+        # Sanity check for Ichimoku calculation
         length_data = len( data )
         if length_data < WIDTH_MA3:
             self.message_entry.config( text=f"Pas assez de connées: {length_data}", foreground="red" )
             return axe_x, False
 
         self.message_entry.config( text=f"Data length: {length_data}", foreground="green" )
-
-        # Check for forcasting enabled
-        _forcasting = self.var_make_forcasting.get()
-        if intraday and _forcasting:
-            _forcasting = False # disable for intraday
-            self.message_entry.config( text="Prévisions désactivées en intraday.", foreground="red" )
-            self.var_make_forcasting.set( False )
-
-        # Set new state
-        self.MAKE_FORCASTING = _forcasting
-
+            
         # Candle Sticks
         #
         ohlc = numpy.column_stack([
@@ -571,17 +581,10 @@ class strategy_ichimoku:
         # -------------------
         data = ichimoku_kinko_hyo.ichimoku_modernise( data, period1=WIDTH_MA1, period2=WIDTH_MA2, period3=WIDTH_MA3  )
 
-        if self.MAKE_FORCASTING:
+        if self.var_make_forcasting.get():
             # Generer le signal d'achat/vente
             data = ichimoku_kinko_hyo.generate_signals( data )
 
-        # Les barres projetées n'ont pas de clôture : generate_signals() n'y
-        # produit que des zéros et Signal_display reste figé sur la moyenne.
-        # On signe donc le nuage projeté à partir de la dernière clôture connue.
-        if PROJECTION:
-            data = ichimoku_kinko_hyo.generate_leading_signals( data, future_mask )
-
-        if self.MAKE_FORCASTING:
             # Entraîner le modèle
             model = ichimoku_kinko_hyo.train_predictive_model( data )
 
@@ -615,10 +618,8 @@ class strategy_ichimoku:
         self.artists_ichimoku['line_kijun_chikou_span'], = ax_main.plot( axe_x, data['Chikou_span'], label='Chikou-span', linestyle='--', linewidth=1, color=pc.royalblue )
         self.artists_ichimoku['fill_Kijun_bands'] = ax_main.fill_between( axe_x, data['Kijun_sen_upper'], data['Kijun_sen_lower'], where=data['Kijun_sen_upper'] >= data['Kijun_sen_lower'], facecolor='lightskyblue', edgecolor='none', alpha=0.3, interpolate=True )
 
-        if 'Signal_display' in data.columns:
+        if self.var_make_forcasting.get():
             self.artists_ichimoku['line_signal'], = ax_main.plot( axe_x, data['Signal_display'], label='Signal', linewidth=1.5, color='plum' )
-
-        if self.MAKE_FORCASTING:
             self.artists_ichimoku['line_forcasted_signal'], = ax_main.plot( axe_x, data['Signal_Forcasted'], label='Forcasted Signal', linewidth=1.5, color='violet' )
             self.artists_ichimoku['line_predicted_signal'], = ax_main.plot( axe_x, data['Signal_Predicted'], label='Predicted Signal', linewidth=2, color='mediumorchid' )
 
@@ -626,10 +627,10 @@ class strategy_ichimoku:
         self.artists_ichimoku['fill_senkou_bands_A'] = ax_main.fill_between( axe_x, data['Senkou_span_A'], data['Senkou_span_B'], where=data['Senkou_span_A'] >= data['Senkou_span_B'], facecolor='lightgreen', edgecolor='none', alpha=0.7, interpolate=True )
         self.artists_ichimoku['fill_senkou_bands_B'] = ax_main.fill_between( axe_x, data['Senkou_span_A'], data['Senkou_span_B'], where=data['Senkou_span_A'] < data['Senkou_span_B'], facecolor='lightcoral', edgecolor='none', alpha=0.7, interpolate=True )
 
-        if self.MAKE_FORCASTING:
-            return axe_x_copy
-
         ax_main.set_xlim( -0.5, len( data ) - 0.5 )
+
+        if self.var_make_forcasting.get():
+            return axe_x_copy
 
         return axe_x
 
@@ -644,7 +645,7 @@ class strategy_ichimoku:
         _s = "{:.6f}".format( self.slope )
         title =  f" - slope: {_s}"
         title += f" - MAx: {WIDTH_MA1} {WIDTH_MA2} {WIDTH_MA3}"
-        if self.MAKE_FORCASTING:
+        if self.var_make_forcasting.get():
             nb_futur = self.nb_days_forcasted_entry.get()
             nb_past = self.nb_days_past_entry.get()
             title += f" - Forcast: {nb_futur} {nb_past}"
