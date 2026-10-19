@@ -189,6 +189,38 @@ def generate_signals( data ):
     
     return data
 
+# 3. Signaux portés par le nuage Kumo projeté (mode « Futuriste »)
+# ----------------------------------------------------------------
+# Dans la zone projetée par le mode Futuriste, la clôture n'existe pas encore :
+# generate_signals() n'y voit que des NaN et laisse tous les signaux à zéro.
+# Les seules valeurs réellement déterminées dans cette zone sont les Senkou
+# spans, c'est-à-dire le nuage lui-même. On compare donc la dernière clôture
+# connue, prolongée à plat, aux deux bornes du nuage projeté - sans le
+# croisement Tenkan/Kijun, qui n'est pas défini dans le futur.
+#
+def generate_leading_signals( data, projection_mask ):
+    # Sans prévision, aucune colonne Signal n'existe : on la crée vide pour que
+    # seule la zone projetée soit signée et que l'historique reste non tracé.
+    if 'Signal' not in data.columns:
+        data['Signal'] = np.nan
+
+    price = data['Close'].ffill()
+    span_a = data['Senkou_span_A']
+    span_b = data['Senkou_span_B']
+
+    # Une barre projetée n'est signable que si son nuage est connu
+    known = projection_mask & span_a.notna() & span_b.notna()
+
+    data.loc[ known, 'Signal' ] = 0
+    data.loc[ known & ( price > span_a ) & ( price > span_b ), 'Signal' ] = 1
+    data.loc[ known & ( price < span_a ) & ( price < span_b ), 'Signal' ] = -1
+
+    # Pour afficher ce signal en bas du graph
+    mean = data['Close'].mean()
+    data['Signal_display'] = data['Signal'] + mean
+
+    return data
+
 def train_predictive_model_0000(data):
     # On crée des features pour entraîner le modèle
     X = data[['Tenkan_sen', 'Kijun_sen', 'Senkou_span_A', 'Senkou_span_B', 'ATR', 'Kijun_sen_upper', 'Kijun_sen_lower']]

@@ -575,6 +575,13 @@ class strategy_ichimoku:
             # Generer le signal d'achat/vente
             data = ichimoku_kinko_hyo.generate_signals( data )
 
+        # Les barres projetées n'ont pas de clôture : generate_signals() n'y
+        # produit que des zéros et Signal_display reste figé sur la moyenne.
+        # On signe donc le nuage projeté à partir de la dernière clôture connue.
+        if PROJECTION:
+            data = ichimoku_kinko_hyo.generate_leading_signals( data, future_mask )
+
+        if self.MAKE_FORCASTING:
             # Entraîner le modèle
             model = ichimoku_kinko_hyo.train_predictive_model( data )
 
@@ -608,8 +615,10 @@ class strategy_ichimoku:
         self.artists_ichimoku['line_kijun_chikou_span'], = ax_main.plot( axe_x, data['Chikou_span'], label='Chikou-span', linestyle='--', linewidth=1, color=pc.royalblue )
         self.artists_ichimoku['fill_Kijun_bands'] = ax_main.fill_between( axe_x, data['Kijun_sen_upper'], data['Kijun_sen_lower'], where=data['Kijun_sen_upper'] >= data['Kijun_sen_lower'], facecolor='lightskyblue', edgecolor='none', alpha=0.3, interpolate=True )
 
-        if self.MAKE_FORCASTING:
+        if 'Signal_display' in data.columns:
             self.artists_ichimoku['line_signal'], = ax_main.plot( axe_x, data['Signal_display'], label='Signal', linewidth=1.5, color='plum' )
+
+        if self.MAKE_FORCASTING:
             self.artists_ichimoku['line_forcasted_signal'], = ax_main.plot( axe_x, data['Signal_Forcasted'], label='Forcasted Signal', linewidth=1.5, color='violet' )
             self.artists_ichimoku['line_predicted_signal'], = ax_main.plot( axe_x, data['Signal_Predicted'], label='Predicted Signal', linewidth=2, color='mediumorchid' )
 
