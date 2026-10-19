@@ -670,6 +670,17 @@ class IndicateurTendanceKalman:
             'trend_strength': float(r_squared * smoothness)
         }
     
+    def _duree_historique_en_annees( self ) -> Optional[ float ]:
+        # Durée couverte par l'historique, utilisée pour annualiser le Sharpe
+        dates = self.historique.get( 'dates' )
+        if dates is None or len( dates ) < 2:
+            return None
+        try:
+            jours = ( pd.Timestamp( dates[ -1 ] ) - pd.Timestamp( dates[ 0 ] ) ).days
+        except ( TypeError, ValueError ):
+            return None
+        return jours / 365.25 if jours > 0 else None
+
     def generer_rapport_performance( self ) -> Dict:
         
         """Rapport performance des signaux"""
@@ -698,15 +709,31 @@ class IndicateurTendanceKalman:
             return {"message": "Aucun cycle d'achat/vente complet"}
         
         rendements_array = np.array(rendements_signals)
-        
+
+        # Courbe de capital : les rendements par opération se composent
+        equity = np.cumprod( 1.0 + rendements_array / 100.0 )
+        sommets = np.maximum.accumulate( equity )
+        drawdowns = ( equity - sommets ) / sommets
+        max_drawdown = float( np.min( drawdowns ) * 100.0 )
+
+        # Sharpe annualisé : la fréquence des opérations est déduite des dates
+        ecart_type = float( np.std( rendements_array ) )
+        sharpe = 0.0
+        if ecart_type > 0:
+            ratio = float( np.mean( rendements_array ) ) / ecart_type
+            annees = self._duree_historique_en_annees()
+            if annees:
+                ratio *= float( np.sqrt( len( rendements_array ) / annees ) )
+            sharpe = ratio
+
         return {
             'nb_signaux': len(rendements_signals),
             'rendement_moyen': float( np.mean(rendements_array) ),
             'rendement_total': float( np.sum(rendements_array) ),
-            'rendement_std': float( np.std(rendements_array) ),
+            'rendement_std': ecart_type,
             'taux_reussite': float( np.mean(rendements_array > 0) * 100 ),
-            'sharpe_ratio': float( np.mean(rendements_array) / np.std(rendements_array) ) if np.std(rendements_array) > 0 else 0.0,
-            'max_drawdown': float( np.min(rendements_array) ),
+            'sharpe_ratio': sharpe,
+            'max_drawdown': max_drawdown,
             'max_gain': float( np.max(rendements_array) )
         }
 
