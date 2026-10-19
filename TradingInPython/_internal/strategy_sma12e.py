@@ -53,6 +53,8 @@ class strategy_sma12e:
         self.slope = None
         self.data = None
         self.change_chk_sates = True
+        self.candle_artists = []
+        self.line_tendency = None
   
         self.get_configuration()
 
@@ -690,11 +692,27 @@ class strategy_sma12e:
             self.change_chk_sates = True	
 
     # ----------------------------------------------------------------------------
+
+    def _remove_draw_artists( self ):
+        # La droite de tendance et les chandeliers ne sont pas dans self.lines :
+        # sans ce nettoyage ils s'empilent à chaque redessin.
+        for artist in [ self.line_tendency ] + self.candle_artists:
+            try:
+                artist.remove()
+            except ( NotImplementedError, ValueError, AttributeError ):
+                pass
+
+        self.line_tendency = None
+        self.candle_artists = []
+
+    # ----------------------------------------------------------------------------
     # Because I found it impossible to just redraw an ax or another
     # I must redraw all things
     #
     def draw_main_graph( self, ax_main, intraday, width ):
         global selector # for event to be called by main program  
+
+        self._remove_draw_artists()
 
         data = self.data.copy()
         self.ax_main = ax_main
@@ -737,6 +755,10 @@ class strategy_sma12e:
             data['Close'].values
         ])
 
+        # Le module compilé ne dit pas ce qu'il ajoute : on retient la différence
+        # sur les axes plutôt que de dépendre de son type de retour.
+        children_before = { id( a ) for a in ax_main.get_children() }
+
         self.candles = candlestick_ohlc(
             ax_main, 
             ohlc, 
@@ -744,6 +766,10 @@ class strategy_sma12e:
             colorup=pc.CANDLE_BULL,
             colordown=pc.CANDLE_BEAR
         )
+
+        self.candle_artists = [
+            a for a in ax_main.get_children() if id( a ) not in children_before
+        ]
         
         # Price
         #        
@@ -762,7 +788,7 @@ class strategy_sma12e:
         if result.slope >= 0:
             color=pc.CANDLE_BULL
         line_tendency = result.slope * axe_x + result.intercept # y = a * x + b
-        ax_main.plot( axe_x, line_tendency, color=color, linewidth=1, label=f"Slope", linestyle='--' )
+        self.line_tendency, = ax_main.plot( axe_x, line_tendency, color=color, linewidth=1, label=f"Slope", linestyle='--' )
 
         # Moyenne mobile calculation
         # --------------------------

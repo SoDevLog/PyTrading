@@ -48,6 +48,9 @@ class strategy_ichimoku:
         self.data = None
         self.MAKE_FORCASTING = False
         self.artists_ichimoku = {}
+        self.candle_artists = []
+        self.line_price = None
+        self.line_tendency = None
 
         # Read Configuration to configure Tkinter UI
         self.get_configuration()
@@ -457,13 +460,7 @@ class strategy_ichimoku:
     
     def on_mobile_average_params_change( self ):
 
-        # Supprimer les anciens éléments graphiques
-        for e in self.artists_ichimoku:
-            try:
-                self.artists_ichimoku[ e ].remove()
-            except ( NotImplementedError, ValueError ):
-                pass
-                
+        # Le nettoyage des artistes du dessin précédent est fait par draw_main_graph()
         self.draw_main_graph( self.ax_main, self.intraday, 0.48 )
         
         self.toggle_visibility()
@@ -471,11 +468,34 @@ class strategy_ichimoku:
         self.canvas.draw_idle()
             
     # ----------------------------------------------------------------------------
+
+    def _remove_draw_artists( self ):
+        # Les artistes d'un dessin précédent doivent disparaître, sinon ils
+        # s'empilent à chaque changement de paramètre : la ligne de prix, la
+        # droite de tendance et les chandeliers n'étaient jamais supprimés.
+        artists = list( self.artists_ichimoku.values() )
+        artists += [ self.line_price, self.line_tendency ]
+        artists += self.candle_artists
+
+        for artist in artists:
+            try:
+                artist.remove()
+            except ( NotImplementedError, ValueError, AttributeError ):
+                pass
+
+        self.artists_ichimoku = {}
+        self.line_price = None
+        self.line_tendency = None
+        self.candle_artists = []
+
+    # ----------------------------------------------------------------------------
     # Because I found it impossible to just redraw an ax or another
     # I must redraw all things
     #
     def draw_main_graph( self, ax_main, intraday, width ):
         global selector # for event to be called by main program
+
+        self._remove_draw_artists()
 
         PROJECTION = self.ichimoku_futuriste.get()
 
@@ -538,6 +558,10 @@ class strategy_ichimoku:
             data['Close'].values
         ])
 
+        # Les chandeliers sont dessinés par un module compilé : on retient ce
+        # qu'il ajoute aux axes plutôt que de dépendre de son type de retour.
+        children_before = { id( a ) for a in ax_main.get_children() }
+
         self.candles = candlestick_ohlc(
             ax_main,
             ohlc,
@@ -545,6 +569,10 @@ class strategy_ichimoku:
             colorup= pc.CANDLE_BULL,
             colordown= pc.CANDLE_BEAR
         )
+
+        self.candle_artists = [
+            a for a in ax_main.get_children() if id( a ) not in children_before
+        ]
 
         # Permettre au Graph de dessiner
         # ------------------------------
@@ -564,7 +592,7 @@ class strategy_ichimoku:
         if result.slope >= 0:
             color='darkgreen'
         line_tendency = result.slope * axe_x + result.intercept # y = a * x + b
-        ax_main.plot( axe_x, line_tendency, color=color, linewidth=1, label=f"Tendance", linestyle='--', alpha=0.5 )
+        self.line_tendency, = ax_main.plot( axe_x, line_tendency, color=color, linewidth=1, label=f"Tendance", linestyle='--', alpha=0.5 )
 
         # -------------------
         # ichimoku_kinko_hyo
