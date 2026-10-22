@@ -6,7 +6,9 @@ import pandas as pd
 from datetime import datetime, timedelta
 from matplotlib.figure import Figure
 
-if __name__ == "__main__":
+run_standalone = (__name__ == "__main__")
+
+if run_standalone:
     import sys
     from pathlib import Path
     script_dir = Path(__file__).resolve().parent
@@ -213,7 +215,7 @@ def main():
     fig = show_scan_report( df_all, tickers, NB_DAYS, PRICE_THRESHOLD, VOLUME_MULTIPLIER )
     fig.tight_layout()
 
-    if __name__ != "__main__":
+    if run_standalone == False:
         api.show_figure( fig )  # rendu thread-safe dans le thread Tkinter principal
     else:
         # Créer la fenêtre Tkinter, avec un ascenseur vertical si la table dépasse l'écran
@@ -255,7 +257,7 @@ def main():
 
         root.mainloop()  
 
-if __name__ == "__main__":
+if run_standalone:
 
     api_context = {
         'tickers': [ 'HO.PA', 'AM.PA', 'AIR.PA', 'GE', 'AAPL', 'MSFT', 'GOOGL', 'AMZN', 'NVDA', 'IT', 'BABA', 'AMD', 'BA', 'BIDU', 'BP', 'RACE', 'FTNT', 'F', 'GE', 'GM', 'INTC', 'JD', 'BMW', 'CROX' ],

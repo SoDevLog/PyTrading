@@ -102,7 +102,7 @@ class SR_Settings:
     lookback:       int   = 200    # nombre de barres du profil
     rows:           int   = 40     # nombre de lignes de prix
     # --- Moteur de pivots guidé par le profil --- #
-    swing:          int   = 10     # confirmation gauche/droite des pivots
+    swing:          int   = 6      # confirmation gauche/droite des pivots
     atr_period:     int   = 14
     search_atr:     float = 1.5    # rayon de recherche d'un noeud autour du pivot (x ATR)
     min_node:       float = 0.25   # volume mini du noeud / POC

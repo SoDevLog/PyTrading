@@ -8,7 +8,9 @@
     Et utilisez l'API comme dans la fonction main()
         
 """
-if __name__ == "__main__":
+run_standalone = (__name__ == "__main__")
+
+if run_standalone:
     import sys
     from pathlib import Path
     sys.path.append(str(Path(__file__).resolve().parent.parent))
@@ -47,7 +49,7 @@ def main():
     api.on_bar( lambda bar: print(f"[OnBar] close={bar['Close']:.2f}") )
     api.on_close( lambda: print("[OnClose] Script terminé proprement.") )
 
-if __name__ == "__main__":
+if run_standalone:
 
     from user_scripts.api import UserScriptAPI
     
