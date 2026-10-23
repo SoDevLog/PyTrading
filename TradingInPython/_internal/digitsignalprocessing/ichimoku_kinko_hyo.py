@@ -263,7 +263,11 @@ def train_predictive_model( data ):
     accuracy = accuracy_score(y_test, y_pred)
     
     print(f"Précision du modèle: {accuracy:.2f}")
-    
+
+    # Le modèle est entraîné sur des features normalisées : on garde le
+    # normaliseur pour appliquer la même transformation plus tard.
+    model.scaler_ = scaler
+
     return model
 
 # Appliquer le modèle à de nouvelles données pour obtenir des signaux prédictifs
@@ -272,7 +276,12 @@ def apply_model( model, data ):
     
     X_new = data[['Tenkan_sen', 'Kijun_sen', 'Senkou_span_A', 'Senkou_span_B', 'ATR', 'Kijun_sen_upper', 'Kijun_sen_lower']].dropna()
     data['Signal_Forcasted'] = np.nan
-    data.loc[ X_new.index, 'Signal_Forcasted'] = model.predict( X_new )
+
+    # Même normalisation qu'à l'entraînement, sinon le modèle est appliqué
+    # hors de son domaine et ne sort pratiquement plus qu'une seule classe.
+    X_scaled = pandas.DataFrame( model.scaler_.transform( X_new ),
+                                 columns=X_new.columns, index=X_new.index )
+    data.loc[ X_new.index, 'Signal_Forcasted'] = model.predict( X_scaled )
 
     # Pourvoir afficher sur le graphique
     mean = data['Close'].mean()
