@@ -66,7 +66,7 @@ class UserScriptAPI:
     # Affichage de figures matplotlib
     # -------------------------------------------------------------------------
 
-    def show_figure( self, fig, title: str = "" ) -> None:
+    def show_figure( self, fig, type='graph', title: str = "" ) -> None:
         """
         Met en queue une figure matplotlib pour affichage dans une Toplevel Tkinter.
 
@@ -79,9 +79,11 @@ class UserScriptAPI:
             # ... tracé ...
             api.show_figure(fig, title="Mon graphique")
             plt.close(fig)   # libère la mémoire matplotlib côté script
+        
+        type = 'graph' ou 'table'
         """
         label = title or self.name or self.ticker or "Figure"
-        self.figure_queue.put( (fig, label) )
+        self.figure_queue.put( (fig, type, label) )
 
     def pop_figures( self ) -> list[tuple]:
         """

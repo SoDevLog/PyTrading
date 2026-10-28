@@ -1,17 +1,18 @@
 """ Indicateur SuperTrend base sur l'ATR (atr_rolling).
 """
-
-import sys
 import numpy
 import pandas
 import matplotlib.style
 matplotlib.style.use("seaborn-v0_8-notebook")
-
 from matplotlib.figure import Figure
 
-from pathlib import Path
-base = Path(__file__).resolve().parent.parent
-sys.path.append( str(base) )
+run_standalone = (__name__ == "__main__")
+
+if run_standalone:
+    import sys
+    from pathlib import Path
+    base = Path(__file__).resolve().parent.parent
+    sys.path.append( str(base) )
 
 import digitsignalprocessing.indicators as dsp
 
@@ -91,9 +92,9 @@ def main():
     axe.legend(loc='upper left')
     fig.tight_layout()
     
-    api.show_figure( fig, title=f"{api.ticker} - SuperTrend" )
+    api.show_figure( fig, type='graph', title=f"{api.ticker} - SuperTrend" )
 
-if __name__ == '__main__':
+if run_standalone:
     # Exemple minimal
     import yfinance
 
