@@ -6,7 +6,9 @@ import pandas as pd
 from datetime import datetime, timedelta
 from matplotlib.figure import Figure
 
-if __name__ == "__main__":
+run_standalone = (__name__ == "__main__")
+
+if run_standalone:
     import sys
     from pathlib import Path
     script_dir = Path(__file__).resolve().parent
@@ -19,9 +21,13 @@ from styles.watermark import Watermark
 
 # ------------------------------------------------------------------------------
 
-NB_DAYS = 10
+NB_DAYS = 5
 PRICE_THRESHOLD = 0.05 # +5%
 VOLUME_MULTIPLIER = 1.2
+
+COLOR_HEADER   = "#14599e"  # bleu foncé
+COLOR_POSITIVE = "#9ee9b1"  # vert clair
+COLOR_NEGATIVE = "#e5a0a6"  # rouge clair
 
 def filter_strong_growth(
         tickers: list[str], 
@@ -164,13 +170,13 @@ def show_scan_report(
     # Style de l'en-tête du tableau
     for col in range( len( df_view.columns ) ):
         cell = table[0, col]
-        cell.set_facecolor( "#14599e" )
+        cell.set_facecolor( COLOR_HEADER )
         cell.set_text_props( color="white", fontweight="bold" )
 
     # Lignes : vert clair si performance positive (croissant), rouge clair si négative (décroissant)
     for row in range( 1, nb_rows ):
         perf = df_all.iloc[ row - 1 ]["Perf (float)"]
-        bg_color = "#ebfff0" if perf >= 0 else "#ffe9eb"
+        bg_color = COLOR_POSITIVE if perf >= 0 else COLOR_NEGATIVE
         for col in range( len( df_view.columns ) ):
             table[row, col].set_facecolor( bg_color )
 
@@ -209,27 +215,52 @@ def main():
     fig = show_scan_report( df_all, tickers, NB_DAYS, PRICE_THRESHOLD, VOLUME_MULTIPLIER )
     fig.tight_layout()
 
-    if __name__ != "__main__":
-        api.show_figure( fig )  # rendu thread-safe dans le thread Tkinter principal
+    if run_standalone == False:
+        api.show_figure( fig, type='table', title="Strong Growth Filter" )  # rendu thread-safe dans le thread Tkinter principal
     else:
-        # Créer la fenêtre Tkinter    
+        # Créer la fenêtre Tkinter, avec un ascenseur vertical si la table dépasse l'écran
         import tkinter as tk
         from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
 
         root = tk.Tk()
         root.title(f"Filtre à Croissance Forte - {len(tickers)} tickers analysés")
-        canvas = FigureCanvasTkAgg(fig, master=root)
+
+        # La fenêtre ne dépasse pas la hauteur de l'écran ; au-delà, le contenu devient scrollable
+        fig_w_px = int( fig.get_figwidth() * fig.dpi )
+        fig_h_px = int( fig.get_figheight() * fig.dpi )
+        win_h = min( fig_h_px + 20, root.winfo_screenheight() - 100 )
+        root.geometry( f"{fig_w_px}x{win_h}" )
+
+        outer = tk.Frame( root )
+        outer.pack( fill="both", expand=True )
+
+        v_scroll = tk.Scrollbar( outer, orient="vertical" )
+        v_scroll.pack( side="right", fill="y" )
+
+        scroll_area = tk.Canvas( outer, yscrollcommand=v_scroll.set, highlightthickness=0 )
+        scroll_area.pack( side="left", fill="both", expand=True )
+        v_scroll.config( command=scroll_area.yview )
+
+        # NB : toolbar/scrollbar doivent cibler root, pas inner, si réactivés (zone fixe hors défilement)
+        inner = tk.Frame( scroll_area )
+        scroll_area.create_window( (0, 0), window=inner, anchor="nw" )
+
+        canvas = FigureCanvasTkAgg(fig, master=inner)
         # toolbar = NavigationToolbar2Tk(canvas, root)
         # toolbar.update()
-        
-        canvas.draw()
-        canvas.get_tk_widget().pack( fill="both", expand=True )
-        root.mainloop()       
 
-if __name__ == "__main__":
+        canvas.draw()
+        canvas.get_tk_widget().pack()
+
+        inner.bind( "<Configure>", lambda e: scroll_area.configure( scrollregion=scroll_area.bbox("all") ) )
+        scroll_area.bind_all( "<MouseWheel>", lambda e: scroll_area.yview_scroll( int(-1 * (e.delta / 120)), "units" ) )
+
+        root.mainloop()  
+
+if run_standalone:
 
     api_context = {
-        'tickers': [ 'HO.PA', 'AM.PA', 'AIR.PA', 'GE', 'AAPL', 'MSFT', 'GOOGL', 'AMZN', 'NVDA', 'IT' ],
+        'tickers': [ 'HO.PA', 'AM.PA', 'AIR.PA', 'GE', 'AAPL', 'MSFT', 'GOOGL', 'AMZN', 'NVDA', 'IT', 'BABA', 'AMD', 'BA', 'BIDU', 'BP', 'RACE', 'FTNT', 'F', 'GE', 'GM', 'INTC', 'JD', 'BMW', 'CROX' ],
     }
         
     api = UserScriptAPI()
