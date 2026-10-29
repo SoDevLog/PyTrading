@@ -1,30 +1,40 @@
 # 🐍 TradingInPython - Bibliothèque de scripts Python
 
-Des exemples de scripts pour **analyser les marchés, tester des indicateurs et explorer les données financières** avec [TradingInPython](https://trading-in-python.sodevlog.com/).
+Voici tout un tas d'exemples de scripts pour **analyser les marchés, tester des indicateurs**, explorer les données financières et **trouver des actions à trader** avec la plateforme [TradingInPython](https://trading-in-python.sodevlog.com/).
 
-Cette bibliothèque rassemble des scripts que vous pouvez exécuter depuis le **Script Runner** de la plateforme. Étudiez les pour les adapter à vos propres besoins.
+Cette bibliothèque rassemble des scripts que vous pouvez exécuter depuis le **Script Runner** de la plateforme. Étudiez les si vous souhaitez les adapter à vos propres besoins.
 
-> **Vous souhaitez écrire vos scripts personnalisés ?** Vous pouvez commencer par l'API utilisateur : [`use_api.py`](use_api.py) pour comprendre comment votre script peut exploiter les données transmises par TradingInPython.
+## 🚀 Comment exécuter ces scripts avec le Script Runner
 
----
-
-## 🚀 Démarrer avec le Script Runner
-
-Le Script Runner peut transmettre à un script python des données telles que :
+Le **Script Runner** est un composant logiciel de la plateforme, il peut exécuter un script Python en lui transmettant des données qui proviennent de la plateforme. Ces données sont par exemple :
 
 - le symbole et le nom de l'action sélectionnée,
 - les données de marché récupérées par le fournisseur de données,
 - une liste de tickers.
 
-Ces informations sont accessibles via l'API de la plateforme (`api.py`). Les paramètres disponibles et leur utilisation sont illustrés dans le script [`use_api.py`](use_api.py).
+Pour découvrir et vous former à l'utilisation du Script Runner :
 
-**Pour aller plus loin :** [Documentation - Interpréteur de scripts Python](https://trading-in-python.sodevlog.com/script-interpreter/interface/)
+- [Documentation - Interpréteur de scripts Python](https://trading-in-python.sodevlog.com/script-interpreter/interface/)
 
-_Quelques uns de ces scripts fonctionnent en standalone si vous avez un environnement de développement Python installé sur votre machine et sinon pour exéctuer ces scripts :_
+Le **Script Runner** s'installe avec la plateforme :
 
-- [Téléchargez TradingInPython](https://www.trading-et-data-analyses.com/p/plateforme-de-trading-technique.html)
+- [Téléchargez et installez TradingInPython](https://www.trading-et-data-analyses.com/p/plateforme-de-trading-technique.html)
 
----
+> Vous n'avez **rien d'autre à faire** les scripts présentés ici sont livrés avec l'installation, vous n'avez plus qu'à les exécuter.
+
+## 🐍 Adapter ces scripts à vos propres besoins
+
+Vous pouvez adapter un script existant proche de votre besoin ou créer votre script personnalisé.
+
+Votre script peut tirer partie des données transmises par la plateforme, ces informations sont accessibles via l'**API utilisateur** de la plateforme :
+
+- [`api.py`](api.py).
+
+Les paramètres disponibles et leur utilisation sont illustrés dans le script :
+
+- [`use_api.py`](use_api.py).
+
+_Quelques uns de ces scripts fonctionnent en standalone si vous avez un **environnement de développement Python** installé sur votre machine et sinon pour exéctuer ces scripts installez la plateforme._
 
 ## 📈 Analyse technique et stratégies de trading
 
