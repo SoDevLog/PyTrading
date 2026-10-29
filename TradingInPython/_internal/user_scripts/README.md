@@ -2,9 +2,9 @@
 
 Des exemples de scripts pour **analyser les marchés, tester des indicateurs et explorer les données financières** avec [TradingInPython](https://trading-in-python.sodevlog.com/).
 
-Cette bibliothèque rassemble des scripts que vous pouvez exécuter depuis le **Script Runner** de la plateforme, étudier et adapter à vos propres besoins.
+Cette bibliothèque rassemble des scripts que vous pouvez exécuter depuis le **Script Runner** de la plateforme. Étudiez les pour les adapter à vos propres besoins.
 
-> **Vous découvrez les scripts personnalisés ?** Commencez par [`use_api.py`](use_api.py) pour comprendre comment un script peut exploiter les données transmises par TradingInPython.
+> **Vous souhaitez écrire vos scripts personnalisés ?** Vous pouvez commencer par l'API utilisateur : [`use_api.py`](use_api.py) pour comprendre comment votre script peut exploiter les données transmises par TradingInPython.
 
 ---
 
@@ -18,7 +18,11 @@ Le Script Runner peut transmettre à un script python des données telles que :
 
 Ces informations sont accessibles via l'API de la plateforme (`api.py`). Les paramètres disponibles et leur utilisation sont illustrés dans le script [`use_api.py`](use_api.py).
 
-**Pour aller plus loin :** [Documentation - Interpréteur de scripts Python](https://trading-in-python.sodevlog.com/script-interpreter/)
+**Pour aller plus loin :** [Documentation - Interpréteur de scripts Python](https://trading-in-python.sodevlog.com/script-interpreter/interface/)
+
+_Quelques uns de ces scripts fonctionnent en standalone si vous avez un environnement de développement Python installé sur votre machine et sinon pour exéctuer ces scripts :_
+
+- [Téléchargez TradingInPython](https://www.trading-et-data-analyses.com/p/plateforme-de-trading-technique.html)
 
 ---
 
@@ -52,7 +56,7 @@ Algorithme de détection des niveaux de Supports et de Résistances dynamiques g
 
 Cette détection des niveaux de supports et de résistance est maintenant intégrée dans la plateforme :
 
-- [TradingInPython](https://www.trading-et-data-analyses.com/p/plateforme-de-trading-technique.html).
+- [TradingInPython](https://www.trading-et-data-analyses.com/p/plateforme-de-trading-technique.html)
 
 ### SuperTrend Indicator
 
@@ -92,7 +96,7 @@ Comment lire la force du marché pour répondre à une question fondamentale, le
 
 Un exemple de filtre pour rechercher des actions dont la hausse s'accompagne d'une dynamique de volume intéressante.
 
-- ➡️ [`strong-growth.py`](strong-growth.py)  
+- ➡️ [`strong-growth-table.py`](strong-growth-table.py)  
 - 📚 [Lire l'article : Filtre Strong Growth - détecter une hausse soutenue par les volumes avec Python](https://www.trading-et-data-analyses.com/2026/09/filtre-strong-growth-python.html)
 
 ---
