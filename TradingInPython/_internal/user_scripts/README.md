@@ -10,10 +10,10 @@ Cette bibliothèque rassemble des scripts que vous pouvez exécuter depuis le **
 
 ## 🚀 Démarrer avec le Script Runner
 
-Le Script Runner peut transmettre à un script des informations telles que :
+Le Script Runner peut transmettre à un script python des données telles que :
 
-- le symbole et le nom de l'action sélectionnée ;
-- les données de marché récupérées par le fournisseur de données ;
+- le symbole et le nom de l'action sélectionnée,
+- les données de marché récupérées par le fournisseur de données,
 - une liste de tickers.
 
 Ces informations sont accessibles via l'API de la plateforme (`api.py`). Les paramètres disponibles et leur utilisation sont illustrés dans le script [`use_api.py`](use_api.py).
@@ -24,12 +24,35 @@ Ces informations sont accessibles via l'API de la plateforme (`api.py`). Les par
 
 ## 📈 Analyse technique et stratégies de trading
 
+### Comment détecter une capitulation vendeuse ?
+
+Algorithme de détection de la capitulation des vendeurs, comment détecter la fin de la prise de contrôle des vendeurs et un retour à la hausse ?
+
+C'est un condensé d'analyse technique, à l'aide de différents indicateurs techniques l'algorithme va détecter les évènements suivants :
+
+- Une tendance baissière déjà bien établie,
+- Une nouvelle accélération de la baisse,
+- Un volume de transactions nettement supérieur à la normale,
+- Une amplitude de bougie inhabituelle, signe d'un marché particulièrement agité,
+- Une clôture avec une longue mèche qui montre éventuellement un rejet des prix les plus bas,
+- Un RSI qui atteint une zone de survente,
+- Puis, dans les séances suivantes, une diminution de la pression vendeuse et l'apparition d'un rebond.
+
+Ce Filtre repère une séance particulière au cours de laquelle la baisse du cours s'accompagne d'un volume exceptionnel et d'une amplitude de variation inhabituelle (ATR).
+
+- ➡️ [`scanner-seller-capitulation.py`](scanner-seller-capitulation.py)
+- 📚 [Documentation : Comment détecter une capitulation des vendeurs](https://www.trading-et-data-analyses.com/2026/10/comment-detecter-une-capitulation.html)
+
 ### Détection des Supports et des Résistances
 
 Algorithme de détection des niveaux de Supports et de Résistances dynamiques guidée par le profil de volume. Les supports et les résistances occupent une place importante dans l'analyse technique des marchés financiers.
 
-➡️ [`support-resistance-levels.py`](support-resistance-levels.py)  
-📚 [Documentation : Comment détecter les supports et les résistances dynamiques avec Python ?](https://www.trading-et-data-analyses.com/2026/10/detecter-les-supports-et-les-resistances-en-python.html)
+- ➡️ [`support-resistance-levels.py`](support-resistance-levels.py)  
+- 📚 [Documentation : Comment détecter les supports et les résistances dynamiques avec Python ?](https://www.trading-et-data-analyses.com/2026/10/detecter-les-supports-et-les-resistances-en-python.html)
+
+Cette détection des niveaux de supports et de résistance est maintenant intégrée dans la plateforme :
+
+- [TradingInPython](https://www.trading-et-data-analyses.com/p/plateforme-de-trading-technique.html).
 
 ### SuperTrend Indicator
 
@@ -45,28 +68,32 @@ Paramètres de l'exemple : `ATR Period = 10` et `Multiplier = 2.0`.
 
 Le script peut être lancé depuis le Script Runner avec les paramètres `ticker`, `period` et `interval`. Il propose également un exemple autonome utilisant `yfinance` sur le titre NVDA, avec six mois de données journalières.
 
-➡️ [`super-trend-indicator.py`](super-trend-indicator.py)
+- ➡️ [`super-trend-indicator.py`](super-trend-indicator.py)
 
 Ce script peut servir de point de départ pour étudier un filtre de tendance, des retournements ou des signaux d'entrée et de sortie.
 
+Cet indicateur est maintenant intégré dans la plateforme.
+
 ### Bull/Bear Strength Index (BSI)
 
-Une stratégie qui combine plusieurs éléments d'analyse technique :
+Une stratégie complète de trading qui combine plusieurs éléments d'analyse technique :
 
 - un **Cloud BSI**, construit à partir de deux EMA ;
 - un **Stop BSI**, fondé sur un ATR Trailing Stop ;
 - une synergie destinée à rechercher un alignement entre le court et le moyen terme ;
 - deux histogrammes pour distinguer les dynamiques de momentum court terme (CT) et moyen terme (MT).
 
-➡️ [`strategy-bull-bear-strengh-index.py`](strategy-bull-bear-strengh-index.py)  
-📚 [Lire l'article : Bull/Bear Strength Index - Python Trading Strategy](https://www.trading-et-data-analyses.com/2026/09/bullbear-strength-index-python-trading.html)
+Comment lire la force du marché pour répondre à une question fondamentale, le marché est-il vraiment haussier ? Ou est-il seulement en train de faire semblant sur un horizon de temps trop court pour être fiable.
+
+- ➡️ [`strategy-bull-bear-strengh-index.py`](strategy-bull-bear-strengh-index.py)  
+- 📚 [Lire l'article : Bull/Bear Strength Index - Python Trading Strategy](https://www.trading-et-data-analyses.com/2026/09/bullbear-strength-index-python-trading.html)
 
 ### Filtre des actions à forte croissance - Strong Growth
 
 Un exemple de filtre pour rechercher des actions dont la hausse s'accompagne d'une dynamique de volume intéressante.
 
-➡️ [`strong-growth.py`](strong-growth.py)  
-📚 [Lire l'article : Filtre Strong Growth - détecter une hausse soutenue par les volumes avec Python](https://www.trading-et-data-analyses.com/2026/09/filtre-strong-growth-python.html)
+- ➡️ [`strong-growth.py`](strong-growth.py)  
+- 📚 [Lire l'article : Filtre Strong Growth - détecter une hausse soutenue par les volumes avec Python](https://www.trading-et-data-analyses.com/2026/09/filtre-strong-growth-python.html)
 
 ---
 
@@ -131,7 +158,7 @@ Ces exemples explorent différentes approches d'analyse financière et de recher
 
 Un exemple d'agent reposant sur un **MLP (Multi-Layer Perceptron)** avec Keras et le backend JAX, appliqué au trading technique.
 
-➡️ [`agent_ia.py`](agent_ia.py)
+- ➡️ [`agent_ia.py`](agent_ia.py)
 
 ---
 
