@@ -200,6 +200,7 @@ def _prepare_history( df: pd.DataFrame ) -> pd.DataFrame | None:
 
     # Références volume calculées sur les seules séances précédentes :
     # la médiane sert au critère C2
+    data["_VOL_REF_MEAN"] = volume.rolling( VOL_REF, min_periods=VOL_REF ).mean().shift( 1 )
     data["_VOL_REF_MEDIAN"] = volume.rolling( VOL_REF, min_periods=VOL_REF ).median().shift( 1 )
     data["_VOL_Q95"] = volume.rolling(
         VOL_PERCENTILE_LOOKBACK, min_periods=VOL_PERCENTILE_LOOKBACK
@@ -262,6 +263,7 @@ def _measure_climax_at( data: pd.DataFrame, index: int ) -> dict | None:
     event_volume = float( row["Volume"] )
     event_tr = float( row["_TR"] ) if pd.notna( row["_TR"] ) else 0.0
     atr_ref = float( row["_ATR_REF"] ) if pd.notna( row["_ATR_REF"] ) else 0.0
+    vol_ref_mean = float( row["_VOL_REF_MEAN"] ) if pd.notna( row["_VOL_REF_MEAN"] ) else 0.0
     vol_ref_median = float( row["_VOL_REF_MEDIAN"] ) if pd.notna( row["_VOL_REF_MEDIAN"] ) else 0.0
     vol_q95 = float( row["_VOL_Q95"] ) if pd.notna( row["_VOL_Q95"] ) else 0.0
     turnover_est = close * event_volume
@@ -273,6 +275,7 @@ def _measure_climax_at( data: pd.DataFrame, index: int ) -> dict | None:
     drop = (prior_peak - event_low) / prior_peak if prior_peak > 0 else 0.0
     # Ratio utilisé par la règle C2 : volume / médiane des séances précédentes.
     vol_ratio = event_volume / vol_ref_median if vol_ref_median > 0 else 0.0
+    vol_ratio_mean = event_volume / vol_ref_mean if vol_ref_mean > 0 else 0.0 # volume moyen calculé
     turnover_ratio = turnover_est / turnover_ref_median if turnover_ref_median > 0 else 0.0
     atr_ratio = event_tr / atr_ref if atr_ref > 0 else 0.0
 
@@ -305,6 +308,7 @@ def _measure_climax_at( data: pd.DataFrame, index: int ) -> dict | None:
         "open": float( row["Open"] ),
         "drop": drop,
         "vol_ratio": vol_ratio,                 # rapport au volume médian : règle C2 active
+        "vol_ratio_mean": vol_ratio_mean,       # rapport à la moyenne pour indication
         "turnover_ratio": turnover_ratio,       # valeur échangée estimée / médiane historique
         "atr_ratio": atr_ratio,
         "rsi_min": float( rsi_min ) if pd.notna( rsi_min ) else numpy.nan,
@@ -549,6 +553,7 @@ class ScanRow:
     score_sc: float = numpy.nan
     drop: str = "—"
     vol_ratio: float = numpy.nan
+    vol_ratio_mean: float = numpy.nan
     turnover_ratio: float = numpy.nan
     atr_ratio: float = numpy.nan
     rsi_min: float = numpy.nan
@@ -571,6 +576,7 @@ class ScanRow:
             "score_sc":       event["score"],
             "drop":           f"-{event['drop']:.0%}",
             "vol_ratio":      round( event["vol_ratio"], 2 ),
+            "vol_ratio_mean": round( event["vol_ratio_mean"], 2 ),
             "turnover_ratio": round( event["turnover_ratio"], 2 ),
             "atr_ratio":      round( event["atr_ratio"], 2 ),
             "rsi_min":        round( event["rsi_min"], 1 ) if pd.notna( event["rsi_min"] ) else numpy.nan,
@@ -619,6 +625,7 @@ class ScanRow:
             "Score SC":       self.score_sc,
             "Chute":          self.drop,
             "Vol / médiane":  self.vol_ratio,
+            "Vol / moyenne":  self.vol_ratio_mean,
             "Valeur éch. x":  self.turnover_ratio,
             "ATR ratio":      self.atr_ratio,
             "RSI min":        self.rsi_min,
@@ -1084,7 +1091,7 @@ def show_scan_report( df_scan: pd.DataFrame, nb_tickers: int ) -> Figure:
         tx, ha = anchor( "Vol / moyenne" )
         ax.text(
             tx, yc, display_number( mean_num, ".2f", "×" ), fontsize=7.6,
-            fontweight="bold" if pd.notna( vol_num ) and vol_num >= VOLUME_MULTIPLIER else "normal",
+            fontweight="bold" if pd.notna( mean_num ) and mean_num >= VOLUME_MULTIPLIER else "normal",
             color=T["GREEN"] if pd.notna( mean_num ) and mean_num >= VOLUME_MULTIPLIER else T["TEXT"] if pd.notna( mean_num ) else T["MUTED"],
             ha=ha, va="center",
         )
