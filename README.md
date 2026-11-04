@@ -186,6 +186,8 @@ Read the documentation on the platform strategy's API :
 
 ### You'd like to contribute
 
+Fisrt of all ⭐ **Star PyTrading** to follow the development of **TradingInPython**.
+
 You should be intrested by devloping the project, learn about Python, about trading strategy, about technical analysies, ...
 
 Then have a look here :
