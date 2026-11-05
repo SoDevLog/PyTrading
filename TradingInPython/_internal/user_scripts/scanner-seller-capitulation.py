@@ -112,30 +112,32 @@ CONFIRMATION_CRITERIA = ["F1", "F2", "F3", "F4", "F5", "F6", "F7"]
 
 _THEME = {
     True: { # --- DARK --- #
-        "BG":       "#0F1117",
-        "BG_LEGEND":"#0D397A",
-        "ROW":      "#171A21",
-        "ROW_ALT":  "#151920",
-        "BORDER":   "#252B35",
-        "TEXT":     "#F4F7FB",
-        "MUTED":    "#858E9E",
-        "GREEN":    "#00E676",
-        "RED":      "#FF4D67",
-        "ORANGE":   "#FFB020",
-        "BLUE":     "#4DA3FF",
+        "BG":        "#0F1117",
+        "BG_LEGEND" :"#195BBE",
+        "TXT_LEGEND":"#8DABDF",
+        "ROW":       "#16191F",
+        "ROW_ALT":   "#1F232B",
+        "BORDER":    "#252B35",
+        "TEXT":      "#F4F7FB",
+        "MUTED":     "#858E9E",
+        "GREEN":     "#00E676",
+        "RED":       "#FF4D67",
+        "ORANGE":    "#FFB020",
+        "BLUE":      "#4DA3FF",
     },
     False: { # --- LIGHT --- #
-        "BG":       "#FFFFFF",
-        "BG_LEGEND":"#F5F5F5",
-        "ROW":      "#F0F0F0",
-        "ROW_ALT":  "#DFE4EC",
-        "BORDER":   "#173363",
-        "TEXT":     "#6b7280",
-        "MUTED":    "#858E9E",
-        "GREEN":    "#26B6A3",
-        "RED":      "#D83C49",
-        "ORANGE":   "#FFB020",
-        "BLUE":     "#4DA3FF",
+        "BG":        "#FFFFFF",
+        "BG_LEGEND": "#AEC8FF",
+        "TXT_LEGEND":"#414D66",
+        "ROW":       "#FAFAFA",
+        "ROW_ALT":   "#F3F3F3",
+        "BORDER":    "#173363",
+        "TEXT":      "#6b7280",
+        "MUTED":     "#858E9E",
+        "GREEN":     "#26B6A3",
+        "RED":       "#D83C49",
+        "ORANGE":    "#FFB020",
+        "BLUE":      "#4DA3FF",
     },
 }
         
@@ -995,7 +997,7 @@ def show_scan_report( df_scan: pd.DataFrame, nb_tickers: int ) -> Figure:
         tx, ha = anchor( key )
         ax.text(
             tx, y_head, title, fontsize=7.2, fontweight="bold",
-            color=T["MUTED"], ha=ha, va="center",
+            color=T["TXT_LEGEND"], ha=ha, va="center",
         )
 
     status_colors = {
