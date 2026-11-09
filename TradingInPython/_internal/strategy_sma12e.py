@@ -18,6 +18,7 @@
     
 """
 import json
+import os
 import numpy
 import tkinter as tk
 import config.func as conf
@@ -26,11 +27,115 @@ import helper as h
 import figure.helper as fighelper
 import styles.palette_colors as pc
 
+from dataclasses import dataclass
 from tkinter import ttk
+from matplotlib.colors import to_rgba
 from matplotlib.ticker import FuncFormatter, StrMethodFormatter
-from figure.candlestick_ohlc import candlestick_ohlc, set_visibility_ohlc
+from figure.candlestick_ohlc import candlestick_ohlc, set_visibility_ohlc, remove_ohlc
 from figure.linedeltaselector import LineDeltaSelector
 from tkinterh.helper import Tooltip
+
+# -----------------------------------------------------------------------------
+
+# Exécution des ordres (ne change pas les signaux, seulement le prix et le coût du spread)
+#   "close"     : clôture de la barre du signal (comportement d'origine)
+#   "next_open" : ouverture de la barre suivante (on ne peut pas trader la clôture qui a servi au calcul)
+EXECUTION = "close"
+COST_PCT = 0.0  # frais par ordre, en % du prix (0.1 = 0,1 %)
+
+PERIOD_MIN = 3   # bornes des périodes de moyennes mobiles (curseurs)
+PERIOD_MAX = 400
+
+# -----------------------------------------------------------------------------
+
+@dataclass
+class SignalResult:
+    buy_bars:      numpy.ndarray # barres des signaux d'achat
+    sell_bars:     numpy.ndarray # barres des signaux de vente
+    buy_executed:  list          # un booléen par signal d'achat (False = ignoré)
+    sell_executed: list          # un booléen par signal de vente
+    spread:        float         # somme des (vente - achat), position ouverte soldée au dernier cours
+    trades:        int           # nombre d'allers-retours, position ouverte comprise
+    is_open:       bool          # True si la position est encore ouverte à la fin
+    events:        list          # (libellé, prix, spread cumulé ou None) pour l'affichage console
+
+def compute_signals( ma1, ma2, mae, close, open_, strategy_1_2=False, execution=EXECUTION, cost_pct=COST_PCT ):
+    """ Signaux d'achat / vente (croisement MA1/MA2 confirmé par MAE) et spread.
+
+        Achat : MA1 croise MA2 à la hausse et MAE est au-dessus des deux.
+        Vente : MA1 croise MA2 à la baisse et MAE est sous les deux.
+        Long seul, achats et ventes alternés : un achat alors qu'on est déjà en
+        position, ou une vente alors qu'on n'y est pas, est un signal ignoré.
+
+        strategy_1_2 : le signal est confirmé par la barre suivante (i+1). Il n'est donc
+                       connu, et exécutable, qu'à la barre i+1 : c'est là qu'il est
+                       placé et exécuté (et non à la barre i, ce qui serait de l'anticipation).
+    """
+    ma1 = numpy.asarray( ma1, dtype=float )
+    ma2 = numpy.asarray( ma2, dtype=float )
+    mae = numpy.asarray( mae, dtype=float )
+    close = numpy.asarray( close, dtype=float )
+    open_ = numpy.asarray( open_, dtype=float )
+
+    n = len( close )
+    cost = cost_pct / 100.0
+    last = n - 1 if strategy_1_2 else n # strategy 1/2 lit la barre i+1
+
+    def exec_price( k, side ): # side : +1 achat, -1 vente
+        base = open_[k + 1] if ( execution == "next_open" and k + 1 < n ) else close[k]
+        return base * ( 1.0 + side * cost )
+
+    buy_bars, sell_bars, buy_executed, sell_executed, events = [], [], [], [], []
+    in_position = False
+    spread = 0.0
+    trades = 0
+
+    for i in range( 1, last ):
+        up = ma1[i-1] <= ma2[i-1] and ma1[i] > ma2[i]
+        down = ma1[i-1] >= ma2[i-1] and ma1[i] < ma2[i]
+        buy = up and mae[i] > ma1[i] and mae[i] > ma2[i]
+        sell = down and mae[i] < ma1[i] and mae[i] < ma2[i]
+        k = i # barre où le signal est connu
+
+        if strategy_1_2:
+            j = i + 1
+            buy = buy and ma1[j] > ma2[j] and mae[j] > ma1[j] and mae[j] > ma2[j]
+            sell = sell and ma1[j] < ma2[j] and mae[j] < ma1[j] and mae[j] < ma2[j]
+            k = j
+
+        if buy:
+            executed = not in_position
+            price = exec_price( k, +1 ) if executed else close[k]
+            if executed:
+                in_position = True
+                spread -= price
+            buy_bars.append( k )
+            buy_executed.append( executed )
+            events.append( ( "Buy", price, spread if executed else None ) )
+
+        if sell:
+            executed = in_position
+            price = exec_price( k, -1 ) if executed else close[k]
+            if executed:
+                in_position = False
+                spread += price
+                trades += 1
+            sell_bars.append( k )
+            sell_executed.append( executed )
+            events.append( ( "Sell", price, spread if executed else None ) )
+
+    # The spread is not closed still we are in "buy mode"
+    # let sell at the last price for demonstration
+    if in_position:
+        price = close[-1] * ( 1.0 - cost )
+        spread += price
+        trades += 1
+        events.append( ( "Sell", price, spread ) )
+
+    return SignalResult(
+        numpy.array( buy_bars, dtype=int ), numpy.array( sell_bars, dtype=int ),
+        buy_executed, sell_executed, float( spread ), trades, in_position, events
+    )
 
 # -----------------------------------------------------------------------------
 
@@ -53,6 +158,12 @@ class strategy_sma12e:
         self.slope = None
         self.data = None
         self.change_chk_sates = True
+        self.trades = None
+        self.hold = None
+        self.lines = []          # artistes retirés/recréés à chaque redessin
+        self.candles = None
+        self.line_trend = None
+        self.selector = None
   
         self.get_configuration()
 
@@ -74,66 +185,69 @@ class strategy_sma12e:
 
     # -------------------------------------------------------------------------
 
-    def on_slider_mobile_average_1_change( self, value ):
+    def _on_period_change( self, var, value ):
+        """ Commun aux trois réglages de période.
+            value : str : valeur du curseur (nombre en texte)
+                    -1/+1 : boutons - et +
+                    autre : valeur saisie dans le champ (touche Entrée)
+            La période est bornée à [PERIOD_MIN, PERIOD_MAX].
+        """
+        try:
+            if isinstance( value, str ):
+                value = int( float( value ) )
+            elif value == -1:
+                value = var.get() - 1
+            elif value == +1:
+                value = var.get() + 1
+            else:
+                value = var.get()
+        except ( ValueError, tk.TclError ): # saisie invalide dans le champ
+            return
 
-        # Filtrer les valeurs de value
-        if isinstance( value, str ):
-            value = int( float(value) )
-            self.mobile_average_1.set( value )
-        
-        if value == -1:
-            v = self.mobile_average_1.get()
-            value = v - 1
-            self.mobile_average_1.set( value )
-
-        if value == +1:
-            v = self.mobile_average_1.get()
-            value = v + 1
-            self.mobile_average_1.set( value )
-   
+        var.set( max( PERIOD_MIN, min( PERIOD_MAX, int( value ) ) ) )
         self.update_graph()
 
-    # ----------------------------------------------------------------------------  
+    def _snap_period( self, var, value ):
+        """ Arrondit la valeur du curseur à l'entier sans redessiner :
+            le graphique est mis à jour quand on relâche le curseur.
+        """
+        var.set( max( PERIOD_MIN, min( PERIOD_MAX, int( float( value ) ) ) ) )
 
-    def on_slider_mobile_average_2_change( self, value ):
+    # ----------------------------------------------------------------------------
 
-        # Filtrer les valeurs de value
-        if isinstance( value, str ):
-            value = int( float(value) )
-            self.mobile_average_2.set( value )
-           
-        if value == -1:
-            v = self.mobile_average_2.get()
-            value = v - 1
-            self.mobile_average_2.set( value )
+    def _add_period_row( self, frame, tk_row, text, var ):
+        """ Une ligne de réglage de période : libellé, boutons - et +, curseur, champ.
+            Retourne la prochaine ligne libre de la grille.
+        """
+        ttk.Label( frame, text=text ).grid( row=tk_row, column=0, columnspan=2, sticky="e" )
+        tk_row += 1
 
-        if value == +1:
-            v = self.mobile_average_2.get()
-            value = v + 1
-            self.mobile_average_2.set( value )
-   
-        self.update_graph()
-  
-      # ----------------------------------------------------------------------------  
+        # Minus button
+        ttk.Button( frame, text="-", width=2, command=lambda: self._on_period_change( var, -1 ) ).grid( row=tk_row, column=0, sticky="w" )
 
-    def on_slider_mobile_average_exp_change( self, value ):
+        # Slider pour la période de la moyenne mobile (de PERIOD_MIN à PERIOD_MAX jours)
+        slider = ttk.Scale(
+            frame,
+            from_=PERIOD_MIN,
+            to=PERIOD_MAX,
+            orient=tk.HORIZONTAL,
+            variable=var,
+            length=130,
+            command=lambda value: self._snap_period( var, value )
+        )
+        slider.grid( row=tk_row, column=1, sticky="w" )
+        slider.bind( "<ButtonRelease-1>", lambda e: self.update_graph() )
+        slider.bind( "<KeyRelease>", lambda e: self.update_graph() )
 
-        # Filtrer les valeurs de value
-        if isinstance( value, str ):
-            value = int( float(value) )
-            self.mobile_average_exp.set( value )
-           
-        if value == -1:
-            v = self.mobile_average_exp.get()
-            value = v - 1
-            self.mobile_average_exp.set( value )
+        # Plus button
+        ttk.Button( frame, text="+", width=2, command=lambda: self._on_period_change( var, +1 ) ).grid( row=tk_row, column=2, sticky="w" )
 
-        if value == +1:
-            v = self.mobile_average_exp.get()
-            value = v + 1
-            self.mobile_average_exp.set( value )
-   
-        self.update_graph()
+        # Entry pour afficher la valeur actuelle du slider
+        entry = ttk.Entry( frame, width=5, textvariable=var )
+        entry.grid( row=tk_row, column=3, sticky="e", padx=5, pady=5 )
+        entry.bind( "<Return>", lambda e: self._on_period_change( var, 0 ) )
+
+        return tk_row + 1
   
     # ----------------------------------------------------------------------------  
     # Mettre à jour le graphique seulement quand on relâche le slider
@@ -141,17 +255,25 @@ class strategy_sma12e:
     #	
     def update_graph( self ):
 
+        if not self.lines: # rien n'a encore été dessiné
+            return
+
         # self.ax_main.clear() DO NOT clear() otherwise annotations won't work
         # remove alls lines because strategy by/sell has to be recalculate
+        # Les bougies et la droite de tendance sont retirées aussi : sinon elles
+        # s'empilent à chaque redessin (et les anciennes bougies restent visibles
+        # quand on décoche "Candle")
         #
         for l in self.lines:
             l.remove()
+        remove_ohlc( self.candles )
+        self.line_trend.remove()
    
         self.draw_main_graph( self.ax_main, self.intraday, self.width )
         self.ax_main.set_title( self.template.format( self.add_title() ) )
         self.toggle_visibility()
         #self.fig.autofmt_xdate()
-        self.canvas.draw_idle() # rafraichit lorsque le proce est dispo
+        self.canvas.draw_idle() # rafraichit lorsque le processeur est dispo
     
     # ----------------------------------------------------------------------------
     #
@@ -171,102 +293,18 @@ class strategy_sma12e:
         
         # ------------------------------------------------------------------------
 
-        ttk.Label( frame_ma12e, text="Moyenne Mobile 1").grid( row=tk_row, column=0, columnspan=2, sticky="e" )
-        self.mobile_average_1 = tk.IntVar( value=self.get_stock('MA1'))
-        
-        tk_row += 1
-  
-        # Minus button
-        _ttk = ttk.Button( frame_ma12e, text="-", width=2, command=lambda: self.on_slider_mobile_average_1_change(-1) )
-        _ttk.grid( row=tk_row, column=0, sticky="w" )
-        
-        # Slider pour la période de la moyenne mobile (de 5 à 200 jours)
-        self.slider_ma1 = ttk.Scale(
-            frame_ma12e,
-            from_=5,
-            to=200,
-            orient=tk.HORIZONTAL,
-            variable=self.mobile_average_1,
-            length=130,
-            command=self.on_slider_mobile_average_1_change
-        ).grid( row=tk_row, column=1, sticky="w" )
-    
-        # Plus button
-        _ttk = ttk.Button( frame_ma12e, text="+", width=2, command=lambda: self.on_slider_mobile_average_1_change(+1) )
-        _ttk.grid( row=tk_row, column=2, sticky="w" )
-  
-        # Entry pour afficher la valeur actuelle du slider
-        _ttk = ttk.Entry( frame_ma12e, width=5, textvariable=self.mobile_average_1 )
-        _ttk.grid( row=tk_row, column=3, sticky="e", **padding_options )
-        _ttk.bind( "<Return>", lambda e: self.on_slider_mobile_average_1_change( self.mobile_average_1.get() ) )
-        
-        tk_row += 1 
+        self.mobile_average_1 = tk.IntVar( value=self.get_stock('MA1') )
+        tk_row = self._add_period_row( frame_ma12e, tk_row, "Moyenne Mobile 1", self.mobile_average_1 )
 
         # ------------------------------------------------------------------------
 
-        ttk.Label( frame_ma12e, text="Moyenne Mobile 2").grid( row=tk_row, column=0, columnspan=2, sticky="e" )
-        self.mobile_average_2 = tk.IntVar( value=self.get_stock('MA2'))
-        
-        tk_row += 1
-  
-        # Minus button
-        _ttk = ttk.Button( frame_ma12e, text="-", width=2, command=lambda: self.on_slider_mobile_average_2_change(-1) )
-        _ttk.grid( row=tk_row, column=0, sticky="w" )
-        
-        # Slider pour la période de la moyenne mobile (de 5 à 200 jours)
-        self.slider_ma2 = ttk.Scale(
-            frame_ma12e,
-            from_=5,
-            to=200,
-            orient=tk.HORIZONTAL,
-            variable=self.mobile_average_2,
-            length=130,
-            command=self.on_slider_mobile_average_2_change
-        ).grid( row=tk_row, column=1, sticky="w" )
+        self.mobile_average_2 = tk.IntVar( value=self.get_stock('MA2') )
+        tk_row = self._add_period_row( frame_ma12e, tk_row, "Moyenne Mobile 2", self.mobile_average_2 )
 
-        # Plus button
-        _ttk = ttk.Button( frame_ma12e, text="+", width=2, command=lambda: self.on_slider_mobile_average_2_change(+1) )
-        _ttk.grid( row=tk_row, column=2, sticky="w" )
-  
-        # Entry pour afficher la valeur actuelle du slider
-        _ttk = ttk.Entry( frame_ma12e, width=5, textvariable=self.mobile_average_2 )
-        _ttk.grid( row=tk_row, column=3, sticky="e", **padding_options )
-        _ttk.bind( "<Return>", lambda e: self.on_slider_mobile_average_2_change( self.mobile_average_2.get() ) )
-        
-        tk_row += 1
-          
         # ------------------------------------------------------------------------
 
-        ttk.Label( frame_ma12e, text="Moyenne Mobile Exp").grid( row=tk_row, column=0, columnspan=2, sticky="e" )
-        self.mobile_average_exp = tk.IntVar( value=self.get_stock('MAE'))
-        
-        tk_row += 1
-  
-        # Minus button
-        _ttk = ttk.Button( frame_ma12e, text="-", width=2, command=lambda: self.on_slider_mobile_average_exp_change(-1) )
-        _ttk.grid( row=tk_row, column=0, sticky="w" )
-        
-        # Slider pour la période de la moyenne mobile (de 5 à 200 jours)
-        self.slider_ma2 = ttk.Scale(
-            frame_ma12e,
-            from_=5,
-            to=200,
-            orient=tk.HORIZONTAL,
-            variable=self.mobile_average_exp,
-            length=130,
-            command=self.on_slider_mobile_average_exp_change
-        ).grid( row=tk_row, column=1, sticky="w" )
-    
-        # Plus button
-        _ttk = ttk.Button( frame_ma12e, text="+", width=2, command=lambda: self.on_slider_mobile_average_exp_change(+1) )
-        _ttk.grid( row=tk_row, column=2, sticky="w" )
-  
-        # Entry pour afficher la valeur actuelle du slider
-        _ttk = ttk.Entry( frame_ma12e, width=5, textvariable=self.mobile_average_exp )
-        _ttk.grid( row=tk_row, column=3, sticky="e", **padding_options )
-        _ttk.bind( "<Return>", lambda e: self.on_slider_mobile_average_exp_change( self.mobile_average_exp.get() ) )
-        
-        tk_row += 1
+        self.mobile_average_exp = tk.IntVar( value=self.get_stock('MAE') )
+        tk_row = self._add_period_row( frame_ma12e, tk_row, "Moyenne Mobile Exp", self.mobile_average_exp )
   
         # ------------------------------------------------------------------------
 
@@ -281,6 +319,7 @@ class strategy_sma12e:
         self.mobile_average_3 = tk.IntVar( value=self.get_stock('MA3') )
         _tki = ttk.Entry( content, width=10, textvariable=self.mobile_average_3 )
         _tki.grid( row=tk_row, column=1, sticky="w", **padding_options )
+        _tki.bind( "<Return>", lambda e: self._on_period_change( self.mobile_average_3, 0 ) )
         
         tk_row += 1
 
@@ -290,6 +329,7 @@ class strategy_sma12e:
         self.mobile_average_4 = tk.IntVar( value=self.get_stock('MA4') )
         _tki = ttk.Entry( content, width=10, textvariable=self.mobile_average_4 )
         _tki.grid( row=tk_row, column=1, sticky="w", **padding_options )
+        _tki.bind( "<Return>", lambda e: self._on_period_change( self.mobile_average_4, 0 ) )
         
         tk_row += 1
 
@@ -299,6 +339,7 @@ class strategy_sma12e:
         self.mobile_average_5 = tk.IntVar( value=self.get_stock('MA5') )
         _tki = ttk.Entry( content, width=10, textvariable=self.mobile_average_5 )
         _tki.grid( row=tk_row, column=1, sticky="w", **padding_options )
+        _tki.bind( "<Return>", lambda e: self._on_period_change( self.mobile_average_5, 0 ) )
         
         tk_row += 1
 
@@ -308,6 +349,7 @@ class strategy_sma12e:
         self.mobile_average_6 = tk.IntVar( value=self.get_stock('MA6') )
         _tki = ttk.Entry( content, width=10, textvariable=self.mobile_average_6 )
         _tki.grid( row=tk_row, column=1, sticky="w", **padding_options )
+        _tki.bind( "<Return>", lambda e: self._on_period_change( self.mobile_average_6, 0 ) )
         
         tk_row += 1
       
@@ -367,6 +409,7 @@ class strategy_sma12e:
     def save_configuration( self ):
 
         # Take DEFAULT values
+        _default_ma1 = _default_ma2 = _default_ma3 = _default_ma4 = _default_ma5 = _default_ma6 = _default_mae = None # pas d'entrée DEFAULT dans le fichier
         for stock in self.configuration.get( 'stocks' ):
             if stock['name'] == 'DEFAULT':
                 _default_ma1 = stock.get('MA1')
@@ -391,8 +434,7 @@ class strategy_sma12e:
             and _default_mae == self.mobile_average_exp.get():
             # Suppress element that it's like DEFAULT
             self.configuration['stocks'] = [stock for stock in self.configuration['stocks'] if stock['name'] != self.name]
-            with open( self.path_for_configuration_file, "w" ) as file:
-                json.dump( self.configuration, file, indent=4 )        
+            self._write_configuration()
             return
                     
         # Update otherwise Create
@@ -406,8 +448,7 @@ class strategy_sma12e:
                 stock['MA5'] = self.mobile_average_5.get()
                 stock['MA6'] = self.mobile_average_6.get()
                 stock['MAE'] = self.mobile_average_exp.get()
-                with open( self.path_for_configuration_file, "w" ) as file:
-                    json.dump( self.configuration, file, indent=4 )
+                self._write_configuration()
                 return    
         
         # Create new item from Tkinter interface
@@ -424,8 +465,17 @@ class strategy_sma12e:
         
         # Finaly Append (Created item)
         self.configuration.get('stocks').append( _config )
-        with open( self.path_for_configuration_file, "w" ) as file:
+        self._write_configuration()
+
+    # ----------------------------------------------------------------------------
+
+    def _write_configuration( self ):
+        # Ecrit dans un fichier temporaire puis remplace : un plantage en cours
+        # ne pas laisser le fichier de configuration tronqué
+        _tmp = self.path_for_configuration_file + ".tmp"
+        with open( _tmp, "w", encoding="utf-8" ) as file:
             json.dump( self.configuration, file, indent=4 )
+        os.replace( _tmp, self.path_for_configuration_file )
 
     # ----------------------------------------------------------------------------
 
@@ -443,14 +493,13 @@ class strategy_sma12e:
                 break
 
         self.message_entry.config( text=f"Default config", foreground="green" )
-        self.on_slider_mobile_average_1_change( 0 )
+        self.update_graph()
             
     # ----------------------------------------------------------------------------
 
     def command_get_item_configration( self ):
         
         for stock in self.configuration.get( 'stocks' ):
-            founded = False
             if stock['name'] == self.name:
                 self.mobile_average_1.set( stock.get('MA1') )
                 self.mobile_average_2.set( stock.get('MA2') )
@@ -459,11 +508,9 @@ class strategy_sma12e:
                 self.mobile_average_5.set( stock.get('MA5') )
                 self.mobile_average_6.set( stock.get('MA6') )
                 self.mobile_average_exp.set( stock.get('MAE') )
-                founded = True
                 break
-        
-        if founded == False:
-            self.command_get_default_configuration()  
+        else: # aucune configuration pour cette valeur (ou liste vide)
+            self.command_get_default_configuration()
 
     # ----------------------------------------------------------------------------
 
@@ -520,7 +567,7 @@ class strategy_sma12e:
         self.var34.set(0)
         self.var35.set(0)
         self.var36.set(0)
-        self.var37.set(0)
+        self.var37.set(1)
         self.var40.set(1)
         self.var41.set(1)
         self.var70.set(0)
@@ -596,7 +643,7 @@ class strategy_sma12e:
         if self.var31.get():
             lines[idx].set_visible(True)
         else:
-            lines[2].set_visible(False)
+            lines[idx].set_visible(False)
         idx += 1
 
         if self.var32.get():
@@ -723,8 +770,11 @@ class strategy_sma12e:
         # ------------------------------
         fighelper.set_axe( ax_main, data )
 
-        # Set the delta selector
-        selector = LineDeltaSelector( ax_main, self.fig, self.display )
+        # Set the delta selector : un seul, réutilisé (sinon un gestionnaire de clic
+        # de plus est connecté à chaque redessin)
+        if self.selector is None or self.selector.ax is not ax_main or self.selector.fig is not self.fig:
+            self.selector = LineDeltaSelector( ax_main, self.fig, self.display )
+        selector = self.selector
         selector.set_curve_data( axe_x, data['Close'] )
 
         # Candle Sticks
@@ -762,7 +812,7 @@ class strategy_sma12e:
         if result.slope >= 0:
             color=pc.CANDLE_BULL
         line_tendency = result.slope * axe_x + result.intercept # y = a * x + b
-        ax_main.plot( axe_x, line_tendency, color=color, linewidth=1, label=f"Slope", linestyle='--' )
+        self.line_trend, = ax_main.plot( axe_x, line_tendency, color=color, linewidth=1, label=f"Slope", linestyle='--' )
 
         # Moyenne mobile calculation
         # --------------------------
@@ -791,94 +841,35 @@ class strategy_sma12e:
         ma6 = dsp.moving_average_rolling( y_data, WIDTH_MA6 )
         line_ma6, = ax_main.plot( axe_x, ma6, color="purple", linewidth=0.9, label=f"ma6", linestyle='-' )
           
-        # Variables pour l'algo calcul du spread
-        buy_sell = False # Spread state alternate buy and sell
-        cum_price = 0.0 # Cumulate spreads
-        
-        #
-        # Create buy/sell signals
-        #
-        _strategy_1_2 = self.var70.get()
-        lenght = len( y_data )    
-        if _strategy_1_2:
-            lenght = lenght - 1  
-        
-        data[ 'Buy_Signal' ] = 0
-        data[ 'Sell_Signal' ] = 0
-        
-        for i in range(1, lenght ):
-            # Buy
-            _c1 = (ma1[i-1] <= ma2[i-1] and ma1[i] > ma2[i])
-            _c2 = (mae[i] > ma1[i] and mae[i] > ma2[i])
-            
-            if _strategy_1_2:
-                _c2_2 = (mae[i+1] > ma1[i+1] and mae[i+1] > ma2[i+1])
-                _c1_2 = (ma1[i+1] > ma2[i+1])
-                _buy_condition = _c1 and _c1_2 and _c2 and _c2_2
-            else:
-                _buy_condition = _c1 and _c2
+        # Signaux d'achat / vente et spread (voir compute_signals)
+        # --------------------------------------------------------
+        signals = compute_signals(
+            ma1, ma2, mae,
+            data['Close'].values, data['Open'].values,
+            strategy_1_2=bool( self.var70.get() )
+        )
 
-            if _buy_condition:
-                data[ 'Buy_Signal' ].iat[ i ] = data[ 'Low' ].iat[ i ]
-                _str = f"Buy -> {h.format_number3f(y_data.iloc[i])}"
-                if buy_sell == False:
-                    buy_sell = True
-                    cum_price -= y_data.iloc[i]
-                    _str += f" Cum_price: {h.format_number3f(cum_price)}"
-                print(_str)
-            else:
-                data[ 'Buy_Signal' ].iat[ i ] = -1
-
-            # Sell
-            _c1 = (ma1[i-1] >= ma2[i-1] and ma1[i] < ma2[i])
-            _c2 = (mae[i] < ma1[i] and mae[i] < ma2[i])
-            
-            if _strategy_1_2:
-                _c1_2 = (ma1[i+1] < ma2[i+1])
-                _c2_2 = (mae[i+1] < ma1[i+1] and mae[i+1] < ma2[i+1])
-                _sell_condition = _c1 and _c1_2 and _c2 and _c2_2
-            else:
-                _sell_condition = _c1 and _c2
-                
-            if _sell_condition:
-                data[ 'Sell_Signal' ].iat[ i ] = data[ 'High' ].iat[ i ]
-                _str = f"Sell -> {h.format_number3f(y_data.iloc[i])}"
-                if buy_sell == True:
-                    buy_sell = False
-                    cum_price += y_data.iloc[i]
-                    _str += f" Cum_price: {h.format_number3f(cum_price)}"
-                print(_str)
-            else:
-                data[ 'Sell_Signal' ].iat[ i ] = -1
-                
-        # The spread is not closed still we are in "buy mode"
-        # let sell at the last price for demonstration
-        #
-        if buy_sell == True:
-            cum_price += y_data.iloc[ len(y_data)-1 ]
-            _str = f"Sell -> {h.format_number3f(y_data.iloc[len(y_data)-1])}"
-            _str += f" Cum_price: {h.format_number3f(cum_price)}"
+        for _label, _price, _cum in signals.events:
+            _str = f"{_label} -> {h.format_number3f(_price)}"
+            if _cum is not None:
+                _str += f" Cum_price: {h.format_number3f(_cum)}"
             print( _str )
-        
+
         print( "---------------------------------" )
-            
-        if 'Buy_Signal' in data.columns:
 
-            # Affiche uniquement les signaux valides
-            buy_signals = data['Buy_Signal'][data['Buy_Signal'] > 0]
-            sell_signals = data['Sell_Signal'][data['Sell_Signal'] > 0]
+        # Marqueurs : signaux exécutés en plein, signaux ignorés (déjà en position
+        # pour un achat, pas en position pour une vente) en pâle
+        low = data['Low'].values
+        high = data['High'].values
+        buy_colors = [ to_rgba( 'green', 1.0 if executed else 0.25 ) for executed in signals.buy_executed ]
+        sell_colors = [ to_rgba( 'red', 1.0 if executed else 0.25 ) for executed in signals.sell_executed ]
 
-            # Extraire les coordonnées X à partir de axe_x
-            buy_positions = [data.index.get_loc(idx) for idx in buy_signals.index]
-            sell_positions = [data.index.get_loc(idx) for idx in sell_signals.index]
+        line_stem1 = ax_main.scatter( signals.buy_bars, low[ signals.buy_bars ] * 0.99, c=buy_colors, marker='^', s=100, label='Buy Signal' )
+        line_stem2 = ax_main.scatter( signals.sell_bars, high[ signals.sell_bars ] * 1.01, c=sell_colors, marker='v', s=100, label='Sell Signal' )
 
-            line_stem1 = ax_main.scatter( buy_positions, buy_signals.values * 0.99, color='green', marker='^', s=100, label='Buy Signal' )
-            line_stem2 = ax_main.scatter( sell_positions, sell_signals.values * 1.01, color='red', marker='v', s=100, label='Buy Signal' )
-
-        else:
-            self.message_entry.config( text=f"NO Buy/Sell DATA", foreground="red" )
-        
-        self.cum_price = cum_price
+        self.cum_price = signals.spread
+        self.trades = signals.trades
+        self.hold = data['Close'].iloc[-1] - data['Close'].iloc[0] # acheter-et-garder, en points
         self.slope = result.slope
 
         self.lines = [line_price, line_price2, line_ma1, line_ma2, line_mae, line_ma3, line_ma4, line_ma5, line_ma6, fill1, fill2, line_stem1, line_stem2]
@@ -894,7 +885,11 @@ class strategy_sma12e:
         WIDTH_MAE = self.mobile_average_exp.get()
 
         _s = "{:.6f}".format( self.slope )
-        title =  f" - slope: {_s}"       
+        title =  f" - Slope: {_s}"       
         title += f" - MAx/MAE: {WIDTH_MA1} {WIDTH_MA2} {WIDTH_MAE}"
-        title += f" - spread: {h.format_number3f(self.cum_price)}"
+        title += f" - Spread: {h.format_number3f(self.cum_price)}"
+        title += f" - trades: {self.trades}"
+        title += f" - B&H: {h.format_number3f(self.hold)}"
+        if EXECUTION != "close" or COST_PCT > 0:
+            title += f" - exec: {EXECUTION}, frais {COST_PCT}%"
         return title
