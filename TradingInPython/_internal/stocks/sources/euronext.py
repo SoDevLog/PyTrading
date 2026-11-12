@@ -3,6 +3,12 @@
     Stocks All Market :
     > https://live.euronext.com/fr/products/equities/list
     
+    Actuellement ce composant utilise le fichier euronext.csv 
+    
+    Par la suite on pourrait créer un scraper pour récupérer 
+    les données directement sur le site Euronext :
+    exemple : stocks/sources/euronext_scraper.py
+    
 """
 
 import csv
