@@ -1,10 +1,10 @@
 """ Indicateurs BSI (Bull/Bear Strength Index)
 
     Reproduction des composants visibles sur le graphique :
-    1. Cloud BSI    : deux EMA formant un nuage coloré (style Ichimoku)
+    1. cloud_bsi    : deux EMA formant un nuage coloré (style Ichimoku)
     2. Stop BSI     : ATR Trailing Stop (style SuperTrend)
     3. Synergie     : alignement multi-timeframe (fond coloré)
-    4. Histogrammes : oscillateur binaire, sur 3 échelles empilées
+    4. histo_bsi : oscillateur binaire, sur 3 échelles empilées
        - BSI LT (long terme)  : la boussole, biais de marché de fond
        - BSI MT (moyen terme) : indicateur stratégique de prise de bénéfices
        - BSI CT (court terme) : indicateur chirurgical de timing
@@ -30,20 +30,53 @@ import matplotlib
 import matplotlib.style
 #matplotlib.style.use("seaborn-v0_8-darkgrid")
 matplotlib.style.use("seaborn-v0_8-notebook")
+from matplotlib.figure import Figure
 import matplotlib.ticker as mticker
 import yfinance
+run_standalone = (__name__ == "__main__")
+
+if run_standalone:
+    import sys
+    from pathlib import Path
+    script_dir = Path(__file__).resolve().parent
+    base_dir = script_dir.parent
+    sys.path.append( str(base_dir) )
 from styles.watermark import Watermark
 
-# ------------------------------------------------------
-# 1. CLOUD BSI  (deux EMA lissées = nuage Ichimoku-like)
-# ------------------------------------------------------
+# ---------------------------
+# Paramètrage des signaux BSI
+# ---------------------------
+
+FAST_CT: int = 9
+SLOW_CT: int = 26
+
+FAST_MT: int = 21
+SLOW_MT: int = 60
+
+FAST_LT: int = 50
+SLOW_LT: int = 200
+
+# Nuage BSI cloud_bsi
+CLOUD_EMA_FAST: int = 9
+CLOUD_EMA_SLOW: int = 26
+
+# Super Trend / Stop BSI
+SUPER_TREND_PERIOD: int = 26
+SUPER_TREND_MULTIPLIER: float = 3.2
+
+ZONE_RULES: bool = False  # True = interdiction d'acheter en zone rouge / vendre en zone verte
+EXIT_ON_WHITE_ZONE: bool = True  # True = clôture dès que la synergie passe en zone blanche
+ 
+# ------------------------------------------------------------
+# 1. CLOUD BSI  (nuage de tendance et de volatilité : EMA ± ATR)
+# ------------------------------------------------------------
 
 def ema(series: pd.Series, period: int) -> pd.Series:
     return series.ewm(span=period, adjust=False).mean()
 
-def cloud_bsi(close: pd.Series,
-              fast: int = 9,
-              slow: int = 26) -> pd.DataFrame:
+def cloud_bsi( close: pd.Series,
+               fast: int,
+               slow: int) -> pd.DataFrame:
     """
     Retourne deux lignes EMA.
     La zone entre elles est colorée verte (fast > slow) ou rouge.
@@ -72,11 +105,11 @@ def atr(high: pd.Series,
     tr   = pd.concat([h_l, h_pc, l_pc], axis=1).max(axis=1)
     return tr.ewm(span=period, adjust=False).mean()
 
-def stop_bsi(high: pd.Series,
-             low: pd.Series,
-             close: pd.Series,
-             atr_period: int = 10,
-             multiplier: float = 3.0) -> pd.DataFrame:
+def stop_bsi( high: pd.Series,
+              low: pd.Series,
+              close: pd.Series,
+              atr_period: int,
+              multiplier: float ) -> pd.DataFrame:
     """
     SuperTrend-style trailing stop.
     Retourne la ligne de stop et la direction (1 = haussier, -1 = baissier).
@@ -171,10 +204,10 @@ def synergie(close: pd.Series,
 # 4. HISTOGRAMME BSI  (oscillateur binaire)
 # ---------------------------------------------
 
-def histogramme_bsi(close: pd.Series,
-                    fast: int  = 9,
-                    slow: int  = 26,
-                    signal: int = 9) -> pd.DataFrame:
+def histo_bsi( close: pd.Series,
+               fast: int,
+               slow: int,
+               signal: int) -> pd.DataFrame:
     """
     Oscillateur style MACD coloré en vert/rouge selon la direction.
     Retourne la valeur de l'histogramme et sa couleur.
@@ -255,11 +288,12 @@ def plot_bsi(ticker: str = "AAPL",
     low   = df["Low"]
 
     # Calcul des indicateurs
-    cloud   = cloud_bsi(close)
-    stop    = stop_bsi(high, low, close)
-    hist_ct = histogramme_bsi(close, fast=9,   slow=26,  signal=9)   # court terme
-    hist_mt = histogramme_bsi(close, fast=21,  slow=55,  signal=9)   # moyen terme
-    hist_lt = histogramme_bsi(close, fast=50,  slow=100, signal=9)   # long terme
+    cloud   = cloud_bsi( close, fast=CLOUD_EMA_FAST, slow=CLOUD_EMA_SLOW )
+    stop    = stop_bsi( high, low, close, atr_period=SUPER_TREND_PERIOD, multiplier=SUPER_TREND_MULTIPLIER )
+    hist_ct = histo_bsi( close, fast=FAST_CT, slow=SLOW_CT, signal=9 ) # court terme
+    hist_mt = histo_bsi( close, fast=FAST_MT, slow=SLOW_MT, signal=9 ) # moyen terme
+    hist_lt = histo_bsi( close, fast=FAST_LT, slow=SLOW_LT, signal=9 ) # long terme
+
 
     # Synergie 3 horizons CT/MT/LT — une seule série close, périodes différentes
     syn = synergie( close,
@@ -276,8 +310,7 @@ def plot_bsi(ticker: str = "AAPL",
     dates = df.index
 
     # --- Layout --------------------------------
-    from matplotlib.figure import Figure
-    
+   
     # Checking witch matplotlib style is used
     #print( matplotlib.rcParams['axes.facecolor'], matplotlib.rcParams['axes.grid'] )
     
@@ -376,9 +409,9 @@ def plot_bsi(ticker: str = "AAPL",
         for spine in ax.spines.values():
             spine.set_edgecolor(T["grid"])
 
-    draw_hist(ax_hist_ct, hist_ct, bull_ct_sig, "BSI CT  9/26")
-    draw_hist(ax_hist_mt, hist_mt, bull_mt_sig, "BSI MT  21/55")
-    draw_hist(ax_hist_lt, hist_lt, bull_lt_sig, "BSI LT  50/100")
+    draw_hist( ax_hist_ct, hist_ct, bull_ct_sig, f"BSI CT  {FAST_CT}/{SLOW_CT}" )
+    draw_hist( ax_hist_mt, hist_mt, bull_mt_sig, f"BSI MT  {FAST_MT}/{SLOW_MT}" )
+    draw_hist( ax_hist_lt, hist_lt, bull_lt_sig, f"BSI LT  {FAST_LT}/{SLOW_LT}" )
 
     # --- Ticks de l'axe X : ré-injecter les vraies dates -------------------
     # x est une position entière ; on va chercher la date correspondante
@@ -427,10 +460,10 @@ def main():
     fig.tight_layout()
     api.show_figure( fig, title=f"{api.ticker} - Bull/Bear Strength Index" )
 
-if __name__ == "__main__":
+if run_standalone:
     matplotlib.use("TkAgg") # standalone : thread principal, affichage direct OK
     
-    TICKER   = "NVDA"
+    TICKER   = "AI.PA" #"NVDA"
     PERIOD   = "1y"
     INTERVAL = "1d"
 
