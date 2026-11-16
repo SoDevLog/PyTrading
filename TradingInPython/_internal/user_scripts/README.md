@@ -88,14 +88,14 @@ Ce script peut servir de point de départ pour étudier un filtre de tendance, d
 
 Cet indicateur est maintenant intégré dans la plateforme.
 
-### Bull/Bear Strength Index (BSI)
+### Global Bull/Bear Strength Index (GBSI)
 
 Une stratégie complète de trading qui combine plusieurs éléments d'analyse technique :
 
 - un **Cloud BSI**, construit à partir de deux EMA ;
 - un **Stop BSI**, fondé sur un ATR Trailing Stop ;
 - une synergie destinée à rechercher un alignement entre le court et le moyen terme ;
-- deux histogrammes pour distinguer les dynamiques de momentum court terme (CT) et moyen terme (MT).
+- trois histogrammes pour distinguer les dynamiques de momentum court terme (CT), moyen terme (MT) et long terme (LT).
 
 Comment lire la force du marché pour répondre à une question fondamentale, le marché est-il vraiment haussier ? Ou est-il seulement en train de faire semblant sur un horizon de temps trop court pour être fiable.
 
