@@ -84,29 +84,41 @@ If you know git, to get new features you'll just had to make a **Pull** wich is 
 
 4. Click on **tradinginpython_setup.exe** to install **TradingInPython**.
 
-#### Help on installer
+### Help on installer
 
 If you need help for installation, have a look to this page :
 
 - [Installation Guide](https://github.com/SoDevLog/PyTrading/wiki/Installation)
 
-### Have a Rapid Tour
+## Have a Rapid Tour
 
 Once the software is installed, click on TradingInPython's short cut, the platform openning.
 
-Choose **Four Time Frame Bolinger Bands strategy**, play with Mobile Average to look bands moving, play with backtesting in real time to see if you should modify parameters :
+### Trade with Four Time Frame Bolinger Bands strategy
+
+In Strategy's menu, choose **Four Time Frame Bolinger Bands strategy**, play with Mobile Average to look bands moving, play with backtesting in real time to see if you should modify parameters :
 
 <div align="center">
-  <img src="images/demo-2.gif" alt="Demo">
+  <img src="images/demo-2.gif" alt="Demo tour">
 </div>
-
-You can have a rapid presentation of what you'll be able to do with the Trading platform, it's in french but you can translate easily by choosing your language in GoogleTranslate :
-
-- [Rapid Tour of the Trading Platform in Python](https://trading-in-python.sodevlog.com/tour-rapide/)
 
 Discover the MTZ-Z + DAS technical indicator shown in this animation :
 
 - [How to Trade with the MTF Z-Score + DAS Indicator](https://www.trading-et-data-analyses.com/2026/03/mtf-z-das-strategy-guide-complet-pour-trader.html)
+
+### How to determine support and resistance levels
+
+Look at the POC (Point Of Control) to understand how sellers win agains byers:
+
+<div align="center">
+  <img src="images/supports-resistances.gif" alt="Supports and resistances">
+</div>
+
+### Key features documentation
+
+You can have a rapid presentation of what you'll be able to do with the Trading platform, it's in french but you can translate easily by choosing your language in GoogleTranslate :
+
+- [Rapid Tour of the Trading Platform in Python](https://trading-in-python.sodevlog.com/tour-rapide/)
 
 You need free training courses :
 
