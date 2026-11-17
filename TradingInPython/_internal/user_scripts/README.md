@@ -99,6 +99,23 @@ Une stratégie complète de trading qui combine plusieurs éléments d'analyse t
 
 Comment lire la force du marché pour répondre à une question fondamentale, le marché est-il vraiment haussier ? Ou est-il seulement en train de faire semblant sur un horizon de temps trop court pour être fiable.
 
+Cette stratégie est backtestée, indication des niveaux d'entrée et de sortie suivant la stratégie et calcul du Spread.
+
+<div align="center">
+  <img src="images/global-bull_bear-strength-index.png" alt="Global Bull/Bear Strength Index ">
+</div>
+
+```text
+=== BSI AI.PA - ZONE_RULES=False  EXIT_ON_WHITE_ZONE=True  BREAK_EVEN_R=1.0 ===
+    Sens  Entrée          Prix  Sortie          Prix    Risque       P&L      R
+ 1  long  2026-02-04    150.04  2026-03-06    148.90     11.18     -1.14  -0.10
+ 2  long  2026-03-30    156.98  2026-05-04    158.10     11.35     +1.12  +0.10
+ 3  long  2026-05-25    167.42  2026-07-31    170.72     10.23     +3.30  +0.32
+ 4  short 2026-08-03    170.32  2026-09-10    166.78      9.09     +3.54  +0.39
+ 5  long  2026-10-15    173.04  2026-11-17    189.96      8.87    +16.92  +1.91  (en cours)
+Spread = +23.74   trades = 5   gagnants = 4/5   R moyen = +0.52
+```
+
 - ➡️ [`strategy-bull-bear-strengh-index.py`](strategy-bull-bear-strengh-index.py)  
 - 📚 [Lire l'article : Bull/Bear Strength Index - Python Trading Strategy](https://www.trading-et-data-analyses.com/2026/09/bullbear-strength-index-python-trading.html)
 

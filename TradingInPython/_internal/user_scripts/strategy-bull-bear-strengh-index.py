@@ -23,6 +23,7 @@
 
     Dépendances : pandas, numpy, matplotlib, yfinance
 """
+from dataclasses import dataclass
 import numpy as np
 import pandas as pd
 pd.set_option('future.no_silent_downcasting', True)  # supprime le FutureWarning fillna/ffill/bfill
@@ -66,6 +67,11 @@ SUPER_TREND_MULTIPLIER: float = 3.2
 
 ZONE_RULES: bool = False  # True = interdiction d'acheter en zone rouge / vendre en zone verte
 EXIT_ON_WHITE_ZONE: bool = True  # True = clôture dès que la synergie passe en zone blanche
+BREAK_EVEN_R: float = 1.0        # le trade passe à break-even une fois +1R atteint (0 = désactivé)
+WARMUP_BARS: int = SUPER_TREND_PERIOD  # barres ignorées au début (chauffe du Stop BSI)
+
+ALLOW_LONG: bool = True          # True = prend les signaux d'achat (positions longues)
+ALLOW_SHORT: bool = False         # True = prend les signaux de vente à découvert (positions short)
  
 # ------------------------------------------------------------
 # 1. CLOUD BSI  (nuage de tendance et de volatilité : EMA ± ATR)
@@ -224,6 +230,115 @@ def histo_bsi( close: pd.Series,
         "color":  color,
     })
 
+# ----------------------------------------------------------
+# 5. SIGNAUX D'ENTRÉE / SORTIE ET SPREAD
+# ----------------------------------------------------------
+
+@dataclass
+class Trade:
+    side:    int            # +1 = long, -1 = short
+    i_entry: int            # position (barre) d'entrée
+    entry:   float
+    risk:    float          # distance entrée -> Stop BSI au moment de l'entrée
+    i_exit:  int = -1
+    exit:    float = np.nan
+    is_open: bool = True    # True = trade encore ouvert, valorisé au dernier cours
+
+    @property
+    def pnl(self) -> float:
+        return self.side * (self.exit - self.entry)
+
+    @property
+    def r(self) -> float:
+        return self.pnl / self.risk if self.risk > 0 else np.nan
+
+def bsi_trades(close: pd.Series,
+               stop: pd.DataFrame,
+               syn: pd.Series) -> list[Trade]:
+    """
+    Signaux BSI, évalués à la clôture de chaque barre.
+
+    Entrée : retournement du Stop BSI (direction -1 -> 1 = long, 1 -> -1 = short).
+      ZONE_RULES : pas d'achat en synergie rouge, pas de vente en synergie verte.
+
+    Sortie, la première de ces conditions :
+      - le Stop BSI se retourne contre la position
+      - break-even : +BREAK_EVEN_R atteint, puis retour au prix d'entrée
+      - EXIT_ON_WHITE_ZONE : la synergie passe en zone blanche
+      ZONE_RULES : une sortie est reportée tant qu'elle serait une vente en synergie
+      verte (position longue) ou un achat en synergie rouge (position short).
+    """
+    c         = close.values
+    direction = stop["direction"].values
+    stop_line = stop["stop"].values
+    zone      = syn.values
+
+    trades: list[Trade] = []
+    trade: Trade | None = None
+    be_armed = False
+
+    for i in range( max(1, WARMUP_BARS), len(c) ):
+
+        # --- position ouverte : faut-il sortir ? ---
+        if trade is not None:
+            side  = trade.side
+            gain  = (c[i] - trade.entry) * side
+            if BREAK_EVEN_R > 0 and gain >= BREAK_EVEN_R * trade.risk:
+                be_armed = True
+
+            want_exit = (
+                direction[i] == -side
+                or (be_armed and gain <= 0)
+                or (EXIT_ON_WHITE_ZONE and zone[i] == 0 and zone[i - 1] != 0)
+            )
+            blocked = ZONE_RULES and zone[i] == side   # long en zone verte / short en zone rouge
+
+            if want_exit and not blocked:
+                trade.i_exit, trade.exit, trade.is_open = i, c[i], False
+                trades.append(trade)
+                trade, be_armed = None, False
+            continue                                   # pas de nouvelle entrée sur cette barre
+
+        # --- à plat : retournement du Stop BSI ? ---
+        if direction[i] == direction[i - 1]:
+            continue
+        side = int(direction[i])
+        if (side == 1 and not ALLOW_LONG) or (side == -1 and not ALLOW_SHORT):
+            continue
+        if ZONE_RULES and zone[i] == -side:            # achat en rouge / vente en vert interdits
+            continue
+        risk = abs(c[i] - stop_line[i])
+        if not np.isfinite(risk) or risk == 0:
+            continue
+        trade = Trade(side=side, i_entry=i, entry=c[i], risk=risk)
+
+    if trade is not None:                              # trade en cours : valorisé au dernier cours
+        trade.i_exit, trade.exit = len(c) - 1, c[-1]
+        trades.append(trade)
+    return trades
+
+def print_trades(ticker: str, trades: list[Trade], dates) -> float:
+    """Affiche le détail des trades et retourne le Spread (somme des P&L)."""
+    print(f"\n=== BSI {ticker} - LONG={ALLOW_LONG}  SHORT={ALLOW_SHORT}  ZONE_RULES={ZONE_RULES}  "
+          f"EXIT_ON_WHITE_ZONE={EXIT_ON_WHITE_ZONE}  BREAK_EVEN_R={BREAK_EVEN_R} ===")
+    print(f"{'#':>2}  {'Sens':<5} {'Entrée':<10} {'Prix':>9}  {'Sortie':<10} {'Prix':>9}  "
+          f"{'Risque':>8} {'P&L':>9} {'R':>6}")
+    for n, t in enumerate(trades, 1):
+        print(f"{n:>2}  {'long' if t.side == 1 else 'short':<5} "
+              f"{dates[t.i_entry]:%Y-%m-%d} {t.entry:>9.2f}  "
+              f"{dates[t.i_exit]:%Y-%m-%d} {t.exit:>9.2f}  "
+              f"{t.risk:>8.2f} {t.pnl:>+9.2f} {t.r:>+6.2f}"
+              f"{'  (en cours)' if t.is_open else ''}")
+    spread = sum(t.pnl for t in trades)
+    if trades:
+        gagnants = sum(t.pnl > 0 for t in trades)
+        r_moyen  = np.nanmean([t.r for t in trades])
+        print(f"Spread = {spread:+.2f}   trades = {len(trades)}   "
+              f"gagnants = {gagnants}/{len(trades)}   R moyen = {r_moyen:+.2f}")
+    else:
+        print("Aucun trade.")
+    return spread
+
 # ---------------------------------------------
 # THÈME - True = fond noir / False = fond blanc
 # ---------------------------------------------
@@ -297,9 +412,13 @@ def plot_bsi(ticker: str = "AAPL",
 
     # Synergie 3 horizons CT/MT/LT — une seule série close, périodes différentes
     syn = synergie( close,
-                    fast_ct=9,  slow_ct=26,
-                    fast_mt=21, slow_mt=55,
-                    fast_lt=50, slow_lt=100 )
+                    fast_ct=FAST_CT, slow_ct=SLOW_CT,
+                    fast_mt=FAST_MT, slow_mt=SLOW_MT,
+                    fast_lt=FAST_LT, slow_lt=SLOW_LT )
+
+    # Signaux d'entrée / sortie et Spread
+    trades = bsi_trades( close, stop, syn )
+    spread = print_trades( ticker, trades, df.index )
 
     # --- Axe X positionnel --------------------------------
     # idx : position entière (0, 1, 2...) utilisée pour tout le tracé —
@@ -375,8 +494,36 @@ def plot_bsi(ticker: str = "AAPL",
     ax_price.scatter(idx[bear_mask], stop["stop"][bear_mask],
                      color=T["bear_bsi"], s=6, zorder=5, label="Stop BSI (baisse)")
 
-    ax_price.set_title(f"{ticker} - Bull/Bear Strength Index", color=T["text"],
-                       fontsize=13, pad=8)
+    # --- Signaux d'entrée / sortie ---------------------------------------
+    labels = set()
+    def _label(name):
+        if name in labels:
+            return None
+        labels.add(name)
+        return name
+
+    for t in trades:
+        x_in, x_out = idx[t.i_entry], idx[t.i_exit]
+        col_trade = T["bull"] if t.pnl >= 0 else T["bear"]
+        ax_price.plot([x_in, x_out], [t.entry, t.exit], ls="--", lw=0.9,
+                      color=col_trade, zorder=6)
+        ax_price.scatter(x_in, t.entry, marker="^" if t.side == 1 else "v", s=80,
+                         color=T["bull"] if t.side == 1 else T["bear"],
+                         edgecolors=T["text"], linewidths=0.6, zorder=8,
+                         label=_label("Entrée long" if t.side == 1 else "Entrée short"))
+        if not t.is_open:
+            ax_price.scatter(x_out, t.exit, marker="o", s=45, color=col_trade,
+                             edgecolors=T["text"], linewidths=0.6, zorder=8,
+                             label=_label("Sortie"))
+
+    spread = sum(t.pnl for t in trades)
+    if trades:
+        gagnants = sum(t.pnl > 0 for t in trades)
+    _title = f"{ticker} ({interval}/{period}) · Bull/Bear Strength Index · Cloud {CLOUD_EMA_FAST}/{CLOUD_EMA_SLOW}"
+    _title += f" · Super Trend {SUPER_TREND_PERIOD}/{SUPER_TREND_MULTIPLIER}"
+    _title += f" · {gagnants}/{len(trades)} trades gagnants"
+    _title += f" · Spread {spread:+.2f}"
+    ax_price.set_title( _title , color=T["text"], fontsize=13, pad=8 )
     ax_price.legend(loc="upper left", fontsize=8,
                     facecolor=T["bg_legend"], labelcolor=T["text"])
 
@@ -384,9 +531,9 @@ def plot_bsi(ticker: str = "AAPL",
     # Chaque axe combine :
     #   • un fond de couleur pleine (vert/rouge) indiquant la direction de l'EMA
     #   • des barres MACD dont la hauteur traduit la force / l'accélération
-    bull_ct_sig = (ema(close, 9)   > ema(close, 26)).values
-    bull_mt_sig = (ema(close, 21)  > ema(close, 55)).values
-    bull_lt_sig = (ema(close, 50)  > ema(close, 100)).values
+    bull_ct_sig = (hist_ct["macd"] > 0).values
+    bull_mt_sig = (hist_mt["macd"] > 0).values
+    bull_lt_sig = (hist_lt["macd"] > 0).values
 
     def draw_hist(ax, hist_df, bull_sig, label):
         """
@@ -463,7 +610,7 @@ def main():
 if run_standalone:
     matplotlib.use("TkAgg") # standalone : thread principal, affichage direct OK
     
-    TICKER   = "AI.PA" #"NVDA"
+    TICKER   = "NVDA" #  AI.PA BN.PA MSFT NVDA AIR.PA AAPL AMZN GOOGL TSLA META NFLX
     PERIOD   = "1y"
     INTERVAL = "1d"
 
