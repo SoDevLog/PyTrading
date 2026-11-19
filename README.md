@@ -206,6 +206,14 @@ Then have a look here :
 
 - [TradingInPython's software devlopement Kit](https://www.trading-et-data-analyses.com/p/trading-en-python.html)
 
+### You need to modify a component
+
+You would like to adapt a part of the platform to suit your needs?
+
+Please feel free to **contact us** :
+
+- [Contact TradingInPython's support](https://www.trading-et-data-analyses.com/p/formulaire-de-contact.html)
+
 ## Script runner
 
 Thank's to Python the platform can execute scripts in a Python environnement.
