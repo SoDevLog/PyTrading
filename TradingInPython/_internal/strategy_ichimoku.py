@@ -2,6 +2,7 @@
 
     - get_configuration
     - create_config_window
+    - toggle_visibility
     - config_window
     - draw_main_graph
     - add_title
@@ -46,7 +47,7 @@ class strategy_ichimoku:
         self.nb_days_past = 9 # by default
         self.slope = None
         self.data = None
-        self.artists_ichimoku = {}
+        self.artists = {}
 
         # Read Configuration to configure Tkinter UI
         self.get_configuration()
@@ -166,17 +167,17 @@ class strategy_ichimoku:
 
         # ------------------------------------------------------------------------
 
-        _tki = ttk.Button(content, text="Default Short", command=lambda: self.command_get_default_configurations( CONFIG.short ) )
+        _tki = ttk.Button(content, text="Default Short", command=lambda: self.command_get_configuration( CONFIG.short ) )
         _tki.grid( row=tk_row, column=0,  columnspan=2, **padding_options  )
 
         tk_row += 1
 
-        _tki = ttk.Button( content, text="Default", command=lambda: self.command_get_default_configurations( CONFIG.default ) )
+        _tki = ttk.Button( content, text="Default", command=lambda: self.command_get_configuration( CONFIG.default ) )
         _tki.grid( row=tk_row, column=0,  columnspan=2, **padding_options  )
 
         tk_row += 1
 
-        _tki = ttk.Button( content, text="Default Long", command=lambda: self.command_get_default_configurations( CONFIG.long ) )
+        _tki = ttk.Button( content, text="Default Long", command=lambda: self.command_get_configuration( CONFIG.long ) )
         _tki.grid( row=tk_row, column=0,  columnspan=2, **padding_options  )
 
         tk_row += 1
@@ -195,7 +196,7 @@ class strategy_ichimoku:
 
     # ----------------------------------------------------------------------------
 
-    def command_get_default_configurations( self,  config ):
+    def command_get_configuration( self,  config ):
 
         for stock in self.configuration.get( 'stocks' ):
             if stock['name'] == config:
@@ -204,9 +205,8 @@ class strategy_ichimoku:
                 self.mobile_average_3.set( stock.get('MA3') )
                 break
 
-        self.message_entry.config( text=f"Config {config}", foreground="green" )
-        
         self.on_mobile_average_params_change()
+        self.message_entry.config( text=f"Config {config}", foreground="green" )
 
     # ----------------------------------------------------------------------------
 
@@ -222,7 +222,7 @@ class strategy_ichimoku:
                 break
 
         if founded == False:
-            self.command_get_default_configurations( CONFIG.default )
+            self.command_get_configuration( CONFIG.default )
 
     # ----------------------------------------------------------------------------
     # Retreive an item from stock in configration file
@@ -393,47 +393,47 @@ class strategy_ichimoku:
 
         # Tenkan sen
         if self.var_tenkan_sen.get():
-            self.artists_ichimoku['line_tenkan_sen'].set_visible( True )
+            self.artists['line_tenkan_sen'].set_visible( True )
         else:
-            self.artists_ichimoku['line_tenkan_sen'].set_visible( False )
+            self.artists['line_tenkan_sen'].set_visible( False )
         
         # Kijun sen
         if self.var_kijun_sen.get():
-            self.artists_ichimoku['line_kijun_sen'].set_visible( True )
+            self.artists['line_kijun_sen'].set_visible( True )
         else:
-            self.artists_ichimoku['line_kijun_sen'].set_visible( False )
+            self.artists['line_kijun_sen'].set_visible( False )
         
         # Kijun sen upper
         if self.var_kijun_upper.get():
-            self.artists_ichimoku['line_kijun_sen_upper'].set_visible( True )
+            self.artists['line_kijun_sen_upper'].set_visible( True )
         else:
-            self.artists_ichimoku['line_kijun_sen_upper'].set_visible( False )
+            self.artists['line_kijun_sen_upper'].set_visible( False )
 
         # Kijun sen lower
         if self.var_kijun_lower.get():
-            self.artists_ichimoku['line_kijun_sen_lower'].set_visible( True )
+            self.artists['line_kijun_sen_lower'].set_visible( True )
         else:
-            self.artists_ichimoku['line_kijun_sen_lower'].set_visible( False )
+            self.artists['line_kijun_sen_lower'].set_visible( False )
         
         # Kijun bands
         if self.var_kijun_bands.get():
-            self.artists_ichimoku['fill_Kijun_bands'].set_visible( True )
+            self.artists['fill_Kijun_bands'].set_visible( True )
         else:
-            self.artists_ichimoku['fill_Kijun_bands'].set_visible( False )
+            self.artists['fill_Kijun_bands'].set_visible( False )
             
         # Chikou span
         if self.var_chikou.get():
-            self.artists_ichimoku['line_kijun_chikou_span'].set_visible( True )
+            self.artists['line_kijun_chikou_span'].set_visible( True )
         else:
-            self.artists_ichimoku['line_kijun_chikou_span'].set_visible( False )
+            self.artists['line_kijun_chikou_span'].set_visible( False )
                         
         # Kumo cloud
         if self.var_kumo.get():
-            self.artists_ichimoku['fill_senkou_bands_A'].set_visible( True )
-            self.artists_ichimoku['fill_senkou_bands_B'].set_visible( True )
+            self.artists['fill_senkou_bands_A'].set_visible( True )
+            self.artists['fill_senkou_bands_B'].set_visible( True )
         else:
-            self.artists_ichimoku['fill_senkou_bands_A'].set_visible( False )
-            self.artists_ichimoku['fill_senkou_bands_B'].set_visible( False )
+            self.artists['fill_senkou_bands_A'].set_visible( False )
+            self.artists['fill_senkou_bands_B'].set_visible( False )
 
         # Candles
         if self.var_candles.get():
@@ -443,22 +443,22 @@ class strategy_ichimoku:
             
         if self.var_make_forcasting.get():
             if self.var_make_forcasting.get():
-                self.artists_ichimoku['line_signal'].set_visible( True )
-                self.artists_ichimoku['line_forcasted_signal'].set_visible( True )
-                self.artists_ichimoku['line_predicted_signal'].set_visible( True )
+                self.artists['line_signal'].set_visible( True )
+                self.artists['line_forcasted_signal'].set_visible( True )
+                self.artists['line_predicted_signal'].set_visible( True )
             else:
-                self.artists_ichimoku['line_signal'].set_visible( False )
-                self.artists_ichimoku['line_forcasted_signal'].set_visible( False )
-                self.artists_ichimoku['line_predicted_signal'].set_visible( False )
+                self.artists['line_signal'].set_visible( False )
+                self.artists['line_forcasted_signal'].set_visible( False )
+                self.artists['line_predicted_signal'].set_visible( False )
 
     # ----------------------------------------------------------------------------
     
     def on_mobile_average_params_change( self ):
 
         # Supprimer les anciens éléments graphiques
-        for e in self.artists_ichimoku:
+        for e in self.artists:
             try:
-                self.artists_ichimoku[ e ].remove()
+                self.artists[ e ].remove()
             except ( NotImplementedError, ValueError ):
                 pass
                 
@@ -611,21 +611,21 @@ class strategy_ichimoku:
         # Visualiser les résultats
         #
         self.line_price, = ax_main.plot( axe_x, data['Close'], label='Prix de clôture', linewidth=0.8 )
-        self.artists_ichimoku['line_tenkan_sen'], = ax_main.plot( axe_x, data['Tenkan_sen'], label='Tenkan-sen', color=pc.TENKAN, linewidth=1.5 )
-        self.artists_ichimoku['line_kijun_sen'], = ax_main.plot( axe_x, data['Kijun_sen'], label='Kijun-sen', color=pc.KIJUN, linewidth=1.5 )
-        self.artists_ichimoku['line_kijun_sen_upper'], = ax_main.plot( axe_x, data['Kijun_sen_upper'], label='Kijun-sen Upper', linestyle='-', linewidth=0.5, color='blue' )
-        self.artists_ichimoku['line_kijun_sen_lower'], = ax_main.plot( axe_x, data['Kijun_sen_lower'], label='Kijun-sen Lower', linestyle='-', linewidth=0.5, color='blue' )
-        self.artists_ichimoku['line_kijun_chikou_span'], = ax_main.plot( axe_x, data['Chikou_span'], label='Chikou-span', linestyle='--', linewidth=1, color=pc.royalblue )
-        self.artists_ichimoku['fill_Kijun_bands'] = ax_main.fill_between( axe_x, data['Kijun_sen_upper'], data['Kijun_sen_lower'], where=data['Kijun_sen_upper'] >= data['Kijun_sen_lower'], facecolor='lightskyblue', edgecolor='none', alpha=0.3, interpolate=True )
+        self.artists['line_tenkan_sen'], = ax_main.plot( axe_x, data['Tenkan_sen'], label='Tenkan-sen', color=pc.TENKAN, linewidth=1.5 )
+        self.artists['line_kijun_sen'], = ax_main.plot( axe_x, data['Kijun_sen'], label='Kijun-sen', color=pc.KIJUN, linewidth=1.5 )
+        self.artists['line_kijun_sen_upper'], = ax_main.plot( axe_x, data['Kijun_sen_upper'], label='Kijun-sen Upper', linestyle='-', linewidth=0.5, color='blue' )
+        self.artists['line_kijun_sen_lower'], = ax_main.plot( axe_x, data['Kijun_sen_lower'], label='Kijun-sen Lower', linestyle='-', linewidth=0.5, color='blue' )
+        self.artists['line_kijun_chikou_span'], = ax_main.plot( axe_x, data['Chikou_span'], label='Chikou-span', linestyle='--', linewidth=1, color=pc.royalblue )
+        self.artists['fill_Kijun_bands'] = ax_main.fill_between( axe_x, data['Kijun_sen_upper'], data['Kijun_sen_lower'], where=data['Kijun_sen_upper'] >= data['Kijun_sen_lower'], facecolor='lightskyblue', edgecolor='none', alpha=0.3, interpolate=True )
 
         if self.var_make_forcasting.get():
-            self.artists_ichimoku['line_signal'], = ax_main.plot( axe_x, data['Signal_display'], label='Signal', linewidth=1.5, color='plum' )
-            self.artists_ichimoku['line_forcasted_signal'], = ax_main.plot( axe_x, data['Signal_Forcasted'], label='Forcasted Signal', linewidth=1.5, color='violet' )
-            self.artists_ichimoku['line_predicted_signal'], = ax_main.plot( axe_x, data['Signal_Predicted'], label='Predicted Signal', linewidth=2, color='mediumorchid' )
+            self.artists['line_signal'], = ax_main.plot( axe_x, data['Signal_display'], label='Signal', linewidth=1.5, color='plum' )
+            self.artists['line_forcasted_signal'], = ax_main.plot( axe_x, data['Signal_Forcasted'], label='Forcasted Signal', linewidth=1.5, color='violet' )
+            self.artists['line_predicted_signal'], = ax_main.plot( axe_x, data['Signal_Predicted'], label='Predicted Signal', linewidth=2, color='mediumorchid' )
 
         # Kumo cloud
-        self.artists_ichimoku['fill_senkou_bands_A'] = ax_main.fill_between( axe_x, data['Senkou_span_A'], data['Senkou_span_B'], where=data['Senkou_span_A'] >= data['Senkou_span_B'], facecolor='lightgreen', edgecolor='none', alpha=0.7, interpolate=True )
-        self.artists_ichimoku['fill_senkou_bands_B'] = ax_main.fill_between( axe_x, data['Senkou_span_A'], data['Senkou_span_B'], where=data['Senkou_span_A'] < data['Senkou_span_B'], facecolor='lightcoral', edgecolor='none', alpha=0.7, interpolate=True )
+        self.artists['fill_senkou_bands_A'] = ax_main.fill_between( axe_x, data['Senkou_span_A'], data['Senkou_span_B'], where=data['Senkou_span_A'] >= data['Senkou_span_B'], facecolor='lightgreen', edgecolor='none', alpha=0.7, interpolate=True )
+        self.artists['fill_senkou_bands_B'] = ax_main.fill_between( axe_x, data['Senkou_span_A'], data['Senkou_span_B'], where=data['Senkou_span_A'] < data['Senkou_span_B'], facecolor='lightcoral', edgecolor='none', alpha=0.7, interpolate=True )
 
         ax_main.set_xlim( -0.5, len( data ) - 0.5 )
 

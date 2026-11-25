@@ -5,6 +5,18 @@
             "JAW": 13,
             "TEETH": 8,
             "LIPS": 5
+        },
+        {
+            "name": "DEFAULT_SHORT",
+            "JAW": 8,
+            "TEETH": 5,
+            "LIPS": 3
+        },
+        {
+            "name": "DEFAULT_LONG",
+            "JAW": 26,
+            "TEETH": 16,
+            "LIPS": 10
         }
     ]
 }
